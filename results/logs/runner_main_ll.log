@@ -1,0 +1,8 @@
+[연결] results/progress_pilot_b_lunarlander.json 종료를 기다린 뒤 experiments/configs/main_lunarlander.yaml 발사
+[연결] 파일럿 종료 확인 — 본실험 main_lunarlander 발사 23:37:59
+[러너] main_lunarlander | 총 180조건 | 이미 완료 6 | 동시 5개
+  ▶ 시작 LunarLander-v3/dqn/lam0.1/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam0.3/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam0.6/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam1.0/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam1.37/seed0 (시도 1)

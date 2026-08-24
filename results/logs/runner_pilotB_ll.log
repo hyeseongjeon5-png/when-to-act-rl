@@ -4,3 +4,11 @@
   ▶ 시작 LunarLander-v3/temporl/lam0.0/seed0 (시도 1)
   ▶ 시작 LunarLander-v3/temporl/lam0.0/seed1 (시도 1)
   ▶ 시작 LunarLander-v3/lazy/lam0.0/seed0 (시도 1)
+  ✔ 완료 LunarLander-v3/dqn/lam0.0/seed0 (12.6분)
+  ▶ 시작 LunarLander-v3/lazy/lam0.0/seed1 (시도 1)
+  ✔ 완료 LunarLander-v3/lazy/lam0.0/seed0 (12.7분)
+  ✔ 완료 LunarLander-v3/dqn/lam0.0/seed1 (13.0분)
+  ✔ 완료 LunarLander-v3/temporl/lam0.0/seed1 (21.0분)
+  ✔ 완료 LunarLander-v3/temporl/lam0.0/seed0 (21.1분)
+  ✔ 완료 LunarLander-v3/lazy/lam0.0/seed1 (9.5분)
+[러너 종료] pilot_b_lunarlander | 완료 6/6 | 건너뜀 0 | 총 0.37시간
