@@ -1,40 +1,40 @@
 {
- "time": "2026-08-25 01:01:38",
- "ts": 1787587298.9652603,
+ "time": "2026-08-25 02:01:40",
+ "ts": 1787590900.339427,
  "runs": [
   {
    "run": "main_lunarlander",
-   "done": 24,
-   "total": 180,
+   "done": 42,
+   "total": 240,
    "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.3,
+   "stale_min": 0.1,
    "advanced_since_last": true,
-   "eta_text": "약 6.7시간 남음",
-   "prev_done": 5
+   "eta_text": "약 9.6시간 남음",
+   "prev_done": 24
   },
   {
    "run": "main_mountaincar",
-   "done": 14,
-   "total": 180,
+   "done": 28,
+   "total": 270,
    "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.3,
+   "stale_min": 0.5,
    "advanced_since_last": true,
-   "eta_text": "약 11.2시간 남음",
-   "prev_done": 0
+   "eta_text": "약 16.4시간 남음",
+   "prev_done": 14
   }
  ],
  "issues": [
-  "⑤ 학습 계열이 무행동으로 굳은 조건 10개 (λ가 크면 정상일 수 있음): temporl/lam0.35/seed0, lazy/lam0.05/seed0, lazy/lam0.1/seed0, temporl/lam0.2/seed0, temporl/lam0.1/seed0"
+  "⑤ 학습 계열이 무행동으로 굳은 조건 9개 (λ가 크면 정상일 수 있음): temporl/lam0.03/seed0, lazy/lam0.03/seed0, lazy/lam0.66/seed0, lazy/lam0.35/seed0, lazy/lam0.2/seed0"
  ],
  "level": "경고",
  "logs": {
-  "scanned": 51,
+  "scanned": 63,
   "traceback_logs": [],
   "nan_logs": []
  },
@@ -42,19 +42,18 @@
   "checked": 400,
   "nan_results": [],
   "floor_conditions": [
-   "temporl/lam0.35/seed0",
-   "lazy/lam0.05/seed0",
-   "lazy/lam0.1/seed0",
-   "temporl/lam0.2/seed0",
-   "temporl/lam0.1/seed0",
-   "dqn/lam0.66/seed0",
-   "dqn/lam0.2/seed0",
-   "dqn/lam0.1/seed0",
-   "dqn/lam0.05/seed0",
-   "dqn/lam0.35/seed0"
+   "temporl/lam0.03/seed0",
+   "lazy/lam0.03/seed0",
+   "lazy/lam0.66/seed0",
+   "lazy/lam0.35/seed0",
+   "lazy/lam0.2/seed0",
+   "temporl/lam0.02/seed0",
+   "temporl/lam0.66/seed0",
+   "dqn/lam0.03/seed0",
+   "dqn/lam0.02/seed0"
   ],
-  "n_floor": 10
+  "n_floor": 9
  },
  "disk_free_gb": 360.4,
- "done_conditions_total": 758
+ "done_conditions_total": 1090
 }

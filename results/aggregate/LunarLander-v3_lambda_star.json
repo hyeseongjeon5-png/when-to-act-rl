@@ -13,7 +13,9 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "lams_compared": [
         0.0,
@@ -21,7 +23,9 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "rows": [
         {
@@ -71,24 +75,42 @@
           "rule_iqm": -130.545097364853,
           "wins_ci": true,
           "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 2,
+          "learner_iqm": -157.53926887790715,
+          "rule_iqm": -206.89899736485268,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 2,
+          "learner_iqm": -221.71683863388918,
+          "rule_iqm": -328.0975283545661,
+          "wins_ci": true,
+          "wins_pt": true
         }
       ],
-      "coverage": "6/6 λ",
+      "coverage": "8/8 λ",
       "min_seeds": 2,
       "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 2개뿐 — 시드 10개 기준 결론이 아님)"
     },
     {
       "learner": "lazy",
       "rule": "rule_threshold",
-      "lam_star_ci": null,
-      "lam_star_pt": null,
+      "lam_star_ci": 2.0,
+      "lam_star_pt": 2.0,
       "lams_in_grid": [
         0.0,
         0.1,
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "lams_compared": [
         0.0,
@@ -96,7 +118,9 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "rows": [
         {
@@ -146,16 +170,32 @@
           "rule_iqm": -130.545097364853,
           "wins_ci": true,
           "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 1,
+          "learner_iqm": -330.9291421394087,
+          "rule_iqm": -206.89899736485268,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 1,
+          "learner_iqm": -136.3868293265984,
+          "rule_iqm": -328.0975283545661,
+          "wins_ci": true,
+          "wins_pt": true
         }
       ],
-      "coverage": "6/6 λ",
+      "coverage": "8/8 λ",
       "min_seeds": 1,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
     },
     {
       "learner": "temporl",
       "rule": "rule_threshold",
-      "lam_star_ci": null,
+      "lam_star_ci": 0.1,
       "lam_star_pt": null,
       "lams_in_grid": [
         0.0,
@@ -163,7 +203,9 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "lams_compared": [
         0.0,
@@ -171,45 +213,47 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 189.3832830747743,
+          "n_seeds": 2,
+          "learner_iqm": 145.74463497883733,
           "rule_iqm": 35.79395934101099,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 0.1,
-          "n_seeds": 1,
-          "learner_iqm": 141.1235763735359,
+          "n_seeds": 2,
+          "learner_iqm": 81.8369702970262,
           "rule_iqm": 23.633792674344107,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 0.3,
-          "n_seeds": 1,
-          "learner_iqm": 88.75165897091644,
+          "n_seeds": 2,
+          "learner_iqm": 74.84384753070412,
           "rule_iqm": -0.686540658989146,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 0.6,
-          "n_seeds": 1,
-          "learner_iqm": -6.796044123188518,
+          "n_seeds": 2,
+          "learner_iqm": 17.146770411833753,
           "rule_iqm": -37.167040658989094,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 1.0,
-          "n_seeds": 1,
-          "learner_iqm": -43.94045579761978,
+          "n_seeds": 2,
+          "learner_iqm": -41.8729568725859,
           "rule_iqm": -85.70233069818624,
           "wins_ci": true,
           "wins_pt": true
@@ -221,9 +265,25 @@
           "rule_iqm": -130.545097364853,
           "wins_ci": true,
           "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 1,
+          "learner_iqm": -186.6362914206439,
+          "rule_iqm": -206.89899736485268,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 1,
+          "learner_iqm": -123.67806269375627,
+          "rule_iqm": -328.0975283545661,
+          "wins_ci": true,
+          "wins_pt": true
         }
       ],
-      "coverage": "6/6 λ",
+      "coverage": "8/8 λ",
       "min_seeds": 1,
       "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
     }
@@ -233,15 +293,17 @@
     {
       "learner": "dqn",
       "rule": "rule_best",
-      "lam_star_ci": null,
-      "lam_star_pt": null,
+      "lam_star_ci": 2.0,
+      "lam_star_pt": 2.0,
       "lams_in_grid": [
         0.0,
         0.1,
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "lams_compared": [
         0.0,
@@ -249,7 +311,9 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "rows": [
         {
@@ -299,24 +363,42 @@
           "rule_iqm": -130.545097364853,
           "wins_ci": true,
           "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 2,
+          "learner_iqm": -157.53926887790715,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 2,
+          "learner_iqm": -221.71683863388918,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
         }
       ],
-      "coverage": "6/6 λ",
+      "coverage": "8/8 λ",
       "min_seeds": 2,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 2개뿐 — 시드 10개 기준 결론이 아님)"
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 2개뿐 — 시드 10개 기준 결론이 아님)"
     },
     {
       "learner": "lazy",
       "rule": "rule_best",
-      "lam_star_ci": null,
-      "lam_star_pt": null,
+      "lam_star_ci": 2.0,
+      "lam_star_pt": 2.0,
       "lams_in_grid": [
         0.0,
         0.1,
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "lams_compared": [
         0.0,
@@ -324,7 +406,9 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "rows": [
         {
@@ -374,24 +458,42 @@
           "rule_iqm": -130.545097364853,
           "wins_ci": true,
           "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 1,
+          "learner_iqm": -330.9291421394087,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 1,
+          "learner_iqm": -136.3868293265984,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
         }
       ],
-      "coverage": "6/6 λ",
+      "coverage": "8/8 λ",
       "min_seeds": 1,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
     },
     {
       "learner": "temporl",
       "rule": "rule_best",
-      "lam_star_ci": null,
-      "lam_star_pt": null,
+      "lam_star_ci": 0.1,
+      "lam_star_pt": 2.0,
       "lams_in_grid": [
         0.0,
         0.1,
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "lams_compared": [
         0.0,
@@ -399,45 +501,47 @@
         0.3,
         0.6,
         1.0,
-        1.37
+        1.37,
+        2.0,
+        3.0
       ],
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 189.3832830747743,
+          "n_seeds": 2,
+          "learner_iqm": 145.74463497883733,
           "rule_iqm": 35.79395934101099,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 0.1,
-          "n_seeds": 1,
-          "learner_iqm": 141.1235763735359,
+          "n_seeds": 2,
+          "learner_iqm": 81.8369702970262,
           "rule_iqm": 23.633792674344107,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 0.3,
-          "n_seeds": 1,
-          "learner_iqm": 88.75165897091644,
+          "n_seeds": 2,
+          "learner_iqm": 74.84384753070412,
           "rule_iqm": -0.686540658989146,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 0.6,
-          "n_seeds": 1,
-          "learner_iqm": -6.796044123188518,
+          "n_seeds": 2,
+          "learner_iqm": 17.146770411833753,
           "rule_iqm": -37.167040658989094,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 1.0,
-          "n_seeds": 1,
-          "learner_iqm": -43.94045579761978,
+          "n_seeds": 2,
+          "learner_iqm": -41.8729568725859,
           "rule_iqm": -85.70233069818624,
           "wins_ci": true,
           "wins_pt": true
@@ -449,11 +553,27 @@
           "rule_iqm": -130.545097364853,
           "wins_ci": true,
           "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 1,
+          "learner_iqm": -186.6362914206439,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 1,
+          "learner_iqm": -123.67806269375627,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": true,
+          "wins_pt": true
         }
       ],
-      "coverage": "6/6 λ",
+      "coverage": "8/8 λ",
       "min_seeds": 1,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
     }
   ]
 }
