@@ -1,0 +1,19 @@
+# 스모크 테스트 config — 고정 규칙 3종 × MountainCar × λ=0
+# 목적: 본실험이 아니라 "배관이 도는가"를 확인하는 1회성 점검 (docs/03_로드맵.md 1주차)
+name: smoke_fixed_rules_mountaincar
+date: 2026-08-24
+env_id: MountainCar-v0
+lambdas: [0.0]
+n_episodes: 30          # 평가 에피소드 수 (본실험 기준 100 — 스모크라 30으로 줄임)
+eval_seeds_start: 0     # 환경 시드 0..29 (고정 규칙은 학습이 없어 환경 시드만 적용)
+policies:
+  - {id: noop,       type: NoOpPolicy}
+  - {id: periodic_k1, type: PeriodicPolicy, base_action: 2, k: 1}
+  - {id: periodic_k2, type: PeriodicPolicy, base_action: 2, k: 2}
+  - {id: periodic_k4, type: PeriodicPolicy, base_action: 2, k: 4}
+  - {id: periodic_k8, type: PeriodicPolicy, base_action: 2, k: 8}
+  - {id: pump,        type: MountainCarPumpPolicy, act_threshold: 0.0}
+notes: |
+  - PeriodicPolicy의 base_action=2(오른쪽 가속)는 임시값. docs/02_실험-설계.md §2대로
+    "λ=0에서 가장 점수가 좋은 단일 행동"은 파일럿에서 확정할 것 (확인 필요).
+  - MountainCarPumpPolicy의 act_threshold 변형(행동 절약형)은 파일럿 항목.
