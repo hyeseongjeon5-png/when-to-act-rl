@@ -1,4 +1,10 @@
 ﻿env_id,agent,lam,seed,fingerprint,cost_return,raw_return,n_actions,solved,steps,n_eval_episodes,elapsed_sec,total_steps,source_csv
+MountainCar-v0,dqn,0.0,0,b77904fc190a,-136.05333333333334,-136.05333333333334,126.77333333333333,0.8533333333333334,136.05333333333334,150,903.5,300000,results/raw/MountainCar-v0/dqn/lam0.0/seed0_final.csv
+MountainCar-v0,dqn,0.05,0,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,903.0,300000,results/raw/MountainCar-v0/dqn/lam0.05/seed0_final.csv
+MountainCar-v0,dqn,0.1,0,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,906.1,300000,results/raw/MountainCar-v0/dqn/lam0.1/seed0_final.csv
+MountainCar-v0,dqn,0.2,0,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,907.5,300000,results/raw/MountainCar-v0/dqn/lam0.2/seed0_final.csv
+MountainCar-v0,dqn,0.35,0,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,901.0,300000,results/raw/MountainCar-v0/dqn/lam0.35/seed0_final.csv
+MountainCar-v0,dqn,0.66,0,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,890.2,300000,results/raw/MountainCar-v0/dqn/lam0.66/seed0_final.csv
 MountainCar-v0,rule_noop,0.0,0,규칙(지문없음),-200.0,-200.0,0.0,0.0,200.0,100,0.43,0,results/raw/MountainCar-v0/rule_noop/lam0.0/seed0_final.csv
 MountainCar-v0,rule_noop,0.0,1,규칙(지문없음),-200.0,-200.0,0.0,0.0,200.0,100,0.43,0,results/raw/MountainCar-v0/rule_noop/lam0.0/seed1_final.csv
 MountainCar-v0,rule_noop,0.0,2,규칙(지문없음),-200.0,-200.0,0.0,0.0,200.0,100,0.48,0,results/raw/MountainCar-v0/rule_noop/lam0.0/seed2_final.csv
@@ -359,3 +365,7 @@ MountainCar-v0,rule_pump,0.66,6,규칙(지문없음),-198.18739999999966,-119.39
 MountainCar-v0,rule_pump,0.66,7,규칙(지문없음),-197.65619999999967,-119.07,119.07,1.0,119.07,100,0.5,0,results/raw/MountainCar-v0/rule_pump/lam0.66/seed7_final.csv
 MountainCar-v0,rule_pump,0.66,8,규칙(지문없음),-198.0545999999997,-119.31,119.31,1.0,119.31,100,0.51,0,results/raw/MountainCar-v0/rule_pump/lam0.66/seed8_final.csv
 MountainCar-v0,rule_pump,0.66,9,규칙(지문없음),-198.35339999999974,-119.49,119.49,1.0,119.49,100,0.42,0,results/raw/MountainCar-v0/rule_pump/lam0.66/seed9_final.csv
+MountainCar-v0,temporl,0.0,0,031b8c9ed399,-128.24666666666667,-128.24666666666667,118.89333333333333,0.8866666666666667,128.24666666666667,150,1739.7,300000,results/raw/MountainCar-v0/temporl/lam0.0/seed0_final.csv
+MountainCar-v0,temporl,0.05,0,031b8c9ed399,-203.3333333333335,-200.0,66.66666666666667,0.0,200.0,150,1755.4,300000,results/raw/MountainCar-v0/temporl/lam0.05/seed0_final.csv
+MountainCar-v0,temporl,0.1,0,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,1748.9,300000,results/raw/MountainCar-v0/temporl/lam0.1/seed0_final.csv
+MountainCar-v0,temporl,0.2,0,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,1752.0,300000,results/raw/MountainCar-v0/temporl/lam0.2/seed0_final.csv

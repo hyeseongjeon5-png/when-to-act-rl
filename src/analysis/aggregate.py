@@ -139,7 +139,31 @@ def aggregate(env_id: str, reps: int = 5000) -> tuple[pd.DataFrame, pd.DataFrame
             rec[f"{m}_mean"] = float(g[m].mean())
         out.append(rec)
     agg = pd.DataFrame(out).sort_values(["agent", "lam"]).reset_index(drop=True)
+    agg = add_best_rule_envelope(agg)
     return cond, agg
+
+
+def add_best_rule_envelope(agg: pd.DataFrame, metric: str = "cost_return") -> pd.DataFrame:
+    """λ마다 '그 시점에서 가장 센 고정 규칙'을 골라 rule_best 라는 가상의 줄로 추가한다.
+
+    왜 필요한가: 어느 규칙이 최강인지는 λ에 따라 바뀐다. MountainCar에서 λ<0.673이면
+    pump 규칙이 최강이지만 그보다 비싸지면 '아무것도 안 하기'가 최강이 된다.
+    "학습이 단순 규칙을 이기는가"를 정직하게 물으려면 그 λ에서 실제로 가장 센 규칙과 비교해야 한다.
+    (지정된 기준 규칙 pump/임계값은 그대로 유지하고, 이건 보조선으로 함께 본다)
+    """
+    rules = agg[agg.agent.astype(str).str.startswith("rule_")]
+    if rules.empty:
+        return agg
+    picks = []
+    for lam, g in rules.groupby("lam"):
+        best = g.loc[g[f"{metric}_iqm"].idxmax()].copy()
+        best["best_rule_name"] = best["agent"]
+        best["agent"] = "rule_best"
+        picks.append(best)
+    if not picks:
+        return agg
+    out = pd.concat([agg, pd.DataFrame(picks)], ignore_index=True)
+    return out.sort_values(["agent", "lam"]).reset_index(drop=True)
 
 
 def critical_lambda(agg: pd.DataFrame, learner: str, rule: str = "rule_pump",
@@ -213,18 +237,26 @@ def main() -> None:
         cond.to_csv(OUT / f"{env_id}_conditions.csv", index=False, encoding="utf-8-sig")
         agg.to_csv(OUT / f"{env_id}_iqm.csv", index=False, encoding="utf-8-sig")
         rule = pick_ref_rule(env_id, set(agg.agent), a.rule)
+        learners = sorted(set(agg.agent) - {x for x in agg.agent if str(x).startswith("rule_")})
         stars = []
         if rule:
-            for learner in sorted(set(agg.agent) - {x for x in agg.agent if str(x).startswith("rule_")}):
+            for learner in learners:
                 stars.append(critical_lambda(agg, learner, rule))
+        # 보조: 'λ마다 가장 센 규칙'과의 비교도 함께 낸다
+        stars_best = []
+        if "rule_best" in set(agg.agent):
+            for learner in learners:
+                stars_best.append(critical_lambda(agg, learner, "rule_best"))
         (OUT / f"{env_id}_lambda_star.json").write_text(
-            json.dumps({"env_id": env_id, "rule": rule, "results": stars}, ensure_ascii=False, indent=2),
+            json.dumps({"env_id": env_id, "rule": rule, "results": stars,
+                        "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
+                        "results_vs_best_rule": stars_best}, ensure_ascii=False, indent=2),
             encoding="utf-8")
         print(f"\n===== {env_id} =====")
         show = agg[["agent", "lam", "n_seeds", "cost_return_iqm", "cost_return_ci_lo",
                     "cost_return_ci_hi", "n_actions_iqm", "solved_iqm"]]
         print(show.to_string(index=False, float_format=lambda v: f"{v:8.2f}"))
-        for s in stars:
+        for s in stars + stars_best:
             print(f"  λ* [{s['learner']} vs {s['rule']}] CI기준 {s['lam_star_ci']} / 점추정기준 {s['lam_star_pt']} — {s['note']}")
         print(f"  저장: results/aggregate/{env_id}_iqm.csv, {env_id}_lambda_star.json")
 

@@ -6,3 +6,4 @@
 2026-08-24 23:47:59 [경고] main_lunarlander 6/180 진행중 ; main_mountaincar 6/180 진행중 ; pilot_b_lunarlander 6/6 종료됨 ; pilot_b_mountaincar 6/6 종료됨 | 디스크 361GB | 완료조건 누계 733 | ⑤ 학습 계열이 무행동으로 굳은 조건 1개 (λ가 크면 정상일 수 있음): temporl/lam0.0/seed1
 2026-08-25 00:01:37 [정상] main_lunarlander 5/180 진행중 ; main_mountaincar 0/180 진행중 ; pilot_b_lunarlander 6/6 종료됨 ; pilot_b_mountaincar 6/6 종료됨 | 디스크 360GB | 완료조건 누계 725 | 이상 없음
 2026-08-25 00:05:25 [정상] main_lunarlander 5/180 진행중 ; main_mountaincar 0/180 진행중 | 디스크 360GB | 완료조건 누계 725 | 이상 없음
+2026-08-25 01:01:38 [경고] main_lunarlander 24/180 진행중 ; main_mountaincar 14/180 진행중 | 디스크 360GB | 완료조건 누계 758 | ⑤ 학습 계열이 무행동으로 굳은 조건 10개 (λ가 크면 정상일 수 있음): temporl/lam0.35/seed0, lazy/lam0.05/seed0, lazy/lam0.1/seed0, temporl/lam0.2/seed0, temporl/lam0.1/seed0

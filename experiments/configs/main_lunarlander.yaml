@@ -18,11 +18,11 @@ n_eval_episodes_rules: 100     # 고정 규칙은 학습이 없어 스냅샷이 
 final_snapshots: [0.9, 0.95, 1.0]   # 예산의 90%·95%·100% 시점 정책을 각각 평가해 합친다
                                     # 이유: 정책이 평가 시점마다 두 상태를 오가는 경우가 있어
                                     # 한 시점만 재면 최종 점수가 동전 던지기가 된다 (실험일지 참조)
-ckpt_every: 100000
+ckpt_every: 50000   # 러너를 다시 띄울 때 잃는 학습량을 줄인다
 workers: 5
 
 agents: [dqn, temporl, lazy]
-lambdas: [0.0, 0.1, 0.3, 0.6, 1.0, 1.37]
+lambdas: [0.0, 0.1, 0.3, 0.6, 1.0, 1.37, 2.0, 3.0]
 seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 hyperparams:
@@ -37,6 +37,12 @@ rules:
   - {id: periodic_k4, type: PeriodicPolicy, base_action: 1, k: 4}
   - {id: periodic_k8, type: PeriodicPolicy, base_action: 1, k: 8}
   - {id: threshold,   type: LunarLanderThresholdPolicy}
+
+# 2026-08-25 격자 보강: 시드0~1 결과에서 λ=1.37(격자 상한)에서도 학습이 규칙을 이겼다
+# (예: DQN r' −66.1 vs 임계값 규칙 −132.9). λ*가 격자 밖에 있다는 뜻이므로 2.0·3.0을 추가했다.
+# λ>1.366 구간에서는 '가장 센 고정 규칙'이 임계값 규칙이 아니라 무행동(−132.2)으로 바뀐다.
+# 그래서 그림·표에는 지정대로 임계값 규칙을 기준선으로 유지하되, '그 λ에서 가장 센 규칙'의
+# 포락선도 함께 그린다.
 
 notes: |
   주기 규칙의 기저 행동 1(왼쪽 엔진)은 파일럿에서 고른 값이다 — λ=0에서 단일 행동 셋을 비교한

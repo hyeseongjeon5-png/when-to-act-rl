@@ -33,6 +33,7 @@ for f in ("Malgun Gothic", "NanumGothic", "AppleGothic", "DejaVu Sans"):
 plt.rcParams["axes.unicode_minus"] = False
 
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식",
+         "rule_best": "λ마다 가장 센 고정 규칙 (포락선)",
          "rule_pump": "고정 규칙: pump(임계값)", "rule_noop": "고정 규칙: 무행동",
          "rule_threshold": "고정 규칙: 임계값", "rule_periodic_k1": "고정 규칙: 매 스텝",
          "rule_periodic_k2": "고정 규칙: 2스텝 주기", "rule_periodic_k4": "고정 규칙: 4스텝 주기",
@@ -59,7 +60,12 @@ def lam_map(env_id: str, metric: str = "cost_return", ref_rule: str = "rule_pump
         ax.fill_between(g.lam, g[f"{metric}_ci_lo"], g[f"{metric}_ci_hi"], color=c, alpha=0.18, lw=0, zorder=2)
     for a in rules:
         g = agg[agg.agent == a].sort_values("lam")
-        style = dict(ls="--", lw=2.0, color="#111111") if a == ref_rule else dict(ls=":", lw=1.2, color="#888888")
+        if a == ref_rule:
+            style = dict(ls="--", lw=2.0, color="#111111")
+        elif a == "rule_best":
+            style = dict(ls="-.", lw=1.8, color="#7b3fb5")
+        else:
+            style = dict(ls=":", lw=1.2, color="#888888")
         ax.plot(g.lam, g[f"{metric}_iqm"], label=LABEL.get(a, a), zorder=1, **style)
         if a == ref_rule:
             ax.fill_between(g.lam, g[f"{metric}_ci_lo"], g[f"{metric}_ci_hi"],
