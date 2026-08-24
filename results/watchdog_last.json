@@ -1,0 +1,36 @@
+{
+ "time": "2026-08-24 23:01:36",
+ "ts": 1787580096.7881002,
+ "runs": [
+  {
+   "run": "pilot_mountaincar",
+   "done": 0,
+   "total": 27,
+   "running": 9,
+   "skipped": 0,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 1.9,
+   "advanced_since_last": false,
+   "eta_text": "측정 중",
+   "prev_done": 0
+  }
+ ],
+ "issues": [
+  "[pilot_mountaincar] ② 지난 점검 이후 완료 조건이 늘지 않음 (완료 0/27)"
+ ],
+ "level": "경고",
+ "logs": {
+  "scanned": 9,
+  "traceback_logs": [],
+  "nan_logs": []
+ },
+ "curves": {
+  "checked": 0,
+  "nan_results": [],
+  "floor_conditions": [],
+  "n_floor": 0
+ },
+ "disk_free_gb": 361.1,
+ "done_conditions_total": 0
+}

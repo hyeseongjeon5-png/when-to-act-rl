@@ -124,6 +124,7 @@ def main() -> None:
     queue = [k for k, v in state.items() if v["status"] != "완료"]
     active: dict[str, dict] = {}
     write_progress()
+    last_beat = time.time()
 
     while queue or active:
         while queue and len(active) < workers:
@@ -143,6 +144,9 @@ def main() -> None:
             write_progress()
 
         time.sleep(2.0)
+        if time.time() - last_beat > 30:  # 심장박동: 사건이 없어도 30초마다 갱신 (멈춤 감지용)
+            write_progress()
+            last_beat = time.time()
         for k in list(active):
             proc = active[k]["proc"]
             if proc.poll() is None:
