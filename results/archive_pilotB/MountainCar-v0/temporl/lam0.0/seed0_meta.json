@@ -1,0 +1,38 @@
+{
+  "done": true,
+  "fingerprint": "de0959197851",
+  "hyperparams": {
+    "hidden": [
+      50,
+      50
+    ],
+    "lr": 0.001,
+    "gamma": 0.99,
+    "buffer_size": 100000,
+    "batch_size": 64,
+    "learn_start": 1000,
+    "target_update": 500,
+    "eps_const": 0.2,
+    "double_dqn": true,
+    "max_skip": 10,
+    "skip_augment": true
+  },
+  "env_id": "MountainCar-v0",
+  "agent": "temporl",
+  "lam": 0.0,
+  "seed": 0,
+  "total_steps": 300000,
+  "elapsed_sec": 1790.4,
+  "config_name": "pilot_b_mountaincar",
+  "env_kwargs": {},
+  "final": {
+    "raw_return_iqm": -112.04,
+    "raw_return_mean": -108.99,
+    "cost_return_iqm": -112.04,
+    "cost_return_mean": -108.99,
+    "n_actions_mean": 104.49,
+    "steps_mean": 108.99,
+    "solved_rate": 1.0
+  },
+  "n_eval_episodes_final": 100
+}

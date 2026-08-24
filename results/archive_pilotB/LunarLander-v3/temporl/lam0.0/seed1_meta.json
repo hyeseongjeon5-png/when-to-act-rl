@@ -1,0 +1,38 @@
+{
+  "done": true,
+  "fingerprint": "93b34aca62cb",
+  "hyperparams": {
+    "hidden": [
+      50,
+      50
+    ],
+    "lr": 0.001,
+    "gamma": 0.99,
+    "buffer_size": 100000,
+    "batch_size": 64,
+    "learn_start": 1000,
+    "target_update": 500,
+    "eps_const": 0.2,
+    "double_dqn": true,
+    "max_skip": 10,
+    "skip_augment": true
+  },
+  "env_id": "LunarLander-v3",
+  "agent": "temporl",
+  "lam": 0.0,
+  "seed": 1,
+  "total_steps": 200000,
+  "elapsed_sec": 1252.0,
+  "config_name": "pilot_b_lunarlander",
+  "env_kwargs": {},
+  "final": {
+    "raw_return_iqm": 224.87074867869399,
+    "raw_return_mean": 198.3280631570534,
+    "cost_return_iqm": 224.87074867869399,
+    "cost_return_mean": 198.3280631570534,
+    "n_actions_mean": 266.44,
+    "steps_mean": 468.21,
+    "solved_rate": 0.79
+  },
+  "n_eval_episodes_final": 100
+}

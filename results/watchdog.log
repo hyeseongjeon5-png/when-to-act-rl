@@ -3,3 +3,4 @@
 2026-08-24 23:30:38 [경고] pilot_b_lunarlander 3/6 진행중 ; pilot_b_mountaincar 0/6 진행중 | 디스크 361GB | 완료조건 누계 723 | ⑤ 바닥 고정(성공률 0%·행동 0회) 조건 20개: rule_noop/lam0.66/seed9, rule_noop/lam0.66/seed8, rule_noop/lam0.66/seed7, rule_noop/lam0.66/seed6, rule_noop/lam0.66/seed5
 2026-08-24 23:31:32 [경고] pilot_b_lunarlander 3/6 진행중 ; pilot_b_mountaincar 0/6 진행중 | 디스크 361GB | 완료조건 누계 723 | [pilot_b_mountaincar] ② 지난 점검 이후 완료 조건이 늘지 않음 (완료 0/6)
 2026-08-24 23:31:49 [정상] pilot_b_lunarlander 3/6 진행중 ; pilot_b_mountaincar 0/6 진행중 | 디스크 361GB | 완료조건 누계 723 | 이상 없음
+2026-08-24 23:47:59 [경고] main_lunarlander 6/180 진행중 ; main_mountaincar 6/180 진행중 ; pilot_b_lunarlander 6/6 종료됨 ; pilot_b_mountaincar 6/6 종료됨 | 디스크 361GB | 완료조건 누계 733 | ⑤ 학습 계열이 무행동으로 굳은 조건 1개 (λ가 크면 정상일 수 있음): temporl/lam0.0/seed1

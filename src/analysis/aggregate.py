@@ -68,6 +68,7 @@ def load_conditions(env_id: str) -> pd.DataFrame:
         df = pd.read_csv(csv_p)
         rows.append({
             "env_id": m["env_id"], "agent": m["agent"], "lam": float(m["lam"]), "seed": int(m["seed"]),
+            "fingerprint": m.get("fingerprint", "규칙(지문없음)"),
             "cost_return": float(df["cost_return"].mean()),
             "raw_return": float(df["raw_return"].mean()),
             "n_actions": float(df["n_actions"].mean()),
@@ -79,6 +80,25 @@ def load_conditions(env_id: str) -> pd.DataFrame:
             "source_csv": str(csv_p.relative_to(ROOT)).replace("\\", "/"),
         })
     return pd.DataFrame(rows)
+
+
+def check_mixed_settings(cond: pd.DataFrame) -> list[str]:
+    """같은 (계열, λ) 안에 서로 다른 설정으로 만든 결과가 섞여 있는지 본다.
+
+    왜 필요한가: 프로토콜이나 하이퍼파라미터를 바꾸고 다시 돌리면 예전 결과 파일이 남아 있을 수 있다.
+    그것이 새 결과와 한 표에 섞이면 아무도 눈치채지 못한 채 틀린 신뢰구간이 나온다.
+    설정 지문이 두 종류 이상이면 여기서 잡아 크게 경고한다 (CLAUDE.md 절대 규칙 3·4).
+    """
+    warns = []
+    for (agent, lam), g in cond.groupby(["agent", "lam"]):
+        fps = sorted(set(g["fingerprint"].astype(str)))
+        if len(fps) > 1:
+            warns.append(f"[설정 혼입] {agent} λ={lam}: 서로 다른 설정 지문 {len(fps)}종이 섞여 있다 {fps} "
+                         f"— 예전 결과 파일을 지우거나 옮긴 뒤 다시 집계할 것")
+        steps = sorted(set(int(x) for x in g["total_steps"]))
+        if len(steps) > 1:
+            warns.append(f"[예산 혼입] {agent} λ={lam}: 학습 스텝 예산이 {steps}로 다르다 — 공정 비교 위반")
+    return warns
 
 
 def iqm_ci(scores: np.ndarray, reps: int = 5000, seed: int = 0) -> tuple[float, float, float]:
@@ -104,6 +124,8 @@ def aggregate(env_id: str, reps: int = 5000) -> tuple[pd.DataFrame, pd.DataFrame
     cond = load_conditions(env_id)
     if cond.empty:
         return cond, cond
+    for w in check_mixed_settings(cond):
+        print("  ⚠ " + w)
     out = []
     for (agent, lam), g in cond.groupby(["agent", "lam"]):
         rec = {"env_id": env_id, "agent": agent, "lam": lam, "n_seeds": len(g),

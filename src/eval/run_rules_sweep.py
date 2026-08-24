@@ -53,7 +53,8 @@ def main() -> None:
     cfg = yaml.safe_load(Path(a.config).read_text(encoding="utf-8"))
     env_id = cfg["env_id"]
     seeds = cfg["seeds"]
-    n_final = int(cfg.get("n_eval_episodes_final", 100))
+    # 고정 규칙은 학습이 없어 스냅샷 개념이 없다. 학습 계열의 평가 수와 따로 둔다.
+    n_final = int(cfg.get("n_eval_episodes_rules", 100))
     env_kwargs = dict(cfg.get("env_kwargs", {}))
 
     for lam in cfg["lambdas"]:

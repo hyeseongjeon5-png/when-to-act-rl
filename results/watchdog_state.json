@@ -1,1 +1,1 @@
-{"ts": 1787581909.4958186, "min_gap_min": 40, "runs": {"pilot_b_lunarlander": {"done": 3}, "pilot_b_mountaincar": {"done": 0}}}
+{"ts": 1787582879.4037297, "min_gap_min": 40, "runs": {"main_lunarlander": {"done": 6}, "main_mountaincar": {"done": 6}, "pilot_b_lunarlander": {"done": 6}, "pilot_b_mountaincar": {"done": 6}}}
