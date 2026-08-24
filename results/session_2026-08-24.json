@@ -1,0 +1,59 @@
+{
+  "title": "1주차 1일 — 환경 세팅 · 비용 래퍼 점검 · 고정 규칙 스모크 테스트",
+  "date": "2026-08-24 (KST)",
+  "out": "2026-08-24_1주차-세팅.html",
+  "summary_json": "results/summary_smoke_fixed_rules_mountaincar.json",
+  "install_log": "results/logs/install_2026-08-24.log",
+  "footer": "when-to-act-rl · 전혜성 · 동아대학교 졸업논문 · 실험 조건: MountainCar-v0, λ=0, 에피소드 30개(환경 시드 0~29), 학습 없음",
+
+  "lead": "<b>배관은 다 통했다.</b> 설치·비용 래퍼·고정 규칙까지 오늘 목표는 전부 됐고, 걱정했던 LunarLander도 설치에 성공했다(단 v2는 폐기돼 <b>v3</b>로 쓴다). 스모크 테스트 결론은 <b>MountainCar에서 임계값 규칙(pump)만 100% 성공</b>이고 나머지 규칙은 전부 실패다. 즉 <b>앞으로 학습 에이전트가 넘어야 할 상대는 이 임계값 규칙</b>이며, 이 규칙은 거의 매 스텝 행동하므로 <b>λ를 올리면 급격히 불리해진다</b> — 이 연구가 노리는 자리가 바로 거기다.",
+
+  "todo": [
+    ["1. swig + requirements 설치", "<span class='ok'>완료</span>", "프로젝트 전용 .venv (전역 파이썬 안 건드림)"],
+    ["2. cost_wrapper / fixed_rules 동작 확인", "<span class='ok'>완료</span>", "λ=0 자가 점검 포함 (아래 3절)"],
+    ["3. 깃허브 저장소·마일스톤·이슈", "<span class='ok'>완료</span>", "공개 저장소 + 마일스톤 3개 + 이슈 5개"],
+    ["4. MountainCar 고정 규칙 스모크 테스트", "<span class='ok'>완료</span>", "6조건 × 30에피소드, 총 0.3초"],
+    ["5. 커밋·푸시 + HTML 보고서", "<span class='ok'>완료</span>", "커밋 5개, 이 보고서"]
+  ],
+
+  "setup": [
+    ["Python", "<span class='ok'>3.11.9</span>", "프로젝트 전용 .venv"],
+    ["torch", "<span class='warn'>2.13.0+cpu</span>", "CUDA 없음 → 본실험 시간 어림은 CPU 기준으로"],
+    ["gymnasium", "<span class='ok'>1.3.0</span>", ""],
+    ["MountainCar-v0", "<span class='ok'>정상</span>", "행동 3개, 관측 2개, 최대 200스텝"],
+    ["LunarLander-v2", "<span class='bad'>사용 불가</span>", "gymnasium 1.3.0에서 폐기(DeprecatedEnv)"],
+    ["LunarLander-v3", "<span class='ok'>정상</span>", "행동 4개, 관측 8개, 최대 1000스텝 — <b>v2 대신 이걸 쓴다</b>"],
+    ["Box2D (LunarLander 물리엔진)", "<span class='ok'>설치 성공</span>", "swig 선설치 후 Box2D 2.3.10 휠. Windows 최대 위험 요소였는데 통과"],
+    ["MinAtar breakout", "<span class='ok'>정상</span>", "행동 6개, 관측 10×10×4"],
+    ["rliable / matplotlib / pandas", "<span class='ok'>설치됨</span>", "IQM·신뢰구간 집계용"]
+  ],
+
+  "selfcheck": [
+    ["λ=0에서 에피소드 전체 점수가 원래 게임과 같은가", "<span class='ok'>통과</span> — 원본 −200.0 == 래퍼 −200.0"],
+    ["λ=0.05에서 <code>r' = r − λ×행동횟수</code>가 정확히 성립하는가", "<span class='ok'>통과</span> — −206.7000 == −200.0 − 0.05×134회"],
+    ["무행동(no-op)에는 비용이 안 붙는가", "<span class='ok'>통과</span> — no-op 0.0 / 행동 1.0 (λ=1 기준)"],
+    ["고정 규칙 3종이 의도대로 움직이는가", "<span class='ok'>통과</span> — 무행동 전부 1 / 주기 k=4는 4스텝마다 / 임계값은 속도 부호 추종"]
+  ],
+
+  "smoke_intro": "MountainCar는 <b>골짜기에 빠진 자동차를 흔들어서 언덕 위 깃발까지 올리는 게임</b>이다. 엔진이 약해서 그냥 밟으면 못 올라가고, 그네처럼 좌우로 반동을 키워야 한다. 200스텝 안에 못 올라가면 −200점으로 끝난다. 학습 없이 규칙만으로 6가지를 각각 30판씩 돌린 결과다.",
+
+  "smoke_read": "<div class='note'><b>읽는 법</b><ul><li><b>임계값 규칙(pump)만 30판 전부 성공</b>했다. '속도가 오른쪽이면 오른쪽으로 밀고, 왼쪽이면 왼쪽으로 민다'는 한 줄짜리 그네 규칙이다. 평균 120.5스텝에 깃발에 닿았다.</li><li>나머지 5종은 <b>30판 전부 실패</b>(−200, 시간초과). 무행동은 당연하고, '오른쪽으로만 미는' 주기 규칙은 k를 1·2·4·8 어떻게 바꿔도 반동을 못 만든다.</li><li>주의: 주기 규칙의 기저 행동을 '오른쪽(2)'으로 임시 고정했다. 설계 문서대로 <b>λ=0에서 가장 좋은 단일 행동을 파일럿에서 고르는 절차는 아직 안 했다</b>. 다만 MountainCar에서는 어느 한 방향으로만 밀어서는 원리상 못 푸는 것이 알려져 있다.</li><li><b>이 결과가 연구에 주는 뜻</b>: 학습 에이전트가 이겨야 할 상대는 −200짜리 약한 규칙이 아니라 <b>−120.5짜리 임계값 규칙</b>이다. 기준선을 세게 잡아야 결론이 의미를 갖는다.</li></ul></div>",
+
+  "lambda_read": "<div class='note'><b>읽는 법</b><ul><li>임계값 규칙은 <b>거의 매 스텝 행동한다</b>(120.5스텝 중 119.7회). 그래서 λ가 커질수록 손해가 빠르게 쌓인다 — 그래프에서 가장 가파르게 떨어지는 선이다.</li><li>무행동은 아무 비용도 안 내므로 λ가 아무리 커져도 −200에 머문다 — 평평한 선이다.</li><li>두 선이 만나는 지점, 즉 <b>임계값 규칙이 무행동에게 따라잡히는 비용은 λ ≈ {cross}</b>이다. 이 값은 추정이 아니라 기록된 에피소드를 다시 계산해서 얻은 정확한 값이다(고정 규칙은 λ에 따라 행동을 바꾸지 않으므로).</li><li><b>λ 격자를 정하는 데 바로 쓰인다</b>: 설계 문서(docs/02 §3)는 'λ=0이면 표준과 같고, 최대 λ면 무행동이 최적'이 되도록 양 끝을 맞추라고 했다. MountainCar에서 <b>위쪽 끝은 λ≈{cross} 부근</b>이면 된다는 뜻이다. 초안 격자의 최대값 1.0은 이미 무행동이 이기는 구간이라 <b>정보가 없는 칸</b>일 수 있다.</li><li><b>단, 이건 고정 규칙 이야기다.</b> 학습 에이전트는 λ가 커지면 '행동을 아끼는 쪽'으로 정책 자체를 바꿀 수 있어서 이 선을 그대로 따라가지 않는다. 바로 그 차이를 재는 것이 이 연구다.</li></ul></div>",
+
+  "github": "<p>공개 저장소: <b><a href='https://github.com/hyeseongjeon5-png/when-to-act-rl'>github.com/hyeseongjeon5-png/when-to-act-rl</a></b> · 토픽: reinforcement-learning, dqn, gymnasium, pytorch, thesis</p><table><tr><th>마일스톤</th><th>마감</th><th>상태</th></tr><tr><td>1주차 기준선</td><td>2026-08-31</td><td>이슈 5개 (1개 닫힘, 4개 열림)</td></tr><tr><td>2주차 선행연구 재현</td><td>2026-09-07</td><td>이슈 미등록</td></tr><tr><td>3주차 본실험 1차</td><td>2026-09-14</td><td>이슈 미등록</td></tr></table><table><tr><th>이슈</th><th>상태</th></tr><tr><td>#1 환경 세팅 — requirements 설치와 LunarLander 확인</td><td><span class='ok'>닫힘 (결과 코멘트 첨부)</span></td></tr><tr><td>#2 비용 래퍼 완성 + 자동 테스트</td><td>열림</td></tr><tr><td>#3 고정 규칙 3종 + MountainCar 성능 확인</td><td>열림 <span class='muted'>(오늘 결과 코멘트 첨부, 남은 항목 3개)</span></td></tr><tr><td>#4 DQN 베이스라인 λ=0 수렴</td><td>열림</td></tr><tr><td>#5 파일럿 — λ×시드 배관 점검, 소요시간 측정</td><td>열림</td></tr></table><div class='note'><b>기록해 둘 것</b><ul><li>gh CLI를 winget으로 설치하려 했으나 15분 넘게 응답이 없어, <b>이식형 zip을 <code>.tools/</code>에 풀어</b> 사용했다. <code>.tools/</code>는 커밋에서 제외했다.</li><li><code>gh auth login --web</code>은 브라우저 열기 전 Enter 입력을 기다려서 비대화형 실행에서 멈춘다. <code>printf '\\n' |</code> 로 흘려 넣으면 기기 코드가 출력되고 승인만 받으면 된다.</li><li>커밋 5개: 초기 구조 / 래퍼·규칙·러너 / 스모크 결과 / .tools 제외 / 보고서·README.</li></ul></div>",
+
+  "next": [
+    "<b>비용 래퍼 자동 테스트 파일 작성</b> — 오늘 점검은 손으로 돌린 것이라 회귀 검사가 안 된다 (1주차 이슈)",
+    "<b>주기 규칙의 기저 행동 확정</b> — λ=0에서 단일 행동 3종(0/1/2)을 실제로 비교해서 고르기 (docs/02 §2)",
+    "<b>DQN 베이스라인</b> — λ=0 MountainCar에서 수렴시키기. torch가 CPU 빌드이므로 1조건 소요시간을 먼저 재야 한다",
+    "<b>임계값 규칙의 행동 절약형 변형</b> — <code>act_threshold&gt;0</code>(속도가 충분히 붙으면 관성에 맡김)은 λ가 클 때 강해질 수 있어 기준선을 더 세게 만든다"
+  ],
+
+  "unknown": [
+    "<b>1조건당 학습 시간</b> — CPU 전용이라 본실험 총시간(로드맵 어림 60시간/환경)이 얼마나 늘어날지 모른다. 파일럿에서 재야 한다",
+    "<b>LunarLander의 임계값 규칙 정의</b> — 각도·속도 임계값을 아직 안 정했다 (docs/02 §2, 파일럿 항목)",
+    "<b>MinAtar의 no-op 행동 번호</b> — 게임별로 확인해야 한다. 현재 <code>NOOP_BY_ENV</code>에 등록돼 있지 않아 비용 래퍼가 거부한다",
+    "<b>비용 부과 시점</b> — TempoRL처럼 행동을 k스텝 유지할 때 '결정 시점 1회'로 할지 '유지되는 매 스텝'으로 할지. 기본은 결정 시점 1회이나 민감도 비교가 남아 있다"
+  ]
+}

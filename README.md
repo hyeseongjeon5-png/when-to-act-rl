@@ -39,15 +39,29 @@
 ## 재현 방법
 
 ```bash
+pip install swig                 # Windows에서 box2d(LunarLander) 빌드에 먼저 필요
 pip install -r requirements.txt
-# 파일럿 (예정): python -m src.run --config experiments/configs/pilot_mountaincar.yaml
+
+# 고정 규칙 기준선 평가 (동작함)
+python -m src.eval.run_fixed_rules --config experiments/configs/smoke_fixed_rules_mountaincar.yaml
+python -m src.report.make_report --session results/session_2026-08-24.json
+
+# 학습 에이전트 파일럿 (예정): python -m src.run --config experiments/configs/pilot_mountaincar.yaml
 ```
+
+> **환경 버전 메모** — `LunarLander-v2`는 gymnasium 1.3.0에서 폐기되어 **v3**를 사용한다.
+> torch는 CPU 빌드로 설치되었다(CUDA 없음). 자세한 세팅 기록은 `docs/실험일지.md`.
 
 ## 진행 상황
 
 - [x] 계획서 제출 (2026-07-30)
 - [x] 저장소·실험 설계 초안 (2026-08-24)
-- [ ] 1주차 — DQN 베이스라인 + 비용 래퍼 + 고정 규칙, MountainCar 파일럿
+- [ ] 1주차 — DQN 베이스라인 + 비용 래퍼 + 고정 규칙, MountainCar 파일럿 *(진행 중)*
+  - [x] 환경 세팅 — MountainCar · LunarLander-v3 · MinAtar 모두 동작 확인 ([#1](../../issues/1))
+  - [x] 비용 래퍼 λ=0 동일성 점검 (자동 테스트는 남음, [#2](../../issues/2))
+  - [x] 고정 규칙 3종 + MountainCar λ=0 성능 확인 — **임계값 규칙만 100% 성공**(r IQM −120.5) ([#3](../../issues/3))
+  - [ ] DQN 베이스라인 λ=0 수렴 ([#4](../../issues/4))
+  - [ ] λ×시드 파일럿 + 1조건 소요시간 측정 ([#5](../../issues/5))
 - [ ] 2주차 — TempoRL 재현(automl/TempoRL 기준) + Lazy-MDP 구현, λ 격자 파일럿
 - [ ] 3주차 — 본실험 (λ 격자 × 시드 10+), IQM 분석, λ-성능 지도 v1
 - [ ] 본실험 확장 (MinAtar 포함) 및 통계 분석 마무리
