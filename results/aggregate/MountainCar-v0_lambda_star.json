@@ -1,5 +1,66 @@
 {
   "env_id": "MountainCar-v0",
   "rule": "rule_pump",
-  "results": []
+  "results": [
+    {
+      "learner": "dqn",
+      "rule": "rule_pump",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0,
+        0.05,
+        0.1,
+        0.2,
+        0.35,
+        0.66
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 2,
+          "learner_iqm": -154.36,
+          "rule_iqm": -119.33833333333332,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/6 λ",
+      "min_seeds": 2,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
+    },
+    {
+      "learner": "lazy",
+      "rule": "rule_pump",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": null,
+      "lams_in_grid": [
+        0.0,
+        0.05,
+        0.1,
+        0.2,
+        0.35,
+        0.66
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 1,
+          "learner_iqm": -119.21,
+          "rule_iqm": -119.33833333333332,
+          "wins_ci": false,
+          "wins_pt": true
+        }
+      ],
+      "coverage": "1/6 λ",
+      "min_seeds": 1,
+      "note": "아직 λ 1개만 비교됨(격자 6개 중, 최대 λ=0.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
+    }
+  ]
 }

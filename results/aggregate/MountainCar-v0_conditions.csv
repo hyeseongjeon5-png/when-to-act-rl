@@ -1,4 +1,7 @@
 ﻿env_id,agent,lam,seed,cost_return,raw_return,n_actions,solved,steps,n_eval_episodes,elapsed_sec,total_steps,source_csv
+MountainCar-v0,dqn,0.0,0,-157.01,-157.01,146.29,0.6,157.01,100,1002.2,300000,results/raw/MountainCar-v0/dqn/lam0.0/seed0_final.csv
+MountainCar-v0,dqn,0.0,1,-151.71,-151.71,148.55,0.75,151.71,100,1006.3,300000,results/raw/MountainCar-v0/dqn/lam0.0/seed1_final.csv
+MountainCar-v0,lazy,0.0,0,-119.21,-119.21,119.21,1.0,119.21,100,1001.9,300000,results/raw/MountainCar-v0/lazy/lam0.0/seed0_final.csv
 MountainCar-v0,rule_noop,0.0,0,-200.0,-200.0,0.0,0.0,200.0,100,0.43,0,results/raw/MountainCar-v0/rule_noop/lam0.0/seed0_final.csv
 MountainCar-v0,rule_noop,0.0,1,-200.0,-200.0,0.0,0.0,200.0,100,0.43,0,results/raw/MountainCar-v0/rule_noop/lam0.0/seed1_final.csv
 MountainCar-v0,rule_noop,0.0,2,-200.0,-200.0,0.0,0.0,200.0,100,0.48,0,results/raw/MountainCar-v0/rule_noop/lam0.0/seed2_final.csv

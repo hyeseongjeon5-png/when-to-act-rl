@@ -1,6 +1,8 @@
 ﻿env_id,agent,lam,seed,cost_return,raw_return,n_actions,solved,steps,n_eval_episodes,elapsed_sec,total_steps,source_csv
 LunarLander-v3,dqn,0.0,0,268.51945745701573,268.51945745701573,203.97,1.0,269.3,100,746.3,200000,results/raw/LunarLander-v3/dqn/lam0.0/seed0_final.csv
+LunarLander-v3,dqn,0.0,1,141.89565864838087,141.89565864838087,530.24,0.34,826.12,100,769.9,200000,results/raw/LunarLander-v3/dqn/lam0.0/seed1_final.csv
 LunarLander-v3,lazy,0.0,0,223.51490273284773,223.51490273284773,157.95,0.97,255.9,100,751.1,200000,results/raw/LunarLander-v3/lazy/lam0.0/seed0_final.csv
+LunarLander-v3,lazy,0.0,1,261.68383336246427,261.68383336246427,158.57,0.99,257.82,100,564.4,200000,results/raw/LunarLander-v3/lazy/lam0.0/seed1_final.csv
 LunarLander-v3,rule_noop,0.0,0,-130.6083365462689,-130.6083365462689,0.0,1.0,72.16,100,0.42,0,results/raw/LunarLander-v3/rule_noop/lam0.0/seed0_final.csv
 LunarLander-v3,rule_noop,0.0,1,-123.88320478804691,-123.88320478804691,0.0,1.0,70.14,100,0.39,0,results/raw/LunarLander-v3/rule_noop/lam0.0/seed1_final.csv
 LunarLander-v3,rule_noop,0.0,2,-133.45451036251632,-133.45451036251632,0.0,1.0,71.86,100,0.45,0,results/raw/LunarLander-v3/rule_noop/lam0.0/seed2_final.csv
@@ -361,3 +363,5 @@ LunarLander-v3,rule_threshold,1.37,6,-132.2139484324162,33.92595156758407,121.27
 LunarLander-v3,rule_threshold,1.37,7,-129.91215988345922,35.88524011654105,121.02,1.0,191.46,100,1.95,0,results/raw/LunarLander-v3/rule_threshold/lam1.37/seed7_final.csv
 LunarLander-v3,rule_threshold,1.37,8,-131.9017453632306,34.34775463676966,121.35,1.0,191.05,100,1.94,0,results/raw/LunarLander-v3/rule_threshold/lam1.37/seed8_final.csv
 LunarLander-v3,rule_threshold,1.37,9,-131.46768404735798,34.64481595264229,121.25,1.0,193.42,100,2.07,0,results/raw/LunarLander-v3/rule_threshold/lam1.37/seed9_final.csv
+LunarLander-v3,temporl,0.0,0,252.05625590199364,252.05625590199364,249.64,0.91,321.38,100,1258.6,200000,results/raw/LunarLander-v3/temporl/lam0.0/seed0_final.csv
+LunarLander-v3,temporl,0.0,1,198.3280631570534,198.3280631570534,266.44,0.79,468.21,100,1252.0,200000,results/raw/LunarLander-v3/temporl/lam0.0/seed1_final.csv

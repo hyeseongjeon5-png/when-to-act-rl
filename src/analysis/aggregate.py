@@ -25,6 +25,29 @@ OUT = ROOT / "results" / "aggregate"
 
 METRICS = ["cost_return", "raw_return", "n_actions", "solved"]
 
+# 환경별 '기준이 되는 최고 고정 규칙'. 학습이 이걸 언제까지 이기는지가 이 연구의 질문이므로,
+# 문제를 아예 못 푸는 약한 규칙(무행동·주기)이 아니라 그 환경에서 가장 센 규칙을 기준으로 둔다.
+REF_RULE = {
+    "MountainCar-v0": "rule_pump",
+    "LunarLander-v3": "rule_threshold",
+    "LunarLander-v2": "rule_threshold",
+}
+
+
+def pick_ref_rule(env_id: str, agents: set, override: str | None = None) -> str | None:
+    """기준 규칙 고르기. --rule로 지정하면 그것, 아니면 환경별 기본값,
+    그것도 없으면 이름이 rule_로 시작하는 것 중 아무거나(경고와 함께)."""
+    if override and override in agents:
+        return override
+    default = REF_RULE.get(env_id)
+    if default in agents:
+        return default
+    rules = sorted(a for a in agents if str(a).startswith("rule_"))
+    if rules:
+        print(f"  [주의] {env_id}의 기준 규칙 {default or override}를 찾지 못해 {rules[0]}를 대신 쓴다")
+        return rules[0]
+    return None
+
 
 def load_conditions(env_id: str) -> pd.DataFrame:
     """조건별 seed 점수표를 만든다. 한 줄 = (환경, 계열, λ, 시드) 1개."""
@@ -111,7 +134,9 @@ def critical_lambda(agg: pd.DataFrame, learner: str, rule: str = "rule_pump",
     if L.empty or R.empty:
         return {"learner": learner, "rule": rule, "lam_star_ci": None, "lam_star_pt": None,
                 "note": "비교할 데이터 없음"}
-    res = {"learner": learner, "rule": rule, "lam_star_ci": None, "lam_star_pt": None, "rows": []}
+    all_lams = sorted(agg.lam.unique())
+    res = {"learner": learner, "rule": rule, "lam_star_ci": None, "lam_star_pt": None,
+           "lams_in_grid": all_lams, "lams_compared": [], "rows": []}
     for _, r in L.iterrows():
         lam = r["lam"]
         if lam not in R.index:
@@ -119,18 +144,32 @@ def critical_lambda(agg: pd.DataFrame, learner: str, rule: str = "rule_pump",
         rr = R.loc[lam]
         wins_ci = r[f"{metric}_ci_lo"] > rr[f"{metric}_ci_hi"]     # 통계적으로 확실히 이김
         wins_pt = r[f"{metric}_iqm"] > rr[f"{metric}_iqm"]         # 점추정으로 이김
-        res["rows"].append({"lam": lam, "learner_iqm": r[f"{metric}_iqm"], "rule_iqm": rr[f"{metric}_iqm"],
+        res["lams_compared"].append(float(lam))
+        res["rows"].append({"lam": float(lam), "n_seeds": int(r["n_seeds"]),
+                            "learner_iqm": r[f"{metric}_iqm"], "rule_iqm": rr[f"{metric}_iqm"],
                             "wins_ci": bool(wins_ci), "wins_pt": bool(wins_pt)})
         if res["lam_star_ci"] is None and not wins_ci:
             res["lam_star_ci"] = float(lam)
         if res["lam_star_pt"] is None and not wins_pt:
             res["lam_star_pt"] = float(lam)
+    done = res["lams_compared"]
+    res["coverage"] = f"{len(done)}/{len(all_lams)} λ"
+    res["min_seeds"] = int(min((row["n_seeds"] for row in res["rows"]), default=0))
+    partial = len(done) < len(all_lams)
     if res["lam_star_pt"] == 0.0:
         res["note"] = "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     elif res["lam_star_pt"] is None:
-        res["note"] = "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
+        if partial:
+            # 아직 안 돌린 λ가 있는데 "전 구간에서 이겼다"고 말하면 거짓이 된다
+            res["note"] = (f"아직 λ {len(done)}개만 비교됨(격자 {len(all_lams)}개 중, "
+                           f"최대 λ={max(done) if done else '—'}). 이 범위에서는 규칙을 이김 — "
+                           f"λ*는 미확정, 실험 진행 중")
+        else:
+            res["note"] = "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
     else:
         res["note"] = "격자 안에서 교차 지점 발견"
+    if res["min_seeds"] < 10 and not partial:
+        res["note"] += f" (주의: 시드 {res['min_seeds']}개뿐 — 시드 10개 기준 결론이 아님)"
     return res
 
 
@@ -138,7 +177,8 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--env", default="all")
     ap.add_argument("--reps", type=int, default=5000)
-    ap.add_argument("--rule", default="rule_pump", help="비교 기준이 되는 최고 고정 규칙")
+    ap.add_argument("--rule", default=None,
+                    help="비교 기준이 되는 최고 고정 규칙 (기본: 환경별 자동 — MountainCar는 rule_pump, LunarLander는 rule_threshold)")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     envs = [p.name for p in RAW.iterdir() if p.is_dir()] if a.env == "all" else [a.env]
@@ -150,7 +190,7 @@ def main() -> None:
             continue
         cond.to_csv(OUT / f"{env_id}_conditions.csv", index=False, encoding="utf-8-sig")
         agg.to_csv(OUT / f"{env_id}_iqm.csv", index=False, encoding="utf-8-sig")
-        rule = a.rule if a.rule in set(agg.agent) else None
+        rule = pick_ref_rule(env_id, set(agg.agent), a.rule)
         stars = []
         if rule:
             for learner in sorted(set(agg.agent) - {x for x in agg.agent if str(x).startswith("rule_")}):

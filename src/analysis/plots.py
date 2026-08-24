@@ -38,6 +38,8 @@ LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방
          "rule_periodic_k2": "고정 규칙: 2스텝 주기", "rule_periodic_k4": "고정 규칙: 4스텝 주기",
          "rule_periodic_k8": "고정 규칙: 8스텝 주기"}
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
+REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
+            "LunarLander-v2": "rule_threshold"}
 
 
 def lam_map(env_id: str, metric: str = "cost_return", ref_rule: str = "rule_pump") -> Path | None:
@@ -155,14 +157,15 @@ def learning_curves(env_id: str, lams=None) -> list[Path]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--env", default="all")
-    ap.add_argument("--rule", default="rule_pump")
+    ap.add_argument("--rule", default=None, help="기준 규칙 (기본: 환경별 자동)")
     a = ap.parse_args()
     envs = ([p.name for p in (ROOT / "results" / "raw").iterdir() if p.is_dir()]
             if a.env == "all" else [a.env])
     for env_id in envs:
         print(f"[{env_id}] 그림 생성")
-        lam_map(env_id, "cost_return", a.rule)
-        lam_map(env_id, "raw_return", a.rule)
+        ref = a.rule or REF_RULE.get(env_id, "rule_pump")
+        lam_map(env_id, "cost_return", ref)
+        lam_map(env_id, "raw_return", ref)
         action_map(env_id)
         learning_curves(env_id)
 

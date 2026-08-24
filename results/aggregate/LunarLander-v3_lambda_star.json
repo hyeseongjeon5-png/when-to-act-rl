@@ -1,5 +1,96 @@
 {
   "env_id": "LunarLander-v3",
-  "rule": null,
-  "results": []
+  "rule": "rule_threshold",
+  "results": [
+    {
+      "learner": "dqn",
+      "rule": "rule_threshold",
+      "lam_star_ci": null,
+      "lam_star_pt": null,
+      "lams_in_grid": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.37
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 2,
+          "learner_iqm": 205.2075580526983,
+          "rule_iqm": 35.79395934101099,
+          "wins_ci": true,
+          "wins_pt": true
+        }
+      ],
+      "coverage": "1/6 λ",
+      "min_seeds": 2,
+      "note": "아직 λ 1개만 비교됨(격자 6개 중, 최대 λ=0.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
+    },
+    {
+      "learner": "lazy",
+      "rule": "rule_threshold",
+      "lam_star_ci": null,
+      "lam_star_pt": null,
+      "lams_in_grid": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.37
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 2,
+          "learner_iqm": 242.59936804765601,
+          "rule_iqm": 35.79395934101099,
+          "wins_ci": true,
+          "wins_pt": true
+        }
+      ],
+      "coverage": "1/6 λ",
+      "min_seeds": 2,
+      "note": "아직 λ 1개만 비교됨(격자 6개 중, 최대 λ=0.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
+    },
+    {
+      "learner": "temporl",
+      "rule": "rule_threshold",
+      "lam_star_ci": null,
+      "lam_star_pt": null,
+      "lams_in_grid": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.37
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 2,
+          "learner_iqm": 225.1921595295235,
+          "rule_iqm": 35.79395934101099,
+          "wins_ci": true,
+          "wins_pt": true
+        }
+      ],
+      "coverage": "1/6 λ",
+      "min_seeds": 2,
+      "note": "아직 λ 1개만 비교됨(격자 6개 중, 최대 λ=0.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
+    }
+  ]
 }
