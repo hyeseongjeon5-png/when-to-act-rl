@@ -1,77 +1,47 @@
 {
- "time": "2026-08-24 23:47:59",
- "ts": 1787582879.4037297,
+ "time": "2026-08-25 00:05:25",
+ "ts": 1787583925.0611262,
  "runs": [
   {
    "run": "main_lunarlander",
-   "done": 6,
+   "done": 5,
    "total": 180,
    "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.5,
+   "stale_min": 0.1,
    "advanced_since_last": null,
-   "eta_text": "약 8.6시간 남음",
-   "prev_done": null
+   "eta_text": "약 6.1시간 남음",
+   "prev_done": 5
   },
   {
    "run": "main_mountaincar",
-   "done": 6,
+   "done": 0,
    "total": 180,
    "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.4,
-   "advanced_since_last": null,
-   "eta_text": "약 11.9시간 남음",
-   "prev_done": null
-  },
-  {
-   "run": "pilot_b_lunarlander",
-   "done": 6,
-   "total": 6,
-   "running": 0,
-   "skipped": 0,
-   "pid_alive": false,
-   "finished": true,
-   "stale_min": 10.4,
-   "advanced_since_last": null,
-   "eta_text": "측정 중",
-   "prev_done": 3
-  },
-  {
-   "run": "pilot_b_mountaincar",
-   "done": 6,
-   "total": 6,
-   "running": 0,
-   "skipped": 0,
-   "pid_alive": false,
-   "finished": true,
-   "stale_min": 2.1,
+   "stale_min": 0.1,
    "advanced_since_last": null,
    "eta_text": "측정 중",
    "prev_done": 0
   }
  ],
- "issues": [
-  "⑤ 학습 계열이 무행동으로 굳은 조건 1개 (λ가 크면 정상일 수 있음): temporl/lam0.0/seed1"
- ],
- "level": "경고",
+ "issues": [],
+ "level": "정상",
  "logs": {
-  "scanned": 22,
+  "scanned": 27,
   "traceback_logs": [],
   "nan_logs": []
  },
  "curves": {
   "checked": 400,
   "nan_results": [],
-  "floor_conditions": [
-   "temporl/lam0.0/seed1"
-  ],
-  "n_floor": 1
+  "floor_conditions": [],
+  "n_floor": 0
  },
- "disk_free_gb": 360.7,
- "done_conditions_total": 733
+ "disk_free_gb": 360.5,
+ "done_conditions_total": 725
 }
