@@ -63,7 +63,7 @@ def check_logs(minutes: int = 90) -> dict:
 def check_curves(max_files: int = 400) -> dict:
     """끝난 조건들의 최종 결과를 훑어 이상 신호를 찾는다."""
     metas = sorted((RESULTS / "raw").rglob("seed*_meta.json"), key=lambda p: p.stat().st_mtime, reverse=True)[:max_files]
-    bad_nan, all_floor, n = [], [], 0
+    bad_nan, all_floor, expected_floor, n = [], [], 0, 0
     for m in metas:
         try:
             d = json.loads(m.read_text(encoding="utf-8"))
@@ -78,12 +78,19 @@ def check_curves(max_files: int = 400) -> dict:
         # 고정 규칙(rule_*)은 제외한다. 무행동 규칙은 '행동 0회·성공 0%'가 정상이므로
         # 여기 걸리면 오탐이 된다 (2026-08-24 첫 실행에서 실제로 20건 오탐이 났다).
         agent = str(d.get("agent", ""))
-        if (not agent.startswith("rule_")
-                and d.get("env_id") == "MountainCar-v0"
-                and f.get("solved_rate", 1) == 0 and f.get("n_actions_mean", 1) == 0):
-            all_floor.append(f"{agent}/lam{d.get('lam')}/seed{d.get('seed')}")
+        collapsed = (not agent.startswith("rule_")
+                     and f.get("solved_rate", 1) == 0 and f.get("n_actions_mean", 1) == 0)
+        if collapsed:
+            # λ>0에서 무행동으로 굳는 것은 이 연구가 관찰하려는 현상 자체다(2026-08-25 확인).
+            # 그걸 매번 경고하면 진짜 이상 신호가 파묻힌다. 세어만 두고 경고하지 않는다.
+            # λ=0은 다르다 — 비용 압력이 아예 없는데 무행동으로 굳는 것은 정상이 아니다.
+            if float(d.get("lam", 0)) > 0:
+                expected_floor += 1
+            else:
+                all_floor.append(f"{d.get('env_id')}/{agent}/lam0/seed{d.get('seed')}")
     return {"checked": n, "nan_results": bad_nan[:10],
-            "floor_conditions": all_floor[:20], "n_floor": len(all_floor)}
+            "floor_conditions": all_floor[:20], "n_floor": len(all_floor),
+            "n_expected_floor": expected_floor}
 
 
 def main() -> int:
@@ -157,11 +164,10 @@ def main() -> int:
         report["issues"].append(f"④ 디스크 여유 {free_gb:.1f}GB — 부족")
         report["level"] = "이상"
     if curves["n_floor"] > 0:
-        # 학습 계열이 '행동 0회 + 성공 0%'로 굳은 것은 무행동 정책으로 무너졌다는 뜻이다.
-        # 버그일 수도 있고 비용 λ 때문에 실제로 그렇게 수렴한 것일 수도 있어, 경고로만 남긴다.
+        # λ=0인데 무행동으로 굳었다 — 비용 압력이 없으므로 학습 불안정 또는 버그 신호다.
         report["issues"].append(
-            f"⑤ 학습 계열이 무행동으로 굳은 조건 {curves['n_floor']}개 "
-            f"(λ가 크면 정상일 수 있음): {', '.join(curves['floor_conditions'][:5])}")
+            f"⑤ λ=0인데 무행동으로 굳은 조건 {curves['n_floor']}개 (비용이 없는데 안 움직인다 — "
+            f"학습 불안정 의심): {', '.join(curves['floor_conditions'][:5])}")
         if report["level"] == "정상":
             report["level"] = "경고"
 
@@ -178,7 +184,7 @@ def main() -> int:
                           for r in report["runs"]) or "실행 중인 러너 없음"
     issues_txt = " | ".join(report["issues"]) if report["issues"] else "이상 없음"
     line = (f"{report['time']} [{report['level']}] {runs_txt} | 디스크 {free_gb:.0f}GB | "
-            f"완료조건 누계 {raw_files} | {issues_txt}")
+            f"완료조건 누계 {raw_files} | 비용에 의한 무행동 수렴 {curves['n_expected_floor']}건(정상) | {issues_txt}")
     with LOG.open("a", encoding="utf-8") as f:
         f.write(line + "\n")
     print(line)
