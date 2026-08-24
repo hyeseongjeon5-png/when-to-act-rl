@@ -1,0 +1,41 @@
+# 본실험 — MountainCar-v0
+#
+# λ 격자 근거 (지난 세션 + 이번 사전 측정):
+#   pump 규칙: r = −119.8, 행동 119.2회 → r' = −119.8 − 119.2λ
+#   무행동   : r' = −200 (행동 0회이므로 λ와 무관)
+#   두 선이 만나는 지점 λ = (200−119.8)/119.2 = 0.673
+#   → λ > 0.67이면 '아무것도 안 하기'가 최고 규칙을 이긴다. 그래서 격자를 0~0.66으로 잡고
+#     1.0까지 가지 않는다. 파일럿 A에서 DQN이 λ=0.2에서 이미 무너졌으므로 낮은 쪽을 촘촘히 둔다.
+name: main_mountaincar
+date: 2026-08-25
+env_id: MountainCar-v0
+env_kwargs: {}            # 시간제한 200스텝 (공개 코드 기본값과 동일)
+total_steps: 300000
+eval_every: 25000
+n_eval_episodes_curve: 10
+n_eval_episodes_final: 100
+ckpt_every: 100000
+workers: 5
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0, 0.05, 0.1, 0.2, 0.35, 0.66]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+hyperparams:
+  dqn:     {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: pump, eta: 0.0}
+
+rules:
+  - {id: noop,        type: NoOpPolicy}
+  - {id: periodic_k1, type: PeriodicPolicy, base_action: 2, k: 1}
+  - {id: periodic_k2, type: PeriodicPolicy, base_action: 2, k: 2}
+  - {id: periodic_k4, type: PeriodicPolicy, base_action: 2, k: 4}
+  - {id: periodic_k8, type: PeriodicPolicy, base_action: 2, k: 8}
+  - {id: pump,        type: MountainCarPumpPolicy, act_threshold: 0.0}
+
+notes: |
+  기준선은 pump 규칙(r IQM −120.5, 100% 목표 도달)이다. 무행동·주기 규칙은 전부 −200으로
+  문제를 못 풀기 때문에, 그것을 기준으로 "학습이 이겼다"고 말하면 너무 쉬운 승리가 된다.
+  주기 규칙의 기저 행동 2(오른쪽 가속)는 임의값 — MountainCar에서는 어떤 단일 행동도 목표에
+  닿지 못해 선택이 결과를 바꾸지 않는다(전부 −200).

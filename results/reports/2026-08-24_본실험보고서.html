@@ -1,0 +1,39 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>본실험 보고서 — 행동 비용 λ와 강화학습의 우위 조건</title><style>
+*{box-sizing:border-box} body{margin:0;padding:32px;font-family:'Malgun Gothic',system-ui,sans-serif;
+ background:#f6f7f9;color:#1b1f24;line-height:1.65}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:1.9rem;margin:0 0 6px} .sub{color:#5b636d;margin:0 0 28px}
+section{background:#fff;border:1px solid #e3e6ea;border-radius:12px;padding:22px 26px;margin-bottom:22px}
+h2{font-size:1.3rem;margin:0 0 14px;padding-bottom:8px;border-bottom:2px solid #eceff3}
+h3{font-size:1.02rem;margin:22px 0 10px;color:#333}
+table.grid{border-collapse:collapse;width:100%;font-size:.86rem;margin:6px 0}
+table.grid th,table.grid td{border:1px solid #e3e6ea;padding:7px 9px;text-align:left;vertical-align:top}
+table.grid thead th{background:#f0f2f5;font-weight:600;text-align:center}
+table.grid tbody th{background:#fafbfc;white-space:nowrap}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.na{text-align:center;color:#aab}
+td .ci{display:block;font-size:.74rem;color:#6b7280}
+td .act{display:block;font-size:.74rem;color:#8a93a0}
+td.win{background:#e8f6ec} td.lose{background:#fdecec}
+tr.refrule th{background:#fff8e1} tr.learner th{font-weight:700}
+img{max-width:100%;height:auto;display:block;margin:10px 0;border:1px solid #e8eaee;border-radius:8px}
+.cap{font-size:.82rem;color:#5b636d;margin:6px 0 0}
+.missing{color:#9aa0a6;font-style:italic}
+pre.log{background:#1e2228;color:#dfe3e8;padding:12px;border-radius:8px;overflow-x:auto;font-size:.76rem;line-height:1.5}
+.key{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
+.key div{background:#f0f2f5;border-radius:8px;padding:10px 14px;font-size:.86rem}
+.key b{display:block;font-size:1.25rem}
+</style></head><body><div class='wrap'><h1>λ-성능 지도와 임계 비용 λ*</h1><p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — 동아대학교 졸업과제 · 전혜성</p><div class="key"><div>완료 조건 수<b>720</b></div><div>환경<b>2</b></div><div>생성 시각<b>2026-08-24 23:27 KST</b></div></div><section><h2>이 보고서를 읽는 법</h2>
+<p><b>가로축 λ</b>는 행동 1번의 값이다. 오른쪽으로 갈수록 "버튼 한 번 누르는 값"이 비싸진다.
+λ=0이면 원래 문제와 같고, λ가 충분히 크면 아무것도 안 하는 것이 최적이 된다.</p>
+<p><b>세로축 r'</b>은 비용까지 빼고 남은 총보상이다. 높을수록 좋다.</p>
+<p><b>기준선</b>은 학습 없는 고정 규칙 중 가장 센 것이다 (MountainCar는 pump 규칙, r IQM −120.5).
+무행동(−200)처럼 문제를 아예 못 푸는 약한 규칙을 기준으로 삼으면 "학습이 이겼다"는 말이
+너무 쉬워지므로, 모든 그림과 표에서 pump 규칙을 기준으로 유지한다.</p>
+<p><b>임계 비용 λ*</b>는 학습이 이 기준 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ다.
+이 값이 이 연구의 최종 산출물이다 — "행동이 이만큼 비싸지면 학습을 도입할 이유가 없다"는 문턱.</p>
+</section><section><h2>실험 진행 상태</h2><table class="grid"><thead><tr><th>실험</th><th>완료 조건</th><th>건너뜀</th><th>남은 시간</th><th>상태</th></tr></thead><tbody><tr><th>pilot_b_lunarlander</th><td class="num">0/6 (0%)</td><td class="num">0</td><td>측정 중</td><td>진행 중</td></tr><tr><th>pilot_b_mountaincar</th><td class="num">0/6 (0%)</td><td class="num">0</td><td>측정 중</td><td>진행 중</td></tr></tbody></table><h3>자가 감시 기록 (최근 12줄)</h3><pre class='log'>2026-08-24 23:01:17 [정상] pilot_mountaincar 0/27 진행중 | 디스크 361GB | 완료조건 누계 0 | 이상 없음
+2026-08-24 23:01:36 [경고] pilot_mountaincar 0/27 진행중 | 디스크 361GB | 완료조건 누계 0 | [pilot_mountaincar] ② 지난 점검 이후 완료 조건이 늘지 않음 (완료 0/27)</pre></section><section><h2>LunarLander-v3</h2><p class="missing">집계 결과가 아직 없다.</p></section><section><h2>MountainCar-v0</h2><p class="missing">집계 결과가 아직 없다.</p></section><section><h2>출처</h2>
+<p class="cap">모든 수치는 <code>results/aggregate/*_iqm.csv</code>,
+<code>results/aggregate/*_lambda_star.json</code>, <code>results/raw/…/seed*_final.csv</code>에서 읽었다.
+설계 결정과 도중에 고친 버그는 <code>docs/실험일지.md</code>에 날짜와 함께 기록돼 있다.</p></section></div></body></html>

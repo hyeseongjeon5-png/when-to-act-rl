@@ -1,0 +1,233 @@
+"""본실험 종합 HTML 보고서 — λ-성능 지도 + 임계 비용 λ* 표 + 실험 상태.
+
+숫자는 전부 results/ 아래 결과 파일에서만 읽는다 (CLAUDE.md 절대 규칙 4).
+없는 것은 "아직 없음"이라고 쓰고 빈칸을 그럴듯한 말로 채우지 않는다.
+
+실행: python -m src.report.make_experiment_report --open
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import json
+import subprocess
+import time
+from pathlib import Path
+
+import pandas as pd
+
+ROOT = Path(__file__).resolve().parents[2]
+AGG = ROOT / "results" / "aggregate"
+FIG = ROOT / "results" / "figures"
+REP = ROOT / "results" / "reports"
+
+LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식"}
+REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold"}
+RULE_LABEL = {"rule_pump": "pump(임계값) 규칙", "rule_threshold": "임계값 규칙",
+              "rule_noop": "무행동", "rule_periodic_k1": "매 스텝 규칙",
+              "rule_periodic_k2": "2스텝 주기", "rule_periodic_k4": "4스텝 주기",
+              "rule_periodic_k8": "8스텝 주기"}
+
+
+def esc(s) -> str:
+    return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def img(path: Path) -> str:
+    if not path.exists():
+        return '<p class="missing">그림 없음: ' + esc(path.name) + "</p>"
+    b64 = base64.b64encode(path.read_bytes()).decode()
+    return '<img src="data:image/png;base64,' + b64 + '" alt="' + esc(path.name) + '">'
+
+
+def fmt(v, nd=1) -> str:
+    try:
+        return format(float(v), ",." + str(nd) + "f")
+    except Exception:
+        return "—"
+
+
+def env_section(env_id: str) -> str:
+    iqm_p = AGG / (env_id + "_iqm.csv")
+    if not iqm_p.exists():
+        return "<section><h2>" + esc(env_id) + '</h2><p class="missing">집계 결과가 아직 없다.</p></section>'
+    agg = pd.read_csv(iqm_p)
+    ref = REF_RULE.get(env_id, "rule_pump")
+    learners = [a for a in sorted(agg.agent.unique()) if not str(a).startswith("rule_")]
+    rules = [a for a in sorted(agg.agent.unique()) if str(a).startswith("rule_")]
+    lams = sorted(agg.lam.unique())
+
+    head = "".join("<th>λ=" + format(l, "g") + "</th>" for l in lams)
+    body = ""
+    for a in learners + rules:
+        g = agg[agg.agent == a].set_index("lam")
+        cells = ""
+        for l in lams:
+            if l not in g.index:
+                cells += '<td class="na">—</td>'
+                continue
+            r = g.loc[l]
+            better = ""
+            if a in learners and ref in set(agg.agent):
+                rr = agg[(agg.agent == ref) & (agg.lam == l)]
+                if len(rr):
+                    rr = rr.iloc[0]
+                    if r["cost_return_ci_lo"] > rr["cost_return_ci_hi"]:
+                        better = " win"
+                    elif r["cost_return_ci_hi"] < rr["cost_return_ci_lo"]:
+                        better = " lose"
+            cells += ('<td class="num' + better + '">' + fmt(r["cost_return_iqm"])
+                      + '<span class="ci">[' + fmt(r["cost_return_ci_lo"]) + ", "
+                      + fmt(r["cost_return_ci_hi"]) + ']</span>'
+                      + '<span class="act">행동 ' + fmt(r["n_actions_iqm"]) + '회</span></td>')
+        name = LABEL.get(a, RULE_LABEL.get(a, a))
+        cls = "learner" if a in learners else ("refrule" if a == ref else "rule")
+        body += '<tr class="' + cls + '"><th>' + esc(name) + "</th>" + cells + "</tr>"
+    n_seeds = int(agg.n_seeds.max())
+    table = ('<table class="grid"><thead><tr><th>계열 / 규칙</th>' + head + "</tr></thead><tbody>"
+             + body + "</tbody></table>"
+             + '<p class="cap">칸의 값 = 비용 반영 총보상 r\'의 IQM, 대괄호는 95% 신뢰구간, '
+             + "그 아래는 에피소드당 행동 횟수. 초록칸 = 기준 규칙("
+             + esc(RULE_LABEL.get(ref, ref)) + ")을 통계적으로 이긴 조건, "
+             + "빨강칸 = 통계적으로 진 조건, 무색 = 신뢰구간이 겹쳐 우열을 말할 수 없음. "
+             + "시드 최대 " + str(n_seeds) + "개.</p>")
+
+    star_p = AGG / (env_id + "_lambda_star.json")
+    star_html = '<p class="missing">λ* 계산 결과가 아직 없다.</p>'
+    if star_p.exists():
+        st = json.loads(star_p.read_text(encoding="utf-8"))
+        rows = ""
+        for s in st.get("results", []):
+            ci = s["lam_star_ci"] if s["lam_star_ci"] is not None else "격자 안에 없음"
+            pt = s["lam_star_pt"] if s["lam_star_pt"] is not None else "격자 안에 없음"
+            rows += ("<tr><th>" + esc(LABEL.get(s["learner"], s["learner"])) + "</th>"
+                     + '<td class="num">' + esc(ci) + "</td>"
+                     + '<td class="num">' + esc(pt) + "</td>"
+                     + "<td>" + esc(s.get("note", "")) + "</td></tr>")
+        star_html = ('<table class="grid"><thead><tr><th>학습 계열</th>'
+                     + "<th>λ*<sub>CI</sub> (엄격)</th><th>λ*<sub>점추정</sub> (느슨)</th><th>해석</th>"
+                     + "</tr></thead><tbody>" + rows + "</tbody></table>"
+                     + '<p class="cap">λ* = ' + esc(RULE_LABEL.get(ref, ref))
+                     + "을 더 이상 이기지 못하게 되는 가장 작은 행동 비용. "
+                     + "λ*<sub>CI</sub>는 '통계적으로 확실한 우위'가 사라지는 지점(신뢰구간 기준), "
+                     + "λ*<sub>점추정</sub>은 두 곡선이 교차하는 지점. "
+                     + "격자 안에서 교차가 없으면 그렇게 적는다.</p>")
+
+    figs = "".join(img(FIG / (env_id + "_" + n + ".png")) for n in
+                   ["lambda_map_cost_return", "action_map", "learning_curves"])
+    return ("<section><h2>" + esc(env_id) + "</h2>"
+            + "<h3>λ-성능 지도</h3>" + figs
+            + "<h3>조건별 성능표</h3>" + table
+            + "<h3>임계 비용 λ*</h3>" + star_html + "</section>")
+
+
+def status_section() -> str:
+    rows = ""
+    for pf in sorted((ROOT / "results").glob("progress_*.json")):
+        try:
+            p = json.loads(pf.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        pct = 100.0 * p["done"] / max(1, p["total"])
+        rows += ("<tr><th>" + esc(p["run_name"]) + '</th><td class="num">'
+                 + str(p["done"]) + "/" + str(p["total"]) + " (" + format(pct, ".0f") + "%)</td>"
+                 + '<td class="num">' + str(p.get("skipped", 0)) + "</td>"
+                 + "<td>" + esc(p.get("eta_text", "—")) + "</td>"
+                 + "<td>" + ("끝남" if p.get("finished") else "진행 중") + "</td></tr>")
+    wd = ROOT / "results" / "watchdog.log"
+    log = ""
+    if wd.exists():
+        lines = wd.read_text(encoding="utf-8").strip().splitlines()[-12:]
+        log = "<pre class='log'>" + esc("\n".join(lines)) + "</pre>"
+    if not rows:
+        rows = '<tr><td colspan="5" class="missing">실행 기록 없음</td></tr>'
+    return ("<section><h2>실험 진행 상태</h2>"
+            + '<table class="grid"><thead><tr><th>실험</th><th>완료 조건</th><th>건너뜀</th>'
+            + "<th>남은 시간</th><th>상태</th></tr></thead><tbody>" + rows + "</tbody></table>"
+            + "<h3>자가 감시 기록 (최근 12줄)</h3>"
+            + (log or '<p class="missing">아직 기록 없음</p>') + "</section>")
+
+
+CSS = """
+*{box-sizing:border-box} body{margin:0;padding:32px;font-family:'Malgun Gothic',system-ui,sans-serif;
+ background:#f6f7f9;color:#1b1f24;line-height:1.65}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:1.9rem;margin:0 0 6px} .sub{color:#5b636d;margin:0 0 28px}
+section{background:#fff;border:1px solid #e3e6ea;border-radius:12px;padding:22px 26px;margin-bottom:22px}
+h2{font-size:1.3rem;margin:0 0 14px;padding-bottom:8px;border-bottom:2px solid #eceff3}
+h3{font-size:1.02rem;margin:22px 0 10px;color:#333}
+table.grid{border-collapse:collapse;width:100%;font-size:.86rem;margin:6px 0}
+table.grid th,table.grid td{border:1px solid #e3e6ea;padding:7px 9px;text-align:left;vertical-align:top}
+table.grid thead th{background:#f0f2f5;font-weight:600;text-align:center}
+table.grid tbody th{background:#fafbfc;white-space:nowrap}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.na{text-align:center;color:#aab}
+td .ci{display:block;font-size:.74rem;color:#6b7280}
+td .act{display:block;font-size:.74rem;color:#8a93a0}
+td.win{background:#e8f6ec} td.lose{background:#fdecec}
+tr.refrule th{background:#fff8e1} tr.learner th{font-weight:700}
+img{max-width:100%;height:auto;display:block;margin:10px 0;border:1px solid #e8eaee;border-radius:8px}
+.cap{font-size:.82rem;color:#5b636d;margin:6px 0 0}
+.missing{color:#9aa0a6;font-style:italic}
+pre.log{background:#1e2228;color:#dfe3e8;padding:12px;border-radius:8px;overflow-x:auto;font-size:.76rem;line-height:1.5}
+.key{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
+.key div{background:#f0f2f5;border-radius:8px;padding:10px 14px;font-size:.86rem}
+.key b{display:block;font-size:1.25rem}
+"""
+
+INTRO = """<section><h2>이 보고서를 읽는 법</h2>
+<p><b>가로축 λ</b>는 행동 1번의 값이다. 오른쪽으로 갈수록 "버튼 한 번 누르는 값"이 비싸진다.
+λ=0이면 원래 문제와 같고, λ가 충분히 크면 아무것도 안 하는 것이 최적이 된다.</p>
+<p><b>세로축 r'</b>은 비용까지 빼고 남은 총보상이다. 높을수록 좋다.</p>
+<p><b>기준선</b>은 학습 없는 고정 규칙 중 가장 센 것이다 (MountainCar는 pump 규칙, r IQM −120.5).
+무행동(−200)처럼 문제를 아예 못 푸는 약한 규칙을 기준으로 삼으면 "학습이 이겼다"는 말이
+너무 쉬워지므로, 모든 그림과 표에서 pump 규칙을 기준으로 유지한다.</p>
+<p><b>임계 비용 λ*</b>는 학습이 이 기준 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ다.
+이 값이 이 연구의 최종 산출물이다 — "행동이 이만큼 비싸지면 학습을 도입할 이유가 없다"는 문턱.</p>
+</section>"""
+
+SOURCE = """<section><h2>출처</h2>
+<p class="cap">모든 수치는 <code>results/aggregate/*_iqm.csv</code>,
+<code>results/aggregate/*_lambda_star.json</code>, <code>results/raw/…/seed*_final.csv</code>에서 읽었다.
+설계 결정과 도중에 고친 버그는 <code>docs/실험일지.md</code>에 날짜와 함께 기록돼 있다.</p></section>"""
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--open", action="store_true", help="Microsoft Edge로 자동 열기")
+    ap.add_argument("--out", default=None)
+    a = ap.parse_args()
+
+    envs = sorted({p.name.replace("_iqm.csv", "") for p in AGG.glob("*_iqm.csv")}) if AGG.exists() else []
+    if not envs:
+        envs = [p.name for p in (ROOT / "results" / "raw").iterdir() if p.is_dir()]
+
+    n_done = sum(1 for _ in (ROOT / "results" / "raw").rglob("seed*_meta.json"))
+    key = ('<div class="key"><div>완료 조건 수<b>' + str(n_done) + "</b></div>"
+           + "<div>환경<b>" + str(len(envs)) + "</b></div>"
+           + "<div>생성 시각<b>" + time.strftime("%Y-%m-%d %H:%M") + " KST</b></div></div>")
+
+    html = ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            + "<title>본실험 보고서 — 행동 비용 λ와 강화학습의 우위 조건</title>"
+            + "<style>" + CSS + "</style></head><body><div class='wrap'>"
+            + "<h1>λ-성능 지도와 임계 비용 λ*</h1>"
+            + '<p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — '
+            + "동아대학교 졸업과제 · 전혜성</p>"
+            + key + INTRO + status_section()
+            + "".join(env_section(e) for e in envs)
+            + SOURCE + "</div></body></html>")
+
+    REP.mkdir(parents=True, exist_ok=True)
+    out = Path(a.out) if a.out else REP / (time.strftime("%Y-%m-%d") + "_본실험보고서.html")
+    out.write_text(html, encoding="utf-8")
+    print("보고서 저장: " + str(out.relative_to(ROOT)))
+    if a.open:
+        try:
+            subprocess.run(["cmd", "/c", "start", "msedge", str(out.resolve())], check=False)
+            print("Microsoft Edge로 열었다")
+        except Exception as e:
+            print("Edge 열기 실패(" + str(e) + ") — 파일을 직접 열 것: " + str(out.resolve()))
+
+
+if __name__ == "__main__":
+    main()

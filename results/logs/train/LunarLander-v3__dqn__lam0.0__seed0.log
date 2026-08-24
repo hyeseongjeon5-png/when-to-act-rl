@@ -1,2 +1,13 @@
 
 ===== 시도 1 @ 2026-08-24 23:15:27 =====
+  LunarLander-v3/dqn/lam0.0/seed0   20000/200000 | r' IQM   -50.52 | 행동  395.4 | 성공  60.0%
+  LunarLander-v3/dqn/lam0.0/seed0   40000/200000 | r' IQM    -9.25 | 행동  716.4 | 성공  20.0%
+  LunarLander-v3/dqn/lam0.0/seed0   60000/200000 | r' IQM   218.21 | 행동  281.6 | 성공 100.0%
+  LunarLander-v3/dqn/lam0.0/seed0   80000/200000 | r' IQM   -16.95 | 행동  704.2 | 성공   0.0%
+  LunarLander-v3/dqn/lam0.0/seed0  100000/200000 | r' IQM   245.34 | 행동  403.6 | 성공  80.0%
+  LunarLander-v3/dqn/lam0.0/seed0  120000/200000 | r' IQM   -24.71 | 행동  469.8 | 성공  40.0%
+  LunarLander-v3/dqn/lam0.0/seed0  140000/200000 | r' IQM   250.75 | 행동  219.8 | 성공 100.0%
+  LunarLander-v3/dqn/lam0.0/seed0  160000/200000 | r' IQM   229.95 | 행동  318.4 | 성공 100.0%
+  LunarLander-v3/dqn/lam0.0/seed0  180000/200000 | r' IQM   251.81 | 행동  217.2 | 성공 100.0%
+  LunarLander-v3/dqn/lam0.0/seed0  200000/200000 | r' IQM   253.66 | 행동  195.6 | 성공 100.0%
+[완료] LunarLander-v3/dqn/lam0.0/seed0 | r' IQM 269.76 | 행동 204.0 | 성공 100.0% | 746초

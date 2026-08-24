@@ -29,13 +29,18 @@ if not Path(PY).exists():
 
 
 def expand(cfg: dict) -> list[dict]:
-    """config → 조건 목록. 조건 = 환경 × 계열 × λ × 시드"""
+    """config → 조건 목록. 조건 = 환경 × 계열 × λ × 시드
+
+    **순서가 중요하다.** 시드를 가장 바깥에 두어 (시드0의 전 계열×전 λ) → (시드1의 전 계열×전 λ) …
+    순으로 돈다. 이렇게 하면 실험을 중간에 멈춰도 **격자 전체가 채워진 상태**가 되어
+    시드 수만 적은 λ-성능 지도를 그릴 수 있다. 계열을 바깥에 두면 중간에 멈췄을 때
+    한 계열이 통째로 비어 아무 그림도 못 그린다 (마감이 있는 실험에서 치명적).
+    """
     out = []
     lam_by_agent = cfg.get("lambdas_by_agent", {})
-    for agent in cfg["agents"]:
-        lams = lam_by_agent.get(agent, cfg["lambdas"])
-        for lam in lams:
-            for seed in cfg["seeds"]:
+    for seed in cfg["seeds"]:
+        for agent in cfg["agents"]:
+            for lam in lam_by_agent.get(agent, cfg["lambdas"]):
                 out.append({"env_id": cfg["env_id"], "agent": agent, "lam": float(lam), "seed": int(seed)})
     return out
 

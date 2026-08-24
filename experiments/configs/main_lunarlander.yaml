@@ -1,0 +1,40 @@
+# 본실험 — LunarLander-v3 (v2는 gymnasium 1.3.0에서 폐기됨)
+#
+# λ 격자 근거 (이번 사전 측정):
+#   임계값 규칙: r = +32.7, 행동 120.7회 → r' = 32.7 − 120.7λ
+#   무행동     : r' = −132.2 (추락)
+#   두 선이 만나는 지점 λ = (32.7+132.2)/120.7 = 1.366
+#   → 격자를 0~1.37로 잡는다. MountainCar와 λ 눈금이 다른 것은 보상 스케일이 다르기 때문이며,
+#     설계 문서 §3의 "환경별 보상 스케일 보정"에 해당한다.
+name: main_lunarlander
+date: 2026-08-25
+env_id: LunarLander-v3
+env_kwargs: {}
+total_steps: 200000
+eval_every: 25000
+n_eval_episodes_curve: 5
+n_eval_episodes_final: 100
+ckpt_every: 100000
+workers: 5
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0, 0.1, 0.3, 0.6, 1.0, 1.37]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+hyperparams:
+  dqn:     {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: threshold, eta: 0.0}
+
+rules:
+  - {id: noop,        type: NoOpPolicy}
+  - {id: periodic_k1, type: PeriodicPolicy, base_action: 1, k: 1}
+  - {id: periodic_k2, type: PeriodicPolicy, base_action: 1, k: 2}
+  - {id: periodic_k4, type: PeriodicPolicy, base_action: 1, k: 4}
+  - {id: periodic_k8, type: PeriodicPolicy, base_action: 1, k: 8}
+  - {id: threshold,   type: LunarLanderThresholdPolicy}
+
+notes: |
+  주기 규칙의 기저 행동 1(왼쪽 엔진)은 파일럿에서 고른 값이다 — λ=0에서 단일 행동 셋을 비교한
+  결과 왼쪽 −533.7 / 주엔진 −668.2 / 오른쪽 −549.6 으로 왼쪽이 가장 나았다(전부 추락이지만).
+  기준선은 임계값 규칙(r IQM +32.7)이다.
