@@ -23,3 +23,6 @@ Thumbs.db
 
 # 옵시디언·클로드 로컬 설정
 .obsidian/
+
+# 로컬 도구 (gh CLI 이식형) — 커밋하지 않는다
+.tools/
