@@ -1,0 +1,29 @@
+# 파일럿 — MountainCar, 학습 3계열 × λ 3개 × 시드 3개 (docs/03_로드맵.md 1주차 마지막 항목, 이슈 #5)
+# 목적 두 가지:
+#   (1) 조건 1개당 소요시간(단가)을 재서 본실험 총시간을 계산한다
+#   (2) 표준 DQN이 MountainCar 200스텝 제한에서 애초에 배울 수 있는지 확인한다
+#       — 사전 측정 결과 무작위 탐험의 목표 도달률이 0.0%(500에피소드)라 위험 신호가 있었다
+name: pilot_mountaincar
+date: 2026-08-24
+env_id: MountainCar-v0
+env_kwargs: {}            # 시간제한은 기본값 200스텝
+total_steps: 100000       # 파일럿 예산 (본실험은 이 결과를 보고 정한다)
+eval_every: 5000
+n_eval_episodes_curve: 10
+n_eval_episodes_final: 100
+ckpt_every: 25000
+workers: 9
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0, 0.2, 0.5]
+seeds: [0, 1, 2]
+
+hyperparams:
+  dqn:     {hidden: [128, 128], lr: 0.0005, gamma: 0.99, buffer_size: 100000, batch_size: 128, learn_start: 1000, target_update: 500, eps_end: 0.05, eps_frac: 0.3}
+  temporl: {hidden: [128, 128], lr: 0.0005, gamma: 0.99, buffer_size: 100000, batch_size: 128, learn_start: 1000, target_update: 500, eps_end: 0.05, eps_frac: 0.3, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [128, 128], lr: 0.0005, gamma: 0.99, buffer_size: 100000, batch_size: 128, learn_start: 1000, target_update: 500, eps_end: 0.05, eps_frac: 0.3, base_policy: pump, eta: 0.0}
+
+notes: |
+  - 세 계열의 신경망 크기·학습률·버퍼·ε 일정은 전부 동일하게 맞췄다 (CLAUDE.md 절대 규칙 2, 공정 비교).
+  - 예산은 '환경 스텝 수'로 센다. TempoRL이 한 번 결정으로 j스텝을 진행해도 그만큼 예산이 준다.
+  - 비용 λ는 모든 계열에서 '실제 실행된 no-op 아닌 스텝'마다 부과 (결정 시점 1회 부과 방식은 민감도 분석 항목).

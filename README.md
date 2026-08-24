@@ -73,5 +73,9 @@ python -m src.report.make_report --session results/session_2026-08-24.json
 2. A. Jacq, J. Ferret, O. Pietquin, M. Geist, **"Lazy-MDPs: Towards Interpretable Reinforcement Learning by Learning When to Act"**, AAMAS 2022.
 3. R. Agarwal, M. Schwarzer, P. S. Castro, A. Courville, M. G. Bellemare, **"Deep Reinforcement Learning at the Edge of the Statistical Precipice"**, NeurIPS 2021.
 
+## 도구
+
+실험 자동화(러너·감시 스크립트·집계 코드 작성)에 **Claude Code**를 활용했습니다. 실험 설계, 하이퍼파라미터 결정, 결과 해석은 저자가 직접 판단했으며 모든 수치는 `results/`의 로그 파일에서 인용합니다.
+
 ---
 전혜성 · Dong-A University · 2026
