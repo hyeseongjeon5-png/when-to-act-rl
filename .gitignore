@@ -1,0 +1,25 @@
+# 파이썬
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# 비밀 정보
+.env
+
+# 대용량 실험 산출물 (요약·그림만 커밋한다)
+results/raw/
+results/checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# 편집기·OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# 옵시디언·클로드 로컬 설정
+.obsidian/

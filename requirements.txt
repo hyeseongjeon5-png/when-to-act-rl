@@ -1,0 +1,10 @@
+# 파이썬 3.10+ 권장
+gymnasium[classic-control]>=0.29   # MountainCar-v0
+gymnasium[box2d]>=0.29             # LunarLander (Windows는 swig 필요: pip install swig 먼저)
+minatar>=1.0.15                    # 소형 아타리
+torch>=2.0
+numpy
+pandas
+matplotlib
+pyyaml
+rliable                            # IQM + 부트스트랩 신뢰구간 (Agarwal et al. 2021)
