@@ -1,0 +1,24 @@
+# 파일럿 B — LunarLander-v3. 확인할 것: (1) 표준 DQN이 실제로 학습되는가 (2) 조건당 소요시간
+name: pilot_b_lunarlander
+date: 2026-08-24
+env_id: LunarLander-v3
+env_kwargs: {}
+total_steps: 200000
+eval_every: 20000
+n_eval_episodes_curve: 5
+n_eval_episodes_final: 100
+ckpt_every: 100000
+workers: 5
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0]
+seeds: [0, 1]
+
+hyperparams:
+  dqn:     {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: threshold, eta: 0.0}
+
+rules:
+  - {id: noop,      type: NoOpPolicy}
+  - {id: threshold, type: LunarLanderThresholdPolicy}

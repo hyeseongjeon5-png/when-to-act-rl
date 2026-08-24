@@ -44,12 +44,14 @@ def cond_key(c: dict) -> str:
     return f"{c['env_id']}/{c['agent']}/lam{c['lam']}/seed{c['seed']}"
 
 
-def is_done(c: dict) -> bool:
+def is_done(c: dict, fp: str | None = None) -> bool:
+    """이미 끝난 조건인가. 설정 지문이 다르면(하이퍼파라미터가 바뀌었으면) '안 끝난 것'으로 본다."""
     m = ROOT / "results" / "raw" / c["env_id"] / c["agent"] / f"lam{c['lam']}" / f"seed{c['seed']}_meta.json"
     if not m.exists():
         return False
     try:
-        return bool(json.loads(m.read_text(encoding="utf-8")).get("done"))
+        d = json.loads(m.read_text(encoding="utf-8"))
+        return bool(d.get("done")) and (fp is None or d.get("fingerprint") == fp)
     except Exception:
         return False
 
@@ -80,8 +82,11 @@ def main() -> None:
     log_dir = ROOT / "results" / "logs" / "train"
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    state = {cond_key(c): {"status": "완료" if is_done(c) else "대기", "attempts": 0,
-                           "elapsed_sec": done_elapsed(c) if is_done(c) else 0.0, **c} for c in conds}
+    from src.train.train_agent import fingerprint
+    fps = {ag: fingerprint(cfg, ag) for ag in cfg["agents"]}
+    state = {cond_key(c): {"status": "완료" if is_done(c, fps.get(c["agent"])) else "대기", "attempts": 0,
+                           "elapsed_sec": done_elapsed(c) if is_done(c, fps.get(c["agent"])) else 0.0,
+                           "fingerprint": fps.get(c["agent"]), **c} for c in conds}
     started = time.time()
     print(f"[러너] {name} | 총 {len(conds)}조건 | 이미 완료 {sum(1 for v in state.values() if v['status']=='완료')} | 동시 {workers}개", flush=True)
     if a.dry_run:
@@ -155,7 +160,7 @@ def main() -> None:
             active[k]["log"].close()
             active.pop(k)
             c = state[k]
-            if proc.returncode == 0 and is_done(c):
+            if proc.returncode == 0 and is_done(c, c.get("fingerprint")):
                 c["status"] = "완료"
                 c["elapsed_sec"] = done_elapsed(c)
                 print(f"  ✔ 완료 {k} ({dt/60:.1f}분)", flush=True)

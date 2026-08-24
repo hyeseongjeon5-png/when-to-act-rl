@@ -1,0 +1,26 @@
+# 파일럿 B — automl/TempoRL 공개 코드 기본값으로 맞춘 뒤 "학습이 되는가"를 확인한다.
+# 파일럿 A(10만 스텝, ε 감소형)에서는 세 계열 모두 학습되지 않았고, 공개 코드가
+# 100만 스텝 · ε=0.2 고정 · Double DQN을 쓴다는 사실을 확인해 설정을 바꾼 뒤 다시 재는 것.
+name: pilot_b_mountaincar
+date: 2026-08-24
+env_id: MountainCar-v0
+env_kwargs: {}
+total_steps: 300000
+eval_every: 20000
+n_eval_episodes_curve: 10
+n_eval_episodes_final: 100
+ckpt_every: 100000
+workers: 5
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0]
+seeds: [0, 1]
+
+hyperparams:
+  dqn:     {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: pump, eta: 0.0}
+
+rules:
+  - {id: noop,  type: NoOpPolicy}
+  - {id: pump,  type: MountainCarPumpPolicy, act_threshold: 0.0}

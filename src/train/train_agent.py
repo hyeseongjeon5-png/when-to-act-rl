@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import time
 import traceback
@@ -42,6 +43,24 @@ def build_agent(agent_name: str, obs_dim: int, n_actions: int, cfg: dict, seed: 
     raise KeyError(f"모르는 계열: {agent_name}")
 
 
+def fingerprint(cfg: dict, agent_name: str) -> str:
+    """설정 지문 — 체크포인트가 '지금 이 설정으로 만들어진 것'인지 확인하는 도장.
+
+    왜 필요한가: 하이퍼파라미터를 바꾸고 다시 돌리면 예전 체크포인트가 남아 있다가
+    신경망 크기가 안 맞아 터지거나, 더 나쁘게는 조용히 섞인 결과를 만든다.
+    지문이 다르면 예전 체크포인트를 무시하고 처음부터 다시 시작한다.
+    """
+    key = {
+        "agent": agent_name,
+        "hp": cfg.get("hyperparams", {}).get(agent_name, {}),
+        "total_steps": cfg.get("total_steps"),
+        "env_id": cfg.get("env_id"),
+        "env_kwargs": cfg.get("env_kwargs", {}),
+        "n_eval_episodes_final": cfg.get("n_eval_episodes_final"),
+    }
+    return hashlib.sha1(json.dumps(key, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:12]
+
+
 def cond_paths(cfg: dict, agent: str, lam: float, seed: int) -> dict:
     env_id = cfg["env_id"]
     tag = f"{env_id}/{agent}/lam{lam}"
@@ -68,8 +87,14 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
     env_kwargs = dict(cfg.get("env_kwargs", {}))
     p = cond_paths(cfg, agent_name, lam, seed)
 
-    if p["meta"].exists() and json.loads(p["meta"].read_text(encoding="utf-8")).get("done"):
-        return {"status": "이미완료", "tag": p["tag"]}
+    fp = fingerprint(cfg, agent_name)
+    if p["meta"].exists():
+        old = json.loads(p["meta"].read_text(encoding="utf-8"))
+        if old.get("done") and old.get("fingerprint") == fp:
+            return {"status": "이미완료", "tag": p["tag"]}
+        if old.get("done"):
+            print(f"[경고] {p['tag']} 의 기존 결과는 다른 설정(지문 {old.get('fingerprint')})으로 만들어진 것 "
+                  f"— 현재 지문 {fp}. 다시 계산한다.")
 
     env = make_cost_env(env_id, lam=lam, **env_kwargs)
     eval_env = make_cost_env(env_id, lam=lam, **env_kwargs)
@@ -81,12 +106,18 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
     elapsed_prev = 0.0
     if p["ckpt"].exists():  # ---- 이어하기 ----
         sd = torch.load(p["ckpt"], weights_only=False)
-        agent.load_state_dict(sd["agent"])
-        step = sd["step"]
-        curve = sd["curve"]
-        elapsed_prev = sd.get("elapsed", 0.0)
-        if not quiet:
-            print(f"[이어하기] {p['tag']} — {step}/{total_steps} 스텝부터")
+        if sd.get("fingerprint") != fp:
+            # 다른 설정으로 만든 체크포인트 — 이어붙이면 결과가 오염된다. 버리고 처음부터.
+            print(f"[체크포인트 무시] {p['tag']} — 설정 지문 불일치 "
+                  f"(체크포인트 {sd.get('fingerprint')} ≠ 현재 {fp}). 처음부터 다시 학습한다.")
+            p["ckpt"].unlink()
+        else:
+            agent.load_state_dict(sd["agent"])
+            step = sd["step"]
+            curve = sd["curve"]
+            elapsed_prev = sd.get("elapsed", 0.0)
+            if not quiet:
+                print(f"[이어하기] {p['tag']} — {step}/{total_steps} 스텝부터")
 
     eval_seeds_curve = [100_000 + seed * 1000 + i for i in range(n_eval_train)]
     eval_seeds_final = [500_000 + seed * 1000 + i for i in range(n_eval_final)]
@@ -120,6 +151,7 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
 
         if step >= next_ckpt:
             torch.save({"agent": agent.state_dict(), "step": step, "curve": curve,
+                        "fingerprint": fp,
                         "elapsed": elapsed_prev + time.time() - t_start}, p["ckpt"])
             next_ckpt += ckpt_every
 
@@ -138,7 +170,9 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
             w.writeheader()
             w.writerows(curve)
     meta = {
-        "done": True, "env_id": env_id, "agent": agent_name, "lam": lam, "seed": seed,
+        "done": True, "fingerprint": fp,
+        "hyperparams": cfg.get("hyperparams", {}).get(agent_name, {}),
+        "env_id": env_id, "agent": agent_name, "lam": lam, "seed": seed,
         "total_steps": total_steps, "elapsed_sec": round(elapsed, 1),
         "config_name": cfg.get("name"), "env_kwargs": env_kwargs,
         "final": final, "n_eval_episodes_final": n_eval_final,

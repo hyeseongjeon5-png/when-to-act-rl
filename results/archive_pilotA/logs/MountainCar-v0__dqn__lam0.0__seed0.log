@@ -1,0 +1,23 @@
+
+===== 시도 1 @ 2026-08-24 22:59:43 =====
+  MountainCar-v0/dqn/lam0.0/seed0    5000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   10000/100000 | r' IQM  -200.00 | 행동  188.9 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   15000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   20000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   25000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   30000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   35000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   40000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   45000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   50000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   55000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   60000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   65000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   70000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   75000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   80000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   85000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   90000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed0   95000/100000 | r' IQM  -131.00 | 행동  132.3 | 성공 100.0%
+  MountainCar-v0/dqn/lam0.0/seed0  100000/100000 | r' IQM  -194.67 | 행동  189.5 | 성공  40.0%
+[완료] MountainCar-v0/dqn/lam0.0/seed0 | r' IQM -196.18 | 행동 189.6 | 성공 36.0% | 397초

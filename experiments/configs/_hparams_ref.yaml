@@ -1,0 +1,4 @@
+# (참고용 조각) automl/TempoRL 공개 코드 기본값에 맞춘 하이퍼파라미터.
+# 실제 config들은 이 값을 복사해 쓴다. 세 계열 모두 동일 — 공정 비교(CLAUDE.md 절대 규칙 2).
+#   출처: github.com/automl/TempoRL run_featurized_experiments.py (2026-08-24 확인)
+#   hidden_dim=50, Adam lr=1e-3, batch=64, Double DQN, ε=0.2 고정, env_max_steps=200, max_skips=10

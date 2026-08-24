@@ -53,11 +53,17 @@ class DQNAgent:
         self.total_steps = int(cfg["total_steps"])
         self.eps_end = float(cfg.get("eps_end", 0.05))
         self.eps_frac = float(cfg.get("eps_frac", 0.3))
+        # eps_const가 있으면 ε를 감소시키지 않고 그 값으로 고정한다
+        # (automl/TempoRL 공개 코드는 ε=0.2 고정을 쓴다)
+        self.eps_const = cfg.get("eps_const", None)
+        self.double = bool(cfg.get("double_dqn", True))  # 공개 코드가 Double DQN을 쓴다
         self.n_updates = 0
         self.last_loss = float("nan")
 
     # ---------- 행동 선택 ----------
     def eps(self, step: int) -> float:
+        if self.eps_const is not None:
+            return float(self.eps_const)
         return linear_eps(step, self.total_steps, 1.0, self.eps_end, self.eps_frac)
 
     def q_values(self, obs) -> np.ndarray:
@@ -88,6 +94,18 @@ class DQNAgent:
         self.buffer.add(obs, action, reward, next_obs, float(terminated))
         return next_obs, 1, bool(terminated or truncated), info
 
+    def bootstrap(self, next_obs: torch.Tensor) -> torch.Tensor:
+        """다음 상태의 가치 어림. Double DQN이면 '행동 고르기'와 '값 매기기'를 다른 망이 맡는다.
+
+        같은 망이 둘 다 하면 실수로 높게 평가된 행동을 자기가 다시 골라 과대평가가 눈덩이처럼 커진다.
+        고르는 건 학습망, 값은 목표망 — 이렇게 나누면 그 눈덩이가 줄어든다 (van Hasselt et al. 2016).
+        """
+        with torch.no_grad():
+            if self.double:
+                a_star = self.q(next_obs).argmax(1)
+                return self.q_target(next_obs).gather(1, a_star[:, None]).squeeze(1)
+            return self.q_target(next_obs).max(1).values
+
     # ---------- 학습 ----------
     def update(self, global_step: int, n_updates: int = 1) -> None:
         if self.buffer.size < max(self.learn_start, self.batch_size):
@@ -95,7 +113,8 @@ class DQNAgent:
         for _ in range(n_updates):
             b = self.buffer.sample(self.batch_size, self.rng)
             with torch.no_grad():
-                target = b["reward"] + self.gamma * (1 - b["done"]) * self.q_target(b["next_obs"]).max(1).values
+                boot = self.bootstrap(b["next_obs"])
+                target = b["reward"] + self.gamma * (1 - b["done"]) * boot
             pred = self.q(b["obs"]).gather(1, b["action"][:, None]).squeeze(1)
             loss = F.smooth_l1_loss(pred, target)
             self.opt.zero_grad(set_to_none=True)

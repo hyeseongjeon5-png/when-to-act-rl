@@ -1,0 +1,21 @@
+{
+  "done": true,
+  "env_id": "MountainCar-v0",
+  "agent": "dqn",
+  "lam": 0.5,
+  "seed": 0,
+  "total_steps": 100000,
+  "elapsed_sec": 397.0,
+  "config_name": "pilot_mountaincar",
+  "env_kwargs": {},
+  "final": {
+    "raw_return_iqm": -200.0,
+    "raw_return_mean": -200.0,
+    "cost_return_iqm": -200.0,
+    "cost_return_mean": -200.0,
+    "n_actions_mean": 0.0,
+    "steps_mean": 200.0,
+    "solved_rate": 0.0
+  },
+  "n_eval_episodes_final": 100
+}

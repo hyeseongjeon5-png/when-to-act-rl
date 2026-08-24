@@ -120,7 +120,8 @@ class TempoRLAgent(DQNAgent):
             b = self.skip_buffer.sample(self.batch_size, self.rng)
             j = b["j"].long()
             with torch.no_grad():
-                boot = self.q_target(b["next_obs"]).max(1).values
+                # 공개 코드와 동일하게 지속망의 부트스트랩도 '행동망 기준 Double DQN'을 쓴다
+                boot = self.bootstrap(b["next_obs"])
                 target = b["reward"] + (self.gamma ** j.float()) * (1 - b["done"]) * boot
             sa = self._sa_batch(b["obs"], b["behaviour_action"])
             pred = self.q_skip(sa).gather(1, (j - 1)[:, None]).squeeze(1)

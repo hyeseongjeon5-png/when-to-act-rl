@@ -1,7 +1,0 @@
-
-===== 시도 1 @ 2026-08-24 22:59:43 =====
-  MountainCar-v0/dqn/lam0.0/seed2    5000/100000 | r' IQM  -200.00 | 행동  173.5 | 성공   0.0%
-  MountainCar-v0/dqn/lam0.0/seed2   10000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
-  MountainCar-v0/dqn/lam0.0/seed2   15000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
-  MountainCar-v0/dqn/lam0.0/seed2   20000/100000 | r' IQM  -200.00 | 행동    0.0 | 성공   0.0%
-  MountainCar-v0/dqn/lam0.0/seed2   25000/100000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
