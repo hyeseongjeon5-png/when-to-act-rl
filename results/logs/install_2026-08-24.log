@@ -1,0 +1,166 @@
++ cd $'C:/Users/\354\240\204\355\230\234\354\204\261/Desktop/AI-Team/13_\354\241\270\354\227\205\352\263\274\354\240\234'
++ PY=./.venv/Scripts/python.exe
++ echo '##### STEP1 swig #####'
+##### STEP1 swig #####
++ ./.venv/Scripts/python.exe -m pip install swig
+Collecting swig
+  Downloading swig-4.5.0-py3-none-win_amd64.whl.metadata (3.3 kB)
+Downloading swig-4.5.0-py3-none-win_amd64.whl (2.6 MB)
+   ---------------------------------------- 2.6/2.6 MB 25.1 MB/s  0:00:00
+Installing collected packages: swig
+Successfully installed swig-4.5.0
++ echo $'##### STEP2 core (box2d \354\240\234\354\231\270) #####'
+##### STEP2 core (box2d ì œì™¸) #####
++ ./.venv/Scripts/python.exe -m pip install 'gymnasium[classic-control]>=0.29' 'minatar>=1.0.15' 'torch>=2.0' numpy pandas matplotlib pyyaml rliable
+Collecting gymnasium>=0.29 (from gymnasium[classic-control]>=0.29)
+  Downloading gymnasium-1.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting minatar>=1.0.15
+  Downloading MinAtar-1.0.15-py3-none-any.whl.metadata (685 bytes)
+Collecting torch>=2.0
+  Downloading torch-2.13.0-cp311-cp311-win_amd64.whl.metadata (39 kB)
+Collecting numpy
+  Using cached numpy-2.4.6-cp311-cp311-win_amd64.whl.metadata (6.6 kB)
+Collecting pandas
+  Using cached pandas-3.0.5-cp311-cp311-win_amd64.whl.metadata (19 kB)
+Collecting matplotlib
+  Using cached matplotlib-3.11.1-cp311-cp311-win_amd64.whl.metadata (80 kB)
+Collecting pyyaml
+  Using cached pyyaml-6.0.3-cp311-cp311-win_amd64.whl.metadata (2.4 kB)
+Collecting rliable
+  Downloading rliable-1.2.0.tar.gz (21 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting cloudpickle>=1.2.0 (from gymnasium>=0.29->gymnasium[classic-control]>=0.29)
+  Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Collecting typing-extensions>=4.3.0 (from gymnasium>=0.29->gymnasium[classic-control]>=0.29)
+  Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting farama-notifications>=0.0.1 (from gymnasium>=0.29->gymnasium[classic-control]>=0.29)
+  Downloading farama_notifications-0.0.6-py3-none-any.whl.metadata (729 bytes)
+Collecting cycler>=0.10.0 (from minatar>=1.0.15)
+  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting kiwisolver>=1.0.1 (from minatar>=1.0.15)
+  Using cached kiwisolver-1.5.0-cp311-cp311-win_amd64.whl.metadata (5.2 kB)
+Collecting pyparsing>=2.3.1 (from minatar>=1.0.15)
+  Using cached pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
+Collecting python-dateutil>=2.8.0 (from minatar>=1.0.15)
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2018.9 (from minatar>=1.0.15)
+  Downloading pytz-2026.3.post1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting scipy>=1.2.1 (from minatar>=1.0.15)
+  Using cached scipy-1.17.1-cp311-cp311-win_amd64.whl.metadata (60 kB)
+Collecting seaborn>=0.9.0 (from minatar>=1.0.15)
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting six>=1.12.0 (from minatar>=1.0.15)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting filelock (from torch>=2.0)
+  Downloading filelock-3.32.4-py3-none-any.whl.metadata (2.0 kB)
+Collecting setuptools>=77.0.3 (from torch>=2.0)
+  Using cached setuptools-84.0.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting sympy>=1.13.3 (from torch>=2.0)
+  Using cached sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx>=2.5.1 (from torch>=2.0)
+  Using cached networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting jinja2 (from torch>=2.0)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec>=0.8.5 (from torch>=2.0)
+  Using cached fsspec-2026.7.0-py3-none-any.whl.metadata (10 kB)
+Collecting tzdata (from pandas)
+  Using cached tzdata-2026.3-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting contourpy>=1.0.1 (from matplotlib)
+  Using cached contourpy-1.3.3-cp311-cp311-win_amd64.whl.metadata (5.5 kB)
+Collecting fonttools>=4.28.2 (from matplotlib)
+  Using cached fonttools-4.63.0-cp311-cp311-win_amd64.whl.metadata (121 kB)
+Collecting packaging>=20.0 (from matplotlib)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pillow>=9 (from matplotlib)
+  Using cached pillow-12.3.0-cp311-cp311-win_amd64.whl.metadata (9.3 kB)
+Collecting arch<8.0,>=5.3.1 (from rliable)
+  Downloading arch-7.2.0-cp311-cp311-win_amd64.whl.metadata (13 kB)
+Collecting absl-py>=0.9.0 (from rliable)
+  Downloading absl_py-2.5.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting statsmodels>=0.12 (from arch<8.0,>=5.3.1->rliable)
+  Downloading statsmodels-0.14.6-cp311-cp311-win_amd64.whl.metadata (9.8 kB)
+Collecting pygame-ce>=2.1.3 (from gymnasium[classic-control]>=0.29)
+  Downloading pygame_ce-2.5.8-cp311-cp311-win_amd64.whl.metadata (11 kB)
+Collecting patsy>=0.5.6 (from statsmodels>=0.12->arch<8.0,>=5.3.1->rliable)
+  Downloading patsy-1.0.2-py2.py3-none-any.whl.metadata (3.6 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch>=2.0)
+  Using cached mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch>=2.0)
+  Using cached markupsafe-3.0.3-cp311-cp311-win_amd64.whl.metadata (2.8 kB)
+Downloading gymnasium-1.3.0-py3-none-any.whl (953 kB)
+   ---------------------------------------- 953.9/953.9 kB 22.3 MB/s  0:00:00
+Downloading MinAtar-1.0.15-py3-none-any.whl (16 kB)
+Downloading torch-2.13.0-cp311-cp311-win_amd64.whl (122.0 MB)
+   ---------------------------------------- 122.0/122.0 MB 54.5 MB/s  0:00:02
+Using cached numpy-2.4.6-cp311-cp311-win_amd64.whl (12.6 MB)
+Using cached pandas-3.0.5-cp311-cp311-win_amd64.whl (10.0 MB)
+Using cached matplotlib-3.11.1-cp311-cp311-win_amd64.whl (9.3 MB)
+Using cached pyyaml-6.0.3-cp311-cp311-win_amd64.whl (158 kB)
+Downloading arch-7.2.0-cp311-cp311-win_amd64.whl (927 kB)
+   ---------------------------------------- 927.1/927.1 kB 41.6 MB/s  0:00:00
+Downloading absl_py-2.5.0-py3-none-any.whl (137 kB)
+Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+Using cached contourpy-1.3.3-cp311-cp311-win_amd64.whl (225 kB)
+Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading farama_notifications-0.0.6-py3-none-any.whl (2.9 kB)
+Using cached fonttools-4.63.0-cp311-cp311-win_amd64.whl (2.4 MB)
+Using cached fsspec-2026.7.0-py3-none-any.whl (206 kB)
+Using cached kiwisolver-1.5.0-cp311-cp311-win_amd64.whl (73 kB)
+Using cached networkx-3.6.1-py3-none-any.whl (2.1 MB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Using cached pillow-12.3.0-cp311-cp311-win_amd64.whl (7.2 MB)
+Downloading pygame_ce-2.5.8-cp311-cp311-win_amd64.whl (9.7 MB)
+   ---------------------------------------- 9.7/9.7 MB 46.3 MB/s  0:00:00
+Using cached pyparsing-3.3.2-py3-none-any.whl (122 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading pytz-2026.3.post1-py2.py3-none-any.whl (508 kB)
+Using cached scipy-1.17.1-cp311-cp311-win_amd64.whl (36.6 MB)
+Downloading seaborn-0.13.2-py3-none-any.whl (294 kB)
+Using cached setuptools-84.0.0-py3-none-any.whl (818 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading statsmodels-0.14.6-cp311-cp311-win_amd64.whl (9.6 MB)
+   ---------------------------------------- 9.6/9.6 MB 49.8 MB/s  0:00:00
+Downloading patsy-1.0.2-py2.py3-none-any.whl (233 kB)
+Using cached sympy-1.14.0-py3-none-any.whl (6.3 MB)
+Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
+Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading filelock-3.32.4-py3-none-any.whl (99 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Using cached markupsafe-3.0.3-cp311-cp311-win_amd64.whl (15 kB)
+Using cached tzdata-2026.3-py2.py3-none-any.whl (348 kB)
+Building wheels for collected packages: rliable
+  Building wheel for rliable (pyproject.toml): started
+  Building wheel for rliable (pyproject.toml): finished with status 'done'
+  Created wheel for rliable: filename=rliable-1.2.0-py3-none-any.whl size=19989 sha256=2f76d74edffa8867f7e99fb56cf84421a105f0d8a4381f4a11a75a04382c718f
+  Stored in directory: c:\users\ÀüÇý¼º\appdata\local\pip\cache\wheels\34\be\3f\e6f24933a89f00320bf7608500ace2a48d9821d12f9ea527b1
+Successfully built rliable
+Installing collected packages: pytz, mpmath, farama-notifications, tzdata, typing-extensions, sympy, six, setuptools, pyyaml, pyparsing, pygame-ce, pillow, packaging, numpy, networkx, MarkupSafe, kiwisolver, fsspec, fonttools, filelock, cycler, cloudpickle, absl-py, scipy, python-dateutil, patsy, jinja2, gymnasium, contourpy, torch, pandas, matplotlib, statsmodels, seaborn, minatar, arch, rliable
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 65.5.0
+    Uninstalling setuptools-65.5.0:
+      Successfully uninstalled setuptools-65.5.0
+
+Successfully installed MarkupSafe-3.0.3 absl-py-2.5.0 arch-7.2.0 cloudpickle-3.1.2 contourpy-1.3.3 cycler-0.12.1 farama-notifications-0.0.6 filelock-3.32.4 fonttools-4.63.0 fsspec-2026.7.0 gymnasium-1.3.0 jinja2-3.1.6 kiwisolver-1.5.0 matplotlib-3.11.1 minatar-1.0.15 mpmath-1.3.0 networkx-3.6.1 numpy-2.4.6 packaging-26.3 pandas-3.0.5 patsy-1.0.2 pillow-12.3.0 pygame-ce-2.5.8 pyparsing-3.3.2 python-dateutil-2.9.0.post0 pytz-2026.3.post1 pyyaml-6.0.3 rliable-1.2.0 scipy-1.17.1 seaborn-0.13.2 setuptools-84.0.0 six-1.17.0 statsmodels-0.14.6 sympy-1.14.0 torch-2.13.0 typing-extensions-4.16.0 tzdata-2026.3
++ echo $'##### STEP3 box2d (\354\213\244\355\214\250 \355\227\210\354\232\251) #####'
+##### STEP3 box2d (ì‹¤íŒ¨ í—ˆìš©) #####
++ ./.venv/Scripts/python.exe -m pip install 'gymnasium[box2d]>=0.29'
+Requirement already satisfied: gymnasium>=0.29 in .\.venv\Lib\site-packages (from gymnasium[box2d]>=0.29) (1.3.0)
+Requirement already satisfied: numpy>=1.21.0 in .\.venv\Lib\site-packages (from gymnasium>=0.29->gymnasium[box2d]>=0.29) (2.4.6)
+Requirement already satisfied: cloudpickle>=1.2.0 in .\.venv\Lib\site-packages (from gymnasium>=0.29->gymnasium[box2d]>=0.29) (3.1.2)
+Requirement already satisfied: typing-extensions>=4.3.0 in .\.venv\Lib\site-packages (from gymnasium>=0.29->gymnasium[box2d]>=0.29) (4.16.0)
+Requirement already satisfied: farama-notifications>=0.0.1 in .\.venv\Lib\site-packages (from gymnasium>=0.29->gymnasium[box2d]>=0.29) (0.0.6)
+Collecting box2d==2.3.10 (from gymnasium[box2d]>=0.29)
+  Downloading Box2D-2.3.10-cp311-cp311-win_amd64.whl.metadata (593 bytes)
+Requirement already satisfied: pygame-ce>=2.1.3 in .\.venv\Lib\site-packages (from gymnasium[box2d]>=0.29) (2.5.8)
+Requirement already satisfied: swig==4.* in .\.venv\Lib\site-packages (from gymnasium[box2d]>=0.29) (4.5.0)
+Downloading Box2D-2.3.10-cp311-cp311-win_amd64.whl (1.3 MB)
+   ---------------------------------------- 1.3/1.3 MB 22.3 MB/s  0:00:00
+Installing collected packages: box2d
+Successfully installed box2d-2.3.10
++ echo '##### DONE rc=0 #####'
+##### DONE rc=0 #####
