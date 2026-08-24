@@ -1,2 +1,5 @@
 2026-08-24 23:01:17 [정상] pilot_mountaincar 0/27 진행중 | 디스크 361GB | 완료조건 누계 0 | 이상 없음
 2026-08-24 23:01:36 [경고] pilot_mountaincar 0/27 진행중 | 디스크 361GB | 완료조건 누계 0 | [pilot_mountaincar] ② 지난 점검 이후 완료 조건이 늘지 않음 (완료 0/27)
+2026-08-24 23:30:38 [경고] pilot_b_lunarlander 3/6 진행중 ; pilot_b_mountaincar 0/6 진행중 | 디스크 361GB | 완료조건 누계 723 | ⑤ 바닥 고정(성공률 0%·행동 0회) 조건 20개: rule_noop/lam0.66/seed9, rule_noop/lam0.66/seed8, rule_noop/lam0.66/seed7, rule_noop/lam0.66/seed6, rule_noop/lam0.66/seed5
+2026-08-24 23:31:32 [경고] pilot_b_lunarlander 3/6 진행중 ; pilot_b_mountaincar 0/6 진행중 | 디스크 361GB | 완료조건 누계 723 | [pilot_b_mountaincar] ② 지난 점검 이후 완료 조건이 늘지 않음 (완료 0/6)
+2026-08-24 23:31:49 [정상] pilot_b_lunarlander 3/6 진행중 ; pilot_b_mountaincar 0/6 진행중 | 디스크 361GB | 완료조건 누계 723 | 이상 없음

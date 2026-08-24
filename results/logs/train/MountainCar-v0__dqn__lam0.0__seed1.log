@@ -6,3 +6,13 @@
   MountainCar-v0/dqn/lam0.0/seed1   80000/300000 | r' IQM  -175.33 | 행동  177.6 | 성공  60.0%
   MountainCar-v0/dqn/lam0.0/seed1  100000/300000 | r' IQM  -200.00 | 행동  192.0 | 성공  10.0%
   MountainCar-v0/dqn/lam0.0/seed1  120000/300000 | r' IQM  -176.00 | 행동  170.2 | 성공  60.0%
+  MountainCar-v0/dqn/lam0.0/seed1  140000/300000 | r' IQM  -169.83 | 행동  170.2 | 성공  90.0%
+  MountainCar-v0/dqn/lam0.0/seed1  160000/300000 | r' IQM  -200.00 | 행동  200.0 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed1  180000/300000 | r' IQM   -92.67 | 행동  112.9 | 성공  80.0%
+  MountainCar-v0/dqn/lam0.0/seed1  200000/300000 | r' IQM  -104.17 | 행동  100.4 | 성공 100.0%
+  MountainCar-v0/dqn/lam0.0/seed1  220000/300000 | r' IQM  -103.67 | 행동  112.1 | 성공 100.0%
+  MountainCar-v0/dqn/lam0.0/seed1  240000/300000 | r' IQM  -180.83 | 행동  150.6 | 성공  40.0%
+  MountainCar-v0/dqn/lam0.0/seed1  260000/300000 | r' IQM  -200.00 | 행동  195.9 | 성공   0.0%
+  MountainCar-v0/dqn/lam0.0/seed1  280000/300000 | r' IQM  -135.00 | 행동  126.1 | 성공  90.0%
+  MountainCar-v0/dqn/lam0.0/seed1  300000/300000 | r' IQM  -126.67 | 행동  131.3 | 성공  90.0%
+[완료] MountainCar-v0/dqn/lam0.0/seed1 | r' IQM -155.56 | 행동 148.6 | 성공 75.0% | 1006초

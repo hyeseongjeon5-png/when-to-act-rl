@@ -3,3 +3,7 @@
   LunarLander-v3/temporl/lam0.0/seed1   20000/200000 | r' IQM   182.78 | 행동  466.2 | 성공 100.0%
   LunarLander-v3/temporl/lam0.0/seed1   40000/200000 | r' IQM    -0.52 | 행동  646.0 | 성공   0.0%
   LunarLander-v3/temporl/lam0.0/seed1   60004/200000 | r' IQM    12.14 | 행동  622.6 | 성공   0.0%
+  LunarLander-v3/temporl/lam0.0/seed1   80000/200000 | r' IQM   257.58 | 행동  223.8 | 성공 100.0%
+  LunarLander-v3/temporl/lam0.0/seed1  100005/200000 | r' IQM   172.57 | 행동  776.4 | 성공  40.0%
+  LunarLander-v3/temporl/lam0.0/seed1  120000/200000 | r' IQM   275.41 | 행동  207.6 | 성공 100.0%
+  LunarLander-v3/temporl/lam0.0/seed1  140001/200000 | r' IQM    65.41 | 행동  719.6 | 성공  40.0%

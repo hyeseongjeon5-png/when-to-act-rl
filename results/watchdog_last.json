@@ -1,36 +1,47 @@
 {
- "time": "2026-08-24 23:01:36",
- "ts": 1787580096.7881002,
+ "time": "2026-08-24 23:31:49",
+ "ts": 1787581909.4958186,
  "runs": [
   {
-   "run": "pilot_mountaincar",
-   "done": 0,
-   "total": 27,
-   "running": 9,
+   "run": "pilot_b_lunarlander",
+   "done": 3,
+   "total": 6,
+   "running": 3,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 1.9,
-   "advanced_since_last": false,
+   "stale_min": 0.4,
+   "advanced_since_last": null,
+   "eta_text": "약 0.1시간 남음",
+   "prev_done": 3
+  },
+  {
+   "run": "pilot_b_mountaincar",
+   "done": 0,
+   "total": 6,
+   "running": 5,
+   "skipped": 0,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.4,
+   "advanced_since_last": null,
    "eta_text": "측정 중",
    "prev_done": 0
   }
  ],
- "issues": [
-  "[pilot_mountaincar] ② 지난 점검 이후 완료 조건이 늘지 않음 (완료 0/27)"
- ],
- "level": "경고",
+ "issues": [],
+ "level": "정상",
  "logs": {
-  "scanned": 9,
+  "scanned": 11,
   "traceback_logs": [],
   "nan_logs": []
  },
  "curves": {
-  "checked": 0,
+  "checked": 400,
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0
  },
- "disk_free_gb": 361.1,
- "done_conditions_total": 0
+ "disk_free_gb": 360.7,
+ "done_conditions_total": 723
 }

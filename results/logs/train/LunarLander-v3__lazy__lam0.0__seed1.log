@@ -1,0 +1,5 @@
+
+===== 시도 1 @ 2026-08-24 23:28:01 =====
+  LunarLander-v3/lazy/lam0.0/seed1   20000/200000 | r' IQM   -27.93 | 행동  688.8 | 성공  20.0%
+  LunarLander-v3/lazy/lam0.0/seed1   40000/200000 | r' IQM   204.53 | 행동  429.4 | 성공 100.0%
+  LunarLander-v3/lazy/lam0.0/seed1   60000/200000 | r' IQM   126.29 | 행동  303.0 | 성공  80.0%
