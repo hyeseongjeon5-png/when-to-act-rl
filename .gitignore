@@ -26,3 +26,8 @@ Thumbs.db
 
 # 로컬 도구 (gh CLI 이식형) — 커밋하지 않는다
 .tools/
+
+# 조건별 학습 로그 (수백 개로 늘어난다 — 요약은 results/aggregate/ 에 있다)
+results/logs/train/
+results/archive_pilotA/logs/
+results/archive_pilotA/checkpoints/
