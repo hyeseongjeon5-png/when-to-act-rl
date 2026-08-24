@@ -11,4 +11,5 @@ while true; do
   "$PY" -m src.analysis.aggregate --env all --reps 2000 2>&1 | tail -3
   "$PY" -m src.analysis.plots --env all 2>&1 | tail -3
   "$PY" -m src.report.make_experiment_report 2>&1 | tail -1
+  "$PY" -m src.report.make_results_chapter 2>&1 | tail -1
 done
