@@ -1,38 +1,38 @@
 {
- "time": "2026-08-25 04:02:23",
- "ts": 1787598143.5698998,
+ "time": "2026-08-25 11:01:58",
+ "ts": 1787623318.2365053,
  "runs": [
   {
    "run": "main_lunarlander",
-   "done": 85,
+   "done": 230,
    "total": 240,
    "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
    "stale_min": 0.2,
-   "advanced_since_last": null,
-   "eta_text": "약 7.4시간 남음",
-   "prev_done": 83
+   "advanced_since_last": true,
+   "eta_text": "약 0.5시간 남음",
+   "prev_done": 210
   },
   {
    "run": "main_mountaincar",
-   "done": 59,
+   "done": 158,
    "total": 270,
    "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.1,
-   "advanced_since_last": null,
-   "eta_text": "약 14.4시간 남음",
-   "prev_done": 57
+   "stale_min": 0.2,
+   "advanced_since_last": true,
+   "eta_text": "약 7.7시간 남음",
+   "prev_done": 144
   }
  ],
  "issues": [],
  "level": "정상",
  "logs": {
-  "scanned": 64,
+  "scanned": 61,
   "traceback_logs": [],
   "nan_logs": []
  },
@@ -41,8 +41,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 32
+  "n_expected_floor": 99
  },
- "disk_free_gb": 356.7,
- "done_conditions_total": 1164
+ "disk_free_gb": 356.0,
+ "done_conditions_total": 1408
 }

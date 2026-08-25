@@ -1,1 +1,14 @@
 [재분배] LunarLander 본실험 종료를 기다린다
+[재분배] LunarLander 종료 확인 11:20:06
+[재분배] MountainCar 러너(pid 9000)를 멈추고 워커 10개로 다시 띄운다
+[러너] main_mountaincar | 총 270조건 | 이미 완료 163 | 동시 10개
+  ▶ 시작 MountainCar-v0/dqn/lam0.01/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.02/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.03/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.05/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.1/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.2/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.35/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/dqn/lam0.66/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/temporl/lam0.0/seed6 (시도 1)
+  ▶ 시작 MountainCar-v0/temporl/lam0.01/seed6 (시도 1)

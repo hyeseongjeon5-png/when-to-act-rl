@@ -11,3 +11,10 @@
 2026-08-25 03:01:42 [경고] main_lunarlander 61/240 진행중 ; main_mountaincar 41/270 진행중 | 디스크 357GB | 완료조건 누계 1122 | ⑤ 학습 계열이 무행동으로 굳은 조건 19개 (λ가 크면 정상일 수 있음): temporl/lam0.05/seed1, temporl/lam0.03/seed1, temporl/lam0.01/seed1, dqn/lam0.66/seed1, dqn/lam0.35/seed1
 2026-08-25 04:01:44 [경고] main_lunarlander 83/240 진행중 ; main_mountaincar 57/270 진행중 | 디스크 357GB | 완료조건 누계 1162 | ⑤ 학습 계열이 무행동으로 굳은 조건 31개 (λ가 크면 정상일 수 있음): dqn/lam0.03/seed2, dqn/lam0.02/seed2, dqn/lam0.01/seed2, lazy/lam0.66/seed1, lazy/lam0.35/seed1
 2026-08-25 04:02:23 [정상] main_lunarlander 85/240 진행중 ; main_mountaincar 59/270 진행중 | 디스크 357GB | 완료조건 누계 1164 | 비용에 의한 무행동 수렴 32건(정상) | 이상 없음
+2026-08-25 05:01:45 [정상] main_lunarlander 104/240 진행중 ; main_mountaincar 68/270 진행중 | 디스크 357GB | 완료조건 누계 1192 | 비용에 의한 무행동 수렴 38건(정상) | 이상 없음
+2026-08-25 06:01:47 [정상] main_lunarlander 128/240 진행중 ; main_mountaincar 86/270 진행중 | 디스크 357GB | 완료조건 누계 1234 | 비용에 의한 무행동 수렴 48건(정상) | 이상 없음
+2026-08-25 07:01:50 [정상] main_lunarlander 148/240 진행중 ; main_mountaincar 97/270 진행중 | 디스크 357GB | 완료조건 누계 1265 | 비용에 의한 무행동 수렴 55건(정상) | 이상 없음
+2026-08-25 08:01:52 [정상] main_lunarlander 169/240 진행중 ; main_mountaincar 116/270 진행중 | 디스크 357GB | 완료조건 누계 1305 | 비용에 의한 무행동 수렴 68건(정상) | 이상 없음
+2026-08-25 09:01:54 [정상] main_lunarlander 191/240 진행중 ; main_mountaincar 127/270 진행중 | 디스크 357GB | 완료조건 누계 1338 | 비용에 의한 무행동 수렴 77건(정상) | 이상 없음
+2026-08-25 10:01:56 [정상] main_lunarlander 210/240 진행중 ; main_mountaincar 144/270 진행중 | 디스크 356GB | 완료조건 누계 1374 | 비용에 의한 무행동 수렴 92건(정상) | 이상 없음
+2026-08-25 11:01:58 [정상] main_lunarlander 230/240 진행중 ; main_mountaincar 158/270 진행중 | 디스크 356GB | 완료조건 누계 1408 | 비용에 의한 무행동 수렴 99건(정상) | 이상 없음

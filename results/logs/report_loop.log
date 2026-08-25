@@ -33,3 +33,66 @@
   저장: results\figures\MountainCar-v0_action_map.png
   저장: results\figures\MountainCar-v0_learning_curves.png
 보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 04:55:53 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 2개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 2개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 05:57:44 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 3개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 3개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 07:00:35 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 3개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 3개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 08:02:23 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 4개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 4개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 09:04:09 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 4개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 10:05:58 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
+결과 장 생성: paper\04_결과.md
+===== 2026-08-25 11:07:48 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 6개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MountainCar-v0_iqm.csv, MountainCar-v0_lambda_star.json
+  저장: results\figures\MountainCar-v0_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0_action_map.png
+  저장: results\figures\MountainCar-v0_learning_curves.png
+보고서 저장: results\reports\2026-08-25_본실험보고서.html
