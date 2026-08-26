@@ -1,38 +1,38 @@
 {
- "time": "2026-08-25 11:01:58",
- "ts": 1787623318.2365053,
+ "time": "2026-08-26 21:02:39",
+ "ts": 1787745759.7168384,
  "runs": [
   {
    "run": "main_lunarlander",
-   "done": 230,
+   "done": 240,
    "total": 240,
-   "running": 5,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.2,
-   "advanced_since_last": true,
-   "eta_text": "약 0.5시간 남음",
-   "prev_done": 210
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 2023.1,
+   "advanced_since_last": false,
+   "eta_text": "측정 중",
+   "prev_done": 240
   },
   {
    "run": "main_mountaincar",
-   "done": 158,
+   "done": 270,
    "total": 270,
-   "running": 5,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.2,
-   "advanced_since_last": true,
-   "eta_text": "약 7.7시간 남음",
-   "prev_done": 144
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 1799.9,
+   "advanced_since_last": false,
+   "eta_text": "측정 중",
+   "prev_done": 270
   }
  ],
  "issues": [],
  "level": "정상",
  "logs": {
-  "scanned": 61,
+  "scanned": 0,
   "traceback_logs": [],
   "nan_logs": []
  },
@@ -41,8 +41,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 99
+  "n_expected_floor": 145
  },
- "disk_free_gb": 356.0,
- "done_conditions_total": 1408
+ "disk_free_gb": 352.9,
+ "done_conditions_total": 1530
 }
