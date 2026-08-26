@@ -1,6 +1,6 @@
 {
- "time": "2026-08-26 21:02:39",
- "ts": 1787745759.7168384,
+ "time": "2026-08-26 22:02:40",
+ "ts": 1787749360.1993957,
  "runs": [
   {
    "run": "main_lunarlander",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2023.1,
+   "stale_min": 2083.1,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 1799.9,
+   "stale_min": 1859.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 270
