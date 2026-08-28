@@ -23,7 +23,9 @@ def run_episode(env, policy, seed: int) -> dict:
         "steps": t,
         "raw_return": info["episode_raw_return"],
         "cost_return": cost_return,
-        "n_actions": info["episode_actions"],
+        "n_actions": info["episode_actions"],           # 비용이 부과된 횟수
+        # per_switch 방식에서만 위와 달라진다 (전환 횟수 vs 진짜 행동 횟수)
+        "n_true_actions": info.get("episode_true_actions", info["episode_actions"]),
         "solved": int(bool(terminated)),
     }
 
