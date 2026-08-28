@@ -186,15 +186,26 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
         g = agg[agg.agent == name].sort_values("lam")
         ax.plot(g.lam, g.cost_return_iqm, label=LABEL.get(name, name), zorder=3, **style)
 
+    # λ* 표시선은 **최강 규칙 포락선 기준**을 쓴다.
+    # 지정 기준 규칙만 보면 LunarLander처럼 격자 끝까지 이기는 환경에서 교차가 없어 선이 안 그려지는데,
+    # 실제로는 λ>1.37에서 최강 규칙이 무행동으로 바뀌며 λ=2에서 역전된다. 그쪽이 실질적인 문턱이다.
     star_p = AGG / f"{env_id}_lambda_star.json"
     lam_stars = []
     if star_p.exists():
         st = json.loads(star_p.read_text(encoding="utf-8"))
-        for r in st.get("results", []):
+        for r in st.get("results_vs_best_rule", st.get("results", [])):
             if r.get("lam_star_pt"):
-                lam_stars.append((r["learner"], r["lam_star_pt"]))
-    for learner, lam in lam_stars:
-        ax.axvline(lam, color=COLOR.get(learner, "#666"), ls="-.", lw=0.9, alpha=0.55, zorder=1)
+                lam_stars.append((r["learner"], float(r["lam_star_pt"])))
+    for learner, lam in sorted(set(lam_stars), key=lambda x: x[1]):
+        ax.axvline(lam, color=COLOR.get(learner, "#666"), ls="-.", lw=1.0, alpha=0.5, zorder=1)
+    if lam_stars:
+        lo, hi = min(l for _, l in lam_stars), max(l for _, l in lam_stars)
+        txt = f"λ* = {lo:g}" if lo == hi else f"λ* = {lo:g} ~ {hi:g}"
+        # 세로 위치를 축 높이의 22%에 둔다 — 바닥에 두면 시드 수 주석과 겹친다
+        y0, y1 = ax.get_ylim()
+        ax.annotate(txt + " (최강 규칙 기준)", xy=(hi, y0 + 0.22 * (y1 - y0)),
+                    xytext=(4, 0), textcoords="offset points", rotation=90,
+                    fontsize=8, color="#7b3fb5", fontweight="bold", va="bottom")
 
     n_seeds = int(agg.n_seeds.max())
     if symlog:
