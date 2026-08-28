@@ -4,29 +4,18 @@
  "pid": 3548,
  "workers": 10,
  "started_at": 1787939564.922123,
- "updated_at": 1787959329.9919362,
- "wall_elapsed_sec": 19765.1,
+ "updated_at": 1787959736.6466312,
+ "wall_elapsed_sec": 20171.7,
  "total": 420,
- "done": 410,
- "running": 10,
+ "done": 420,
+ "running": 0,
  "failed": 0,
  "skipped": 0,
  "pending": 0,
- "avg_sec_per_cond": 1257.3,
- "eta_sec": 1257.3,
- "eta_text": "약 0.3시간 남음",
- "running_now": [
-  "MountainCar-v0/temporl/lam0.001/seed9",
-  "MountainCar-v0/temporl/lam0.002/seed9",
-  "MountainCar-v0/temporl/lam0.003/seed9",
-  "MountainCar-v0/temporl/lam0.005/seed9",
-  "MountainCar-v0/temporl/lam0.0075/seed9",
-  "MountainCar-v0/lazy/lam0.001/seed9",
-  "MountainCar-v0/lazy/lam0.002/seed9",
-  "MountainCar-v0/lazy/lam0.003/seed9",
-  "MountainCar-v0/lazy/lam0.005/seed9",
-  "MountainCar-v0/lazy/lam0.0075/seed9"
- ],
+ "avg_sec_per_cond": 1263.4,
+ "eta_sec": null,
+ "eta_text": "측정 중",
+ "running_now": [],
  "conditions": {
   "MountainCar-v0/dqn/lam0.0/seed0": {
    "status": "완료",
@@ -4352,9 +4341,9 @@
    "seed": 9
   },
   "MountainCar-v0/temporl/lam0.001/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 2000.3,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4363,9 +4352,9 @@
    "seed": 9
   },
   "MountainCar-v0/temporl/lam0.002/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1996.6,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4374,9 +4363,9 @@
    "seed": 9
   },
   "MountainCar-v0/temporl/lam0.003/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1969.4,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4385,9 +4374,9 @@
    "seed": 9
   },
   "MountainCar-v0/temporl/lam0.005/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1980.2,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4396,9 +4385,9 @@
    "seed": 9
   },
   "MountainCar-v0/temporl/lam0.0075/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 2054.2,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4506,9 +4495,9 @@
    "seed": 9
   },
   "MountainCar-v0/lazy/lam0.001/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1046.1,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4517,9 +4506,9 @@
    "seed": 9
   },
   "MountainCar-v0/lazy/lam0.002/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1018.7,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4528,9 +4517,9 @@
    "seed": 9
   },
   "MountainCar-v0/lazy/lam0.003/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1031.5,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4539,9 +4528,9 @@
    "seed": 9
   },
   "MountainCar-v0/lazy/lam0.005/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1004.1,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4550,9 +4539,9 @@
    "seed": 9
   },
   "MountainCar-v0/lazy/lam0.0075/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1008.8,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -4648,5 +4637,7 @@
    "lam": 0.66,
    "seed": 9
   }
- }
+ },
+ "finished": true,
+ "finished_at": 1787959736.6466312
 }

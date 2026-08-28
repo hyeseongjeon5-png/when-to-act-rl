@@ -1,14 +1,16 @@
 {
  "done": [
   "1_공정성파일럿",
-  "2_붕괴문턱_규칙"
+  "2_붕괴문턱_규칙",
+  "2_붕괴문턱_학습",
+  "3_인과_규칙"
  ],
  "current": {
-  "label": "2_붕괴문턱_학습",
+  "label": "3_인과_학습",
   "kind": "train",
-  "spec": "experiments/configs/main_mountaincar.yaml:10",
-  "started_at": 1787939561.433379,
-  "started_text": "2026-08-29 02:52:41"
+  "spec": "experiments/configs/causal_warmup_mc.yaml:10",
+  "started_at": 1787959765.427481,
+  "started_text": "2026-08-29 08:29:25"
  },
  "history": [
   {
@@ -22,8 +24,20 @@
    "hours": 0.01,
    "exit": 0,
    "finished_text": "2026-08-29 02:52:41"
+  },
+  {
+   "label": "2_붕괴문턱_학습",
+   "hours": 5.6,
+   "exit": 0,
+   "finished_text": "2026-08-29 08:28:57"
+  },
+  {
+   "label": "3_인과_규칙",
+   "hours": 0.01,
+   "exit": 0,
+   "finished_text": "2026-08-29 08:29:25"
   }
  ],
- "updated_at": 1787939561.433379,
- "updated_text": "2026-08-29 02:52:41"
+ "updated_at": 1787959765.427481,
+ "updated_text": "2026-08-29 08:29:25"
 }
