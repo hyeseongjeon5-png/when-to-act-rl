@@ -42,6 +42,9 @@ def make_base_policy(name: str, env_id: str):
         return MountainCarPumpPolicy()
     if name == "threshold":
         return LunarLanderThresholdPolicy()
+    if name == "threshold_tuned":
+        # 평가에 쓰지 않는 에피소드로 계수를 고른 강한 변형 (r IQM 38.3 → 179.8)
+        return LunarLanderThresholdPolicy(angle_thresh=0.05, vy_thresh=-0.25, angle_gain=1.0)
     if name == "freeway_cautious":
         # danger=0 — 사전 측정에서 가장 센 설정(r IQM 17.80, 행동 298.4회).
         # 기본 정책은 '그 환경에서 가장 센 고정 규칙'이어야 한다. 기준 규칙과 다른 값을 쓰면

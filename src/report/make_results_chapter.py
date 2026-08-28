@@ -23,7 +23,8 @@ AGG = ROOT / "results" / "aggregate"
 OUT = ROOT / "paper" / "04_결과.md"
 
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL", "lazy": "Lazy-MDP"}
-RULE_LABEL = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙",
+RULE_LABEL = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙(처음)",
+              "rule_threshold_tuned": "임계값 규칙(튜닝)",
               "rule_cautious": "신중 규칙", "rule_cautious_d1": "신중 규칙(d=1)",
               "rule_noop": "무행동", "rule_best": "최강 규칙",
               "rule_periodic_k1": "매 스텝 주기", "rule_periodic_k2": "2스텝 주기",

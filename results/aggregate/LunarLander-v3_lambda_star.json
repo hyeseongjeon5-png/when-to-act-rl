@@ -13,8 +13,12 @@
         0.3,
         0.6,
         1.0,
+        1.2,
         1.37,
+        1.6,
+        1.8,
         2.0,
+        2.5,
         3.0
       ],
       "lams_compared": [
@@ -93,9 +97,9 @@
           "wins_pt": true
         }
       ],
-      "coverage": "8/8 λ",
+      "coverage": "8/12 λ",
       "min_seeds": 10,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
+      "note": "아직 λ 8개만 비교됨(격자 12개 중, 최대 λ=3.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
     },
     {
       "learner": "lazy",
@@ -108,8 +112,12 @@
         0.3,
         0.6,
         1.0,
+        1.2,
         1.37,
+        1.6,
+        1.8,
         2.0,
+        2.5,
         3.0
       ],
       "lams_compared": [
@@ -188,9 +196,9 @@
           "wins_pt": true
         }
       ],
-      "coverage": "8/8 λ",
+      "coverage": "8/12 λ",
       "min_seeds": 10,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
+      "note": "아직 λ 8개만 비교됨(격자 12개 중, 최대 λ=3.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
     },
     {
       "learner": "temporl",
@@ -203,8 +211,12 @@
         0.3,
         0.6,
         1.0,
+        1.2,
         1.37,
+        1.6,
+        1.8,
         2.0,
+        2.5,
         3.0
       ],
       "lams_compared": [
@@ -283,9 +295,9 @@
           "wins_pt": true
         }
       ],
-      "coverage": "8/8 λ",
+      "coverage": "8/12 λ",
       "min_seeds": 10,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
+      "note": "아직 λ 8개만 비교됨(격자 12개 중, 최대 λ=3.0). 이 범위에서는 규칙을 이김 — λ*는 미확정, 실험 진행 중"
     }
   ],
   "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
@@ -293,16 +305,20 @@
     {
       "learner": "dqn",
       "rule": "rule_best",
-      "lam_star_ci": 2.0,
-      "lam_star_pt": 2.0,
+      "lam_star_ci": 0.1,
+      "lam_star_pt": 1.0,
       "lams_in_grid": [
         0.0,
         0.1,
         0.3,
         0.6,
         1.0,
+        1.2,
         1.37,
+        1.6,
+        1.8,
         2.0,
+        2.5,
         3.0
       ],
       "lams_compared": [
@@ -320,7 +336,7 @@
           "lam": 0.0,
           "n_seeds": 10,
           "learner_iqm": 188.85711092823217,
-          "rule_iqm": 35.79395934101099,
+          "rule_iqm": 162.275249950774,
           "wins_ci": true,
           "wins_pt": true
         },
@@ -328,40 +344,40 @@
           "lam": 0.1,
           "n_seeds": 10,
           "learner_iqm": 189.0750717295949,
-          "rule_iqm": 23.633792674344107,
-          "wins_ci": true,
+          "rule_iqm": 146.10391661744063,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 0.3,
           "n_seeds": 10,
           "learner_iqm": 140.939345867245,
-          "rule_iqm": -0.686540658989146,
-          "wins_ci": true,
+          "rule_iqm": 113.76124995077397,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 0.6,
           "n_seeds": 10,
           "learner_iqm": 90.22576374076105,
-          "rule_iqm": -37.167040658989094,
-          "wins_ci": true,
+          "rule_iqm": 65.00584678874165,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.0,
           "n_seeds": 10,
           "learner_iqm": -12.752568953922504,
-          "rule_iqm": -85.70233069818624,
-          "wins_ci": true,
-          "wins_pt": true
+          "rule_iqm": -0.5701254152012409,
+          "wins_ci": false,
+          "wins_pt": false
         },
         {
           "lam": 1.37,
           "n_seeds": 10,
           "learner_iqm": -60.66819939274973,
-          "rule_iqm": -130.545097364853,
-          "wins_ci": true,
+          "rule_iqm": -61.20510874853458,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
@@ -381,14 +397,14 @@
           "wins_pt": false
         }
       ],
-      "coverage": "8/8 λ",
+      "coverage": "8/12 λ",
       "min_seeds": 10,
       "note": "격자 안에서 교차 지점 발견"
     },
     {
       "learner": "lazy",
       "rule": "rule_best",
-      "lam_star_ci": 2.0,
+      "lam_star_ci": 0.6,
       "lam_star_pt": 2.0,
       "lams_in_grid": [
         0.0,
@@ -396,8 +412,12 @@
         0.3,
         0.6,
         1.0,
+        1.2,
         1.37,
+        1.6,
+        1.8,
         2.0,
+        2.5,
         3.0
       ],
       "lams_compared": [
@@ -415,7 +435,7 @@
           "lam": 0.0,
           "n_seeds": 10,
           "learner_iqm": 210.13247159650135,
-          "rule_iqm": 35.79395934101099,
+          "rule_iqm": 162.275249950774,
           "wins_ci": true,
           "wins_pt": true
         },
@@ -423,7 +443,7 @@
           "lam": 0.1,
           "n_seeds": 10,
           "learner_iqm": 212.94608460089282,
-          "rule_iqm": 23.633792674344107,
+          "rule_iqm": 146.10391661744063,
           "wins_ci": true,
           "wins_pt": true
         },
@@ -431,7 +451,7 @@
           "lam": 0.3,
           "n_seeds": 10,
           "learner_iqm": 147.08964120912114,
-          "rule_iqm": -0.686540658989146,
+          "rule_iqm": 113.76124995077397,
           "wins_ci": true,
           "wins_pt": true
         },
@@ -439,24 +459,24 @@
           "lam": 0.6,
           "n_seeds": 10,
           "learner_iqm": 102.92298943821443,
-          "rule_iqm": -37.167040658989094,
-          "wins_ci": true,
+          "rule_iqm": 65.00584678874165,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.0,
           "n_seeds": 10,
           "learner_iqm": 36.77279729249343,
-          "rule_iqm": -85.70233069818624,
-          "wins_ci": true,
+          "rule_iqm": -0.5701254152012409,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.37,
           "n_seeds": 10,
           "learner_iqm": -47.039263646395774,
-          "rule_iqm": -130.545097364853,
-          "wins_ci": true,
+          "rule_iqm": -61.20510874853458,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
@@ -476,23 +496,27 @@
           "wins_pt": false
         }
       ],
-      "coverage": "8/8 λ",
+      "coverage": "8/12 λ",
       "min_seeds": 10,
       "note": "격자 안에서 교차 지점 발견"
     },
     {
       "learner": "temporl",
       "rule": "rule_best",
-      "lam_star_ci": 1.0,
-      "lam_star_pt": 2.0,
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
       "lams_in_grid": [
         0.0,
         0.1,
         0.3,
         0.6,
         1.0,
+        1.2,
         1.37,
+        1.6,
+        1.8,
         2.0,
+        2.5,
         3.0
       ],
       "lams_compared": [
@@ -510,48 +534,48 @@
           "lam": 0.0,
           "n_seeds": 10,
           "learner_iqm": 159.13009181245488,
-          "rule_iqm": 35.79395934101099,
-          "wins_ci": true,
-          "wins_pt": true
+          "rule_iqm": 162.275249950774,
+          "wins_ci": false,
+          "wins_pt": false
         },
         {
           "lam": 0.1,
           "n_seeds": 10,
           "learner_iqm": 118.89502278226881,
-          "rule_iqm": 23.633792674344107,
-          "wins_ci": true,
-          "wins_pt": true
+          "rule_iqm": 146.10391661744063,
+          "wins_ci": false,
+          "wins_pt": false
         },
         {
           "lam": 0.3,
           "n_seeds": 10,
           "learner_iqm": 80.70117600445663,
-          "rule_iqm": -0.686540658989146,
-          "wins_ci": true,
-          "wins_pt": true
+          "rule_iqm": 113.76124995077397,
+          "wins_ci": false,
+          "wins_pt": false
         },
         {
           "lam": 0.6,
           "n_seeds": 10,
           "learner_iqm": 59.42264467906108,
-          "rule_iqm": -37.167040658989094,
-          "wins_ci": true,
-          "wins_pt": true
+          "rule_iqm": 65.00584678874165,
+          "wins_ci": false,
+          "wins_pt": false
         },
         {
           "lam": 1.0,
           "n_seeds": 10,
           "learner_iqm": -34.2042794045463,
-          "rule_iqm": -85.70233069818624,
+          "rule_iqm": -0.5701254152012409,
           "wins_ci": false,
-          "wins_pt": true
+          "wins_pt": false
         },
         {
           "lam": 1.37,
           "n_seeds": 10,
           "learner_iqm": -52.16245199657402,
-          "rule_iqm": -130.545097364853,
-          "wins_ci": true,
+          "rule_iqm": -61.20510874853458,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
@@ -571,9 +595,9 @@
           "wins_pt": false
         }
       ],
-      "coverage": "8/8 λ",
+      "coverage": "8/12 λ",
       "min_seeds": 10,
-      "note": "격자 안에서 교차 지점 발견"
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     }
   ]
 }

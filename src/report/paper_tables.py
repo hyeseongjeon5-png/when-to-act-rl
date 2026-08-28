@@ -23,7 +23,7 @@ CFG = ROOT / "experiments" / "configs"
 AGENT_KO = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식"}
 ENV_KO = {"MountainCar-v0": "MountainCar-v0", "LunarLander-v3": "LunarLander-v3",
           "MinAtar_Freeway-v1": "MinAtar Freeway"}
-RULE_KO = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙",
+RULE_KO = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙(처음)", "rule_threshold_tuned": "임계값 규칙(튜닝)",
            "rule_cautious": "신중 규칙", "rule_best": "최강 규칙 포락선"}
 
 

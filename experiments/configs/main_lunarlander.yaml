@@ -37,6 +37,12 @@ rules:
   - {id: periodic_k4, type: PeriodicPolicy, base_action: 1, k: 4}
   - {id: periodic_k8, type: PeriodicPolicy, base_action: 1, k: 8}
   - {id: threshold,   type: LunarLanderThresholdPolicy}
+  # 2026-08-29 추가: 같은 규칙의 계수를 **평가에 쓰지 않는 에피소드**(시드 900000~, 80개)로
+  #   튜닝한 것. 18개 후보 중 최고를 고른 뒤 평가용 에피소드로 다시 쟀다.
+  #   r IQM 38.3 → 179.8 (행동 123.7 → 169.6회). 처음 손으로 짠 계수가 크게 덜 좋았다는 뜻이다.
+  #   기존 threshold를 지우지 않는 이유: '기준선을 얼마나 잘 만드느냐가 결론을 바꾼다'는 것
+  #   자체가 논문에 쓸 내용이기 때문이다.
+  - {id: threshold_tuned, type: LunarLanderThresholdPolicy, angle_thresh: 0.05, vy_thresh: -0.25, angle_gain: 1.0}
 
 # 2026-08-25 격자 보강: 시드0~1 결과에서 λ=1.37(격자 상한)에서도 학습이 규칙을 이겼다
 # (예: DQN r' −66.1 vs 임계값 규칙 −132.9). λ*가 격자 밖에 있다는 뜻이므로 2.0·3.0을 추가했다.

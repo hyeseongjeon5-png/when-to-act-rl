@@ -35,7 +35,8 @@ plt.rcParams["axes.unicode_minus"] = False
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식",
          "rule_best": "λ마다 가장 센 고정 규칙 (포락선)",
          "rule_pump": "고정 규칙: pump(임계값)", "rule_noop": "고정 규칙: 무행동",
-         "rule_threshold": "고정 규칙: 임계값", "rule_periodic_k1": "고정 규칙: 매 스텝",
+         "rule_threshold": "고정 규칙: 임계값(처음)",
+         "rule_threshold_tuned": "고정 규칙: 임계값(튜닝)", "rule_periodic_k1": "고정 규칙: 매 스텝",
          "rule_periodic_k2": "고정 규칙: 2스텝 주기", "rule_periodic_k4": "고정 규칙: 4스텝 주기",
          "rule_periodic_k8": "고정 규칙: 8스텝 주기"}
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}

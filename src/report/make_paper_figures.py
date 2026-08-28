@@ -33,7 +33,8 @@ plt.rcParams["axes.unicode_minus"] = False
 
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식",
          "rule_best": "λ마다 가장 센 고정 규칙", "rule_pump": "고정 규칙 (pump)",
-         "rule_threshold": "고정 규칙 (임계값)", "rule_noop": "고정 규칙 (무행동)",
+         "rule_threshold": "고정 규칙 (임계값·처음)",
+         "rule_threshold_tuned": "고정 규칙 (임계값·튜닝)", "rule_noop": "고정 규칙 (무행동)",
          "rule_cautious": "고정 규칙 (신중)", "rule_cautious_d1": "고정 규칙 (신중 d=1)"}
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
 REF = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
