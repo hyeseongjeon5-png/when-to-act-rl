@@ -6,9 +6,13 @@
   절반 뒤에 비용  : results/raw/MountainCar-v0@warmup50/…     (인과 실험)
 
 읽는 법:
-  워밍업 쪽이 **행동을 유지하고 점수도 높으면** → 탐험 실패다.
-    비용이 있는 세상에서도 행동하는 정책이 존재하는데, 처음부터 비용을 물리면 그것을 못 찾는 것이다.
+  워밍업 쪽이 **목표에 더 자주 닿으면** → 탐험 실패다. 비용이 있는 세상에서도 목표에 닿는
+    정책이 존재하는데, 처음부터 비용을 물리면 그것을 못 찾는 것이다.
   워밍업 쪽도 **똑같이 무행동으로 굳으면** → 비용을 반영한 최적해가 정말 무행동이다.
+
+  실험 2에서 붕괴가 두 단계로 일어난다는 것이 밝혀졌다 — 행동은 유지되는데 성능이 먼저
+  무너지는 구간이 있다. 그래서 점수·행동뿐 아니라 **목표 도달률**을 함께 본다.
+  그 구간에서 워밍업 쪽이 도달률을 지켜 낸다면 그것이 가장 직접적인 증거다.
 
 두 조건은 환경 스텝 예산·시드·평가 방식이 모두 같고, 다른 것은 학습 중 보상 신호뿐이다.
 평가는 양쪽 모두 **진짜 λ**로 한다 — 성적표는 언제나 비용이 있는 세상에서 매긴다.
@@ -58,10 +62,21 @@ def stat(vals: list[float], reps: int = 10000) -> dict | None:
     return {"n": len(vals), "iqm": p, "lo": lo, "hi": hi}
 
 
-def verdict(base: dict, warm: dict, base_act: dict, warm_act: dict) -> str:
-    """두 조건의 신뢰구간으로 판정한다. 겹치면 우열을 말하지 않는다."""
+def verdict(base: dict, warm: dict, base_act: dict, warm_act: dict,
+            base_solved: dict | None = None, warm_solved: dict | None = None) -> str:
+    """두 조건의 신뢰구간으로 판정한다. 겹치면 우열을 말하지 않는다.
+
+    실험 2에서 붕괴가 두 단계로 일어난다는 것이 밝혀졌다 — 행동은 유지되는데 성능이 먼저
+    무너지는 구간이 있다. 그래서 **목표 도달률**을 함께 본다. 그 구간에서 워밍업 쪽이
+    도달률을 지켜 낸다면, 그것이 '탐험 실패'의 가장 직접적인 증거다.
+    """
     acts_up = warm_act["lo"] > base_act["hi"]
     score_up = warm["lo"] > base["hi"]
+    solved_up = bool(base_solved and warm_solved and warm_solved["lo"] > base_solved["hi"])
+    if solved_up and score_up:
+        return "탐험 실패 (워밍업 쪽이 도달률도 점수도 높다)"
+    if solved_up:
+        return "탐험 실패 (워밍업 쪽이 목표에 더 자주 닿는다)"
     if score_up and acts_up:
         return "탐험 실패 (워밍업 쪽이 행동도 점수도 높다)"
     if acts_up and not score_up:
@@ -83,23 +98,26 @@ def main() -> None:
     print("인과 실험 — 비용을 처음부터 물릴 때 vs 절반 뒤에 켤 때 (MountainCar-v0, 같은 예산·시드)")
     print("=" * 104)
     print(f"{'λ':>7} {'계열':<10} {'조건':<12} {'시드':>4} {'r′ IQM':>9} {'95% CI':>20} "
-          f"{'행동 IQM':>9} {'판정':<40}")
+          f"{'행동':>9} {'도달률':>6} {'판정':<38}")
     for lam in lams:
         for ag in ("dqn", "temporl", "lazy"):
             b = stat(seed_values(BASE_ROOM, ag, lam, "cost_return"))
             w = stat(seed_values(WARM_ROOM, ag, lam, "cost_return"))
             ba = stat(seed_values(BASE_ROOM, ag, lam, "n_actions"))
             wa = stat(seed_values(WARM_ROOM, ag, lam, "n_actions"))
+            bs = stat(seed_values(BASE_ROOM, ag, lam, "solved"))
+            ws = stat(seed_values(WARM_ROOM, ag, lam, "solved"))
             if not (b and w and ba and wa):
                 continue
-            v = verdict(b, w, ba, wa)
-            for label, s, a in (("처음부터 비용", b, ba), ("절반 뒤 비용", w, wa)):
-                print(f"{lam:>7g} {AGENT_KO[ag]:<10} {label:<12} {s['n']:>4} {s['iqm']:>9.1f} "
-                      f"{'[' + format(s['lo'], '.1f') + ', ' + format(s['hi'], '.1f') + ']':>20} "
-                      f"{a['iqm']:>9.1f} {v if label == '절반 뒤 비용' else '':<40}")
+            v = verdict(b, w, ba, wa, bs, ws)
+            for label, sc, a, sv in (("처음부터 비용", b, ba, bs), ("절반 뒤 비용", w, wa, ws)):
+                sv_txt = f"{sv['iqm']*100:5.0f}%" if sv else "    —"
+                print(f"{lam:>7g} {AGENT_KO[ag]:<10} {label:<12} {sc['n']:>4} {sc['iqm']:>9.1f} "
+                      f"{'[' + format(sc['lo'], '.1f') + ', ' + format(sc['hi'], '.1f') + ']':>20} "
+                      f"{a['iqm']:>9.1f} {sv_txt} {v if label == '절반 뒤 비용' else '':<38}")
             payload.append({"lam": lam, "agent": ag, "verdict": v,
-                            "from_start": {"score": b, "actions": ba},
-                            "warmup": {"score": w, "actions": wa}})
+                            "from_start": {"score": b, "actions": ba, "solved": bs},
+                            "warmup": {"score": w, "actions": wa, "solved": ws}})
             rows.append((lam, ag, v))
     if not payload:
         print("비교할 수 있는 조건이 아직 없다 (양쪽 방에 같은 λ·계열이 모두 있어야 한다)")

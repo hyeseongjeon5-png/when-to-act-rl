@@ -344,20 +344,25 @@ def causal_section(sec: str) -> str:
         "앞 절의 붕괴에는 두 가지 해석이 있다. **(가)** 비용을 반영하면 정말로 가만히 있는 것이 "
         "최선이거나, **(나)** 비용 때문에 초반에 목표를 한 번도 보지 못해 굳었거나. "
         "두 해석은 같은 관측을 낳지만 뜻이 정반대다. 이를 가르기 위해 같은 예산·시드 안에서 "
-        "**비용을 켜는 시점만** 바꾼 조건을 두었다(Ⅲ장 6.2절). 평가는 양쪽 모두 진짜 λ로 한다.",
+        "**비용을 켜는 시점만** 바꾼 조건을 두었다(Ⅲ장 6.3절). 평가는 양쪽 모두 진짜 λ로 한다. "
+        "앞 절에서 본 두 단계 구조 때문에 점수·행동뿐 아니라 **목표 도달률**을 함께 본다 — "
+        "행동은 유지되는데 성능만 무너지는 구간에서 워밍업 쪽이 도달률을 지켜 낸다면, "
+        "그것이 탐험 실패의 가장 직접적인 증거다.",
         "",
         "<!--TABCAP: 비용을 처음부터 물릴 때와 절반 뒤에 켤 때 (MountainCar-v0, 같은 예산·시드)"
         " | Charging the cost from the start versus switching it on halfway (MountainCar-v0) -->",
-        "| λ | 계열 | 비용 시점 | r′ IQM [95% CI] | 행동 횟수 | 판정 |",
-        "|---|---|---|---|---|---|",
+        "| λ | 계열 | 비용 시점 | r′ IQM [95% CI] | 행동 횟수 | 목표 도달률 | 판정 |",
+        "|---|---|---|---|---|---|---|",
     ]
     for r in res:
         lam, ag = format(float(r["lam"]), "g"), name(r["agent"])
         for key, label in (("from_start", "처음부터"), ("warmup", "절반 뒤")):
             sc, ac = r[key]["score"], r[key]["actions"]
+            sv = r[key].get("solved")
             lines.append("| **" + lam + "** | " + ag + " | " + label + " | "
                          + num(sc["iqm"]) + " [" + num(sc["lo"]) + ", " + num(sc["hi"]) + "] | "
-                         + num(ac["iqm"]) + " | "
+                         + num(ac["iqm"], 0) + " | "
+                         + (num(sv["iqm"] * 100, 0) + "%" if sv else "—") + " | "
                          + (r["verdict"] if key == "warmup" else "") + " |")
     n_expl = sum(1 for r in res if str(r["verdict"]).startswith("탐험 실패"))
     n_opt = sum(1 for r in res if "무행동이 최적해" in str(r["verdict"]))
