@@ -43,9 +43,12 @@ def make_base_policy(name: str, env_id: str):
     if name == "threshold":
         return LunarLanderThresholdPolicy()
     if name == "freeway_cautious":
-        return MinAtarFreewayCautiousPolicy()
+        # danger=0 — 사전 측정에서 가장 센 설정(r IQM 17.80, 행동 298.4회).
+        # 기본 정책은 '그 환경에서 가장 센 고정 규칙'이어야 한다. 기준 규칙과 다른 값을 쓰면
+        # Lazy가 위임해도 기준선에 못 미쳐 비교가 어긋난다.
+        return MinAtarFreewayCautiousPolicy(danger=0)
     if name == "breakout_track":
-        return MinAtarBreakoutTrackPolicy()
+        return MinAtarBreakoutTrackPolicy(tol=0)
     if name == "noop":
         return NoOpPolicy(NOOP_BY_ENV[env_id])
     raise KeyError(f"모르는 기본 정책: {name}")
@@ -81,9 +84,16 @@ class LazyAgent(DQNAgent):
         self.n_decisions = 0
 
     def to_env_action(self, aug_action: int, obs, t: int) -> int:
-        if aug_action == 0:
-            return int(self.base_policy.act(obs, t))
-        return int(aug_action - 1)
+        """증강 행동 → 실제 환경 행동.
+
+        **기본 정책은 위임하지 않는 스텝에도 항상 호출한다.** 내부 상태를 가진 규칙
+        (예: MinAtar Freeway 신중 규칙은 '내가 방금 움직였는가'로 이동 대기시간을 센다)은
+        한 스텝이라도 건너뛰면 상태가 어긋나 엉뚱한 행동을 낸다.
+        호출만 하고 결과를 버리면 상태는 항상 실제 환경을 따라간다.
+        (pump·임계값처럼 상태가 없는 규칙에서는 결과가 달라지지 않는다 — 기존 결과 불변)
+        """
+        base = int(self.base_policy.act(obs, t))
+        return base if aug_action == 0 else int(aug_action - 1)
 
     def eval_policy(self):
         return LazyEvalPolicy(self)
