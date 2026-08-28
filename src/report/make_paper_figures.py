@@ -162,6 +162,9 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
         return None
     ref = REF[env_id]
     learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
+    if not learners:
+        print(f"  [건너뜀] {env_id} — 학습 계열 결과가 아직 없다 (규칙만으로는 지도를 그리지 않는다)")
+        return None
 
     fig, ax = plt.subplots(figsize=(7.4, 4.5), dpi=DPI)
     for a in learners:
@@ -266,6 +269,8 @@ def main() -> None:
     lambda_map("MountainCar-v0", "fig2", symlog=True)
     lambda_map("LunarLander-v3", "fig3")
     collapse_figure("MountainCar-v0")
+    # 세 번째 환경은 학습 결과가 들어온 뒤에만 그린다 (규칙만 있으면 지도가 의미 없다)
+    lambda_map("MinAtar_Freeway-v1", "fig5")
     (OUT / "captions.json").write_text(json.dumps(CAPTIONS, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"  캡션: {(OUT / 'captions.json').relative_to(ROOT)}")
 

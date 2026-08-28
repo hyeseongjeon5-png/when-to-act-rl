@@ -1,0 +1,4 @@
+﻿env_id,gym_env_id,agent,lam,seed,fingerprint,cost_return,raw_return,n_actions,solved,steps,n_eval_episodes,elapsed_sec,total_steps,source_csv
+MountainCar-v0@budget1M_wide,MountainCar-v0,dqn,0.0,0,faf85b1ef586,-135.76,-135.76,124.56666666666666,0.8,135.76,150,4250.9,1000000,results/raw/MountainCar-v0@budget1M_wide/dqn/lam0.0/seed0_final.csv
+MountainCar-v0@budget1M_wide,MountainCar-v0,dqn,0.0,1,faf85b1ef586,-200.0,-200.0,133.01333333333332,0.0,200.0,150,4281.3,1000000,results/raw/MountainCar-v0@budget1M_wide/dqn/lam0.0/seed1_final.csv
+MountainCar-v0@budget1M_wide,MountainCar-v0,dqn,0.0,2,faf85b1ef586,-148.87333333333333,-148.87333333333333,130.84,0.9533333333333334,148.87333333333333,150,4278.9,1000000,results/raw/MountainCar-v0@budget1M_wide/dqn/lam0.0/seed2_final.csv

@@ -223,6 +223,17 @@ def critical_lambda(agg: pd.DataFrame, learner: str, rule: str = "rule_pump",
     return res
 
 
+def atomic_write(path: Path, write_fn) -> None:
+    """임시 파일에 쓰고 한 번에 바꿔치기한다.
+
+    왜: 1시간 주기 중간 보고서 루프와 손으로 돌린 집계가 겹치면, 반쯤 쓰인 CSV를
+    다른 쪽이 읽어 조용히 틀린 표가 나올 수 있다. 바꿔치기는 원자적이라 그럴 일이 없다.
+    """
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    write_fn(tmp)
+    tmp.replace(path)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--env", default="all")
@@ -239,8 +250,10 @@ def main() -> None:
         if agg.empty:
             print(f"[{env_id}] 완료된 조건 없음 — 건너뜀")
             continue
-        cond.to_csv(OUT / f"{env_id}_conditions.csv", index=False, encoding="utf-8-sig")
-        agg.to_csv(OUT / f"{env_id}_iqm.csv", index=False, encoding="utf-8-sig")
+        atomic_write(OUT / f"{env_id}_conditions.csv",
+                     lambda q: cond.to_csv(q, index=False, encoding="utf-8-sig"))
+        atomic_write(OUT / f"{env_id}_iqm.csv",
+                     lambda q: agg.to_csv(q, index=False, encoding="utf-8-sig"))
         rule = pick_ref_rule(env_id, set(agg.agent), a.rule)
         learners = sorted(set(agg.agent) - {x for x in agg.agent if str(x).startswith("rule_")})
         stars = []
@@ -252,11 +265,11 @@ def main() -> None:
         if "rule_best" in set(agg.agent):
             for learner in learners:
                 stars_best.append(critical_lambda(agg, learner, "rule_best"))
-        (OUT / f"{env_id}_lambda_star.json").write_text(
-            json.dumps({"env_id": env_id, "rule": rule, "results": stars,
-                        "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
-                        "results_vs_best_rule": stars_best}, ensure_ascii=False, indent=2),
-            encoding="utf-8")
+        payload = json.dumps({"env_id": env_id, "rule": rule, "results": stars,
+                              "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
+                              "results_vs_best_rule": stars_best}, ensure_ascii=False, indent=2)
+        atomic_write(OUT / f"{env_id}_lambda_star.json",
+                     lambda q: q.write_text(payload, encoding="utf-8"))
         print(f"\n===== {env_id} =====")
         show = agg[["agent", "lam", "n_seeds", "cost_return_iqm", "cost_return_ci_lo",
                     "cost_return_ci_hi", "n_actions_iqm", "solved_iqm"]]
