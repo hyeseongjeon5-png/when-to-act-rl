@@ -247,6 +247,10 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     envs = [p.name for p in RAW.iterdir() if p.is_dir()] if a.env == "all" else [a.env]
     envs = [e for e in envs if (RAW / e).exists()]
+    # 점검용 방(@REPRO 등)은 조건이 1개뿐이라 신뢰구간·지도가 의미 없다 — 훑기에서 뺀다.
+    # 이름으로 명시해 부르면(--env "…@REPRO") 그때는 처리한다.
+    if a.env == "all":
+        envs = [e for e in envs if "@REPRO" not in e]
 
     for env_id in envs:
         cond, agg = aggregate(env_id, reps=a.reps)

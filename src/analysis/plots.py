@@ -172,6 +172,10 @@ def main() -> None:
     a = ap.parse_args()
     envs = ([p.name for p in (ROOT / "results" / "raw").iterdir() if p.is_dir()]
             if a.env == "all" else [a.env])
+    # 점검용 방(@REPRO 등)은 조건이 1개뿐이라 신뢰구간·지도가 의미 없다 — 훑기에서 뺀다.
+    # 이름으로 명시해 부르면(--env "…@REPRO") 그때는 처리한다.
+    if a.env == "all":
+        envs = [e for e in envs if "@REPRO" not in e]
     for env_id in envs:
         print(f"[{env_id}] 그림 생성")
         # 변종 방(env@variant)도 본래 환경의 기준 규칙을 쓴다
