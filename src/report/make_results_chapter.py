@@ -125,6 +125,19 @@ def star_facts(env_id: str) -> list[str]:
         else:
             out.append(lname + " 비교된 λ 구간 전체(" + str(s.get("coverage", ""))
                        + ")에서 " + RULE_LABEL.get(ref, ref) + "을 이겼다.")
+
+    # 지정 기준 규칙만 보면 실제보다 후하게 나올 수 있다. 비용이 커지면 '그 λ에서 가장 센 규칙'이
+    # 무행동으로 바뀌기 때문이다. 실질적인 λ*는 최강 규칙 포락선과의 비교에서 나온다.
+    best = st.get("results_vs_best_rule", [])
+    crossed = [r for r in best if r.get("lam_star_pt") not in (None, 0.0)]
+    zeroed = [r for r in best if r.get("lam_star_pt") == 0.0]
+    if crossed:
+        bits = [name(r["learner"]) + " λ=" + format(float(r["lam_star_pt"]), "g") for r in crossed]
+        out.append("λ마다 가장 센 규칙(최강 규칙 포락선)과 비교하면 역전 지점이 앞당겨진다: "
+                   + ", ".join(bits) + ". 비용이 커지면 최강 규칙이 무행동으로 바뀌기 때문이며, "
+                   "이쪽이 실질적인 임계 비용이다.")
+    elif zeroed and not any(r.get("lam_star_pt") == 0.0 for r in st.get("results", [])):
+        out.append("최강 규칙 포락선과 비교하면 λ=0에서부터 이기지 못한다.")
     return out
 
 
