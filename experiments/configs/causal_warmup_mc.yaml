@@ -1,0 +1,47 @@
+# 인과 실험 (스프린트 실험 3) — "붕괴는 비용 탓인가, 탐험 실패 탓인가"
+#
+# 묻는 것: MountainCar에서 λ>0이면 세 계열이 모두 '아무것도 안 하기'로 굳는다(무행동 붕괴).
+#   이것이 (가) 비용을 반영하면 무행동이 정말로 최적이기 때문인가,
+#          (나) 비용 때문에 초반 탐험이 막혀 목표를 한 번도 못 보고 굳은 것인가?
+#
+# 방법: 같은 예산 300k 스텝을 쓰되, **앞 절반(150k)은 비용을 끄고(λ=0) 학습**한 뒤
+#   나머지 절반에서 비용을 켠다. 평가는 언제나 진짜 λ로 한다.
+#   - 워밍업 쪽이 행동을 유지하고 점수가 높아지면 → (나) 탐험 실패다.
+#     '비용 있는 세상에서도 행동하는 정책'이 존재하는데 처음부터 비용을 물리면 그걸 못 찾는 것이다.
+#   - 워밍업 쪽도 똑같이 무행동으로 굳으면 → (가) 무행동이 실제로 최적이다.
+#
+# 비교 대상은 같은 λ의 기존 본실험 조건(처음부터 비용)이다 — 예산·시드·평가가 전부 같다.
+# λ는 붕괴가 이미 완전한 구간에서 고른다 (기존 결과: λ=0.01 행동 33회, 0.02 21.8회, 0.05 0회).
+name: causal_warmup_mc
+variant: warmup50
+cost_warmup_frac: 0.5
+date: 2026-08-25
+env_id: MountainCar-v0
+env_kwargs: {}            # 시간제한 200스텝 (공개 코드 기본값과 동일)
+total_steps: 300000
+eval_every: 25000
+n_eval_episodes_curve: 10
+n_eval_episodes_final: 50      # 스냅샷 1장당 평가 에피소드 수 (총 50 × 3장 = 150)
+n_eval_episodes_rules: 100     # 고정 규칙은 학습이 없어 스냅샷이 필요 없다
+final_snapshots: [0.9, 0.95, 1.0]   # 예산의 90%·95%·100% 시점 정책을 각각 평가해 합친다
+                                    # 이유: 정책이 평가 시점마다 두 상태를 오가는 경우가 있어
+                                    # 한 시점만 재면 최종 점수가 동전 던지기가 된다 (실험일지 참조)
+ckpt_every: 50000   # 러너를 다시 띄울 때 잃는 학습량을 줄인다
+workers: 5
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.01, 0.02, 0.05]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+hyperparams:
+  dqn:     {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: pump, eta: 0.0}
+
+rules:
+  - {id: noop,        type: NoOpPolicy}
+  - {id: periodic_k1, type: PeriodicPolicy, base_action: 2, k: 1}
+  - {id: periodic_k2, type: PeriodicPolicy, base_action: 2, k: 2}
+  - {id: periodic_k4, type: PeriodicPolicy, base_action: 2, k: 4}
+  - {id: periodic_k8, type: PeriodicPolicy, base_action: 2, k: 8}
+  - {id: pump,        type: MountainCarPumpPolicy, act_threshold: 0.0}

@@ -1,0 +1,5 @@
+[2026-08-29 01:01:16] 대기열 감시 시작
+[2026-08-29 01:01:16] === 작업 시작: 1_공정성파일럿 (train) ===
+[2026-08-29 01:01:16]   ▶ experiments/configs/fair_pilot_mc_A.yaml (워커 4)
+[2026-08-29 01:01:16]   ▶ experiments/configs/fair_pilot_mc_B.yaml (워커 3)
+[2026-08-29 01:01:16]   ▶ experiments/configs/fair_pilot_mc_C.yaml (워커 3)

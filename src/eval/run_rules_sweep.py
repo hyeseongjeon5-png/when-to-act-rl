@@ -65,6 +65,20 @@ def main() -> None:
             out.mkdir(parents=True, exist_ok=True)
             env = make_cost_env(env_id, lam=float(lam), **env_kwargs)
             for seed in seeds:
+                # 이미 같은 조건·같은 규칙 정의·같은 평가 수로 계산해 둔 것은 건너뛴다.
+                # 규칙은 학습이 없어 결과가 결정적이므로 다시 계산해도 같은 숫자가 나온다
+                # (λ 격자를 넓힐 때마다 전체를 다시 도는 것은 시간 낭비다).
+                mp = out / f"seed{seed}_meta.json"
+                if mp.exists():
+                    try:
+                        prev = json.loads(mp.read_text(encoding="utf-8"))
+                        if (prev.get("done") and prev.get("rule_spec") == spec
+                                and prev.get("n_eval_episodes_final") == n_final
+                                and (out / f"seed{seed}_final.csv").exists()):
+                            s = prev.get("final", {})
+                            continue
+                    except Exception:
+                        pass
                 eval_seeds = [500_000 + int(seed) * 1000 + i for i in range(n_final)]
                 t0 = time.time()
                 rows = evaluate(env, build(spec, env_id), eval_seeds)

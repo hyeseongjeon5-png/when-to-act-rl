@@ -1,0 +1,11 @@
+# 85시간 스프린트 작업 대기열 (라벨<탭>종류<탭>내용)
+# 위에서부터 차례로 실행된다. 도는 중에 줄을 덧붙이면 다음 차례로 잡힌다.
+# 종류 train = 학습 러너 (설정:워커수, 쉼표로 나열하면 동시 실행)
+# 종류 rules = 고정 규칙 평가 (1코어, 차례로)
+1_공정성파일럿	train	experiments/configs/fair_pilot_mc_A.yaml:4,experiments/configs/fair_pilot_mc_B.yaml:3,experiments/configs/fair_pilot_mc_C.yaml:3
+2_붕괴문턱_규칙	rules	experiments/configs/main_mountaincar.yaml
+2_붕괴문턱_학습	train	experiments/configs/main_mountaincar.yaml:10
+3_인과_규칙	rules	experiments/configs/causal_warmup_mc.yaml
+3_인과_학습	train	experiments/configs/causal_warmup_mc.yaml:10
+5_LL정밀_규칙	rules	experiments/configs/main_lunarlander.yaml
+5_LL정밀_학습	train	experiments/configs/main_lunarlander.yaml:10

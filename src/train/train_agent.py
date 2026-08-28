@@ -79,9 +79,14 @@ def fingerprint(cfg: dict, agent_name: str) -> str:
         "env_kwargs": cfg.get("env_kwargs", {}),
         "n_eval_episodes_final": cfg.get("n_eval_episodes_final"),
         "final_snapshots": cfg.get("final_snapshots", [0.9, 0.95, 1.0]),
-        "variant": cfg.get("variant"),
-        "cost_warmup_frac": cfg.get("cost_warmup_frac", 0.0),
     }
+    # 변종·워밍업은 **쓸 때만** 지문에 넣는다. 항상 넣으면 이 항목이 없던 시절에 계산한
+    # 기존 결과의 지문이 전부 바뀌어, 끝난 조건을 처음부터 다시 돌리게 된다
+    # (2026-08-29 실제로 이 실수를 했고 dry-run에서 '이미 완료 0'으로 잡혔다).
+    if cfg.get("variant"):
+        key["variant"] = cfg["variant"]
+    if float(cfg.get("cost_warmup_frac", 0.0) or 0.0) > 0:
+        key["cost_warmup_frac"] = float(cfg["cost_warmup_frac"])
     return hashlib.sha1(json.dumps(key, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:12]
 
 
