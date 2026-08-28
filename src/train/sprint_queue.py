@@ -60,6 +60,8 @@ def load_state() -> dict:
 
 
 def save_state(st: dict) -> None:
+    st["pid"] = os.getpid()          # 자가 감시가 '대기열이 살아 있는가'를 확인하는 데 쓴다
+    st["queue_file"] = str(QUEUE.relative_to(ROOT)).replace(chr(92), "/")
     st["updated_at"] = time.time()
     st["updated_text"] = time.strftime("%Y-%m-%d %H:%M:%S")
     tmp = STATE.with_suffix(".tmp")
