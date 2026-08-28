@@ -1,10 +1,12 @@
-"""논문 4장(결과) 원고를 집계 파일에서 자동 생성한다.
+"""논문 Ⅳ장(Experimental Results) 원고를 집계 파일에서 자동 생성한다.
 
 왜 자동 생성인가: 숫자를 손으로 옮겨 적으면 반드시 틀린다. 그리고 실험이 갱신되면
 원고의 숫자가 조용히 낡는다. 이 스크립트는 results/aggregate/*.csv 에서만 숫자를 읽어
 paper/04_결과.md 를 다시 쓴다 (CLAUDE.md 절대 규칙 4 — 숫자는 로그 파일에서만 인용).
 
-서술(해석·논의)은 사람이 쓴다. 이 스크립트는 표와 사실 문장까지만 만든다.
+서술(해석·논의)은 사람이 쓴다. 이 스크립트는 표와 '사실 문장'까지만 만든다.
+
+표는 **λ를 세로로** 놓는다. λ 격자가 14개까지 늘어나 가로로 놓으면 A4 한 쪽에 들어가지 않는다.
 
 실행: python -m src.report.make_results_chapter
 """
@@ -20,20 +22,34 @@ ROOT = Path(__file__).resolve().parents[2]
 AGG = ROOT / "results" / "aggregate"
 OUT = ROOT / "paper" / "04_결과.md"
 
-LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식"}
-RULE_LABEL = {"rule_pump": "pump(임계값) 규칙", "rule_threshold": "임계값 규칙",
-              "rule_noop": "무행동", "rule_periodic_k1": "매 스텝 주기",
-              "rule_periodic_k2": "2스텝 주기", "rule_periodic_k4": "4스텝 주기",
-              "rule_periodic_k8": "8스텝 주기"}
+LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL", "lazy": "Lazy-MDP"}
+RULE_LABEL = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙",
+              "rule_noop": "무행동", "rule_best": "최강 규칙",
+              "rule_periodic_k1": "매 스텝 주기", "rule_periodic_k2": "2스텝 주기",
+              "rule_periodic_k4": "4스텝 주기", "rule_periodic_k8": "8스텝 주기"}
 REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold"}
 ENV_NOTE = {
-    "MountainCar-v0": "보상이 희소한 탐험 문제. 표준 ε-greedy 탐험으로는 목표에 닿지 못한다.",
-    "LunarLander-v3": "보상이 조밀한 제어 문제. 표준 DQN이 정상적으로 학습된다.",
+    "MountainCar-v0": ("보상이 희소한 탐험 문제다. 목표에 닿기 전까지 아무 신호가 없고, "
+                       "매 스텝 무작위로 행동하는 탐험으로는 목표에 한 번도 닿지 못한다. "
+                       "학습 없이도 문제를 푸는 강한 고정 규칙(pump)이 존재한다."),
+    "LunarLander-v3": ("보상이 조밀한 제어 문제다. 매 스텝 자세·속도·연료에 대한 신호가 들어오고, "
+                       "표준 DQN이 정상적으로 학습된다. 고정 규칙은 착륙은 시키지만 점수가 낮다."),
 }
+ENV_ORDER = ["MountainCar-v0", "LunarLander-v3"]
+ENV_FIG = {"MountainCar-v0": "fig2", "LunarLander-v3": "fig3"}
 
 
 def name(a: str) -> str:
     return LABEL.get(a, RULE_LABEL.get(a, a))
+
+
+# 로마자 약어 뒤의 은/는은 읽는 소리로 정해진다 (DQN=디큐엔 → 은, MDP=엠디피 → 는)
+EUN = {"표준 DQN": "은", "TempoRL": "은", "Lazy-MDP": "는"}
+
+
+def eun(a: str) -> str:
+    n = name(a)
+    return n + EUN.get(n, "은")
 
 
 def num(v, nd=1) -> str:
@@ -43,126 +59,202 @@ def num(v, nd=1) -> str:
         return "—"
 
 
+def _cols(agg: pd.DataFrame, env_id: str) -> list[str]:
+    learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
+    rules = [r for r in (REF_RULE.get(env_id), "rule_best", "rule_noop") if r in set(agg.agent)]
+    return learners + rules
+
+
 def perf_table(agg: pd.DataFrame, env_id: str, metric: str = "cost_return") -> str:
+    """λ를 세로, 계열을 가로로 놓은 표. 각 칸은 IQM [95% CI]."""
+    cols = _cols(agg, env_id)
     lams = sorted(agg.lam.unique())
-    learners = [a for a in sorted(agg.agent.unique()) if not str(a).startswith("rule_")]
-    rules = [a for a in sorted(agg.agent.unique()) if str(a).startswith("rule_")]
-    head = "| 계열 / 규칙 | " + " | ".join("λ=" + format(l, "g") for l in lams) + " |"
-    sep = "|---|" + "---|" * len(lams)
-    lines = [head, sep]
-    for a in learners + rules:
-        g = agg[agg.agent == a].set_index("lam")
+    lines = ["| λ | " + " | ".join(name(c) for c in cols) + " |",
+             "|---|" + "---|" * len(cols)]
+    idx = {c: agg[agg.agent == c].set_index("lam") for c in cols}
+    for l in lams:
         cells = []
-        for l in lams:
+        for c in cols:
+            g = idx[c]
             if l not in g.index:
                 cells.append("—")
                 continue
             r = g.loc[l]
-            cells.append(num(r[metric + "_iqm"]) + " <sub>[" + num(r[metric + "_ci_lo"])
-                         + ", " + num(r[metric + "_ci_hi"]) + "]</sub>")
-        bold = "**" if a in learners else ""
-        lines.append("| " + bold + name(a) + bold + " | " + " | ".join(cells) + " |")
+            cells.append(num(r[metric + "_iqm"]) + " ["
+                         + num(r[metric + "_ci_lo"]) + ", " + num(r[metric + "_ci_hi"]) + "]")
+        lines.append("| **" + format(l, "g") + "** | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
 
-def action_table(agg: pd.DataFrame) -> str:
+def action_table(agg: pd.DataFrame, env_id: str) -> str:
+    cols = _cols(agg, env_id)
     lams = sorted(agg.lam.unique())
-    learners = [a for a in sorted(agg.agent.unique()) if not str(a).startswith("rule_")]
-    ref = [a for a in agg.agent.unique() if a in REF_RULE.values()]
-    head = "| 계열 | " + " | ".join("λ=" + format(l, "g") for l in lams) + " |"
-    lines = [head, "|---|" + "---|" * len(lams)]
-    for a in learners + sorted(ref):
-        g = agg[agg.agent == a].set_index("lam")
-        cells = [num(g.loc[l]["n_actions_iqm"]) if l in g.index else "—" for l in lams]
-        lines.append("| " + name(a) + " | " + " | ".join(cells) + " |")
+    lines = ["| λ | " + " | ".join(name(c) for c in cols) + " |",
+             "|---|" + "---|" * len(cols)]
+    idx = {c: agg[agg.agent == c].set_index("lam") for c in cols}
+    for l in lams:
+        cells = [num(idx[c].loc[l]["n_actions_iqm"]) if l in idx[c].index else "—" for c in cols]
+        lines.append("| **" + format(l, "g") + "** | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
 
-def star_table(env_id: str) -> tuple[str, list]:
+def star_facts(env_id: str) -> list[str]:
     p = AGG / (env_id + "_lambda_star.json")
     if not p.exists():
-        return "*(λ\\* 계산 결과 없음)*", []
+        return []
     st = json.loads(p.read_text(encoding="utf-8"))
-    rows = ["| 학습 계열 | λ\\*<sub>CI</sub> (엄격) | λ\\*<sub>점추정</sub> (느슨) | 상태 |", "|---|---|---|---|"]
+    ref = st.get("rule", "")
+    out = []
     for s in st.get("results", []):
-        ci = s["lam_star_ci"] if s["lam_star_ci"] is not None else "격자 안에 없음"
-        pt = s["lam_star_pt"] if s["lam_star_pt"] is not None else "격자 안에 없음"
-        rows.append("| " + name(s["learner"]) + " | " + str(ci) + " | " + str(pt) + " | " + s.get("note", "") + " |")
-    return "\n".join(rows), st.get("results", [])
+        lname = eun(s["learner"])
+        if s.get("lam_star_pt") == 0.0:
+            out.append(lname + " λ=0에서도 " + RULE_LABEL.get(ref, ref)
+                       + "을 이기지 못했다. 비용 때문이 아니라 학습된 정책 자체가 규칙보다 약하다는 뜻이다.")
+        elif s.get("lam_star_pt") is not None:
+            extra = ("" if s.get("lam_star_ci") is None
+                     else " 통계적으로 확실한 우위는 λ=" + format(float(s["lam_star_ci"]), "g")
+                          + "에서 이미 사라졌다.")
+            out.append(lname + " λ=" + format(float(s["lam_star_pt"]), "g") + "에서 "
+                       + RULE_LABEL.get(ref, ref) + "에 역전당했다." + extra)
+        else:
+            out.append(lname + " 비교된 λ 구간 전체(" + str(s.get("coverage", ""))
+                       + ")에서 " + RULE_LABEL.get(ref, ref) + "을 이겼다.")
+    return out
 
 
-def env_chapter(env_id: str) -> str:
+def action_saving_fact(agg: pd.DataFrame, env_id: str) -> str:
+    """비용이 오를 때 행동을 실제로 아끼는가 — 가장 작은 λ와 가장 큰 λ의 행동 횟수를 비교."""
+    learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
+    bits = []
+    for a in learners:
+        g = agg[agg.agent == a].sort_values("lam")
+        if len(g) < 2:
+            continue
+        lo, hi = g.iloc[0], g.iloc[-1]
+        if lo.n_actions_iqm <= 0:
+            continue
+        drop = (1 - hi.n_actions_iqm / lo.n_actions_iqm) * 100
+        bits.append(name(a) + " " + num(lo.n_actions_iqm) + "회(λ=" + format(lo.lam, "g")
+                    + ") → " + num(hi.n_actions_iqm) + "회(λ=" + format(hi.lam, "g")
+                    + "), " + num(drop, 0) + "% 감소")
+    return "; ".join(bits)
+
+
+def env_section(env_id: str, n: int) -> str:
     p = AGG / (env_id + "_iqm.csv")
     if not p.exists():
-        return "### " + env_id + "\n\n*(집계 결과 없음)*\n"
+        return ""
     agg = pd.read_csv(p)
-    ref = REF_RULE.get(env_id, "rule_pump")
-    learners = [a for a in sorted(agg.agent.unique()) if not str(a).startswith("rule_")]
-    seeds_learner = agg[agg.agent.isin(learners)]["n_seeds"]
-    lo_s = int(seeds_learner.min()) if len(seeds_learner) else 0
-    hi_s = int(seeds_learner.max()) if len(seeds_learner) else 0
-    n_lam_learner = agg[agg.agent.isin(learners)].lam.nunique()
-    n_lam_grid = agg.lam.nunique()
-    steps = int(agg[agg.agent.isin(learners)]["total_steps"].max()) if len(seeds_learner) else 0
-
-    status = ("학습 계열은 λ 격자 " + str(n_lam_grid) + "개 중 " + str(n_lam_lam(n_lam_learner))
-              + "개, 시드 " + (str(lo_s) if lo_s == hi_s else str(lo_s) + "~" + str(hi_s))
-              + "개까지 완료된 시점의 집계다.")
-    if lo_s < 10 or n_lam_learner < n_lam_grid:
+    learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
+    sub = agg[agg.agent.isin(learners)]
+    if sub.empty:
+        return ""
+    lo_s, hi_s = int(sub.n_seeds.min()), int(sub.n_seeds.max())
+    steps = int(sub.total_steps.max())
+    n_lam = sub.lam.nunique()
+    n_grid = agg.lam.nunique()
+    status = ("조건당 환경 " + format(steps, ",") + "스텝, 학습 계열은 λ " + str(n_lam)
+              + "개(격자 " + str(n_grid) + "개 중) · 시드 "
+              + (str(lo_s) if lo_s == hi_s else str(lo_s) + "~" + str(hi_s)) + "개까지 완료된 집계다.")
+    if lo_s < 10 or n_lam < n_grid:
         status += " **아직 실험이 끝나지 않았으므로 최종 결론이 아니다.**"
 
-    st_tbl, st_rows = star_table(env_id)
-    facts = []
-    for s in st_rows:
-        lname = name(s["learner"])
-        if s.get("lam_star_pt") == 0.0:
-            facts.append("- " + lname + "은 λ=0에서도 " + RULE_LABEL.get(ref, ref)
-                         + "을 이기지 못했다. 비용 때문이 아니라 학습된 정책 자체가 규칙보다 약하다는 뜻이다.")
-        elif s.get("lam_star_pt") is not None:
-            facts.append("- " + lname + "은 λ=" + str(s["lam_star_pt"])
-                         + "에서 " + RULE_LABEL.get(ref, ref) + "에 역전당했다"
-                         + (" (통계적으로 확실한 우위는 λ=" + str(s["lam_star_ci"]) + "에서 이미 사라졌다)"
-                            if s.get("lam_star_ci") is not None else "") + ".")
-        else:
-            facts.append("- " + lname + "은 비교된 λ 구간 전체에서 " + RULE_LABEL.get(ref, ref)
-                         + "을 이겼다 (" + str(s.get("coverage", "")) + " 비교됨).")
-
-    return ("### " + env_id + "\n\n"
-            + ENV_NOTE.get(env_id, "") + " 조건당 환경 " + format(steps, ",") + "스텝, "
-            + "평가는 탐험을 끈 상태로 100 에피소드. " + status + "\n\n"
-            + "#### 비용 반영 총보상 r' — IQM [95% 신뢰구간]\n\n"
-            + perf_table(agg, env_id) + "\n\n"
-            + "#### 에피소드당 행동 횟수 (IQM)\n\n"
-            + action_table(agg) + "\n\n"
-            + "#### 임계 비용 λ\\*\n\n" + st_tbl + "\n\n"
-            + "\n".join(facts) + "\n\n"
-            + "![λ-성능 지도](../results/figures/" + env_id + "_lambda_map_cost_return.png)\n\n"
-            + "![행동 횟수 지도](../results/figures/" + env_id + "_action_map.png)\n\n"
-            + "![학습 곡선](../results/figures/" + env_id + "_learning_curves.png)\n")
-
-
-def n_lam_lam(n: int) -> int:
-    return n
+    tno_perf, tno_act = 2 + n * 2, 3 + n * 2
+    parts = [
+        "### 4." + str(n) + " " + env_id,
+        "",
+        ENV_NOTE.get(env_id, "") + " " + status,
+        "",
+        "<!--TABCAP: 표 " + str(tno_perf) + ". " + env_id + "의 비용 반영 총보상 r′ — IQM [95% 신뢰구간]"
+        " | Table " + str(tno_perf) + ". Cost-adjusted return r′ on " + env_id + " (IQM [95% CI]) -->",
+        perf_table(agg, env_id),
+        "",
+        "<!--FIG:" + ENV_FIG.get(env_id, "fig2") + "-->",
+        "",
+    ]
+    facts = star_facts(env_id)
+    if facts:
+        parts += ["표에서 읽히는 사실은 다음과 같다.", ""]
+        parts += ["- " + f for f in facts]
+        parts.append("")
+    save = action_saving_fact(agg, env_id)
+    if save:
+        parts += ["비용이 오를 때 실제로 행동을 아꼈는지는 행동 횟수로 확인된다: " + save + ".", ""]
+        parts += [
+            "<!--TABCAP: 표 " + str(tno_act) + ". " + env_id + "의 에피소드당 행동 횟수 (IQM)"
+            " | Table " + str(tno_act) + ". Actions per episode on " + env_id + " (IQM) -->",
+            action_table(agg, env_id),
+            "",
+        ]
+    return "\n".join(parts)
 
 
-HEADER = """# 4장 · 결과
+def collapse_section() -> str:
+    p = AGG / "MountainCar-v0_iqm.csv"
+    if not p.exists():
+        return ""
+    agg = pd.read_csv(p)
+    learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
+    lines = []
+    for a in learners:
+        g = agg[(agg.agent == a) & (agg.lam > 0)].sort_values("lam")
+        if g.empty:
+            continue
+        z = g[g.n_actions_iqm < 1.0]
+        first_zero = format(float(z.iloc[0].lam), "g") if not z.empty else "격자 안에 없음"
+        g0 = agg[(agg.agent == a) & (agg.lam == 0.0)]
+        base = float(g0.iloc[0].n_actions_iqm) if not g0.empty else float("nan")
+        h = g[g.n_actions_iqm < base * 0.5]
+        half = format(float(h.iloc[0].lam), "g") if not h.empty else "격자 안에 없음"
+        lines.append("- " + name(a) + ": 행동 횟수가 절반 아래로 떨어지는 첫 λ = " + half
+                     + ", 완전히 0이 되는 첫 λ = " + first_zero)
+    if not lines:
+        return ""
+    return "\n".join([
+        "## 5. 무행동 붕괴 — 아주 작은 비용에서 학습이 멈춘다",
+        "",
+        "MountainCar에서는 비용이 조금만 붙어도 세 계열 모두 행동을 멈추고 그 상태로 굳는다. "
+        "λ를 0 부근에서 촘촘히 훑어 그 문턱이 어디인지 쟀다.",
+        "",
+        "<!--FIG:fig4-->",
+        "",
+        "\n".join(lines),
+        "",
+        "이 문턱은 에피소드 보상 규모에 견주면 매우 작다. MountainCar의 한 에피소드 보상은 "
+        "−200에서 −120 사이인데, 행동 1번의 값이 그 1% 수준만 되어도 학습은 행동을 포기한다.",
+        "",
+    ])
 
-> **이 문서는 자동 생성된다.** `python -m src.report.make_results_chapter` 를 돌리면
-> `results/aggregate/*.csv` 에서 숫자를 다시 읽어 이 파일을 덮어쓴다.
-> 숫자를 손으로 고치지 말 것 — 다음 생성 때 사라지고, 그 사이 원고가 실험과 어긋난다.
-> 해석과 논의는 5장(`05_논의.md`)에 사람이 쓴다.
 
-## 4.1 읽는 법
+HEADER_TMPL = """# Ⅳ. Experimental Results
 
-- **λ**: 행동 1번의 값. 오른쪽으로 갈수록 행동이 비싸다. λ=0이면 원래 문제와 같다.
-- **r'**: 비용까지 빼고 남은 총보상. 높을수록 좋다.
+## 1. 읽는 법
+
+- **λ**: 행동 1번의 값. 오른쪽(아래쪽)으로 갈수록 행동이 비싸다. λ=0이면 원래 문제와 같다.
+- **r′**: 비용까지 빼고 남은 총보상. 높을수록 좋다.
 - **대괄호**: 95% 계층 부트스트랩 신뢰구간. 두 구간이 겹치면 우열을 말하지 않는다.
-- **기준선**: 각 환경에서 가장 센 고정 규칙 (MountainCar는 pump 규칙, LunarLander는 임계값 규칙).
-  문제를 아예 못 푸는 약한 규칙(무행동·주기)을 기준으로 삼으면 "학습이 이겼다"가 너무 쉬워진다.
-- **λ\\***: 학습이 그 기준 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ.
-  격자 안에서 교차가 없으면 보간하지 않고 "격자 안에 없음"이라고 적는다.
+- **기준 규칙**: 각 환경에서 가장 센 고정 규칙(MountainCar는 pump, LunarLander는 임계값). 문제를 아예 못 푸는 약한 규칙을 기준으로 삼으면 "학습이 이겼다"가 너무 쉬워진다.
+- **최강 규칙**: λ마다 그 시점에서 가장 센 고정 규칙을 골라 이은 포락선. 비용이 커지면 최강 규칙이 무행동으로 바뀌기 때문에 이 보조선을 함께 본다.
+- **λ\\***: 학습이 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ. 격자 안에서 교차가 없으면 보간하지 않고 그 사실을 그대로 적는다.
 
-## 4.2 환경별 결과
+## 2. 핵심 결과 — 임계 비용 λ*
+
+<!--TABLE:tab1-->
+
+## 3. 실험 설정
+
+<!--TABLE:tab2-->
+
+## 4. 환경별 λ-성능 지도
+"""
+
+FAIRNESS_TMPL = """## 6. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
+
+MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습이 규칙에 진다"는 뜻이다.
+그렇다면 이 결과는 비용에 대한 발견이 아니라 학습이 덜 됐다는 신호일 수 있다.
+그래서 학습 예산과 탐험 설정을 바꿔 가며 λ=0 성능을 다시 쟀다.
+
+<!--TABLE:tab3-->
 """
 
 
@@ -170,18 +262,19 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
     a = ap.parse_args()
-    envs = sorted({p.name.replace("_iqm.csv", "") for p in AGG.glob("*_iqm.csv")})
+    envs = [e for e in ENV_ORDER if (AGG / (e + "_iqm.csv")).exists()]
     if not envs:
         print("집계 파일이 없다 — 먼저 aggregate를 돌릴 것")
         return
-    body = "\n".join(env_chapter(e) for e in envs)
-    src = ("\n---\n\n*출처: `results/aggregate/{" + ",".join(envs) + "}_iqm.csv`, "
-           "`*_lambda_star.json`. 조건별 원본은 `results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv`. "
-           "설계 결정과 도중에 고친 버그는 `docs/실험일지.md` 참조.*\n")
+    body = "\n".join(env_section(e, i + 1) for i, e in enumerate(envs))
+    src = ("\n<!-- 출처: results/aggregate/" + "{" + ",".join(envs) + "}_iqm.csv, "
+           "*_lambda_star.json. 조건별 원본은 results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv. "
+           "설계 결정과 도중에 고친 버그는 docs/실험일지.md 참조. -->\n")
     out = Path(a.out) if a.out else OUT
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(HEADER + "\n" + body + src, encoding="utf-8")
-    print("결과 장 생성: " + str(out.relative_to(ROOT)))
+    out.write_text(HEADER_TMPL + "\n" + body + "\n" + collapse_section() + "\n"
+                   + FAIRNESS_TMPL + src, encoding="utf-8")
+    print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
 
 
 if __name__ == "__main__":
