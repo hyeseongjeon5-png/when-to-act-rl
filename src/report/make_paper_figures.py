@@ -37,6 +37,8 @@ LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방
          "rule_threshold_tuned": "고정 규칙 (임계값·튜닝)", "rule_noop": "고정 규칙 (무행동)",
          "rule_cautious": "고정 규칙 (신중)", "rule_cautious_d1": "고정 규칙 (신중 d=1)"}
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
+# 세로로 눕혀 쓰는 짧은 이름 — 긴 이름은 그림 밖으로 넘친다
+SHORT = {"dqn": "DQN", "temporl": "TempoRL", "lazy": "Lazy-MDP"}
 REF = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold_tuned",
        "MinAtar_Freeway-v1": "rule_cautious"}
 from matplotlib.ticker import FuncFormatter
@@ -188,25 +190,29 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
         ax.plot(g.lam, g.cost_return_iqm, label=LABEL.get(name, name), zorder=3, **style)
 
     # λ* 표시선은 **최강 규칙 포락선 기준**을 쓴다.
-    # 지정 기준 규칙만 보면 LunarLander처럼 격자 끝까지 이기는 환경에서 교차가 없어 선이 안 그려지는데,
-    # 실제로는 λ>1.37에서 최강 규칙이 무행동으로 바뀌며 λ=2에서 역전된다. 그쪽이 실질적인 문턱이다.
+    # 지정 기준 규칙만 보면 격자 끝까지 이기는 환경에서 교차가 없어 선이 안 그려지는데,
+    # 비용이 커지면 최강 규칙이 무행동으로 바뀌므로 그쪽이 실질적인 문턱이다.
     star_p = AGG / f"{env_id}_lambda_star.json"
-    lam_stars = []
+    stars = {}
     if star_p.exists():
         st = json.loads(star_p.read_text(encoding="utf-8"))
         for r in st.get("results_vs_best_rule", st.get("results", [])):
-            if r.get("lam_star_pt"):
-                lam_stars.append((r["learner"], float(r["lam_star_pt"])))
-    for learner, lam in sorted(set(lam_stars), key=lambda x: x[1]):
-        ax.axvline(lam, color=COLOR.get(learner, "#666"), ls="-.", lw=1.0, alpha=0.5, zorder=1)
-    if lam_stars:
-        lo, hi = min(l for _, l in lam_stars), max(l for _, l in lam_stars)
-        txt = f"λ* = {lo:g}" if lo == hi else f"λ* = {lo:g} ~ {hi:g}"
-        # 세로 위치를 축 높이의 22%에 둔다 — 바닥에 두면 시드 수 주석과 겹친다
-        y0, y1 = ax.get_ylim()
-        ax.annotate(txt + " (최강 규칙 기준)", xy=(hi, y0 + 0.22 * (y1 - y0)),
+            v = r.get("lam_star_pt")
+            if v is not None:                      # 0.0도 뜻이 있다 — 거짓값으로 버리면 안 된다
+                stars[r["learner"]] = float(v)
+    y0, y1 = ax.get_ylim()
+    zero_at = [LABEL[a] for a, v in stars.items() if v == 0.0 and a in learners]
+    for a, lam in sorted(stars.items(), key=lambda kv: kv[1]):
+        if a not in learners or lam == 0.0:
+            continue
+        ax.axvline(lam, color=COLOR[a], ls="-.", lw=1.0, alpha=0.55, zorder=1)
+        ax.annotate(f"λ*={lam:g} {SHORT[a]}", xy=(lam, y0 + 0.12 * (y1 - y0)),
                     xytext=(4, 0), textcoords="offset points", rotation=90,
-                    fontsize=8, color="#7b3fb5", fontweight="bold", va="bottom")
+                    fontsize=7.6, color=COLOR[a], fontweight="bold", va="bottom")
+    if zero_at:
+        ax.annotate("λ*=0 (비용이 없어도 규칙을 못 이김): " + ", ".join(zero_at),
+                    xy=(0.02, 0.03), xycoords="axes fraction", fontsize=7.6,
+                    color="#b3261e", fontweight="bold")
 
     n_seeds = int(agg.n_seeds.max())
     if symlog:

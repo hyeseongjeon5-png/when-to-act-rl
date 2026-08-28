@@ -18,6 +18,7 @@ MountainCar-v0,MountainCar-v0,dqn,0.001,5,b77904fc190a,-122.53694666666686,-122.
 MountainCar-v0,MountainCar-v0,dqn,0.001,6,b77904fc190a,-200.1333333333337,-200.0,133.33333333333334,0.0,200.0,150,974.2,300000,results/raw/MountainCar-v0/dqn/lam0.001/seed6_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.001,7,b77904fc190a,-200.13333333333367,-200.0,133.33333333333334,0.0,200.0,150,998.7,300000,results/raw/MountainCar-v0/dqn/lam0.001/seed7_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.001,8,b77904fc190a,-141.24733333333356,-141.11333333333334,134.0,0.7533333333333333,141.11333333333334,150,1017.7,300000,results/raw/MountainCar-v0/dqn/lam0.001/seed8_final.csv
+MountainCar-v0,MountainCar-v0,dqn,0.001,9,b77904fc190a,-200.20000000000053,-200.0,200.0,0.0,200.0,150,1008.4,300000,results/raw/MountainCar-v0/dqn/lam0.001/seed9_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.002,0,b77904fc190a,-155.9660000000001,-155.68,143.0,0.68,155.68,150,1012.4,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed0_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.002,1,b77904fc190a,-121.6801466666666,-121.44,120.07333333333334,0.9733333333333334,121.44,150,999.0,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed1_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.002,2,b77904fc190a,-139.29752,-139.02666666666667,135.42666666666668,0.88,139.02666666666667,150,1015.0,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed2_final.csv
@@ -27,6 +28,7 @@ MountainCar-v0,MountainCar-v0,dqn,0.002,5,b77904fc190a,-200.266666666667,-200.0,
 MountainCar-v0,MountainCar-v0,dqn,0.002,6,b77904fc190a,-200.00729333333356,-199.78,113.64666666666666,0.006666666666666667,199.78,150,1002.8,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed6_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.002,7,b77904fc190a,-149.25830666666675,-148.98,139.15333333333334,0.7133333333333334,148.98,150,1020.0,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed7_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.002,8,b77904fc190a,-200.4000000000005,-200.0,200.0,0.0,200.0,150,1008.2,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed8_final.csv
+MountainCar-v0,MountainCar-v0,dqn,0.002,9,b77904fc190a,-200.4000000000005,-200.0,200.0,0.0,200.0,150,1031.6,300000,results/raw/MountainCar-v0/dqn/lam0.002/seed9_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.003,0,b77904fc190a,-161.54829999999944,-161.08,156.1,0.5333333333333333,161.08,150,1014.2,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed0_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.003,1,b77904fc190a,-139.24727999999965,-138.84,135.76,0.7333333333333333,138.84,150,990.2,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed1_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.003,2,b77904fc190a,-181.7754866666663,-181.46666666666667,102.94,0.34,181.46666666666667,150,1004.6,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed2_final.csv
@@ -36,6 +38,7 @@ MountainCar-v0,MountainCar-v0,dqn,0.003,5,b77904fc190a,-110.94375333333325,-110.
 MountainCar-v0,MountainCar-v0,dqn,0.003,6,b77904fc190a,-134.29419999999973,-133.9,131.4,0.8333333333333334,133.9,150,983.6,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed6_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.003,7,b77904fc190a,-200.39999999999932,-200.0,133.33333333333334,0.0,200.0,150,1005.3,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed7_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.003,8,b77904fc190a,-140.1942933333331,-139.79333333333332,133.65333333333334,0.84,139.79333333333332,150,1008.4,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed8_final.csv
+MountainCar-v0,MountainCar-v0,dqn,0.003,9,b77904fc190a,-166.13365999999945,-165.66,157.88666666666666,0.6666666666666666,165.66,150,1014.3,300000,results/raw/MountainCar-v0/dqn/lam0.003/seed9_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.005,0,b77904fc190a,-170.35706666666627,-169.52666666666667,166.08,0.3933333333333333,169.52666666666667,150,1031.0,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed0_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.005,1,b77904fc190a,-130.19076666666646,-129.56,126.15333333333334,0.9466666666666667,129.56,150,997.3,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed1_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.005,2,b77904fc190a,-200.33333333333314,-200.0,66.66666666666667,0.0,200.0,150,989.5,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed2_final.csv
@@ -45,6 +48,7 @@ MountainCar-v0,MountainCar-v0,dqn,0.005,5,b77904fc190a,-129.7863333333331,-129.1
 MountainCar-v0,MountainCar-v0,dqn,0.005,6,b77904fc190a,-200.3333333333332,-200.0,66.66666666666667,0.0,200.0,150,984.0,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed6_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.005,7,b77904fc190a,-200.66666666666632,-200.0,133.33333333333334,0.0,200.0,150,1002.9,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed7_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.005,8,b77904fc190a,-129.9707333333331,-129.34,126.14666666666666,0.96,129.34,150,1000.9,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed8_final.csv
+MountainCar-v0,MountainCar-v0,dqn,0.005,9,b77904fc190a,-200.3333333333332,-200.0,66.66666666666667,0.0,200.0,150,1004.6,300000,results/raw/MountainCar-v0/dqn/lam0.005/seed9_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.0075,0,b77904fc190a,-201.42249999999913,-200.0,189.66666666666666,0.0,200.0,150,1035.6,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed0_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.0075,1,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,1024.6,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed1_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.0075,2,b77904fc190a,-198.5655999999997,-198.08,64.74666666666667,0.16666666666666666,198.08,150,975.6,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed2_final.csv
@@ -54,6 +58,7 @@ MountainCar-v0,MountainCar-v0,dqn,0.0075,5,b77904fc190a,-120.317233333333,-119.4
 MountainCar-v0,MountainCar-v0,dqn,0.0075,6,b77904fc190a,-200.99999999999943,-200.0,133.33333333333334,0.0,200.0,150,985.4,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed6_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.0075,7,b77904fc190a,-160.62124999999938,-159.44,157.5,0.7066666666666667,159.44,150,1001.3,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed7_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.0075,8,b77904fc190a,-198.36586666666582,-196.96666666666667,186.56,0.12,196.96666666666667,150,1015.1,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed8_final.csv
+MountainCar-v0,MountainCar-v0,dqn,0.0075,9,b77904fc190a,-200.49999999999972,-200.0,66.66666666666667,0.0,200.0,150,1028.1,300000,results/raw/MountainCar-v0/dqn/lam0.0075/seed9_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.01,0,b77904fc190a,-184.94446666666636,-183.11333333333334,183.11333333333334,0.20666666666666667,183.11333333333334,150,908.0,300000,results/raw/MountainCar-v0/dqn/lam0.01/seed0_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.01,1,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,1044.6,300000,results/raw/MountainCar-v0/dqn/lam0.01/seed1_final.csv
 MountainCar-v0,MountainCar-v0,dqn,0.01,2,b77904fc190a,-200.0,-200.0,0.0,0.0,200.0,150,927.6,300000,results/raw/MountainCar-v0/dqn/lam0.01/seed2_final.csv
@@ -153,6 +158,7 @@ MountainCar-v0,MountainCar-v0,lazy,0.001,5,924b68cf9f5e,-119.33100000000017,-119
 MountainCar-v0,MountainCar-v0,lazy,0.001,6,924b68cf9f5e,-131.04417333333356,-130.91333333333333,130.84,0.94,130.91333333333333,150,1012.3,300000,results/raw/MountainCar-v0/lazy/lam0.001/seed6_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.001,7,924b68cf9f5e,-137.73058666666694,-137.60666666666665,123.92,0.9866666666666667,137.60666666666665,150,1004.3,300000,results/raw/MountainCar-v0/lazy/lam0.001/seed7_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.001,8,924b68cf9f5e,-147.53372666666698,-147.39333333333335,140.39333333333335,0.6666666666666666,147.39333333333335,150,1016.0,300000,results/raw/MountainCar-v0/lazy/lam0.001/seed8_final.csv
+MountainCar-v0,MountainCar-v0,lazy,0.001,9,924b68cf9f5e,-158.64611333333372,-158.49333333333334,152.78,0.9333333333333333,158.49333333333334,150,1046.1,300000,results/raw/MountainCar-v0/lazy/lam0.001/seed9_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.002,0,924b68cf9f5e,-173.16590666666676,-172.95333333333335,106.28666666666666,0.3333333333333333,172.95333333333335,150,1013.0,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed0_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.002,1,924b68cf9f5e,-122.49115999999995,-122.24666666666667,122.24666666666667,0.9933333333333333,122.24666666666667,150,980.5,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed1_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.002,2,924b68cf9f5e,-115.30146666666663,-115.07333333333334,114.06666666666666,1.0,115.07333333333334,150,995.7,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed2_final.csv
@@ -162,6 +168,7 @@ MountainCar-v0,MountainCar-v0,lazy,0.002,5,924b68cf9f5e,-135.72399999999996,-135
 MountainCar-v0,MountainCar-v0,lazy,0.002,6,924b68cf9f5e,-158.7362000000001,-158.42,158.1,0.8666666666666667,158.42,150,1028.8,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed6_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.002,7,924b68cf9f5e,-142.61129333333324,-142.32666666666665,142.31333333333333,0.8933333333333333,142.32666666666665,150,998.7,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed7_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.002,8,924b68cf9f5e,-117.9107199999999,-117.68666666666667,112.02666666666667,1.0,117.68666666666667,150,998.4,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed8_final.csv
+MountainCar-v0,MountainCar-v0,lazy,0.002,9,924b68cf9f5e,-137.23664000000005,-136.97333333333333,131.65333333333334,0.9733333333333334,136.97333333333333,150,1018.7,300000,results/raw/MountainCar-v0/lazy/lam0.002/seed9_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.003,0,924b68cf9f5e,-119.14647333333322,-118.79333333333334,117.71333333333334,1.0,118.79333333333334,150,1021.6,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed0_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.003,1,924b68cf9f5e,-200.585699999999,-200.0,195.23333333333332,0.0,200.0,150,995.2,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed1_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.003,2,924b68cf9f5e,-119.2365999999999,-118.88,118.86666666666666,0.9933333333333333,118.88,150,1016.2,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed2_final.csv
@@ -171,6 +178,7 @@ MountainCar-v0,MountainCar-v0,lazy,0.003,5,924b68cf9f5e,-112.03509999999993,-111
 MountainCar-v0,MountainCar-v0,lazy,0.003,6,924b68cf9f5e,-109.65868,-109.34,106.22666666666667,1.0,109.34,150,1000.1,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed6_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.003,7,924b68cf9f5e,-134.6876333333331,-134.29333333333332,131.43333333333334,0.9266666666666666,134.29333333333332,150,998.3,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed7_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.003,8,924b68cf9f5e,-147.86252666666644,-147.52666666666667,111.95333333333333,0.8466666666666667,147.52666666666667,150,1017.0,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed8_final.csv
+MountainCar-v0,MountainCar-v0,lazy,0.003,9,924b68cf9f5e,-170.37247999999943,-169.9,157.49333333333334,0.6666666666666666,169.9,150,1031.5,300000,results/raw/MountainCar-v0/lazy/lam0.003/seed9_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.005,0,924b68cf9f5e,-126.16729999999977,-125.54666666666667,124.12666666666667,0.9733333333333334,125.54666666666667,150,1015.8,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed0_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.005,1,924b68cf9f5e,-122.95633333333312,-122.36,119.26666666666667,1.0,122.36,150,960.2,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed1_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.005,2,924b68cf9f5e,-124.9205333333331,-124.30666666666667,122.77333333333333,1.0,124.30666666666667,150,1017.2,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed2_final.csv
@@ -180,6 +188,7 @@ MountainCar-v0,MountainCar-v0,lazy,0.005,5,924b68cf9f5e,-113.13473333333316,-112
 MountainCar-v0,MountainCar-v0,lazy,0.005,6,924b68cf9f5e,-174.62069999999957,-173.75333333333333,173.47333333333333,0.6066666666666667,173.75333333333333,150,1019.2,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed6_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.005,7,924b68cf9f5e,-146.24636666666638,-145.62,125.27333333333333,0.8333333333333334,145.62,150,1035.4,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed7_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.005,8,924b68cf9f5e,-163.52856666666645,-163.04666666666665,96.38,0.5666666666666667,163.04666666666665,150,983.3,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed8_final.csv
+MountainCar-v0,MountainCar-v0,lazy,0.005,9,924b68cf9f5e,-127.38759999999978,-126.76,125.52,0.9933333333333333,126.76,150,1004.1,300000,results/raw/MountainCar-v0/lazy/lam0.005/seed9_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.0075,0,924b68cf9f5e,-200.49999999999972,-200.0,66.66666666666667,0.0,200.0,150,1021.4,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed0_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.0075,1,924b68cf9f5e,-200.0,-200.0,0.0,0.0,200.0,150,1002.9,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed1_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.0075,2,924b68cf9f5e,-201.39159999999922,-200.0,185.54666666666665,0.0,200.0,150,1015.6,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed2_final.csv
@@ -189,6 +198,7 @@ MountainCar-v0,MountainCar-v0,lazy,0.0075,5,924b68cf9f5e,-121.3409666666663,-120
 MountainCar-v0,MountainCar-v0,lazy,0.0075,6,924b68cf9f5e,-145.5997166666662,-144.62666666666667,129.74,0.7733333333333333,144.62666666666667,150,1011.3,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed6_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.0075,7,924b68cf9f5e,-126.4124499999996,-125.48,124.32666666666667,1.0,125.48,150,1037.1,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed7_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.0075,8,924b68cf9f5e,-200.0,-200.0,0.0,0.0,200.0,150,1018.9,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed8_final.csv
+MountainCar-v0,MountainCar-v0,lazy,0.0075,9,924b68cf9f5e,-112.32416666666637,-111.50666666666666,109.0,0.9866666666666667,111.50666666666666,150,1008.8,300000,results/raw/MountainCar-v0/lazy/lam0.0075/seed9_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.01,0,924b68cf9f5e,-174.0161999999999,-172.95333333333335,106.28666666666666,0.3333333333333333,172.95333333333335,150,926.4,300000,results/raw/MountainCar-v0/lazy/lam0.01/seed0_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.01,1,924b68cf9f5e,-170.91093333333313,-169.24,167.09333333333333,0.37333333333333335,169.24,150,943.8,300000,results/raw/MountainCar-v0/lazy/lam0.01/seed1_final.csv
 MountainCar-v0,MountainCar-v0,lazy,0.01,2,924b68cf9f5e,-180.7061999999997,-178.92,178.62,0.3333333333333333,178.92,150,927.6,300000,results/raw/MountainCar-v0/lazy/lam0.01/seed2_final.csv
@@ -1128,6 +1138,7 @@ MountainCar-v0,MountainCar-v0,temporl,0.001,5,031b8c9ed399,-142.0414733333336,-1
 MountainCar-v0,MountainCar-v0,temporl,0.001,6,031b8c9ed399,-127.7315666666669,-127.60666666666667,124.9,1.0,127.60666666666667,150,1914.4,300000,results/raw/MountainCar-v0/temporl/lam0.001/seed6_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.001,7,031b8c9ed399,-132.4896266666669,-132.36666666666667,122.96,0.8266666666666667,132.36666666666667,150,2019.4,300000,results/raw/MountainCar-v0/temporl/lam0.001/seed7_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.001,8,031b8c9ed399,-128.51826666666693,-128.39333333333335,124.93333333333334,0.94,128.39333333333335,150,1958.8,300000,results/raw/MountainCar-v0/temporl/lam0.001/seed8_final.csv
+MountainCar-v0,MountainCar-v0,temporl,0.001,9,031b8c9ed399,-184.19734666666716,-184.01333333333332,184.01333333333332,0.22,184.01333333333332,150,2000.3,300000,results/raw/MountainCar-v0/temporl/lam0.001/seed9_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.002,0,031b8c9ed399,-200.266666666667,-200.0,133.33333333333334,0.0,200.0,150,1961.5,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed0_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.002,1,031b8c9ed399,-129.6442133333333,-129.39333333333335,125.44,0.92,129.39333333333335,150,1947.6,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed1_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.002,2,031b8c9ed399,-140.05210666666673,-139.8,126.05333333333333,0.88,139.8,150,1967.4,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed2_final.csv
@@ -1137,6 +1148,7 @@ MountainCar-v0,MountainCar-v0,temporl,0.002,5,031b8c9ed399,-200.13333333333347,-
 MountainCar-v0,MountainCar-v0,temporl,0.002,6,031b8c9ed399,-164.1763866666669,-163.86,158.19333333333333,0.47333333333333333,163.86,150,1950.0,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed6_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.002,7,031b8c9ed399,-200.4000000000005,-200.0,200.0,0.0,200.0,150,1952.7,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed7_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.002,8,031b8c9ed399,-137.18182666666664,-136.95333333333335,114.24666666666667,0.8733333333333333,136.95333333333335,150,1989.8,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed8_final.csv
+MountainCar-v0,MountainCar-v0,temporl,0.002,9,031b8c9ed399,-117.28359999999991,-117.05333333333333,115.13333333333334,0.9266666666666666,117.05333333333333,150,1996.6,300000,results/raw/MountainCar-v0/temporl/lam0.002/seed9_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.003,0,031b8c9ed399,-200.03167999999997,-200.0,10.56,0.0,200.0,150,1993.3,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed0_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.003,1,031b8c9ed399,-152.25303999999966,-151.84,137.68,0.9666666666666667,151.84,150,1946.4,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed1_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.003,2,031b8c9ed399,-126.54654666666654,-126.22666666666667,106.62666666666667,0.9,126.22666666666667,150,1934.8,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed2_final.csv
@@ -1146,6 +1158,7 @@ MountainCar-v0,MountainCar-v0,temporl,0.003,5,031b8c9ed399,-180.9715333333328,-1
 MountainCar-v0,MountainCar-v0,temporl,0.003,6,031b8c9ed399,-191.1049333333324,-190.53333333333333,190.53333333333333,0.10666666666666667,190.53333333333333,150,1964.9,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed6_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.003,7,031b8c9ed399,-138.7509333333331,-138.37333333333333,125.86666666666666,0.8866666666666667,138.37333333333333,150,2001.3,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed7_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.003,8,031b8c9ed399,-141.22235999999958,-140.8,140.78666666666666,0.7066666666666667,140.8,150,1975.6,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed8_final.csv
+MountainCar-v0,MountainCar-v0,temporl,0.003,9,031b8c9ed399,-128.15609333333316,-127.77333333333333,127.58666666666667,0.9866666666666667,127.77333333333333,150,1969.4,300000,results/raw/MountainCar-v0/temporl/lam0.003/seed9_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.005,0,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,1969.6,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed0_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.005,1,031b8c9ed399,-152.911533333333,-152.23333333333332,135.64,0.7333333333333333,152.23333333333332,150,1970.6,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed1_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.005,2,031b8c9ed399,-122.18506666666644,-121.58,121.01333333333334,0.98,121.58,150,1972.9,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed2_final.csv
@@ -1155,6 +1168,7 @@ MountainCar-v0,MountainCar-v0,temporl,0.005,5,031b8c9ed399,-139.48963333333305,-
 MountainCar-v0,MountainCar-v0,temporl,0.005,6,031b8c9ed399,-128.78516666666644,-128.18,121.03333333333333,1.0,128.18,150,1911.4,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed6_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.005,7,031b8c9ed399,-200.3333333333332,-200.0,66.66666666666667,0.0,200.0,150,2013.4,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed7_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.005,8,031b8c9ed399,-200.66666666666632,-200.0,133.33333333333334,0.0,200.0,150,1952.7,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed8_final.csv
+MountainCar-v0,MountainCar-v0,temporl,0.005,9,031b8c9ed399,-200.0301666666663,-199.36666666666667,132.7,0.006666666666666667,199.36666666666667,150,1980.2,300000,results/raw/MountainCar-v0/temporl/lam0.005/seed9_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.0075,0,031b8c9ed399,-153.86249999999941,-152.74,149.66666666666666,0.8333333333333334,152.74,150,1982.5,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed0_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.0075,1,031b8c9ed399,-200.49999999999974,-200.0,66.66666666666667,0.0,200.0,150,1957.0,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed1_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.0075,2,031b8c9ed399,-181.85644999999926,-180.54,175.52666666666667,0.5,180.54,150,1981.1,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed2_final.csv
@@ -1164,6 +1178,7 @@ MountainCar-v0,MountainCar-v0,temporl,0.0075,5,031b8c9ed399,-201.49999999999912,
 MountainCar-v0,MountainCar-v0,temporl,0.0075,6,031b8c9ed399,-146.99878333333282,-145.99333333333334,134.06,0.9933333333333333,145.99333333333334,150,1955.6,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed6_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.0075,7,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,2007.5,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed7_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.0075,8,031b8c9ed399,-148.67126666666616,-147.62666666666667,139.28,0.7733333333333333,147.62666666666667,150,1991.2,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed8_final.csv
+MountainCar-v0,MountainCar-v0,temporl,0.0075,9,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,2054.2,300000,results/raw/MountainCar-v0/temporl/lam0.0075/seed9_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.01,0,031b8c9ed399,-138.0004666666667,-136.66666666666666,133.38,0.8466666666666667,136.66666666666666,150,1785.7,300000,results/raw/MountainCar-v0/temporl/lam0.01/seed0_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.01,1,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,1973.1,300000,results/raw/MountainCar-v0/temporl/lam0.01/seed1_final.csv
 MountainCar-v0,MountainCar-v0,temporl,0.01,2,031b8c9ed399,-200.0,-200.0,0.0,0.0,200.0,150,1820.5,300000,results/raw/MountainCar-v0/temporl/lam0.01/seed2_final.csv
