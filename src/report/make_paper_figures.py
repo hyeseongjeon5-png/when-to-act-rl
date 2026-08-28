@@ -33,9 +33,11 @@ plt.rcParams["axes.unicode_minus"] = False
 
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식",
          "rule_best": "λ마다 가장 센 고정 규칙", "rule_pump": "고정 규칙 (pump)",
-         "rule_threshold": "고정 규칙 (임계값)", "rule_noop": "고정 규칙 (무행동)"}
+         "rule_threshold": "고정 규칙 (임계값)", "rule_noop": "고정 규칙 (무행동)",
+         "rule_cautious": "고정 규칙 (신중)", "rule_cautious_d1": "고정 규칙 (신중 d=1)"}
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
-REF = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold"}
+REF = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
+       "MinAtar_Freeway-v1": "rule_cautious"}
 CAPTIONS: dict[str, dict] = {}
 
 
@@ -141,7 +143,8 @@ def fig1_method() -> Path:
 
 
 ENV_KO = {"MountainCar-v0": "MountainCar-v0 (보상이 희소한 환경)",
-          "LunarLander-v3": "LunarLander-v3 (보상이 조밀한 환경)"}
+          "LunarLander-v3": "LunarLander-v3 (보상이 조밀한 환경)",
+          "MinAtar_Freeway-v1": "MinAtar Freeway (규칙이 쓸 만하지만 이길 여지가 있는 환경)"}
 
 
 def _load(env_id: str) -> pd.DataFrame | None:

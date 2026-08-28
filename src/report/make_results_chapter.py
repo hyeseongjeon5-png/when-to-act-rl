@@ -24,19 +24,25 @@ OUT = ROOT / "paper" / "04_결과.md"
 
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL", "lazy": "Lazy-MDP"}
 RULE_LABEL = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙",
+              "rule_cautious": "신중 규칙", "rule_cautious_d1": "신중 규칙(d=1)",
               "rule_noop": "무행동", "rule_best": "최강 규칙",
               "rule_periodic_k1": "매 스텝 주기", "rule_periodic_k2": "2스텝 주기",
               "rule_periodic_k4": "4스텝 주기", "rule_periodic_k8": "8스텝 주기"}
-REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold"}
+REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
+            "MinAtar_Freeway-v1": "rule_cautious"}
 ENV_NOTE = {
     "MountainCar-v0": ("보상이 희소한 탐험 문제다. 목표에 닿기 전까지 아무 신호가 없고, "
                        "매 스텝 무작위로 행동하는 탐험으로는 목표에 한 번도 닿지 못한다. "
                        "학습 없이도 문제를 푸는 강한 고정 규칙(pump)이 존재한다."),
     "LunarLander-v3": ("보상이 조밀한 제어 문제다. 매 스텝 자세·속도·연료에 대한 신호가 들어오고, "
                        "표준 DQN이 정상적으로 학습된다. 고정 규칙은 착륙은 시키지만 점수가 낮다."),
+    "MinAtar_Freeway-v1": ("앞의 두 환경 사이에 있는 세 번째 경우다. 손으로 짠 신중 규칙이 쓸 만하지만"
+                           "(무작위 0점 대비 17.8점) 최적과는 거리가 있어 학습이 이길 여지가 남아 있다. "
+                           "에피소드가 1000스텝으로 고정돼 행동 비용의 압력이 두 환경보다 뚜렷하다."),
 }
-ENV_ORDER = ["MountainCar-v0", "LunarLander-v3"]
-ENV_FIG = {"MountainCar-v0": "fig2", "LunarLander-v3": "fig3"}
+ENV_ORDER = ["MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1"]
+ENV_FIG = {"MountainCar-v0": "fig2", "LunarLander-v3": "fig3",
+           "MinAtar_Freeway-v1": "fig5"}
 
 
 def name(a: str) -> str:

@@ -39,8 +39,13 @@ LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방
          "rule_periodic_k2": "고정 규칙: 2스텝 주기", "rule_periodic_k4": "고정 규칙: 4스텝 주기",
          "rule_periodic_k8": "고정 규칙: 8스텝 주기"}
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
-REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
-            "LunarLander-v2": "rule_threshold"}
+REF_RULE = {
+    "MountainCar-v0": "rule_pump",
+    "LunarLander-v3": "rule_threshold",
+    "LunarLander-v2": "rule_threshold",
+    "MinAtar_Freeway-v1": "rule_cautious",
+    "MinAtar_Breakout-v1": "rule_track",
+}
 
 
 def lam_map(env_id: str, metric: str = "cost_return", ref_rule: str = "rule_pump") -> Path | None:

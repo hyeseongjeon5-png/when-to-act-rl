@@ -31,6 +31,8 @@ REF_RULE = {
     "MountainCar-v0": "rule_pump",
     "LunarLander-v3": "rule_threshold",
     "LunarLander-v2": "rule_threshold",
+    "MinAtar_Freeway-v1": "rule_cautious",
+    "MinAtar_Breakout-v1": "rule_track",
 }
 
 

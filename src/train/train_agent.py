@@ -55,7 +55,10 @@ def raw_dir_name(cfg: dict) -> str:
     집계·그림·보고서는 이것을 '다른 환경'처럼 따로 다룬다.
     """
     v = cfg.get("variant")
-    return f"{cfg['env_id']}@{v}" if v else str(cfg["env_id"])
+    # MinAtar 환경 이름에는 '/'가 들어 있다(MinAtar/Freeway-v1). 그대로 쓰면 폴더가 두 겹으로
+    # 갈라져 집계가 'results/raw/<환경> 한 겹' 가정을 깨고 게임들이 한 표에 섞인다. '_'로 바꾼다.
+    base = str(cfg["env_id"]).replace("/", "_")
+    return f"{base}@{v}" if v else base
 
 
 def warmup_steps(cfg: dict) -> int:
