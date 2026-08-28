@@ -1,0 +1,29 @@
+  MinAtar/Freeway-v1@PROBE/temporl/lam0.0/seed0   10000/20000 | r' IQM     4.50 | 행동  922.5 | 성공   0.0%
+  MinAtar/Freeway-v1@PROBE/temporl/lam0.0/seed0   20000/20000 | r' IQM    14.50 | 행동  980.5 | 성공   0.0%
+  [스냅샷 20000] MinAtar/Freeway-v1@PROBE/temporl/lam0.0/seed0 r' IQM     8.67 | 행동  988.0 | 성공   0.0%
+Traceback (most recent call last):
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\train_agent.py", line 274, in main
+    a = ap.parse_args()
+        ^^^^^^^^^^^^^^^^
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\train_agent.py", line 230, in train_one
+    final = summarize(rows)
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\전혜성\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\전혜성\\Desktop\\AI-Team\\13_졸업과제\\results\\raw\\MinAtar\\Freeway-v1@PROBE\\temporl\\lam0.0\\seed0_final.csv'
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\train_agent.py", line 281, in <module>
+    
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\train_agent.py", line 274, in main
+    a = ap.parse_args()
+        ^^^^^^^^^^^^^^^^
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\train_agent.py", line 230, in train_one
+    final = summarize(rows)
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\전혜성\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\전혜성\\Desktop\\AI-Team\\13_졸업과제\\results\\raw\\MinAtar\\Freeway-v1@PROBE\\temporl\\lam0.0\\seed0_final.csv'

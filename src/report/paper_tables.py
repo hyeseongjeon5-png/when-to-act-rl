@@ -59,8 +59,8 @@ def table1_lambda_star(envs=("MountainCar-v0", "LunarLander-v3")) -> dict | None
                    f"λ*_CI\n(기준 규칙)", "λ*_점추정\n(기준 규칙)",
                    "λ*_CI\n(최강 규칙)", "λ*_점추정\n(최강 규칙)", "시드"],
         "rows": rows,
-        "ko": "표 1. 임계 비용 λ* — 학습이 고정 규칙을 더 이상 이기지 못하는 지점",
-        "en": "Table 1. Critical action cost λ* at which learning ceases to beat the fixed rule",
+        "ko": "임계 비용 λ* — 학습이 고정 규칙을 더 이상 이기지 못하는 지점",
+        "en": "Critical action cost λ* at which learning ceases to beat the fixed rule",
         "note": ("λ*_CI는 학습의 95% 신뢰구간 하한이 규칙의 상한 아래로 처음 내려간 λ(엄격), "
                  "λ*_점추정은 두 IQM 곡선이 처음 교차한 λ(느슨)이다. λ*=0은 비용이 없어도 "
                  "규칙을 이기지 못했다는 뜻이며, '격자 밖'은 실험한 최대 λ까지 계속 이겼다는 뜻이다. "
@@ -107,8 +107,8 @@ def table2_setup(cfg_names=("main_mountaincar", "main_lunarlander")) -> dict | N
     return {
         "header": ["항목"] + [c["env_id"] for c in cfgs],
         "rows": rows,
-        "ko": "표 2. 실험 설정 요약",
-        "en": "Table 2. Summary of the experimental setup",
+        "ko": "실험 설정 요약",
+        "en": "Summary of the experimental setup",
         "note": ("하이퍼파라미터는 세 학습 계열이 완전히 동일하며 TempoRL 공개 구현의 기본값을 그대로 썼다. "
                  "출처: experiments/configs/main_*.yaml"),
         "widths": [4.2, 5.6, 5.6],
@@ -160,8 +160,8 @@ def table3_fairness(variants: dict[str, str] | None = None) -> dict | None:
     return {
         "header": ["설정", "학습 예산", "시드", "r IQM", "95% CI", "목표 도달률", "행동 횟수"],
         "rows": rows,
-        "ko": "표 3. 공정성 점검 — 비용이 없을 때(λ=0) 학습은 규칙 수준에 닿는가 (MountainCar-v0)",
-        "en": "Table 3. Fairness check: can learning reach rule-level performance at zero cost (λ=0) on MountainCar-v0",
+        "ko": "공정성 점검 — 비용이 없을 때(λ=0) 학습은 규칙 수준에 닿는가 (MountainCar-v0)",
+        "en": "Fairness check: can learning reach rule-level performance at zero cost (λ=0) on MountainCar-v0",
         "note": ("비용이 없는 조건에서도 학습이 규칙에 지면 '비용 때문에 졌다'고 말할 수 없다. "
                  "그래서 예산과 탐험 설정을 바꿔 가며 λ=0 성능을 다시 쟀다. "
                  "출처: results/aggregate/MountainCar-v0*_iqm.csv"),

@@ -22,8 +22,11 @@ FIG = ROOT / "results" / "figures"
 REP = ROOT / "results" / "reports"
 
 LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식"}
-REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold"}
+REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
+            "MinAtar_Freeway-v1": "rule_cautious"}
 RULE_LABEL = {"rule_pump": "pump(임계값) 규칙", "rule_threshold": "임계값 규칙",
+              "rule_cautious": "신중 규칙", "rule_cautious_d1": "신중 규칙(d=1)",
+              "rule_periodic_k3": "3스텝 주기",
               "rule_noop": "무행동", "rule_periodic_k1": "매 스텝 규칙",
               "rule_periodic_k2": "2스텝 주기", "rule_periodic_k4": "4스텝 주기",
               "rule_periodic_k8": "8스텝 주기"}

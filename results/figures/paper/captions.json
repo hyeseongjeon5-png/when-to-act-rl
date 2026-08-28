@@ -1,27 +1,27 @@
 {
  "fig1": {
   "file": "fig1_method.png",
-  "ko": "그림 1. 행동 비용 래퍼와 비교 4계열의 구조",
-  "en": "Fig. 1. Structure of the action-cost wrapper and the four compared families"
+  "ko": "행동 비용 래퍼와 비교 4계열의 구조",
+  "en": "Structure of the action-cost wrapper and the four compared families"
  },
  "fig2": {
   "file": "fig2_lambda_map_MountainCar-v0.png",
-  "ko": "그림 2. λ-성능 지도 — MountainCar-v0 (보상이 희소한 환경)",
-  "en": "Fig. 2. Performance map over action cost λ on MountainCar-v0",
+  "ko": "λ-성능 지도 — MountainCar-v0 (보상이 희소한 환경)",
+  "en": "Performance map over action cost λ on MountainCar-v0",
   "note": "선은 IQM(사분위평균), 띠는 95% 계층 부트스트랩 신뢰구간(시드 10개). 검은 점선은 기준이 되는 최고 고정 규칙, 보라 일점쇄선은 λ마다 가장 센 규칙의 포락선이다.",
   "source": "results/aggregate/MountainCar-v0_iqm.csv"
  },
  "fig3": {
   "file": "fig3_lambda_map_LunarLander-v3.png",
-  "ko": "그림 3. λ-성능 지도 — LunarLander-v3 (보상이 조밀한 환경)",
-  "en": "Fig. 3. Performance map over action cost λ on LunarLander-v3",
+  "ko": "λ-성능 지도 — LunarLander-v3 (보상이 조밀한 환경)",
+  "en": "Performance map over action cost λ on LunarLander-v3",
   "note": "선은 IQM(사분위평균), 띠는 95% 계층 부트스트랩 신뢰구간(시드 10개). 검은 점선은 기준이 되는 최고 고정 규칙, 보라 일점쇄선은 λ마다 가장 센 규칙의 포락선이다.",
   "source": "results/aggregate/LunarLander-v3_iqm.csv"
  },
  "fig4": {
   "file": "fig4_collapse_MountainCar-v0.png",
-  "ko": "그림 4. 무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
-  "en": "Fig. 4. Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
+  "ko": "무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
+  "en": "Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
   "note": "가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축(linthresh=0.001)을 썼다. 왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이다.",
   "source": "results/aggregate/MountainCar-v0_iqm.csv"
  }

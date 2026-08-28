@@ -106,21 +106,38 @@ TOKEN = re.compile(r"(\*\*[^*]+\*\*|\x60[^\x60]+\x60|\[\d+(?:\s*,\s*\d+)*\])")
 BACKTICK = "\x60"
 
 
+# 마크다운 뷰어용 역슬래시 이스케이프. 토큰을 나누기 전에 잠시 치워 둔다.
+# (제어문자를 자리표시로 쓴다 — 원고에 나올 리 없는 글자여야 한다)
+ESCAPES = {chr(92) + "*": chr(1), chr(92) + "_": chr(2), chr(92) + chr(96): chr(3)}
+
+
 def add_rich_text(p, text: str, size=BODY_PT, font=BODY_FONT, bold=False):
-    """굵게(**), 코드(백틱), [1] 인용(위 첨자)만 처리하는 최소 인라인 마크다운."""
+    """굵게(**), 코드(백틱), [1] 인용(위 첨자)만 처리하는 최소 인라인 마크다운.
+
+    원고에는 마크다운 뷰어용으로 λ\* 처럼 역슬래시로 escape한 별표가 있다. 그대로 두면
+    **굵게** 안에 *가 섞여 토큰 나누기가 깨지므로, 먼저 치워 두었다가 마지막에 되돌린다.
+    """
+    for a, b in ESCAPES.items():
+        text = text.replace(a, b)
+
+    def unesc(x: str) -> str:
+        for a, b in ESCAPES.items():
+            x = x.replace(b, a[1:])
+        return x
+
     for tok in TOKEN.split(text):
         if not tok:
             continue
         if tok.startswith("**") and tok.endswith("**"):
-            set_run_font(p.add_run(tok[2:-2]), font, size, bold=True)
+            set_run_font(p.add_run(unesc(tok[2:-2])), font, size, bold=True)
         elif tok.startswith(BACKTICK) and tok.endswith(BACKTICK) and len(tok) > 1:
-            set_run_font(p.add_run(tok[1:-1]), "Consolas", size - 0.5)
+            set_run_font(p.add_run(unesc(tok[1:-1])), "Consolas", size - 0.5)
         elif CITE.fullmatch(tok):
             r = p.add_run(tok)
             set_run_font(r, font, size, bold=bold)
             r.font.superscript = True      # 양식: 인용 위치 우측 상단에 [번호]
         else:
-            set_run_font(p.add_run(tok), font, size, bold=bold)
+            set_run_font(p.add_run(unesc(tok)), font, size, bold=bold)
     return p
 
 
@@ -148,6 +165,19 @@ def add_bullet(doc, text: str, level: int = 0):
     pf.space_before = Pt(0)
     pf.space_after = Pt(0)
     add_rich_text(p, ("· " if level == 0 else "- ") + text)
+    return p
+
+
+def add_numbered(doc, text: str):
+    """이미 '1.' 같은 번호가 붙은 줄 — 글머리표를 덧붙이지 않고 매달린 들여쓰기만 준다."""
+    p = doc.add_paragraph()
+    pf = p.paragraph_format
+    pf.line_spacing = LINE
+    pf.left_indent = Cm(0.6)
+    pf.first_line_indent = Cm(-0.6)
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(0)
+    add_rich_text(p, text)
     return p
 
 
@@ -191,7 +221,8 @@ def add_table(doc, header: list[str], rows: list[list[str]], ko: str, en: str,
         p = c.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.line_spacing = 1.0
-        set_run_font(p.add_run(str(h)), HEAD_FONT, 9, bold=True)
+        # 머리글 칸도 인라인 마크다운을 거친다 — 원고 표 머리글에 **굵게**가 들어가는 경우가 있다
+        add_rich_text(p, str(h), size=9, font=HEAD_FONT, bold=True)
         _shade(c, "EDEDED")
     for row in rows:
         cells = t.add_row().cells

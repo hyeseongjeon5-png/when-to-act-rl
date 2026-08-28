@@ -118,17 +118,19 @@ def build() -> Path:
     doc = B.new_document()
     title_block(doc)
     abstract_block(doc)
+    counter = M.new_counter()
     for path, _ in CHAPTERS:
         md = _read(path)
         if md is None:
             continue
-        M.render(doc, md, auto_tables=tables, fig_width=FIG_WIDTH)
+        M.render(doc, md, auto_tables=tables, fig_width=FIG_WIDTH, counter=counter)
     references_block(doc)
     doc.save(OUT)
     n_par = len(doc.paragraphs)
     n_tab = len(doc.tables)
     n_img = len(doc.inline_shapes)
-    print(f"  저장: {OUT.name} | 문단 {n_par} · 표 {n_tab} · 그림 {n_img}")
+    print(f"  저장: {OUT.name} | 문단 {n_par} · 표 {n_tab}(번호 {counter['tab']}) · "
+          f"그림 {n_img}(번호 {counter['fig']})")
     return OUT
 
 

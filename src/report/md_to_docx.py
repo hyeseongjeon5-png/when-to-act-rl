@@ -41,12 +41,30 @@ def _split_row(line: str) -> list[str]:
     return [c.strip() for c in line.strip().strip("|").split("|")]
 
 
+def new_counter() -> dict:
+    """그림·표 번호를 등장 순서로 매기기 위한 상태. 장을 여러 번 render해도 이어진다.
+
+    왜 자동인가: 번호를 원고에 손으로 적으면 장을 하나 끼워 넣는 순간 전부 어긋난다.
+    학교 양식은 '본문에서 언급된 쪽에' 싣도록 하므로 번호는 등장 순서를 따라야 한다.
+    """
+    return {"fig": 0, "tab": 0}
+
+
+def _numbered(kind: str, st: dict, ko: str, en: str) -> tuple[str, str]:
+    st[kind] += 1
+    n = st[kind]
+    if kind == "fig":
+        return f"그림 {n}. {ko}", f"Fig. {n}. {en}"
+    return f"표 {n}. {ko}", f"Table {n}. {en}"
+
+
 def render(doc, md_text: str, auto_tables: dict | None = None,
-           fig_width: dict | None = None) -> None:
+           fig_width: dict | None = None, counter: dict | None = None) -> None:
     """마크다운 한 장을 doc에 이어 붙인다."""
     caps = _captions()
     auto_tables = auto_tables or {}
     fig_width = fig_width or {}
+    st = counter if counter is not None else new_counter()
     lines = md_text.splitlines()
     i = 0
     pending_cap: tuple[str, str] | None = None
@@ -68,7 +86,8 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
             key = m.group(1)
             c = caps.get(key)
             if c and (FIGDIR / c["file"]).exists():
-                B.add_figure(doc, FIGDIR / c["file"], c["ko"], c["en"],
+                ko, en = _numbered("fig", st, c["ko"], c["en"])
+                B.add_figure(doc, FIGDIR / c["file"], ko, en,
                              note=c.get("note", ""), width_cm=fig_width.get(key, 15.0))
             else:
                 print(f"  [경고] 그림 {key}를 찾지 못해 건너뜀 (captions.json 확인)")
@@ -81,7 +100,8 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
             key = m.group(1)
             t = auto_tables.get(key)
             if t:
-                B.add_table(doc, t["header"], t["rows"], t["ko"], t["en"],
+                ko, en = _numbered("tab", st, t["ko"], t["en"])
+                B.add_table(doc, t["header"], t["rows"], ko, en,
                             note=t.get("note", ""), widths=t.get("widths"))
             else:
                 print(f"  [경고] 표 {key}를 찾지 못해 건너뜀")
@@ -118,7 +138,11 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
             if len(block) >= 2:
                 header = _split_row(block[0])
                 rows = [_split_row(b) for b in block[2:]]   # block[1]은 구분선
-                ko, en = pending_cap or ("", "")
+                if pending_cap:
+                    ko, en = _numbered("tab", st, pending_cap[0], pending_cap[1])
+                else:
+                    ko, en = "", ""
+                    print("  [경고] 제목 없는 표가 있다 — 앞에 <!--TABCAP: 국문 | 영문 --> 를 넣을 것")
                 B.add_table(doc, header, rows, ko, en)
                 pending_cap = None
             continue
@@ -130,9 +154,9 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
             i += 1
             continue
 
-        # ---- 번호 목록도 글머리표로 ----
+        # ---- 번호 목록: 번호가 이미 있으므로 점(·)을 덧붙이지 않는다 ----
         if re.match(r"^\d+\.\s", stripped):
-            B.add_bullet(doc, COMMENT.sub("", stripped).strip())
+            B.add_numbered(doc, COMMENT.sub("", stripped).strip())
             i += 1
             continue
 

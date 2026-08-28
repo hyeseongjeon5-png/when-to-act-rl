@@ -146,7 +146,7 @@ def action_saving_fact(agg: pd.DataFrame, env_id: str) -> str:
     return "; ".join(bits)
 
 
-def env_section(env_id: str, n: int) -> str:
+def env_section(env_id: str, sec: str) -> str:
     p = AGG / (env_id + "_iqm.csv")
     if not p.exists():
         return ""
@@ -165,14 +165,13 @@ def env_section(env_id: str, n: int) -> str:
     if lo_s < 10 or n_lam < n_grid:
         status += " **아직 실험이 끝나지 않았으므로 최종 결론이 아니다.**"
 
-    tno_perf, tno_act = 2 + n * 2, 3 + n * 2
     parts = [
-        "### 4." + str(n) + " " + env_id,
+        "### " + sec + " " + env_id,
         "",
         ENV_NOTE.get(env_id, "") + " " + status,
         "",
-        "<!--TABCAP: 표 " + str(tno_perf) + ". " + env_id + "의 비용 반영 총보상 r′ — IQM [95% 신뢰구간]"
-        " | Table " + str(tno_perf) + ". Cost-adjusted return r′ on " + env_id + " (IQM [95% CI]) -->",
+        "<!--TABCAP: " + env_id + "의 비용 반영 총보상 r′ — IQM [95% 신뢰구간]"
+        " | Cost-adjusted return r′ on " + env_id + " (IQM [95% CI]) -->",
         perf_table(agg, env_id),
         "",
         "<!--FIG:" + ENV_FIG.get(env_id, "fig2") + "-->",
@@ -187,15 +186,15 @@ def env_section(env_id: str, n: int) -> str:
     if save:
         parts += ["비용이 오를 때 실제로 행동을 아꼈는지는 행동 횟수로 확인된다: " + save + ".", ""]
         parts += [
-            "<!--TABCAP: 표 " + str(tno_act) + ". " + env_id + "의 에피소드당 행동 횟수 (IQM)"
-            " | Table " + str(tno_act) + ". Actions per episode on " + env_id + " (IQM) -->",
+            "<!--TABCAP: " + env_id + "의 에피소드당 행동 횟수 (IQM)"
+            " | Actions per episode on " + env_id + " (IQM) -->",
             action_table(agg, env_id),
             "",
         ]
     return "\n".join(parts)
 
 
-def collapse_section() -> str:
+def collapse_section(sec: str) -> str:
     p = AGG / "MountainCar-v0_iqm.csv"
     if not p.exists():
         return ""
@@ -217,9 +216,10 @@ def collapse_section() -> str:
     if not lines:
         return ""
     return "\n".join([
-        "## 5. 무행동 붕괴 — 아주 작은 비용에서 학습이 멈춘다",
+        "### " + sec + " 무행동 붕괴 — 아주 작은 비용에서 학습이 멈춘다",
         "",
-        "MountainCar에서는 비용이 조금만 붙어도 세 계열 모두 행동을 멈추고 그 상태로 굳는다. "
+        "앞의 두 환경이 갈린 이유를 여기서 본다. MountainCar에서는 비용이 조금만 붙어도 "
+        "세 계열 모두 행동을 멈추고 그 상태로 굳는다. "
         "λ를 0 부근에서 촘촘히 훑어 그 문턱이 어디인지 쟀다.",
         "",
         "<!--FIG:fig4-->",
@@ -254,7 +254,7 @@ HEADER_TMPL = """# Ⅳ. Experimental Results
 ## 4. 환경별 λ-성능 지도
 """
 
-FAIRNESS_TMPL = """## 6. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
+FAIRNESS_TMPL = """## 5. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
 
 MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습이 규칙에 진다"는 뜻이다.
 그렇다면 이 결과는 비용에 대한 발견이 아니라 학습이 덜 됐다는 신호일 수 있다.
@@ -272,14 +272,25 @@ def main() -> None:
     if not envs:
         print("집계 파일이 없다 — 먼저 aggregate를 돌릴 것")
         return
-    body = "\n".join(env_section(e, i + 1) for i, e in enumerate(envs))
+    # 절 배치: 대조되는 두 환경 → 그 대조의 원인(무행동 붕괴) → 세 번째 환경으로 확인.
+    # 이 순서라야 그림 번호가 방법(1) · MountainCar 지도(2) · LunarLander 지도(3) ·
+    # 붕괴(4) · Freeway 지도(5) 로 자연스럽게 붙는다 (번호는 등장 순서로 자동 부여된다).
+    parts, k = [], 0
+    for e in envs[:2]:
+        k += 1
+        parts.append(env_section(e, "4." + str(k)))
+    k += 1
+    parts.append(collapse_section("4." + str(k)))
+    for e in envs[2:]:
+        k += 1
+        parts.append(env_section(e, "4." + str(k)))
+    body = "\n".join(x for x in parts if x)
     src = ("\n<!-- 출처: results/aggregate/" + "{" + ",".join(envs) + "}_iqm.csv, "
            "*_lambda_star.json. 조건별 원본은 results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv. "
            "설계 결정과 도중에 고친 버그는 docs/실험일지.md 참조. -->\n")
     out = Path(a.out) if a.out else OUT
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(HEADER_TMPL + "\n" + body + "\n" + collapse_section() + "\n"
-                   + FAIRNESS_TMPL + src, encoding="utf-8")
+    out.write_text(HEADER_TMPL + "\n" + body + "\n" + FAIRNESS_TMPL + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
 
 

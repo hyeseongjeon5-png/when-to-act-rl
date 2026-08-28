@@ -135,8 +135,8 @@ def fig1_method() -> Path:
     fig.savefig(p, bbox_inches="tight", facecolor="white"); plt.close(fig)
     CAPTIONS["fig1"] = {
         "file": p.name,
-        "ko": "그림 1. 행동 비용 래퍼와 비교 4계열의 구조",
-        "en": "Fig. 1. Structure of the action-cost wrapper and the four compared families",
+        "ko": "행동 비용 래퍼와 비교 4계열의 구조",
+        "en": "Structure of the action-cost wrapper and the four compared families",
     }
     print(f"  저장: {p.relative_to(ROOT)}")
     return p
@@ -207,8 +207,8 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
     CAPTIONS[tag] = {
         "file": out.name,
-        "ko": f"그림 {tag[3:]}. λ-성능 지도 — {ENV_KO.get(env_id, env_id)}",
-        "en": f"Fig. {tag[3:]}. Performance map over action cost λ on {env_id}",
+        "ko": f"λ-성능 지도 — {ENV_KO.get(env_id, env_id)}",
+        "en": f"Performance map over action cost λ on {env_id}",
         "note": (f"선은 IQM(사분위평균), 띠는 95% 계층 부트스트랩 신뢰구간(시드 {n_seeds}개). "
                  "검은 점선은 기준이 되는 최고 고정 규칙, 보라 일점쇄선은 λ마다 가장 센 규칙의 포락선이다."),
         "source": f"results/aggregate/{env_id}_iqm.csv",
@@ -250,8 +250,8 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
     CAPTIONS["fig4"] = {
         "file": out.name,
-        "ko": "그림 4. 무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
-        "en": "Fig. 4. Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
+        "ko": "무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
+        "en": "Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
         "note": ("가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축(linthresh=0.001)을 썼다. "
                  "왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이다."),
         "source": f"results/aggregate/{env_id}_iqm.csv",

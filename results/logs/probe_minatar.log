@@ -1,2 +1,8 @@
 [완료] MinAtar/Freeway-v1@PROBE/dqn/lam0.0/seed0 | r' IQM 1.67 | 행동 805.0 | 성공 0.0% | 123초
   ==> dqn: 138초 / 20k스텝 → 300k 환산 약 2070초
+[완료] MinAtar/Freeway-v1@PROBE/temporl/lam0.0/seed0 | r' IQM 8.67 | 행동 988.0 | 성공 0.0% | 241초
+  ==> temporl: 256초 / 20k스텝 → 300k 환산 약 3840초
+[완료] MinAtar/Freeway-v1@PROBE/lazy/lam0.0/seed0 | r' IQM 5.00 | 행동 694.3 | 성공 0.0% | 133초
+  ==> lazy: 153초 / 20k스텝 → 300k 환산 약 2295초
+==> temporl: 274초 / 20k스텝 → 300k 환산 약 4110초
+==> lazy: 138초 / 20k스텝 → 300k 환산 약 2070초
