@@ -263,19 +263,34 @@ def collapse_section(sec: str) -> str:
         return ""
     agg = pd.read_csv(p)
     learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
-    lines = []
+    rows = []
     for a in learners:
         g = agg[(agg.agent == a) & (agg.lam > 0)].sort_values("lam")
-        if g.empty:
-            continue
-        z = g[g.n_actions_iqm < 1.0]
-        first_zero = format(float(z.iloc[0].lam), "g") if not z.empty else "격자 안에 없음"
         g0 = agg[(agg.agent == a) & (agg.lam == 0.0)]
-        base = float(g0.iloc[0].n_actions_iqm) if not g0.empty else float("nan")
-        h = g[g.n_actions_iqm < base * 0.5]
-        half = format(float(h.iloc[0].lam), "g") if not h.empty else "격자 안에 없음"
-        lines.append("- " + name(a) + ": 행동 횟수가 절반 아래로 떨어지는 첫 λ = " + half
-                     + ", 완전히 0이 되는 첫 λ = " + first_zero)
+        if g.empty or g0.empty:
+            continue
+        base_act = float(g0.iloc[0].n_actions_iqm)
+        base_solved = float(g0.iloc[0].solved_iqm)
+
+        def first(mask) -> str:
+            sub = g[mask]
+            return format(float(sub.iloc[0].lam), "g") if not sub.empty else "격자 밖"
+
+        rows.append([
+            name(a),
+            first(g.solved_iqm < base_solved * 0.5),      # 성능이 먼저 무너지는 지점
+            first(g.n_actions_iqm < base_act * 0.5),      # 행동이 절반으로 주는 지점
+            first(g.n_actions_iqm < 1.0),                 # 행동이 완전히 멈추는 지점
+            num(base_act, 0) + "회 / " + num(base_solved * 100, 0) + "%",
+        ])
+    lines = []
+    if rows:
+        lines = [
+            "<!--TABCAP: 무행동 붕괴의 세 문턱 — 성능이 먼저 무너지고 행동이 나중에 멈춘다 "
+            "| Three thresholds of the collapse: performance degrades before the agent stops acting -->",
+            "| 계열 | 도달률이 절반이 되는 첫 λ | 행동이 절반이 되는 첫 λ | 행동이 0이 되는 첫 λ | λ=0 기준값 |",
+            "|---|---|---|---|---|",
+        ] + ["| " + " | ".join(r) + " |" for r in rows]
     if not lines:
         return ""
     return "\n".join([
@@ -289,7 +304,11 @@ def collapse_section(sec: str) -> str:
         "",
         "\n".join(lines),
         "",
-        "이 문턱은 에피소드 보상 규모에 견주면 매우 작다. MountainCar의 한 에피소드 보상은 "
+        "표에서 드러나는 것은 붕괴가 **한 번에 일어나지 않는다**는 점이다. 비용이 조금 붙으면 "
+        "에이전트는 여전히 λ=0과 비슷한 횟수로 행동하지만 목표에 닿는 비율이 먼저 떨어진다. "
+        "행동을 멈추는 것은 그보다 더 비싸진 뒤다. 즉 **성능이 먼저 무너지고 행동이 나중에 멈춘다.**",
+        "",
+        "이 문턱들은 에피소드 보상 규모에 견주면 매우 작다. MountainCar의 한 에피소드 보상은 "
         "−200에서 −120 사이인데, 행동 1번의 값이 그 1% 수준만 되어도 학습은 행동을 포기한다.",
         "",
     ])
