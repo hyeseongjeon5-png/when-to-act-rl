@@ -21,8 +21,10 @@ AGG = ROOT / "results" / "aggregate"
 CFG = ROOT / "experiments" / "configs"
 
 AGENT_KO = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방식"}
-ENV_KO = {"MountainCar-v0": "MountainCar-v0", "LunarLander-v3": "LunarLander-v3"}
-RULE_KO = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙", "rule_best": "최강 규칙 포락선"}
+ENV_KO = {"MountainCar-v0": "MountainCar-v0", "LunarLander-v3": "LunarLander-v3",
+          "MinAtar_Freeway-v1": "MinAtar Freeway"}
+RULE_KO = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙",
+           "rule_cautious": "신중 규칙", "rule_best": "최강 규칙 포락선"}
 
 
 def _fmt_lam(v) -> str:
@@ -31,7 +33,7 @@ def _fmt_lam(v) -> str:
     return f"{float(v):g}"
 
 
-def table1_lambda_star(envs=("MountainCar-v0", "LunarLander-v3")) -> dict | None:
+def table1_lambda_star(envs=("MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1")) -> dict | None:
     rows = []
     for env in envs:
         p = AGG / f"{env}_lambda_star.json"
@@ -69,7 +71,7 @@ def table1_lambda_star(envs=("MountainCar-v0", "LunarLander-v3")) -> dict | None
     }
 
 
-def table2_setup(cfg_names=("main_mountaincar", "main_lunarlander")) -> dict | None:
+def table2_setup(cfg_names=("main_mountaincar", "main_lunarlander", "main_minatar_freeway")) -> dict | None:
     rows = []
     fields = [
         ("환경", lambda c: c["env_id"]),
@@ -116,56 +118,71 @@ def table2_setup(cfg_names=("main_mountaincar", "main_lunarlander")) -> dict | N
 
 
 def table3_fairness(variants: dict[str, str] | None = None) -> dict | None:
-    """λ=0에서 예산·탐험 설정을 바꿨을 때 학습이 pump 규칙을 이기는가.
+    """공정성 점검 — 비용이 없는 λ=0에서 학습이 그 환경의 최고 규칙 수준에 닿는가.
 
-    variants: {변종 방 이름: 사람이 읽을 설명}
+    세 환경을 한 표에 모은다. 환경마다 '예산을 늘리면 달라지는가'를 물었기 때문이다.
+    표준 DQN 기준이며, 비교 상대는 그 환경의 기준 규칙이다.
     """
-    variants = variants or {}
-    base = AGG / "MountainCar-v0_iqm.csv"
-    if not base.exists():
-        return None
+    ENVS = [
+        ("MountainCar-v0", "rule_pump", [
+            ("MountainCar-v0", "본실험 (30만 스텝, ε=0.2 고정)"),
+            ("MountainCar-v0@budget1M_epsconst", "예산 100만 (ε=0.2 고정)"),
+            ("MountainCar-v0@budget1M_epsdecay", "예산 100만 + ε 감소"),
+            ("MountainCar-v0@budget1M_wide", "예산 100만 + ε 감소 + 용량 확대"),
+        ]),
+        ("LunarLander-v3", "rule_threshold", [
+            ("LunarLander-v3", "본실험 (20만 스텝)"),
+            ("LunarLander-v3@budget1M", "예산 100만"),
+        ]),
+        ("MinAtar_Freeway-v1", "rule_cautious", [
+            ("MinAtar_Freeway-v1", "본실험 (30만 스텝)"),
+            ("MinAtar_Freeway-v1@budget1M", "예산 100만"),
+        ]),
+    ]
     rows = []
-
-    def add(env_key: str, label: str):
-        p = AGG / f"{env_key}_iqm.csv"
-        if not p.exists():
-            return
-        df = pd.read_csv(p)
-        g = df[(df.agent == "dqn") & (df.lam == 0.0)]
-        if g.empty:
-            return
-        r = g.iloc[0]
-        rows.append([
-            label, f"{int(r.total_steps):,}", str(int(r.n_seeds)),
-            f"{r.raw_return_iqm:.1f}",
-            f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
-            f"{r.solved_iqm * 100:.0f}%",
-            f"{r.n_actions_iqm:.0f}",
-        ])
-
-    add("MountainCar-v0", "본실험 설정 (ε=0.2 고정)")
-    for key, label in variants.items():
-        add(key, label)
-
-    ref = pd.read_csv(base)
-    gr = ref[(ref.agent == "rule_pump") & (ref.lam == 0.0)]
-    if not gr.empty:
-        r = gr.iloc[0]
-        rows.append(["**기준: pump 규칙 (학습 없음)**", "—", str(int(r.n_seeds)),
-                     f"**{r.raw_return_iqm:.1f}**",
-                     f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
-                     f"**{r.solved_iqm * 100:.0f}%**", f"{r.n_actions_iqm:.0f}"])
+    for env, rule, settings in ENVS:
+        base_p = AGG / f"{env}_iqm.csv"
+        if not base_p.exists():
+            continue
+        ref = pd.read_csv(base_p)
+        gr = ref[(ref.agent == rule) & (ref.lam == 0.0)]
+        env_rows = []
+        for key, label in settings:
+            p2 = AGG / f"{key}_iqm.csv"
+            if not p2.exists():
+                continue
+            df = pd.read_csv(p2)
+            g = df[(df.agent == "dqn") & (df.lam == 0.0)]
+            if g.empty:
+                continue
+            r = g.iloc[0]
+            env_rows.append([env if not env_rows else "", label,
+                             f"{int(r.total_steps):,}", str(int(r.n_seeds)),
+                             f"{r.raw_return_iqm:.1f}",
+                             f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
+                             f"{r.solved_iqm * 100:.0f}%"])
+        if not env_rows:
+            continue
+        if not gr.empty:
+            r = gr.iloc[0]
+            env_rows.append(["", f"**기준: {RULE_KO.get(rule, rule)} (학습 없음)**", "—",
+                             str(int(r.n_seeds)), f"**{r.raw_return_iqm:.1f}**",
+                             f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
+                             f"**{r.solved_iqm * 100:.0f}%**"])
+        rows += env_rows
     if len(rows) < 2:
         return None
     return {
-        "header": ["설정", "학습 예산", "시드", "r IQM", "95% CI", "목표 도달률", "행동 횟수"],
+        "header": ["환경", "설정", "학습 예산", "시드", "r IQM", "95% CI", "성공률"],
         "rows": rows,
-        "ko": "공정성 점검 — 비용이 없을 때(λ=0) 학습은 규칙 수준에 닿는가 (MountainCar-v0)",
-        "en": "Fairness check: can learning reach rule-level performance at zero cost (λ=0) on MountainCar-v0",
+        "ko": "공정성 점검 — 비용이 없을 때(λ=0) 학습은 그 환경의 규칙 수준에 닿는가",
+        "en": "Fairness check: does learning reach rule-level performance at zero cost (λ=0)",
         "note": ("비용이 없는 조건에서도 학습이 규칙에 지면 '비용 때문에 졌다'고 말할 수 없다. "
-                 "그래서 예산과 탐험 설정을 바꿔 가며 λ=0 성능을 다시 쟀다. "
-                 "출처: results/aggregate/MountainCar-v0*_iqm.csv"),
-        "widths": [4.6, 2.2, 1.2, 1.8, 2.6, 1.9, 1.7],
+                 "그래서 환경마다 학습 예산을 늘려 λ=0 성능을 다시 쟀다. 표준 DQN 기준이며, "
+                 "평가는 본실험과 같다(스냅샷 3장 × 최종 에피소드). 시드 수가 10개보다 적은 줄은 "
+                 "결정을 위한 파일럿이며 그 자체로 결론이 아니다. "
+                 "출처: results/aggregate/*_iqm.csv"),
+        "widths": [2.6, 4.4, 1.9, 1.1, 1.6, 2.4, 1.4],
     }
 
 
