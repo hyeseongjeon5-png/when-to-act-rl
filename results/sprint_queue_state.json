@@ -1,15 +1,24 @@
 {
- "done": [],
+ "done": [
+  "1_공정성파일럿"
+ ],
  "current": {
-  "label": "1_공정성파일럿",
-  "kind": "train",
-  "spec": "experiments/configs/fair_pilot_mc_A.yaml:4,experiments/configs/fair_pilot_mc_B.yaml:3,experiments/configs/fair_pilot_mc_C.yaml:3",
-  "started_at": 1787938803.7418609,
-  "started_text": "2026-08-29 02:40:03"
+  "label": "2_붕괴문턱_규칙",
+  "kind": "rules",
+  "spec": "experiments/configs/main_mountaincar.yaml",
+  "started_at": 1787939279.6587608,
+  "started_text": "2026-08-29 02:47:59"
  },
- "history": [],
- "updated_at": 1787938803.7418609,
- "updated_text": "2026-08-29 02:40:03",
+ "history": [
+  {
+   "label": "1_공정성파일럿",
+   "hours": 0.13,
+   "exit": 1,
+   "finished_text": "2026-08-29 02:47:59"
+  }
+ ],
+ "updated_at": 1787939279.6587608,
+ "updated_text": "2026-08-29 02:47:59",
  "pid": 6164,
  "queue_file": "experiments/sprint_queue.tsv"
 }

@@ -8,3 +8,8 @@
 [2026-08-29 02:40:03]   ▶ experiments/configs/fair_pilot_mc_A.yaml (워커 4)
 [2026-08-29 02:40:03]   ▶ experiments/configs/fair_pilot_mc_B.yaml (워커 3)
 [2026-08-29 02:40:03]   ▶ experiments/configs/fair_pilot_mc_C.yaml (워커 3)
+[2026-08-29 02:47:59] === 작업 완료: 1_공정성파일럿 | 0.13시간 | 종료코드 1 ===
+[2026-08-29 02:47:59] === 작업 시작: 2_붕괴문턱_규칙 (rules) ===
+r_pilot_mc_A.yaml (워커 4)
+[2026-08-29 02:45:24]   ▶ experiments/configs/fair_pilot_mc_B.yaml (워커 3)
+[2026-08-29 02:45:24]   ▶ experiments/configs/fair_pilot_mc_C.yaml (워커 3)
