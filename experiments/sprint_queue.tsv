@@ -1,7 +1,8 @@
 # 85시간 스프린트 작업 대기열 (라벨<탭>종류<탭>내용)
-# 위에서부터 차례로 실행된다. 도는 중에 줄을 덧붙이면 다음 차례로 잡힌다.
-# 종류 train = 학습 러너 (설정:워커수, 쉼표로 나열하면 동시 실행)
-# 종류 rules = 고정 규칙 평가 (1코어, 차례로)
+# 순서 근거 (2026-08-29 결정): 값싼 항목을 먼저 돌려 완주 항목 수를 최대화한다.
+#   2 붕괴문턱 5.1h → 3 인과 3.1h → 5 LL정밀 2.9h → 1B 재격자 20.0h → 4 MinAtar 13.0h
+#   합계 약 45시간. 85시간 예산 안에서 전부 끝난다(여유 약 39시간).
+# 도는 중에 줄을 덧붙이면 다음 차례로 잡힌다.
 1_공정성파일럿	train	experiments/configs/fair_pilot_mc_A.yaml:4,experiments/configs/fair_pilot_mc_B.yaml:3,experiments/configs/fair_pilot_mc_C.yaml:3
 2_붕괴문턱_규칙	rules	experiments/configs/main_mountaincar.yaml
 2_붕괴문턱_학습	train	experiments/configs/main_mountaincar.yaml:10
@@ -9,5 +10,7 @@
 3_인과_학습	train	experiments/configs/causal_warmup_mc.yaml:10
 5_LL정밀_규칙	rules	experiments/configs/main_lunarlander.yaml
 5_LL정밀_학습	train	experiments/configs/main_lunarlander.yaml:10
+1B_재격자_규칙	rules	experiments/configs/regrid_mc_1M.yaml
+1B_재격자_학습	train	experiments/configs/regrid_mc_1M.yaml:10
 4_MinAtar_규칙	rules	experiments/configs/main_minatar_freeway.yaml
 4_MinAtar_학습	train	experiments/configs/main_minatar_freeway.yaml:10
