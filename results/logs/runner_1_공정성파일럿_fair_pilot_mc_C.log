@@ -19,11 +19,10 @@ PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\�
 [러너] fair_pilot_mc_C | 총 5조건 | 이미 완료 3 | 동시 2개
   ▶ 시작 MountainCar-v0@budget1M_wide/dqn/lam0.0/seed3 (시도 1)
   ▶ 시작 MountainCar-v0@budget1M_wide/dqn/lam0.0/seed4 (시도 1)
-
-===== 2026-08-29 02:40:03 시작 =====
-[러너] fair_pilot_mc_C | 총 5조건 | 이미 완료 3 | 동시 3개
-  ▶ 시작 MountainCar-v0@budget1M_wide/dqn/lam0.0/seed3 (시도 1)
-  ▶ 시작 MountainCar-v0@budget1M_wide/dqn/lam0.0/seed4 (시도 1)
+  ✔ 완료 MountainCar-v0@budget1M_wide/dqn/lam0.0/seed3 (73.6분)
+  ✔ 완료 MountainCar-v0@budget1M_wide/dqn/lam0.0/seed4 (74.3분)
+[러너 종료] fair_pilot_mc_C | 완료 5/5 | 건너뜀 0 | 총 1.24시간
+et1M_wide/dqn/lam0.0/seed4 (시도 1)
 
 ===== 2026-08-29 02:45:24 시작 =====
 [러너] fair_pilot_mc_C | 총 5조건 | 이미 완료 3 | 동시 3개
