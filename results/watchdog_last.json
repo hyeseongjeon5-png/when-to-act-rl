@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 02:56:41",
- "ts": 1787939801.1824663,
+ "time": "2026-08-29 03:56:45",
+ "ts": 1787943405.2728558,
  "runs": [
   {
    "run": "fair_pilot_mc_A",
@@ -10,8 +10,8 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5.6,
-   "advanced_since_last": null,
+   "stale_min": 65.7,
+   "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
   },
@@ -23,22 +23,22 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 4.6,
-   "advanced_since_last": null,
+   "stale_min": 64.6,
+   "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
   },
   {
    "run": "fair_pilot_mc_C",
-   "done": 3,
+   "done": 5,
    "total": 5,
-   "running": 2,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.4,
-   "advanced_since_last": null,
-   "eta_text": "약 1.2시간 남음",
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 15.1,
+   "advanced_since_last": true,
+   "eta_text": "측정 중",
    "prev_done": 3
   },
   {
@@ -49,22 +49,22 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5257.2,
-   "advanced_since_last": null,
+   "stale_min": 5317.2,
+   "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
   },
   {
    "run": "main_mountaincar",
-   "done": 270,
+   "done": 290,
    "total": 420,
    "running": 10,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
    "stale_min": 0.4,
-   "advanced_since_last": null,
-   "eta_text": "약 5.1시간 남음",
+   "advanced_since_last": true,
+   "eta_text": "약 4.4시간 남음",
    "prev_done": 270
   }
  ],
@@ -77,14 +77,14 @@
   "next": "2_붕괴문턱_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 4.0
+  "stale_min": 64.1
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 25,
-  "fresh": 15,
+  "scanned": 35,
+  "fresh": 17,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -94,8 +94,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 0
+  "n_expected_floor": 2
  },
- "disk_free_gb": 351.1,
- "done_conditions_total": 2203
+ "disk_free_gb": 351.0,
+ "done_conditions_total": 2225
 }
