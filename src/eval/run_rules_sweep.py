@@ -27,6 +27,7 @@ from src.baselines.fixed_rules import (
 )
 from src.envs.cost_wrapper import NOOP_BY_ENV, make_cost_env
 from src.eval.evaluate import evaluate, summarize
+from src.train.train_agent import raw_dir_name
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -60,7 +61,7 @@ def main() -> None:
     for lam in cfg["lambdas"]:
         for spec in cfg["rules"]:
             agent_id = "rule_" + spec["id"]
-            out = ROOT / "results" / "raw" / env_id / agent_id / f"lam{float(lam)}"
+            out = ROOT / "results" / "raw" / raw_dir_name(cfg) / agent_id / f"lam{float(lam)}"
             out.mkdir(parents=True, exist_ok=True)
             env = make_cost_env(env_id, lam=float(lam), **env_kwargs)
             for seed in seeds:

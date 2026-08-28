@@ -169,7 +169,8 @@ def main() -> None:
             if a.env == "all" else [a.env])
     for env_id in envs:
         print(f"[{env_id}] 그림 생성")
-        ref = a.rule or REF_RULE.get(env_id, "rule_pump")
+        # 변종 방(env@variant)도 본래 환경의 기준 규칙을 쓴다
+        ref = a.rule or REF_RULE.get(str(env_id).split("@")[0], "rule_pump")
         lam_map(env_id, "cost_return", ref)
         lam_map(env_id, "raw_return", ref)
         action_map(env_id)

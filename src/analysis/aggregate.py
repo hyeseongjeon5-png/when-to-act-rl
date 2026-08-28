@@ -39,7 +39,7 @@ def pick_ref_rule(env_id: str, agents: set, override: str | None = None) -> str 
     그것도 없으면 이름이 rule_로 시작하는 것 중 아무거나(경고와 함께)."""
     if override and override in agents:
         return override
-    default = REF_RULE.get(env_id)
+    default = REF_RULE.get(str(env_id).split("@")[0])
     if default in agents:
         return default
     rules = sorted(a for a in agents if str(a).startswith("rule_"))
@@ -67,7 +67,9 @@ def load_conditions(env_id: str) -> pd.DataFrame:
             continue
         df = pd.read_csv(csv_p)
         rows.append({
-            "env_id": m["env_id"], "agent": m["agent"], "lam": float(m["lam"]), "seed": int(m["seed"]),
+            # 변종 방(env@variant)은 그 방 이름으로 기록한다 — meta의 env_id를 쓰면
+            # 서로 다른 설정의 결과가 한 이름으로 합쳐져 조용히 섞인다.
+            "env_id": env_id, "gym_env_id": m["env_id"], "agent": m["agent"], "lam": float(m["lam"]), "seed": int(m["seed"]),
             "fingerprint": m.get("fingerprint", "규칙(지문없음)"),
             "cost_return": float(df["cost_return"].mean()),
             "raw_return": float(df["raw_return"].mean()),
@@ -228,6 +230,7 @@ def main() -> None:
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     envs = [p.name for p in RAW.iterdir() if p.is_dir()] if a.env == "all" else [a.env]
+    envs = [e for e in envs if (RAW / e).exists()]
 
     for env_id in envs:
         cond, agg = aggregate(env_id, reps=a.reps)

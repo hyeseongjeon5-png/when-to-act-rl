@@ -1,0 +1,5 @@
+[러너] fair_pilot_mc_A | 총 5조건 | 이미 완료 0 | 동시 4개
+  ▶ 시작 MountainCar-v0@budget1M_epsconst/dqn/lam0.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@budget1M_epsconst/dqn/lam0.0/seed1 (시도 1)
+  ▶ 시작 MountainCar-v0@budget1M_epsconst/dqn/lam0.0/seed2 (시도 1)
+  ▶ 시작 MountainCar-v0@budget1M_epsconst/dqn/lam0.0/seed3 (시도 1)

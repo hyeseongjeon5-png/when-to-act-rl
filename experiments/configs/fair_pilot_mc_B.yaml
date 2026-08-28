@@ -1,0 +1,38 @@
+# 공정성 파일럿 1-A · 후보 A — "예산만 늘린다"
+#
+# 왜 이 실험을 하나:
+#   본실험에서 MountainCar DQN은 λ=0(비용 없음)에서도 r IQM −160.4 · 성공률 62%로
+#   pump 규칙(−119.3 · 100%)에 졌다. 비용 때문이 아니라 학습 자체가 약한 것이라면
+#   "비용이 붙으면 학습이 진다"는 이 논문의 주장이 근거를 잃는다.
+#   따라서 먼저 "예산·설정을 공개 구현 수준으로 올리면 λ=0에서 규칙을 이기는가"를 확인한다.
+#   출처 수치: results/aggregate/MountainCar-v0_iqm.csv (2026-08-26 집계)
+#
+# 후보 B = 예산 1M + 탐험 방식 변경: ε를 1.0에서 0.05로 앞 20% 구간에 걸쳐 직선 감소
+#   이 후보가 이기면 원인은 '탐험 부족'이다 — ε=0.2 고정은 초반에 산을 오를 만큼 밀어붙이지 못한다.
+name: fair_pilot_mc_B
+variant: budget1M_epsdecay
+date: 2026-08-29
+env_id: MountainCar-v0
+env_kwargs: {}
+total_steps: 1000000
+eval_every: 50000
+n_eval_episodes_curve: 10
+n_eval_episodes_final: 50
+n_eval_episodes_rules: 100
+final_snapshots: [0.9, 0.95, 1.0]
+ckpt_every: 100000
+workers: 5
+
+agents: [dqn]
+lambdas: [0.0]
+seeds: [0, 1, 2, 3, 4]
+
+hyperparams:
+  dqn: {hidden: [50, 50], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_end: 0.05, eps_frac: 0.2, double_dqn: true}
+
+rules:
+  - {id: pump, type: MountainCarPumpPolicy, act_threshold: 0.0}
+
+notes: |
+  비교 기준은 pump 규칙 r IQM −119.3(성공률 100%)이다. 파일럿이므로 시드 5개이며,
+  이 결과로 "이겼다/졌다"를 선언하지 않는다 — 어느 후보로 λ 격자를 다시 돌릴지만 고른다.

@@ -1,7 +1,46 @@
 {
- "time": "2026-08-26 22:02:40",
- "ts": 1787749360.1993957,
+ "time": "2026-08-29 00:56:27",
+ "ts": 1787932587.7006848,
  "runs": [
+  {
+   "run": "fair_pilot_mc_A",
+   "done": 0,
+   "total": 5,
+   "running": 4,
+   "skipped": 0,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.2,
+   "advanced_since_last": null,
+   "eta_text": "측정 중",
+   "prev_done": null
+  },
+  {
+   "run": "fair_pilot_mc_B",
+   "done": 0,
+   "total": 5,
+   "running": 3,
+   "skipped": 0,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.2,
+   "advanced_since_last": null,
+   "eta_text": "측정 중",
+   "prev_done": null
+  },
+  {
+   "run": "fair_pilot_mc_C",
+   "done": 0,
+   "total": 5,
+   "running": 3,
+   "skipped": 0,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.2,
+   "advanced_since_last": null,
+   "eta_text": "측정 중",
+   "prev_done": null
+  },
   {
    "run": "main_lunarlander",
    "done": 240,
@@ -10,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2083.1,
+   "stale_min": 5136.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
@@ -23,7 +62,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 1859.9,
+   "stale_min": 4913.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 270
@@ -32,7 +71,7 @@
  "issues": [],
  "level": "정상",
  "logs": {
-  "scanned": 0,
+  "scanned": 10,
   "traceback_logs": [],
   "nan_logs": []
  },
@@ -43,6 +82,6 @@
   "n_floor": 0,
   "n_expected_floor": 145
  },
- "disk_free_gb": 352.9,
+ "disk_free_gb": 357.6,
  "done_conditions_total": 1530
 }

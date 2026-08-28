@@ -1,0 +1,80 @@
+{
+ "run_name": "fair_pilot_mc_B",
+ "config": "experiments/configs/fair_pilot_mc_B.yaml",
+ "pid": 14448,
+ "workers": 3,
+ "started_at": 1787932547.4048605,
+ "updated_at": 1787932607.5060136,
+ "wall_elapsed_sec": 60.1,
+ "total": 5,
+ "done": 0,
+ "running": 3,
+ "failed": 0,
+ "skipped": 0,
+ "pending": 2,
+ "avg_sec_per_cond": 0.0,
+ "eta_sec": null,
+ "eta_text": "측정 중",
+ "running_now": [
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed0",
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed1",
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed2"
+ ],
+ "conditions": {
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed0": {
+   "status": "진행중",
+   "attempts": 1,
+   "elapsed_sec": 0.0,
+   "fingerprint": "55d614f8c030",
+   "env_id": "MountainCar-v0",
+   "room": "MountainCar-v0@budget1M_epsdecay",
+   "agent": "dqn",
+   "lam": 0.0,
+   "seed": 0
+  },
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed1": {
+   "status": "진행중",
+   "attempts": 1,
+   "elapsed_sec": 0.0,
+   "fingerprint": "55d614f8c030",
+   "env_id": "MountainCar-v0",
+   "room": "MountainCar-v0@budget1M_epsdecay",
+   "agent": "dqn",
+   "lam": 0.0,
+   "seed": 1
+  },
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed2": {
+   "status": "진행중",
+   "attempts": 1,
+   "elapsed_sec": 0.0,
+   "fingerprint": "55d614f8c030",
+   "env_id": "MountainCar-v0",
+   "room": "MountainCar-v0@budget1M_epsdecay",
+   "agent": "dqn",
+   "lam": 0.0,
+   "seed": 2
+  },
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed3": {
+   "status": "대기",
+   "attempts": 0,
+   "elapsed_sec": 0.0,
+   "fingerprint": "55d614f8c030",
+   "env_id": "MountainCar-v0",
+   "room": "MountainCar-v0@budget1M_epsdecay",
+   "agent": "dqn",
+   "lam": 0.0,
+   "seed": 3
+  },
+  "MountainCar-v0@budget1M_epsdecay/dqn/lam0.0/seed4": {
+   "status": "대기",
+   "attempts": 0,
+   "elapsed_sec": 0.0,
+   "fingerprint": "55d614f8c030",
+   "env_id": "MountainCar-v0",
+   "room": "MountainCar-v0@budget1M_epsdecay",
+   "agent": "dqn",
+   "lam": 0.0,
+   "seed": 4
+  }
+ }
+}

@@ -402,3 +402,4 @@
   저장: results\figures\MountainCar-v0_action_map.png
   저장: results\figures\MountainCar-v0_learning_curves.png
 보고서 저장: results\reports\2026-08-26_본실험보고서.html
+결과 장 생성: paper\04_결과.md

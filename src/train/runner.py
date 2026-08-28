@@ -38,20 +38,23 @@ def expand(cfg: dict) -> list[dict]:
     """
     out = []
     lam_by_agent = cfg.get("lambdas_by_agent", {})
+    from src.train.train_agent import raw_dir_name
+    room = raw_dir_name(cfg)
     for seed in cfg["seeds"]:
         for agent in cfg["agents"]:
             for lam in lam_by_agent.get(agent, cfg["lambdas"]):
-                out.append({"env_id": cfg["env_id"], "agent": agent, "lam": float(lam), "seed": int(seed)})
+                out.append({"env_id": cfg["env_id"], "room": room,
+                            "agent": agent, "lam": float(lam), "seed": int(seed)})
     return out
 
 
 def cond_key(c: dict) -> str:
-    return f"{c['env_id']}/{c['agent']}/lam{c['lam']}/seed{c['seed']}"
+    return f"{c.get('room', c['env_id'])}/{c['agent']}/lam{c['lam']}/seed{c['seed']}"
 
 
 def is_done(c: dict, fp: str | None = None) -> bool:
     """이미 끝난 조건인가. 설정 지문이 다르면(하이퍼파라미터가 바뀌었으면) '안 끝난 것'으로 본다."""
-    m = ROOT / "results" / "raw" / c["env_id"] / c["agent"] / f"lam{c['lam']}" / f"seed{c['seed']}_meta.json"
+    m = ROOT / "results" / "raw" / c.get("room", c["env_id"]) / c["agent"] / f"lam{c['lam']}" / f"seed{c['seed']}_meta.json"
     if not m.exists():
         return False
     try:
@@ -62,7 +65,7 @@ def is_done(c: dict, fp: str | None = None) -> bool:
 
 
 def done_elapsed(c: dict) -> float:
-    m = ROOT / "results" / "raw" / c["env_id"] / c["agent"] / f"lam{c['lam']}" / f"seed{c['seed']}_meta.json"
+    m = ROOT / "results" / "raw" / c.get("room", c["env_id"]) / c["agent"] / f"lam{c['lam']}" / f"seed{c['seed']}_meta.json"
     try:
         return float(json.loads(m.read_text(encoding="utf-8")).get("elapsed_sec", 0.0))
     except Exception:

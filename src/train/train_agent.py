@@ -43,6 +43,27 @@ def build_agent(agent_name: str, obs_dim: int, n_actions: int, cfg: dict, seed: 
     raise KeyError(f"모르는 계열: {agent_name}")
 
 
+def raw_dir_name(cfg: dict) -> str:
+    """결과가 쌓일 디렉터리 이름.
+
+    변종(variant) 실험 — 예산을 늘린 재실험, 비용 워밍업 실험 — 은 같은 (계열, λ) 칸에
+    **다른 설정으로 만든 숫자**를 만든다. 그대로 두면 집계가 둘을 한 칸에 섞어
+    아무도 눈치 못 챈 채 틀린 신뢰구간을 낸다 (aggregate.check_mixed_settings가 잡아주지만
+    애초에 섞이지 않게 하는 편이 낫다).
+
+    그래서 변종은 results/raw/{env_id}@{variant}/ 라는 별도 방에 쌓는다.
+    집계·그림·보고서는 이것을 '다른 환경'처럼 따로 다룬다.
+    """
+    v = cfg.get("variant")
+    return f"{cfg['env_id']}@{v}" if v else str(cfg["env_id"])
+
+
+def warmup_steps(cfg: dict) -> int:
+    """비용을 켜기 전 λ=0으로 학습할 스텝 수 (인과 실험용). 0이면 처음부터 비용 부과."""
+    frac = float(cfg.get("cost_warmup_frac", 0.0) or 0.0)
+    return int(round(int(cfg["total_steps"]) * frac))
+
+
 def fingerprint(cfg: dict, agent_name: str) -> str:
     """설정 지문 — 체크포인트가 '지금 이 설정으로 만들어진 것'인지 확인하는 도장.
 
@@ -58,13 +79,14 @@ def fingerprint(cfg: dict, agent_name: str) -> str:
         "env_kwargs": cfg.get("env_kwargs", {}),
         "n_eval_episodes_final": cfg.get("n_eval_episodes_final"),
         "final_snapshots": cfg.get("final_snapshots", [0.9, 0.95, 1.0]),
+        "variant": cfg.get("variant"),
+        "cost_warmup_frac": cfg.get("cost_warmup_frac", 0.0),
     }
     return hashlib.sha1(json.dumps(key, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:12]
 
 
 def cond_paths(cfg: dict, agent: str, lam: float, seed: int) -> dict:
-    env_id = cfg["env_id"]
-    tag = f"{env_id}/{agent}/lam{lam}"
+    tag = f"{raw_dir_name(cfg)}/{agent}/lam{lam}"
     out = ROOT / "results" / "raw" / tag
     ck = ROOT / "results" / "checkpoints" / tag
     out.mkdir(parents=True, exist_ok=True)
@@ -104,7 +126,13 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
             print(f"[경고] {p['tag']} 의 기존 결과는 다른 설정(지문 {old.get('fingerprint')})으로 만들어진 것 "
                   f"— 현재 지문 {fp}. 다시 계산한다.")
 
-    env = make_cost_env(env_id, lam=lam, **env_kwargs)
+    # ---- 비용 워밍업 (인과 실험) ----
+    # warm > 0 이면 학습 환경의 λ를 처음 warm 스텝 동안 0으로 두었다가 그 뒤 켠다.
+    # 평가 환경은 **항상 진짜 λ**를 쓴다 — 성적표는 언제나 비용이 붙은 세상에서 매긴다.
+    # 이렇게 하면 "비용이 있는 세상에서 못 하는 이유가 탐험 실패인가"를 가를 수 있다:
+    #   비용을 나중에 켠 쪽이 잘하면 → 비용 자체가 아니라 '비용 때문에 탐험을 못 해서' 무너진 것.
+    warm = warmup_steps(cfg)
+    env = make_cost_env(env_id, lam=(0.0 if warm > 0 else lam), **env_kwargs)
     eval_env = make_cost_env(env_id, lam=lam, **env_kwargs)
     obs_dim = int(np.prod(env.observation_space.shape))
     n_actions = int(env.action_space.n)
@@ -141,6 +169,10 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
     next_ckpt = ((step // ckpt_every) + 1) * ckpt_every
 
     while step < total_steps:
+        if warm > 0 and step >= warm and env.lam != lam:
+            env.lam = lam   # 여기서 비용을 켠다 (이어하기로 warm 이후부터 시작해도 동일하게 켜진다)
+            if not quiet:
+                print(f"  [비용 켜짐] {p['tag']} {step}스텝 — λ 0 → {lam}", flush=True)
         next_obs, used, done, info = agent.interact(env, obs, t_in_ep, step)
         agent.update(step, n_updates=used)
         step += used
@@ -205,6 +237,8 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
         "env_id": env_id, "agent": agent_name, "lam": lam, "seed": seed,
         "total_steps": total_steps, "elapsed_sec": round(elapsed, 1),
         "config_name": cfg.get("name"), "env_kwargs": env_kwargs,
+        "variant": cfg.get("variant"), "cost_warmup_frac": float(cfg.get("cost_warmup_frac", 0.0) or 0.0),
+        "cost_warmup_steps": warm,
         "final": final,
         "n_eval_episodes_final": n_eval_final,
         "final_snapshots": snap_steps,
