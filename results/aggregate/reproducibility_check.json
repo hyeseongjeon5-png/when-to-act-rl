@@ -1,0 +1,33 @@
+{
+  "설명": "논문 Ⅲ장의 재현성 주장을 실제로 확인한 것. 이미 끝난 조건 하나를 같은 설정·같은 시드로 별도 방(@REPRO)에 다시 돌려 대조했다. 변종 때문에 설정 지문은 다르지만 계산은 동일하다.",
+  "조건": "MountainCar-v0 / 표준 DQN / λ=0 / 시드 5 / 30만 스텝",
+  "원본": {
+    "경로": "results/raw/MountainCar-v0/dqn/lam0.0/seed5_*",
+    "final": {
+      "raw_return_iqm": -131.48684210526315,
+      "raw_return_mean": -135.64,
+      "cost_return_iqm": -131.48684210526315,
+      "cost_return_mean": -135.64,
+      "n_actions_mean": 120.3,
+      "steps_mean": 135.64,
+      "solved_rate": 0.84
+    },
+    "elapsed_sec": 909.4
+  },
+  "재현": {
+    "경로": "results/raw/MountainCar-v0@REPRO/dqn/lam0.0/seed5_*",
+    "final": {
+      "raw_return_iqm": -131.48684210526315,
+      "raw_return_mean": -135.64,
+      "cost_return_iqm": -131.48684210526315,
+      "cost_return_mean": -135.64,
+      "n_actions_mean": 120.3,
+      "steps_mean": 135.64,
+      "solved_rate": 0.84
+    },
+    "elapsed_sec": 1004.4
+  },
+  "최대차이": 0.0,
+  "곡선_평가지점_일치": "12/12 (학습 중 2.5만 스텝마다 평가한 전 지점)",
+  "판정": "모든 지표가 소수점 아래 9자리까지 일치. 소요시간만 다르다(부하 차이 — 결과와 무관)."
+}
