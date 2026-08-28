@@ -21,6 +21,8 @@ from src.agents.common import ReplayBuffer, mlp
 from src.agents.dqn import DQNAgent
 from src.baselines.fixed_rules import (
     LunarLanderThresholdPolicy,
+    MinAtarBreakoutTrackPolicy,
+    MinAtarFreewayCautiousPolicy,
     MountainCarPumpPolicy,
     NoOpPolicy,
 )
@@ -30,6 +32,8 @@ DEFAULT_BASE = {
     "MountainCar-v0": "pump",
     "LunarLander-v3": "threshold",
     "LunarLander-v2": "threshold",
+    "MinAtar/Freeway-v1": "freeway_cautious",
+    "MinAtar/Breakout-v1": "breakout_track",
 }
 
 
@@ -38,6 +42,10 @@ def make_base_policy(name: str, env_id: str):
         return MountainCarPumpPolicy()
     if name == "threshold":
         return LunarLanderThresholdPolicy()
+    if name == "freeway_cautious":
+        return MinAtarFreewayCautiousPolicy()
+    if name == "breakout_track":
+        return MinAtarBreakoutTrackPolicy()
     if name == "noop":
         return NoOpPolicy(NOOP_BY_ENV[env_id])
     raise KeyError(f"모르는 기본 정책: {name}")

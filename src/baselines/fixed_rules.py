@@ -96,3 +96,100 @@ class LunarLanderThresholdPolicy:
         if vy < self.vy_thresh:
             return self.MAIN
         return self.NOOP
+
+
+class MinAtarBreakoutTrackPolicy:
+    """MinAtar Breakout 임계값 규칙 — "공이 있는 쪽으로 판을 옮긴다".
+
+    MountainCar의 pump, LunarLander의 임계값 규칙에 해당하는 '사람이 손으로 짤 수 있는 좋은 규칙'이다.
+    이런 규칙이 있어야 "학습이 규칙을 이기는가"라는 이 연구의 질문을 물을 수 있다.
+
+    관측: (10, 10, 4) 격자를 400차원으로 편 것. 채널 0=판, 1=공, 2=꼬리, 3=벽돌
+    행동(어댑터가 재배치한 뒤): 0 무행동 / 1 왼쪽 / 2 오른쪽
+
+    규칙: 공의 x가 판의 x보다 tol 이상 왼쪽이면 왼쪽, 오른쪽이면 오른쪽, 그 안이면 무행동.
+    tol을 키우면 행동을 아끼는 대신 공을 놓칠 위험이 커진다 (비용-성능 맞바꿈의 손잡이).
+    """
+
+    NOOP, LEFT, RIGHT = 0, 1, 2
+    SHAPE = (10, 10, 4)
+    CH_PADDLE, CH_BALL = 0, 1
+
+    def __init__(self, tol: int = 0):
+        self.tol = int(tol)
+
+    def act(self, obs, t: int) -> int:
+        g = np.asarray(obs, dtype=np.float32).reshape(self.SHAPE)
+        paddle = np.argwhere(g[:, :, self.CH_PADDLE] > 0.5)
+        ball = np.argwhere(g[:, :, self.CH_BALL] > 0.5)
+        if len(paddle) == 0 or len(ball) == 0:
+            return self.NOOP          # 화면에 없으면(종료 직전 등) 굳이 움직이지 않는다
+        px = float(paddle[0][1])
+        bx = float(ball[0][1])
+        if bx < px - self.tol:
+            return self.LEFT
+        if bx > px + self.tol:
+            return self.RIGHT
+        return self.NOOP
+
+
+class MinAtarFreewayCautiousPolicy:
+    """MinAtar Freeway 임계값 규칙 — "차가 안 올 때만 한 칸 올라가고, 아니면 기다린다".
+
+    MountainCar의 pump, LunarLander의 임계값 규칙에 대응하는 '사람이 손으로 짤 수 있는 좋은 규칙'이다.
+    특히 이 규칙은 **기다리는 것(no-op)이 전략의 일부**여서 행동 비용 연구에 잘 맞는다.
+
+    관측: (10, 10, 7)을 700차원으로 편 것. 채널 0=닭, 1=차, 2~6=차의 속도 흔적
+    행동(어댑터 재배치 후): 0 무행동 / 1 위 / 2 아래
+    게임 규칙: 닭은 항상 4번 열에 있고 3프레임에 한 번만 움직일 수 있다(player_speed=3).
+              위(0행)에 닿으면 +1점을 받고 맨 아래(9행)로 돌아간다. 4번 열에서 차에 닿아도 맨 아래로 간다.
+
+    규칙 (위에서부터 먼저 걸리는 것 하나만 실행):
+      1) 아직 이동 대기시간(쿨다운)이면 → 무행동. **어차피 움직이지 못하는 프레임에 행동을 내면
+         비용만 내고 아무 일도 일어나지 않는다.** 대기시간은 관측에 보이지 않으므로
+         '내 행이 바뀌었는가'를 보고 규칙이 직접 센다.
+      2) 바로 위 칸이 목표(0행)이면 → 위로
+      3) 바로 위 칸에 차가 4번 열에서 danger칸 이내로 와 있으면 → 무행동 (보내고 나서 간다)
+      4) 그 외 → 위로
+    """
+
+    NOOP, UP, DOWN = 0, 1, 2
+    SHAPE = (10, 10, 7)
+    CH_CHICKEN, CH_CAR = 0, 1
+    MOVE_COOLDOWN = 3          # freeway.py의 player_speed
+    CHICKEN_COL = 4
+
+    def __init__(self, danger: int = 1):
+        self.danger = int(danger)
+        self.reset()
+
+    def reset(self):
+        self._prev_row = None
+        self._cool = 0
+
+    def act(self, obs, t: int) -> int:
+        g = np.asarray(obs, dtype=np.float32).reshape(self.SHAPE)
+        me = np.argwhere(g[:, :, self.CH_CHICKEN] > 0.5)
+        if len(me) == 0:
+            return self.NOOP
+        row = int(me[0][0])
+
+        # 쿨다운 세기: 내 행이 바뀌었으면 방금 움직인 것이다
+        if self._prev_row is not None and row != self._prev_row:
+            self._cool = self.MOVE_COOLDOWN - 1
+        elif self._cool > 0:
+            self._cool -= 1
+        self._prev_row = row
+
+        if self._cool > 0:
+            return self.NOOP          # 움직일 수 없는 프레임 — 행동을 내면 비용만 버린다
+        target = row - 1
+        if target < 0:
+            return self.NOOP
+        if target == 0:
+            return self.UP            # 맨 위는 차가 없다 (득점 칸)
+        cars = np.argwhere(g[:, :, self.CH_CAR] > 0.5)
+        for cy, cx in cars:
+            if int(cy) == target and abs(int(cx) - self.CHICKEN_COL) <= self.danger:
+                return self.NOOP      # 차가 지나갈 때까지 기다린다
+        return self.UP

@@ -21,6 +21,8 @@ import yaml
 
 from src.baselines.fixed_rules import (
     LunarLanderThresholdPolicy,
+    MinAtarBreakoutTrackPolicy,
+    MinAtarFreewayCautiousPolicy,
     MountainCarPumpPolicy,
     NoOpPolicy,
     PeriodicPolicy,
@@ -36,6 +38,8 @@ TYPES = {
     "PeriodicPolicy": PeriodicPolicy,
     "MountainCarPumpPolicy": MountainCarPumpPolicy,
     "LunarLanderThresholdPolicy": LunarLanderThresholdPolicy,
+    "MinAtarBreakoutTrackPolicy": MinAtarBreakoutTrackPolicy,
+    "MinAtarFreewayCautiousPolicy": MinAtarFreewayCautiousPolicy,
 }
 
 

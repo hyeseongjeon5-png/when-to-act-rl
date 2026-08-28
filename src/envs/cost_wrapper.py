@@ -9,7 +9,7 @@
 환경별 no-op 번호:
   MountainCar-v0  → 1 (가속 안 함)
   LunarLander-v2  → 0 (엔진 안 씀)
-  MinAtar         → 게임별 확인 필요 (보통 0)
+  MinAtar         → 0 (원래 action_map ["n","l","u","r","d","f"]의 0번이 no-op)
 """
 from __future__ import annotations
 
@@ -63,11 +63,20 @@ NOOP_BY_ENV = {
     "MountainCar-v0": 1,
     "LunarLander-v2": 0,
     "LunarLander-v3": 0,
+    # MinAtar: src/envs/minatar_env.py 가 행동을 재배치해 0번을 언제나 no-op('n')으로 만든다.
+    # (MinAtar 원래 action_map은 게임과 무관하게 ['n','l','u','r','d','f'] 로 0번이 no-op이다.)
+    "MinAtar/Breakout-v1": 0,
+    "MinAtar/Asterix-v1": 0,
+    "MinAtar/Freeway-v1": 0,
+    "MinAtar/Seaquest-v1": 0,
+    "MinAtar/SpaceInvaders-v1": 0,
 }
 
 
 def make_cost_env(env_id: str, lam: float, **env_kwargs) -> gym.Env:
     """환경 이름만으로 비용 래퍼가 씌워진 환경을 만든다 (no-op 자동 지정)."""
+    if env_id.startswith("MinAtar/"):
+        import src.envs.minatar_env  # noqa: F401  (import만으로 Gymnasium에 등록된다)
     if env_id not in NOOP_BY_ENV:
         raise KeyError(f"{env_id}의 no-op 행동 번호를 NOOP_BY_ENV에 먼저 등록할 것 (확인 필요)")
     env = gym.make(env_id, **env_kwargs)
