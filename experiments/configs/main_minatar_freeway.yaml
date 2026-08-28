@@ -1,0 +1,53 @@
+# 본실험 3번째 환경 — MinAtar/Freeway-v1 (스프린트 실험 4)
+#
+# 왜 Freeway인가 (다섯 게임 사전 측정 근거는 docs/실험일지.md 2026-08-29 항목):
+#   MountainCar는 규칙이 학습을 압도하는 환경, LunarLander는 규칙이 약한 환경이었다.
+#   Freeway는 그 사이 — 규칙이 쓸 만하지만(무작위 0점 대비 17.8점) 개선 여지가 큰 세 번째 칸이다.
+#   에피소드가 1000스텝 고정이라 행동 비용의 압력이 두 환경보다 뚜렷하다.
+#
+# λ 격자 근거 (사전 측정, 시드 60개):
+#   신중 규칙(danger=0): r = 17.80, 행동 298.4회 → r' = 17.80 − 298.4λ
+#   무행동             : r' = 0 (행동 0회이므로 λ와 무관)
+#   두 선이 만나는 지점 λ = 17.80 / 298.4 = 0.0597
+#   → 격자를 0 ~ 0.06으로 잡는다. 그보다 비싸면 '아무것도 안 하기'가 최고 규칙이 된다.
+name: main_minatar_freeway
+date: 2026-08-29
+env_id: MinAtar/Freeway-v1
+env_kwargs: {}            # 어댑터 기본값: 최소 행동 집합, 끈적임 없음, 1000스텝 제한
+total_steps: 300000
+eval_every: 25000
+n_eval_episodes_curve: 3        # 에피소드가 1000스텝이라 곡선 평가는 적게 (곡선은 추세만 보면 된다)
+n_eval_episodes_final: 15       # 스냅샷 3장 × 15 = 45 에피소드 (= 45,000 환경 스텝)
+n_eval_episodes_rules: 50       # 규칙은 λ 하나에서만 굴리고 나머지는 환산하므로 넉넉히 줘도 싸다
+final_snapshots: [0.9, 0.95, 1.0]
+ckpt_every: 50000
+workers: 10
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0, 0.005, 0.01, 0.02, 0.04, 0.06]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# 은닉층만 128×128로 키웠다 (MountainCar/LunarLander는 50×50).
+# 이유: 관측이 700차원(10×10×7 격자를 편 것)이라 50×50으로는 표현력이 모자란다.
+# 세 계열에 **똑같이** 적용하므로 공정 비교는 유지된다.
+# 합성곱망을 쓰지 않는 이유는 Ⅲ장에 적었다 — 계열 간 차이가 신경망 구조 차이로 오염되기 때문이다.
+hyperparams:
+  dqn:     {hidden: [128, 128], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [128, 128], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [128, 128], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: freeway_cautious, eta: 0.0}
+
+rules:
+  - {id: noop,        type: NoOpPolicy}
+  - {id: periodic_k1, type: PeriodicPolicy, base_action: 1, k: 1}
+  - {id: periodic_k3, type: PeriodicPolicy, base_action: 1, k: 3}
+  - {id: periodic_k8, type: PeriodicPolicy, base_action: 1, k: 8}
+  - {id: cautious,    type: MinAtarFreewayCautiousPolicy, danger: 0}
+  - {id: cautious_d1, type: MinAtarFreewayCautiousPolicy, danger: 1}
+
+notes: |
+  기준선은 신중 규칙(cautious, danger=0)이다. r IQM 17.80 · 행동 298.4회.
+  주기 규칙의 기저 행동 1은 '위로'다 — Freeway에서 점수를 낼 수 있는 유일한 방향이다.
+  부수 관찰: '매 스텝 위로'(행동 1000회)와 '3스텝마다 위로'(행동 334회)의 점수가 10.93으로 같다.
+  닭은 3프레임에 한 번만 움직일 수 있어(player_speed=3), 그 사이에 낸 행동은
+  아무 일도 하지 않으면서 비용만 낸다. 행동 비용이 있는 세계에서 '헛된 행동을 안 내는 것'만으로
+  얻는 공짜 이득이 있다는 뜻이며, 이 환경을 고른 이유 중 하나다.

@@ -9,3 +9,5 @@
 3_인과_학습	train	experiments/configs/causal_warmup_mc.yaml:10
 5_LL정밀_규칙	rules	experiments/configs/main_lunarlander.yaml
 5_LL정밀_학습	train	experiments/configs/main_lunarlander.yaml:10
+4_MinAtar_규칙	rules	experiments/configs/main_minatar_freeway.yaml
+4_MinAtar_학습	train	experiments/configs/main_minatar_freeway.yaml:10
