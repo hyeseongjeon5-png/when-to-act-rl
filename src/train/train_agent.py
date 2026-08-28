@@ -21,6 +21,7 @@ import numpy as np
 import torch
 import yaml
 
+from src.utils_atomic import write_text_atomic
 from src.envs.cost_wrapper import NOOP_BY_ENV, make_cost_env
 from src.eval.evaluate import evaluate, summarize
 
@@ -257,7 +258,10 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
         "final_by_snapshot": {str(st): summarize([r for r in rows if r["snapshot_step"] == st])
                               for st in snap_steps},
     }
-    p["meta"].write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    # meta는 '이 조건이 끝났다'는 유일한 증거다. 자가 감시가 동시에 읽을 수 있으므로
+    # 바꿔치기 방식으로 쓰되, 실패하면 직접 쓰기로 되돌린다(이 파일만은 반드시 남아야 한다).
+    if not write_text_atomic(p["meta"], json.dumps(meta, ensure_ascii=False, indent=2)):
+        p["meta"].write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     env.close(); eval_env.close()
     if p["ckpt"].exists():
         p["ckpt"].unlink()  # 완료된 조건의 체크포인트는 지운다 (디스크 절약)

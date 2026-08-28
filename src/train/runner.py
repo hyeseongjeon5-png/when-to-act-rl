@@ -22,6 +22,8 @@ from pathlib import Path
 
 import yaml
 
+from src.utils_atomic import write_text_atomic
+
 ROOT = Path(__file__).resolve().parents[2]
 PY = str(ROOT / ".venv" / "Scripts" / "python.exe")
 if not Path(PY).exists():
@@ -129,9 +131,10 @@ def main() -> None:
         }
         if extra:
             payload.update(extra)
-        tmp = prog_path.with_suffix(".tmp")
-        tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
-        tmp.replace(prog_path)
+        # 진행 상황 기록이 실패해도 실험은 계속 간다.
+        # (윈도우에서는 감시·상태 확인이 이 파일을 읽는 순간 교체가 거부된다 — 2026-08-29 사고)
+        if not write_text_atomic(prog_path, json.dumps(payload, ensure_ascii=False, indent=1)):
+            print("  [경고] 진행 상황 파일을 갱신하지 못했다 (다음 갱신 때 다시 쓴다)", flush=True)
 
     env = dict(os.environ, PYTHONIOENCODING="utf-8", OMP_NUM_THREADS="1", MKL_NUM_THREADS="1")
     queue = [k for k, v in state.items() if v["status"] != "완료"]

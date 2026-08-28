@@ -19,6 +19,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.utils_atomic import replace_with_retry
+
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "results" / "raw"
 OUT = ROOT / "results" / "aggregate"
@@ -231,7 +233,8 @@ def atomic_write(path: Path, write_fn) -> None:
     """
     tmp = path.with_suffix(path.suffix + ".tmp")
     write_fn(tmp)
-    tmp.replace(path)
+    if not replace_with_retry(tmp, path):
+        print(f"  [경고] {path.name} 을 갱신하지 못했다 (읽는 중인 프로세스가 있다) — 다음 집계 때 다시 쓴다")
 
 
 def main() -> None:

@@ -1,30 +1,29 @@
 {
  "run_name": "fair_pilot_mc_C",
  "config": "experiments/configs/fair_pilot_mc_C.yaml",
- "pid": 16492,
- "workers": 3,
- "started_at": 1787932878.654911,
- "updated_at": 1787936510.943904,
- "wall_elapsed_sec": 3632.3,
+ "pid": 16292,
+ "workers": 2,
+ "started_at": 1787938037.4017415,
+ "updated_at": 1787938067.4447293,
+ "wall_elapsed_sec": 30.0,
  "total": 5,
- "done": 0,
- "running": 3,
+ "done": 3,
+ "running": 2,
  "failed": 0,
  "skipped": 0,
- "pending": 2,
- "avg_sec_per_cond": 0.0,
- "eta_sec": null,
- "eta_text": "측정 중",
+ "pending": 0,
+ "avg_sec_per_cond": 4270.4,
+ "eta_sec": 4270.4,
+ "eta_text": "약 1.2시간 남음",
  "running_now": [
-  "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed0",
-  "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed1",
-  "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed2"
+  "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed3",
+  "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed4"
  ],
  "conditions": {
   "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed0": {
-   "status": "진행중",
-   "attempts": 1,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 0,
+   "elapsed_sec": 4250.9,
    "fingerprint": "faf85b1ef586",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0@budget1M_wide",
@@ -33,9 +32,9 @@
    "seed": 0
   },
   "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed1": {
-   "status": "진행중",
-   "attempts": 1,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 0,
+   "elapsed_sec": 4281.3,
    "fingerprint": "faf85b1ef586",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0@budget1M_wide",
@@ -44,9 +43,9 @@
    "seed": 1
   },
   "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed2": {
-   "status": "진행중",
-   "attempts": 1,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 0,
+   "elapsed_sec": 4278.9,
    "fingerprint": "faf85b1ef586",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0@budget1M_wide",
@@ -55,8 +54,8 @@
    "seed": 2
   },
   "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "faf85b1ef586",
    "env_id": "MountainCar-v0",
@@ -66,8 +65,8 @@
    "seed": 3
   },
   "MountainCar-v0@budget1M_wide/dqn/lam0.0/seed4": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "faf85b1ef586",
    "env_id": "MountainCar-v0",

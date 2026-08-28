@@ -21,6 +21,8 @@ import sys
 import time
 from pathlib import Path
 
+from src.utils_atomic import write_text_atomic
+
 ROOT = Path(__file__).resolve().parents[2]
 PY = str(ROOT / ".venv" / "Scripts" / "python.exe")
 if not Path(PY).exists():
@@ -64,9 +66,8 @@ def save_state(st: dict) -> None:
     st["queue_file"] = str(QUEUE.relative_to(ROOT)).replace(chr(92), "/")
     st["updated_at"] = time.time()
     st["updated_text"] = time.strftime("%Y-%m-%d %H:%M:%S")
-    tmp = STATE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
-    tmp.replace(STATE)
+    if not write_text_atomic(STATE, json.dumps(st, ensure_ascii=False, indent=1)):
+        log("  [경고] 대기열 상태 파일을 갱신하지 못했다 (다음 갱신 때 다시 쓴다)")
 
 
 def run_job(job: dict) -> int:
