@@ -1,0 +1,42 @@
+# 공정성 검증 확장 — MinAtar/Freeway-v1 (실험 1의 연장)
+#
+# 왜 필요한가:
+#   MountainCar에서 "λ=0에서도 학습이 규칙에 진다"는 결과가 나왔을 때 가장 먼저 의심할 것은
+#   '학습이 덜 됐다'였다. 그 의심을 예산을 3.3배로 늘려 확인했다(실험 1-A).
+#   그렇다면 **같은 의심이 LunarLander에도 적용된다.** 여기서는 반대로 학습이 이겼는데,
+#   "예산을 더 주면 더 크게 이기는가, 아니면 이미 수렴했는가"를 확인해야
+#   λ*=2.0이라는 숫자를 예산 탓이 아닌 성질로 말할 수 있다.
+#
+# 무엇만 바꿨나: **예산뿐이다** (300k → 1M, 3.3배). 탐험·신경망·평가는 본실험과 완전히 같다.
+#   한 번에 한 가지만 바꿔야 원인을 말할 수 있다.
+#   λ=0만 돌린다 — 묻는 것이 "비용이 없을 때 학습이 어디까지 가는가"이기 때문이다.
+name: fair_minatar_1M
+variant: budget1M
+date: 2026-08-29
+env_id: MinAtar/Freeway-v1
+env_kwargs: {}
+total_steps: 1000000
+eval_every: 100000
+n_eval_episodes_curve: 3
+n_eval_episodes_final: 15
+n_eval_episodes_rules: 100
+final_snapshots: [0.9, 0.95, 1.0]
+ckpt_every: 100000
+workers: 10
+
+agents: [dqn, temporl, lazy]
+lambdas: [0.0]
+seeds: [0, 1, 2, 3, 4]        # 조건당 단가가 커서 시드 5개 (파일럿 성격 — 결론 선언에 쓰지 않는다)
+
+hyperparams:
+  dqn:     {hidden: [128, 128], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true}
+  temporl: {hidden: [128, 128], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, max_skip: 10, skip_augment: true}
+  lazy:    {hidden: [128, 128], lr: 0.001, gamma: 0.99, buffer_size: 100000, batch_size: 64, learn_start: 1000, target_update: 500, eps_const: 0.2, double_dqn: true, base_policy: freeway_cautious, eta: 0.0}
+
+rules:
+  - {id: noop,     type: NoOpPolicy}
+  - {id: cautious, type: MinAtarFreewayCautiousPolicy, danger: 0}
+
+notes: |
+  기준선은 신중 규칙(r IQM +17.8, 행동 298.4회)이다. 본실험 예산은 300k다. MinAtar는 관측이 700차원이라 학습이 느려
+  '규칙에 졌다면 예산 탓 아니냐'는 의심이 가장 강하게 걸리는 환경이다. 예산을 3.3배로 늘려 확인한다.
