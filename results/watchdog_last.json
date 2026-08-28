@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 04:56:48",
- "ts": 1787947008.4717698,
+ "time": "2026-08-29 05:56:52",
+ "ts": 1787950612.1816745,
  "runs": [
   {
    "run": "fair_pilot_mc_A",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 125.8,
+   "stale_min": 185.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -21,9 +21,9 @@
    "total": 5,
    "running": 0,
    "skipped": 0,
-   "pid_alive": true,
+   "pid_alive": false,
    "finished": true,
-   "stale_min": 124.7,
+   "stale_min": 184.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 75.2,
+   "stale_min": 135.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,23 +49,23 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5377.3,
+   "stale_min": 5437.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
   },
   {
    "run": "main_mountaincar",
-   "done": 320,
+   "done": 348,
    "total": 420,
    "running": 10,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.4,
+   "stale_min": 0.0,
    "advanced_since_last": true,
-   "eta_text": "약 3.4시간 남음",
-   "prev_done": 290
+   "eta_text": "약 2.5시간 남음",
+   "prev_done": 320
   }
  ],
  "issues": [],
@@ -73,18 +73,18 @@
  "queue": {
   "current": "2_붕괴문턱_학습",
   "done": 2,
-  "pending": 13,
+  "pending": 15,
   "next": "2_붕괴문턱_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 124.1
+  "stale_min": 184.2
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 52,
-  "fresh": 15,
+  "scanned": 53,
+  "fresh": 23,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -94,8 +94,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 4
+  "n_expected_floor": 6
  },
  "disk_free_gb": 351.0,
- "done_conditions_total": 2255
+ "done_conditions_total": 2284
 }

@@ -1,0 +1,115 @@
+{
+  "설명": "무작위 정책이 에피소드를 '종료'로 끝내는 비율. '유지 길이'는 같은 무작위 행동을 몇 스텝 이어서 내는지를 뜻한다. 시간 초과(truncated)는 세지 않는다.",
+  "주의": "terminated의 뜻이 환경마다 다르다. MountainCar만 '목표 도달'로 읽을 수 있고, LunarLander는 착륙과 추락을 구분하지 않으며, Freeway는 종료 조건이 없어 항상 0이다. 세 값을 나란히 비교하면 안 된다.",
+  "평가": "평가 시드 900000~ (학습·최종 평가와 겹치지 않는 구간)",
+  "results": [
+    {
+      "env_id": "MountainCar-v0",
+      "terminated_meaning": "목표 도달 (깃발에 닿음)",
+      "hold": 1,
+      "episodes": 500,
+      "reached": 0,
+      "reach_rate": 0.0,
+      "steps_mean": 200.0
+    },
+    {
+      "env_id": "MountainCar-v0",
+      "terminated_meaning": "목표 도달 (깃발에 닿음)",
+      "hold": 2,
+      "episodes": 500,
+      "reached": 0,
+      "reach_rate": 0.0,
+      "steps_mean": 200.0
+    },
+    {
+      "env_id": "MountainCar-v0",
+      "terminated_meaning": "목표 도달 (깃발에 닿음)",
+      "hold": 4,
+      "episodes": 500,
+      "reached": 0,
+      "reach_rate": 0.0,
+      "steps_mean": 200.0
+    },
+    {
+      "env_id": "MountainCar-v0",
+      "terminated_meaning": "목표 도달 (깃발에 닿음)",
+      "hold": 8,
+      "episodes": 500,
+      "reached": 4,
+      "reach_rate": 0.008,
+      "steps_mean": 199.714
+    },
+    {
+      "env_id": "MountainCar-v0",
+      "terminated_meaning": "목표 도달 (깃발에 닿음)",
+      "hold": 16,
+      "episodes": 500,
+      "reached": 41,
+      "reach_rate": 0.082,
+      "steps_mean": 197.108
+    },
+    {
+      "env_id": "MountainCar-v0",
+      "terminated_meaning": "목표 도달 (깃발에 닿음)",
+      "hold": 32,
+      "episodes": 500,
+      "reached": 117,
+      "reach_rate": 0.234,
+      "steps_mean": 188.398
+    },
+    {
+      "env_id": "LunarLander-v3",
+      "terminated_meaning": "착륙 또는 추락으로 종료 — 성공률이 아니다",
+      "hold": 1,
+      "episodes": 300,
+      "reached": 299,
+      "reach_rate": 0.9966666666666667,
+      "steps_mean": 94.99333333333334
+    },
+    {
+      "env_id": "LunarLander-v3",
+      "terminated_meaning": "착륙 또는 추락으로 종료 — 성공률이 아니다",
+      "hold": 4,
+      "episodes": 300,
+      "reached": 300,
+      "reach_rate": 1.0,
+      "steps_mean": 89.31
+    },
+    {
+      "env_id": "LunarLander-v3",
+      "terminated_meaning": "착륙 또는 추락으로 종료 — 성공률이 아니다",
+      "hold": 16,
+      "episodes": 300,
+      "reached": 300,
+      "reach_rate": 1.0,
+      "steps_mean": 83.12666666666667
+    },
+    {
+      "env_id": "MinAtar/Freeway-v1",
+      "terminated_meaning": "종료 조건 없음 — 이 지표는 의미 없다",
+      "hold": 1,
+      "episodes": 300,
+      "reached": 0,
+      "reach_rate": 0.0,
+      "steps_mean": 1000.0
+    },
+    {
+      "env_id": "MinAtar/Freeway-v1",
+      "terminated_meaning": "종료 조건 없음 — 이 지표는 의미 없다",
+      "hold": 4,
+      "episodes": 300,
+      "reached": 0,
+      "reach_rate": 0.0,
+      "steps_mean": 1000.0
+    },
+    {
+      "env_id": "MinAtar/Freeway-v1",
+      "terminated_meaning": "종료 조건 없음 — 이 지표는 의미 없다",
+      "hold": 16,
+      "episodes": 300,
+      "reached": 0,
+      "reach_rate": 0.0,
+      "steps_mean": 1000.0
+    }
+  ]
+}

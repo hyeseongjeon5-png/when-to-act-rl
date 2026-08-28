@@ -25,3 +25,11 @@ agent      lam  n_seeds  cost_return_iqm  cost_return_ci_lo  cost_return_ci_hi  
   저장: results\figures\MountainCar-v0@budget1M_wide_learning_curves.png
 보고서 저장: results\reports\2026-08-29_본실험보고서.html
 Ⅳ장 생성: paper\04_결과.md
+===== 2026-08-29 05:49:16 중간 집계 =====
+agent      lam  n_seeds  cost_return_iqm  cost_return_ci_lo  cost_return_ci_hi  n_actions_iqm  solved_iqm
+  dqn     0.00        5          -161.54            -200.00            -132.38         124.88        0.58
+  저장: results/aggregate/MountainCar-v0@budget1M_wide_iqm.csv, MountainCar-v0@budget1M_wide_lambda_star.json
+  저장: results\figures\MountainCar-v0@budget1M_wide_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@budget1M_wide_action_map.png
+  저장: results\figures\MountainCar-v0@budget1M_wide_learning_curves.png
+보고서 저장: results\reports\2026-08-29_본실험보고서.html
