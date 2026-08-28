@@ -216,7 +216,7 @@ def action_saving_fact(agg: pd.DataFrame, env_id: str) -> str:
     return "; ".join(bits)
 
 
-def env_section(env_id: str, sec: str) -> str:
+def env_section(env_id: str, sec: str, compact: bool = False) -> str:
     p = AGG / (env_id + "_iqm.csv")
     if not p.exists():
         return ""
@@ -255,7 +255,7 @@ def env_section(env_id: str, sec: str) -> str:
     save = action_saving_fact(agg, env_id)
     if save:
         parts += ["비용이 오를 때 실제로 행동을 아꼈는지는 행동 횟수로 확인된다: " + save + ".", ""]
-        parts += [
+        parts += [] if compact else [
             "<!--TABCAP: " + env_id + "의 에피소드당 행동 횟수 (IQM)"
             " | Actions per episode on " + env_id + " (IQM) -->",
             action_table(agg, env_id),
@@ -447,6 +447,9 @@ MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
+    ap.add_argument("--compact", action="store_true",
+                    help="분량을 줄인다: 환경별 '행동 횟수' 표를 빼고 사실 문장만 남긴다 "
+                         "(그림 2·3의 λ 지도와 그림 4에 같은 정보가 있다)")
     a = ap.parse_args()
     envs = [e for e in ENV_ORDER if (AGG / (e + "_iqm.csv")).exists()]
     if not envs:
@@ -458,7 +461,7 @@ def main() -> None:
     parts, k = [], 0
     for e in envs[:2]:
         k += 1
-        parts.append(env_section(e, "4." + str(k)))
+        parts.append(env_section(e, "4." + str(k), a.compact))
     k += 1
     parts.append(collapse_section("4." + str(k)))
     cs = causal_section("4." + str(k + 1))
@@ -467,7 +470,7 @@ def main() -> None:
         parts.append(cs)
     for e in envs[2:]:
         k += 1
-        parts.append(env_section(e, "4." + str(k)))
+        parts.append(env_section(e, "4." + str(k), a.compact))
     body = "\n".join(x for x in parts if x)
     src = ("\n<!-- 출처: results/aggregate/" + "{" + ",".join(envs) + "}_iqm.csv, "
            "*_lambda_star.json. 조건별 원본은 results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv. "

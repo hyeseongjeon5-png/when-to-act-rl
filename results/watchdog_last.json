@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 06:56:56",
- "ts": 1787954216.2485857,
+ "time": "2026-08-29 07:56:59",
+ "ts": 1787957819.7954612,
  "runs": [
   {
    "run": "fair_pilot_mc_A",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 245.9,
+   "stale_min": 306.0,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 244.8,
+   "stale_min": 304.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 195.3,
+   "stale_min": 255.4,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,14 +49,14 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5497.4,
+   "stale_min": 5557.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
   },
   {
    "run": "main_mountaincar",
-   "done": 375,
+   "done": 405,
    "total": 420,
    "running": 10,
    "skipped": 0,
@@ -64,8 +64,8 @@
    "finished": false,
    "stale_min": 0.4,
    "advanced_since_last": true,
-   "eta_text": "약 1.6시간 남음",
-   "prev_done": 348
+   "eta_text": "약 0.5시간 남음",
+   "prev_done": 375
   }
  ],
  "issues": [],
@@ -73,18 +73,18 @@
  "queue": {
   "current": "2_붕괴문턱_학습",
   "done": 2,
-  "pending": 15,
+  "pending": 17,
   "next": "2_붕괴문턱_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 244.2
+  "stale_min": 304.3
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 50,
-  "fresh": 20,
+  "scanned": 55,
+  "fresh": 21,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -94,8 +94,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 6
+  "n_expected_floor": 2
  },
  "disk_free_gb": 346.4,
- "done_conditions_total": 2311
+ "done_conditions_total": 2701
 }
