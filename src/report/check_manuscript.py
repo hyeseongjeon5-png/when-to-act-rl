@@ -54,8 +54,10 @@ def main() -> None:
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
     print("=" * 78)
     n_hits = 0
-    for f in sorted(PAPER.glob("*.md")):
-        if f.name.startswith("00_양식"):
+    # 참고문헌은 원고가 아니라 조립 스크립트에 들어 있다 — 거기 남은 표시도 함께 본다
+    targets = sorted(PAPER.glob("*.md")) + [ROOT / "src" / "report" / "make_thesis_docx.py"]
+    for f in targets:
+        if f.name.startswith("00_양식") or not f.exists():
             continue
         text = f.read_text(encoding="utf-8")
         lines = text.splitlines()
