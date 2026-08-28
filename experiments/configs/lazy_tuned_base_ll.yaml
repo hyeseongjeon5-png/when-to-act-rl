@@ -1,0 +1,103 @@
+# Lazy-MDP 공정성 — 기본 정책을 '잘 만든 규칙'으로 바꾸면 얼마나 달라지는가 (LunarLander)
+#
+# 왜 필요한가:
+#   Lazy-MDP는 '기본 정책에 위임'하는 방법이라 **기본 정책이 강할수록 유리하다.**
+#   그런데 본실험에서 Lazy의 기본 정책은 처음 손으로 짠 약한 규칙(r IQM 38.3)이었다.
+#   나중에 계수를 튜닝한 규칙이 179.8점을 낸다는 것을 알게 됐으므로(2026-08-29),
+#   지금 Lazy 성적은 **하한**이다. 이 변종이 그 차이를 잰다.
+#
+#   이것을 재지 않으면 "Lazy-MDP가 가장 강하다"는 결론이 오히려 **과소평가**된 채로 남는다.
+#   공정 비교는 어느 한쪽에만 적용하는 것이 아니다.
+#
+# 무엇만 바꿨나: Lazy의 기본 정책 하나뿐이다 (threshold → threshold_tuned).
+#   신경망·학습률·예산·평가·λ 격자·시드는 본실험과 완전히 같다.
+name: lazy_tuned_base_ll
+date: 2026-08-25
+env_id: LunarLander-v3
+env_kwargs: {}
+total_steps: 200000
+eval_every: 25000
+n_eval_episodes_curve: 5
+n_eval_episodes_final: 50
+n_eval_episodes_rules: 100
+final_snapshots:
+- 0.9
+- 0.95
+- 1.0
+ckpt_every: 50000
+workers: 10
+agents:
+- lazy
+lambdas:
+- 0.0
+- 0.1
+- 0.3
+- 0.6
+- 1.0
+- 1.2
+- 1.37
+- 1.6
+- 1.8
+- 2.0
+- 2.5
+- 3.0
+seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+hyperparams:
+  lazy:
+    hidden:
+    - 50
+    - 50
+    lr: 0.001
+    gamma: 0.99
+    buffer_size: 100000
+    batch_size: 64
+    learn_start: 1000
+    target_update: 500
+    eps_const: 0.2
+    double_dqn: true
+    base_policy: threshold_tuned
+    eta: 0.0
+rules:
+- id: noop
+  type: NoOpPolicy
+- id: periodic_k1
+  type: PeriodicPolicy
+  base_action: 1
+  k: 1
+- id: periodic_k2
+  type: PeriodicPolicy
+  base_action: 1
+  k: 2
+- id: periodic_k4
+  type: PeriodicPolicy
+  base_action: 1
+  k: 4
+- id: periodic_k8
+  type: PeriodicPolicy
+  base_action: 1
+  k: 8
+- id: threshold
+  type: LunarLanderThresholdPolicy
+- id: threshold_tuned
+  type: LunarLanderThresholdPolicy
+  angle_thresh: 0.05
+  vy_thresh: -0.25
+  angle_gain: 1.0
+notes: '주기 규칙의 기저 행동 1(왼쪽 엔진)은 파일럿에서 고른 값이다 — λ=0에서 단일 행동 셋을 비교한
+
+  결과 왼쪽 −533.7 / 주엔진 −668.2 / 오른쪽 −549.6 으로 왼쪽이 가장 나았다(전부 추락이지만).
+
+  기준선은 임계값 규칙(r IQM +32.7)이다.
+
+  '
+variant: tunedbase

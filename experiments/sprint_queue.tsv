@@ -38,3 +38,7 @@
 # 고정 규칙만 재어 본 결과 λ 눈금이 39.7배 커졌다 — 학습 쪽은 어떻게 되는지 본다.
 7_전환비용_규칙	rules	experiments/configs/switch_cost_mc.yaml
 7_전환비용_학습	train	experiments/configs/switch_cost_mc.yaml:10
+# Lazy-MDP의 기본 정책을 잘 만든 규칙으로 바꿨을 때의 차이를 잰다.
+# 지금 Lazy 성적은 약한 기본 정책 위에서 난 것이라 하한이다 (2026-08-29 발견).
+8_Lazy기본정책_규칙	rules	experiments/configs/lazy_tuned_base_ll.yaml
+8_Lazy기본정책_학습	train	experiments/configs/lazy_tuned_base_ll.yaml:10
