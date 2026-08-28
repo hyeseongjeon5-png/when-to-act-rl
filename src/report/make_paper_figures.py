@@ -38,6 +38,11 @@ LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
 REF = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
        "MinAtar_Freeway-v1": "rule_cautious"}
+from matplotlib.ticker import FuncFormatter
+
+PLAIN = FuncFormatter(lambda v, _pos: format(v, "g"))
+
+
 CAPTIONS: dict[str, dict] = {}
 
 
@@ -196,6 +201,7 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
         # MountainCar는 흥미로운 변화가 전부 λ<0.05에 몰려 있어 선형 축에서는 벽에 붙어 보이지 않는다.
         # 0 근처를 넓혀 보는 대칭 로그 축을 쓴다 (λ=0도 그대로 표시된다).
         ax.set_xscale("symlog", linthresh=0.001)
+        ax.xaxis.set_major_formatter(PLAIN)   # 수식 글꼴 눈금($10^{-3}$) 대신 평범한 숫자로
         ax.set_xlabel("행동 1번의 비용  λ   (0 부근을 넓혀 그린 축)", fontsize=10)
     else:
         ax.set_xlabel("행동 1번의 비용  λ   (오른쪽일수록 행동이 비싸다)", fontsize=10)
@@ -240,14 +246,14 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
             g = agg[agg.agent == ref].sort_values("lam")
             ax.plot(g.lam, g[col], ls="--", lw=1.7, color="#111111", label=LABEL.get(ref, ref), zorder=3)
         ax.set_xscale("symlog", linthresh=0.001)
+        ax.xaxis.set_major_formatter(PLAIN)
         ax.set_xlabel("행동 1번의 비용  λ  (0 부근을 넓혀 그린 축)", fontsize=9.5)
         ax.set_ylabel(ylab, fontsize=9.5)
         ax.grid(alpha=0.25)
         ax.tick_params(labelsize=8.5)
     axes[0].legend(fontsize=7.8, loc="best", framealpha=0.92)
     n_seeds = int(agg.n_seeds.max())
-    axes[1].text(0.99, 0.97, f"시드 {n_seeds}개 · IQM · 95% CI", transform=axes[1].transAxes,
-                 ha="right", va="top", fontsize=7.4, color="#666666")
+    # 시드 수는 그림 안에 적지 않는다 — 오른쪽 패널에서 기준 규칙 점선과 겹친다. 캡션에 넣는다.
     fig.tight_layout()
     out = OUT / f"fig4_collapse_{env_id}.png"
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
@@ -255,8 +261,10 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
         "file": out.name,
         "ko": "무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
         "en": "Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
-        "note": ("가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축(linthresh=0.001)을 썼다. "
-                 "왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이다."),
+        "note": ("가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축을 썼다(0.001 아래는 선형). "
+                 "왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이며, "
+                 f"선은 IQM, 띠는 95% 계층 부트스트랩 신뢰구간이다(시드 {n_seeds}개). "
+                 "검은 점선은 기준 규칙(pump)이다."),
         "source": f"results/aggregate/{env_id}_iqm.csv",
     }
     print(f"  저장: {out.relative_to(ROOT)}")

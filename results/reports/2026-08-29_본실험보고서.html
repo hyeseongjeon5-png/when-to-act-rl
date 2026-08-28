@@ -23,7 +23,7 @@ pre.log{background:#1e2228;color:#dfe3e8;padding:12px;border-radius:8px;overflow
 .key{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
 .key div{background:#f0f2f5;border-radius:8px;padding:10px 14px;font-size:.86rem}
 .key b{display:block;font-size:1.25rem}
-</style></head><body><div class='wrap'><h1>λ-성능 지도와 임계 비용 λ*</h1><p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — 동아대학교 졸업과제 · 전혜성</p><div class="key"><div>완료 조건 수<b>1900</b></div><div>환경<b>6</b></div><div>생성 시각<b>2026-08-29 02:20 KST</b></div></div><section><h2>이 보고서를 읽는 법</h2>
+</style></head><body><div class='wrap'><h1>λ-성능 지도와 임계 비용 λ*</h1><p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — 동아대학교 졸업과제 · 전혜성</p><div class="key"><div>완료 조건 수<b>1900</b></div><div>환경<b>6</b></div><div>생성 시각<b>2026-08-29 02:42 KST</b></div></div><section><h2>이 보고서를 읽는 법</h2>
 <p><b>가로축 λ</b>는 행동 1번의 값이다. 오른쪽으로 갈수록 "버튼 한 번 누르는 값"이 비싸진다.
 λ=0이면 원래 문제와 같고, λ가 충분히 크면 아무것도 안 하는 것이 최적이 된다.</p>
 <p><b>세로축 r'</b>은 비용까지 빼고 남은 총보상이다. 높을수록 좋다.</p>
@@ -32,7 +32,7 @@ pre.log{background:#1e2228;color:#dfe3e8;padding:12px;border-radius:8px;overflow
 너무 쉬워지므로, 모든 그림과 표에서 pump 규칙을 기준으로 유지한다.</p>
 <p><b>임계 비용 λ*</b>는 학습이 이 기준 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ다.
 이 값이 이 연구의 최종 산출물이다 — "행동이 이만큼 비싸지면 학습을 도입할 이유가 없다"는 문턱.</p>
-</section><section><h2>실험 진행 상태</h2><table class="grid"><thead><tr><th>실험</th><th>완료 조건</th><th>건너뜀</th><th>남은 시간</th><th>상태</th></tr></thead><tbody><tr><th>fair_pilot_mc_A</th><td class="num">4/5 (80%)</td><td class="num">0</td><td>약 0.2시간 남음</td><td>진행 중</td></tr><tr><th>fair_pilot_mc_B</th><td class="num">3/5 (60%)</td><td class="num">0</td><td>약 0.6시간 남음</td><td>진행 중</td></tr><tr><th>fair_pilot_mc_C</th><td class="num">0/5 (0%)</td><td class="num">0</td><td>측정 중</td><td>진행 중</td></tr><tr><th>main_lunarlander</th><td class="num">240/240 (100%)</td><td class="num">0</td><td>측정 중</td><td>끝남</td></tr><tr><th>main_mountaincar</th><td class="num">270/270 (100%)</td><td class="num">0</td><td>측정 중</td><td>끝남</td></tr></tbody></table><h3>자가 감시 기록 (최근 12줄)</h3><pre class='log'>2026-08-26 16:02:37 [정상] main_lunarlander 240/240 종료됨 ; main_mountaincar 270/270 종료됨 | 디스크 351GB | 완료조건 누계 1530 | 비용에 의한 무행동 수렴 145건(정상) | 이상 없음
+</section><section><h2>실험 진행 상태</h2><table class="grid"><thead><tr><th>실험</th><th>완료 조건</th><th>건너뜀</th><th>남은 시간</th><th>상태</th></tr></thead><tbody><tr><th>fair_pilot_mc_A</th><td class="num">4/5 (80%)</td><td class="num">0</td><td>약 0.2시간 남음</td><td>진행 중</td></tr><tr><th>fair_pilot_mc_B</th><td class="num">3/5 (60%)</td><td class="num">0</td><td>약 0.6시간 남음</td><td>진행 중</td></tr><tr><th>fair_pilot_mc_C</th><td class="num">3/5 (60%)</td><td class="num">0</td><td>약 0.8시간 남음</td><td>진행 중</td></tr><tr><th>main_lunarlander</th><td class="num">240/240 (100%)</td><td class="num">0</td><td>측정 중</td><td>끝남</td></tr><tr><th>main_mountaincar</th><td class="num">270/270 (100%)</td><td class="num">0</td><td>측정 중</td><td>끝남</td></tr></tbody></table><h3>자가 감시 기록 (최근 12줄)</h3><pre class='log'>2026-08-26 16:02:37 [정상] main_lunarlander 240/240 종료됨 ; main_mountaincar 270/270 종료됨 | 디스크 351GB | 완료조건 누계 1530 | 비용에 의한 무행동 수렴 145건(정상) | 이상 없음
 2026-08-26 17:02:37 [정상] main_lunarlander 240/240 종료됨 ; main_mountaincar 270/270 종료됨 | 디스크 353GB | 완료조건 누계 1530 | 비용에 의한 무행동 수렴 145건(정상) | 이상 없음
 2026-08-26 18:02:38 [정상] main_lunarlander 240/240 종료됨 ; main_mountaincar 270/270 종료됨 | 디스크 353GB | 완료조건 누계 1530 | 비용에 의한 무행동 수렴 145건(정상) | 이상 없음
 2026-08-26 19:02:38 [정상] main_lunarlander 240/240 종료됨 ; main_mountaincar 270/270 종료됨 | 디스크 353GB | 완료조건 누계 1530 | 비용에 의한 무행동 수렴 145건(정상) | 이상 없음

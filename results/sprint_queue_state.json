@@ -4,10 +4,12 @@
   "label": "1_공정성파일럿",
   "kind": "train",
   "spec": "experiments/configs/fair_pilot_mc_A.yaml:4,experiments/configs/fair_pilot_mc_B.yaml:3,experiments/configs/fair_pilot_mc_C.yaml:3",
-  "started_at": 1787932876.738674,
-  "started_text": "2026-08-29 01:01:16"
+  "started_at": 1787938803.7418609,
+  "started_text": "2026-08-29 02:40:03"
  },
  "history": [],
- "updated_at": 1787932876.738674,
- "updated_text": "2026-08-29 01:01:16"
+ "updated_at": 1787938803.7418609,
+ "updated_text": "2026-08-29 02:40:03",
+ "pid": 6164,
+ "queue_file": "experiments/sprint_queue.tsv"
 }
