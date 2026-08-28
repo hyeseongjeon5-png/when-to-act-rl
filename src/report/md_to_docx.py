@@ -74,11 +74,18 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
         stripped = line.strip()
 
         # ---- 표 제목 예약 ----
-        m = TABCAP_MARK.search(stripped)
-        if m:
-            pending_cap = (m.group(1), m.group(2))
-            i += 1
-            continue
+        # 마커가 여러 줄에 걸쳐 있을 수 있다(긴 제목을 줄바꿈해 쓰는 경우).
+        # 한 줄만 보면 조용히 놓쳐서 표에 제목이 안 붙는다 — 닫는 --> 까지 이어 붙여 본다.
+        if stripped.startswith("<!--") and "TABCAP:" in stripped:
+            block, j = stripped, i
+            while "-->" not in block and j + 1 < len(lines):
+                j += 1
+                block += " " + lines[j].strip()
+            m = TABCAP_MARK.search(block)
+            if m:
+                pending_cap = (m.group(1), m.group(2))
+                i = j + 1
+                continue
 
         # ---- 그림 삽입 ----
         m = FIG_MARK.search(stripped)
