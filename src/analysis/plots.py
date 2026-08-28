@@ -42,8 +42,8 @@ LABEL = {"dqn": "표준 DQN", "temporl": "TempoRL 방식", "lazy": "Lazy-MDP 방
 COLOR = {"dqn": "#1f77b4", "temporl": "#d62728", "lazy": "#2ca02c"}
 REF_RULE = {
     "MountainCar-v0": "rule_pump",
-    "LunarLander-v3": "rule_threshold",
-    "LunarLander-v2": "rule_threshold",
+    "LunarLander-v3": "rule_threshold_tuned",
+    "LunarLander-v2": "rule_threshold_tuned",
     "MinAtar_Freeway-v1": "rule_cautious",
     "MinAtar_Breakout-v1": "rule_track",
 }

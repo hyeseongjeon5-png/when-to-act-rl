@@ -31,8 +31,11 @@ METRICS = ["cost_return", "raw_return", "n_actions", "solved"]
 # 문제를 아예 못 푸는 약한 규칙(무행동·주기)이 아니라 그 환경에서 가장 센 규칙을 기준으로 둔다.
 REF_RULE = {
     "MountainCar-v0": "rule_pump",
-    "LunarLander-v3": "rule_threshold",
-    "LunarLander-v2": "rule_threshold",
+    # 2026-08-29: 기준선 감사에서 계수를 다시 고른 규칙이 141점 더 좋다는 것이 밝혀졌다.
+    # 이 표의 기준은 "그 환경에서 가장 센 고정 규칙"이므로 튜닝한 쪽으로 바꾼다.
+    # 처음 규칙(rule_threshold)도 결과에 그대로 남아 표에서 대조된다.
+    "LunarLander-v3": "rule_threshold_tuned",
+    "LunarLander-v2": "rule_threshold_tuned",
     "MinAtar_Freeway-v1": "rule_cautious",
     "MinAtar_Breakout-v1": "rule_track",
 }

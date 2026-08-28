@@ -29,14 +29,16 @@ RULE_LABEL = {"rule_pump": "pump 규칙", "rule_threshold": "임계값 규칙(�
               "rule_noop": "무행동", "rule_best": "최강 규칙",
               "rule_periodic_k1": "매 스텝 주기", "rule_periodic_k2": "2스텝 주기",
               "rule_periodic_k4": "4스텝 주기", "rule_periodic_k8": "8스텝 주기"}
-REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold",
+REF_RULE = {"MountainCar-v0": "rule_pump", "LunarLander-v3": "rule_threshold_tuned",
             "MinAtar_Freeway-v1": "rule_cautious"}
 ENV_NOTE = {
     "MountainCar-v0": ("보상이 희소한 탐험 문제다. 목표에 닿기 전까지 아무 신호가 없고, "
                        "매 스텝 무작위로 행동하는 탐험으로는 목표에 한 번도 닿지 못한다. "
                        "학습 없이도 문제를 푸는 강한 고정 규칙(pump)이 존재한다."),
     "LunarLander-v3": ("보상이 조밀한 제어 문제다. 매 스텝 자세·속도·연료에 대한 신호가 들어오고, "
-                       "표준 DQN이 정상적으로 학습된다. 고정 규칙은 착륙은 시키지만 점수가 낮다."),
+                       "표준 DQN이 정상적으로 학습된다. 고정 규칙은 처음 손으로 짠 계수로는 점수가 "
+                       "낮았지만(36), 계수를 다시 고르자 162까지 올라 학습에 근접한다(Ⅲ장 6.2절의 "
+                       "기준선 감사). 표에는 두 규칙을 함께 실어 그 차이를 보인다."),
     "MinAtar_Freeway-v1": ("앞의 두 환경 사이에 있는 세 번째 경우다. 손으로 짠 신중 규칙이 쓸 만하지만"
                            "(무작위 0점 대비 17.8점) 최적과는 거리가 있어 학습이 이길 여지가 남아 있다. "
                            "에피소드가 1000스텝으로 고정돼 행동 비용의 압력이 두 환경보다 뚜렷하다."),
@@ -76,6 +78,10 @@ def _cols(agg: pd.DataFrame, env_id: str, metric: str = "cost_return") -> list[s
     learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
     ref = REF_RULE.get(env_id)
     rules = [r for r in (ref,) if r in set(agg.agent)]
+    # 기준선 감사에서 계수를 다시 고른 환경에서는 '처음 규칙'도 함께 보인다 —
+    # 기준선을 얼마나 잘 만들었는지가 결론을 바꾼다는 것이 이 논문의 내용이기 때문이다.
+    if ref == "rule_threshold_tuned" and "rule_threshold" in set(agg.agent):
+        rules.append("rule_threshold")
     if "rule_best" in set(agg.agent) and ref in set(agg.agent):
         a = agg[agg.agent == "rule_best"].set_index("lam")[metric + "_iqm"]
         b = agg[agg.agent == ref].set_index("lam")[metric + "_iqm"]

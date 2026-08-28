@@ -130,7 +130,7 @@ def table3_fairness(variants: dict[str, str] | None = None) -> dict | None:
             ("MountainCar-v0@budget1M_epsdecay", "예산 100만 + ε 감소"),
             ("MountainCar-v0@budget1M_wide", "예산 100만 + ε 감소 + 용량 확대"),
         ]),
-        ("LunarLander-v3", "rule_threshold", [
+        ("LunarLander-v3", "rule_threshold_tuned", [
             ("LunarLander-v3", "본실험 (20만 스텝)"),
             ("LunarLander-v3@budget1M", "예산 100만"),
         ]),

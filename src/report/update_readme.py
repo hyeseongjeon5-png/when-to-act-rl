@@ -20,7 +20,7 @@ README = ROOT / "README.md"
 
 BEGIN, END = "<!--AUTO:결과-->", "<!--/AUTO:결과-->"
 ENVS = [("MountainCar-v0", "MountainCar-v0 — 보상이 희소하고 좋은 규칙이 있다", "rule_pump"),
-        ("LunarLander-v3", "LunarLander-v3 — 보상이 조밀하고 규칙이 약하다", "rule_threshold"),
+        ("LunarLander-v3", "LunarLander-v3 — 보상이 조밀하다 (규칙은 계수에 따라 크게 달라진다)", "rule_threshold_tuned"),
         ("MinAtar_Freeway-v1", "MinAtar Freeway — 규칙이 쓸 만하지만 이길 여지가 있다", "rule_cautious")]
 AG = {"dqn": "표준 DQN", "temporl": "TempoRL", "lazy": "Lazy-MDP"}
 
