@@ -4,28 +4,28 @@
  "pid": 3548,
  "workers": 10,
  "started_at": 1787939564.922123,
- "updated_at": 1787953597.3095691,
- "wall_elapsed_sec": 14032.4,
+ "updated_at": 1787954223.9238694,
+ "wall_elapsed_sec": 14659.0,
  "total": 420,
- "done": 372,
+ "done": 375,
  "running": 10,
  "failed": 0,
  "skipped": 0,
- "pending": 38,
- "avg_sec_per_cond": 1256.2,
- "eta_sec": 6029.8,
- "eta_text": "약 1.7시간 남음",
+ "pending": 35,
+ "avg_sec_per_cond": 1254.3,
+ "eta_sec": 5644.4,
+ "eta_text": "약 1.6시간 남음",
  "running_now": [
-  "MountainCar-v0/lazy/lam0.002/seed6",
-  "MountainCar-v0/lazy/lam0.005/seed6",
-  "MountainCar-v0/lazy/lam0.0075/seed6",
   "MountainCar-v0/dqn/lam0.001/seed7",
   "MountainCar-v0/dqn/lam0.002/seed7",
   "MountainCar-v0/dqn/lam0.003/seed7",
   "MountainCar-v0/dqn/lam0.005/seed7",
   "MountainCar-v0/dqn/lam0.0075/seed7",
   "MountainCar-v0/temporl/lam0.001/seed7",
-  "MountainCar-v0/temporl/lam0.002/seed7"
+  "MountainCar-v0/temporl/lam0.002/seed7",
+  "MountainCar-v0/temporl/lam0.003/seed7",
+  "MountainCar-v0/temporl/lam0.005/seed7",
+  "MountainCar-v0/temporl/lam0.0075/seed7"
  ],
  "conditions": {
   "MountainCar-v0/dqn/lam0.0/seed0": {
@@ -3131,9 +3131,9 @@
    "seed": 6
   },
   "MountainCar-v0/lazy/lam0.002/seed6": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1028.8,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -3153,9 +3153,9 @@
    "seed": 6
   },
   "MountainCar-v0/lazy/lam0.005/seed6": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1019.2,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -3164,9 +3164,9 @@
    "seed": 6
   },
   "MountainCar-v0/lazy/lam0.0075/seed6": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1011.3,
    "fingerprint": "924b68cf9f5e",
    "env_id": "MountainCar-v0",
    "room": "MountainCar-v0",
@@ -3450,8 +3450,8 @@
    "seed": 7
   },
   "MountainCar-v0/temporl/lam0.003/seed7": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
@@ -3461,8 +3461,8 @@
    "seed": 7
   },
   "MountainCar-v0/temporl/lam0.005/seed7": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",
@@ -3472,8 +3472,8 @@
    "seed": 7
   },
   "MountainCar-v0/temporl/lam0.0075/seed7": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "031b8c9ed399",
    "env_id": "MountainCar-v0",

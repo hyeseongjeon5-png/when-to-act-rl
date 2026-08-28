@@ -70,6 +70,23 @@ def save_state(st: dict) -> None:
         log("  [경고] 대기열 상태 파일을 갱신하지 못했다 (다음 갱신 때 다시 쓴다)")
 
 
+def train_incomplete(cfg_path: str) -> tuple[int, int, int]:
+    """그 설정의 진행 파일을 보고 (완료, 건너뜀, 남은) 조건 수를 돌려준다.
+
+    왜 필요한가: 러너가 중간에 죽으면 대기열의 wait는 그냥 돌아오고, 작업이 '완료'로 표시된 채
+    다음으로 넘어간다. 조건이 남아 있어도 아무도 모른다 — 실제로 공정성 파일럿 후보 C가
+    이렇게 조건 2개를 잃었다(2026-08-29 사고 2). 그래서 작업이 끝나면 직접 세어 본다.
+    """
+    import yaml
+    try:
+        cfg = yaml.safe_load(Path(cfg_path).read_text(encoding="utf-8"))
+        pf = ROOT / "results" / f"progress_{cfg['name']}.json"
+        d = json.loads(pf.read_text(encoding="utf-8"))
+        return d["done"], d.get("skipped", 0), d["total"] - d["done"] - d.get("skipped", 0)
+    except Exception:
+        return -1, -1, -1
+
+
 def run_job(job: dict) -> int:
     env = dict(os.environ, PYTHONIOENCODING="utf-8", OMP_NUM_THREADS="1", MKL_NUM_THREADS="1")
     LOGDIR.mkdir(parents=True, exist_ok=True)
@@ -101,7 +118,37 @@ def run_job(job: dict) -> int:
     for p, lf in procs:
         codes.append(p.wait())
         lf.close()
-    return max(codes) if codes else 0
+    code = max(codes) if codes else 0
+
+    # ---- 완주 확인: 러너가 죽어서 조건이 남았으면 최대 2번까지 더 띄운다 ----
+    # 러너는 끝난 조건을 건너뛰므로 다시 띄우는 것이 싸고 안전하다(같은 조건을 두 번 계산하지 않는다).
+    if job["kind"] == "train":
+        for extra in range(1, 3):
+            todo = []
+            for item in job["spec"].split(","):
+                cfg = item.partition(":")[0].strip()
+                done, skipped, left = train_incomplete(cfg)
+                if left > 0:
+                    todo.append((cfg, item, done, skipped, left))
+            if not todo:
+                break
+            log(f"  [완주 확인] 남은 조건이 있다 — 러너를 다시 띄운다 ({extra}/2)")
+            again = []
+            for cfg, item, done, skipped, left in todo:
+                log(f"    {Path(cfg).stem}: 완료 {done} · 건너뜀 {skipped} · 남음 {left}")
+                w = item.partition(":")[2].strip()
+                cmd = [PY, "-m", "src.train.runner", "--config", cfg] + (["--workers", w] if w else [])
+                lf = (LOGDIR / f"runner_{job['label']}_{Path(cfg).stem}.log").open("a", encoding="utf-8")
+                lf.write(f"\n===== {time.strftime('%Y-%m-%d %H:%M:%S')} 완주 확인 재시작 {extra} =====\n")
+                lf.flush()
+                again.append((subprocess.Popen(cmd, cwd=str(ROOT), stdout=lf,
+                                               stderr=subprocess.STDOUT, env=env), lf))
+            for pr, lf in again:
+                code = max(code, pr.wait())
+                lf.close()
+        else:
+            log("  [주의] 두 번 더 띄웠는데도 조건이 남았다 — 사람이 볼 문제다")
+    return code
 
 
 def main() -> None:
