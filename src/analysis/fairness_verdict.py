@@ -64,6 +64,18 @@ def main() -> None:
           f"r IQM {ref['iqm']:8.1f}  95%CI [{ref['lo']:.1f}, {ref['hi']:.1f}]")
     print("-" * 100)
 
+    # 본실험 방에서는 세 계열을 모두 본다 — λ*=0이 'DQN만의 문제'인지 확인해야 한다
+    print("1차 본실험(300k)에서 세 계열이 각각 규칙에 얼마나 못 미쳤나")
+    for ag, ko in (("dqn", "표준 DQN"), ("temporl", "TempoRL"), ("lazy", "Lazy-MDP")):
+        s = summarize(seed_scores(REF_ROOM, ag))
+        if not s:
+            continue
+        v = "이김" if s["lo"] > ref["hi"] else ("짐" if s["hi"] < ref["lo"] else "비김")
+        print(f"  [{v}] {ko:<10} 시드 {s['n']:>2} | r IQM {s['iqm']:8.1f} "
+              f"95%CI [{s['lo']:.1f}, {s['hi']:.1f}] | 규칙 대비 {s['iqm'] - ref['iqm']:+.1f}")
+    print("-" * 100)
+    print("공정성 파일럿 — 예산·탐험을 바꾼 표준 DQN이 규칙 수준에 닿는가")
+
     verdicts = {}
     for room, label in CANDIDATES.items():
         sc = seed_scores(room, "dqn")
