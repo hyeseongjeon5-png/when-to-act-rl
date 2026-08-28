@@ -49,6 +49,43 @@ def numbers_in_use() -> dict:
     return out
 
 
+def numbering_rules() -> list[str]:
+    """조립된 .docx에서 그림·표 번호가 지시받은 배치와 맞는지 본다.
+
+    왜 필요한가: 번호는 등장 순서로 자동 부여되므로 **다른 장에 표를 하나 추가하면
+    조용히 밀린다.** 실제로 Ⅲ장에 표를 넣었더니 '표 1 = 임계 비용 λ*'가 표 2로 밀렸다.
+    사람 눈에는 잘 안 띄는 종류의 어긋남이라 기계가 본다.
+    """
+    docx = ROOT / "졸업논문_초안v1.docx"
+    if not docx.exists():
+        return ["  [건너뜀] .docx가 아직 없다"]
+    try:
+        import mammoth
+        with docx.open("rb") as f:
+            html = mammoth.convert_to_html(f).value
+    except Exception as e:
+        return [f"  [건너뜀] .docx를 읽지 못함: {e}"]
+    text = re.sub(r"<[^>]+>", " ", html)
+    caps = {}
+    for m in re.finditer(r"(표|그림) (\d+)\.\s*([^|]{0,60})", text):
+        key = f"{m.group(1)} {m.group(2)}"
+        caps.setdefault(key, re.sub(r"\s+", " ", m.group(3)).strip())
+    # 지시받은 배치 (사용자 요구사항)
+    want = [("표 1", "임계 비용"), ("표 2", "실험 설정"),
+            ("그림 1", "래퍼"), ("그림 2", "λ-성능 지도"), ("그림 3", "λ-성능 지도"),
+            ("그림 4", "무행동 붕괴")]
+    out = []
+    for key, must in want:
+        got = caps.get(key)
+        if got is None:
+            out.append(f"  [없음] {key} — 아직 만들어지지 않았다 (실험이 끝나면 생길 수 있다)")
+        elif must not in got:
+            out.append(f"  [어긋남] {key}가 '{got[:40]}' 이다 — '{must}'이어야 한다")
+        else:
+            out.append(f"  [맞음] {key}. {got[:46]}")
+    return out
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
