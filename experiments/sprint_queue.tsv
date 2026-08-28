@@ -1,7 +1,16 @@
 # 85시간 스프린트 작업 대기열 (라벨<탭>종류<탭>내용)
-# 순서 근거 (2026-08-29 결정): 값싼 항목을 먼저 돌려 완주 항목 수를 최대화한다.
-#   2 붕괴문턱 5.1h → 3 인과 3.1h → 5 LL정밀 2.9h → 1B 재격자 20.0h → 4 MinAtar 13.0h
-#   합계 약 45시간. 85시간 예산 안에서 전부 끝난다(여유 약 39시간).
+#
+# 순서 근거 (2026-08-29 결정):
+#   값싼 항목을 먼저 돌려 완주 항목 수를 최대화한다.
+#   2 붕괴문턱 5.1h → 3 인과 3.1h → 5 LL정밀 2.9h → 4 MinAtar 13.0h
+#   → 1C 공정성확장(LL 3.6h + MinAtar 3.6h)
+#   합계 약 31시간. 85시간 예산 안에서 전부 끝난다.
+#
+# 1B(λ 격자 재실험, 20h)는 **취소했다.** 공정성 파일럿에서 예산을 3.3배로 늘려도
+#   λ=0에서 pump 규칙을 이기지 못했기 때문이다(지시받은 판단 규칙: '그래도 지면 결론 확정').
+#   그 시간을 같은 공정성 질문을 다른 두 환경에 거는 데 쓴다 — 실험 1의 연장이다.
+#   근거: docs/실험일지.md 2026-08-29 항목, src/analysis/fairness_verdict.py
+#
 # 도는 중에 줄을 덧붙이면 다음 차례로 잡힌다.
 1_공정성파일럿	train	experiments/configs/fair_pilot_mc_A.yaml:4,experiments/configs/fair_pilot_mc_B.yaml:3,experiments/configs/fair_pilot_mc_C.yaml:3
 2_붕괴문턱_규칙	rules	experiments/configs/main_mountaincar.yaml
@@ -10,7 +19,7 @@
 3_인과_학습	train	experiments/configs/causal_warmup_mc.yaml:10
 5_LL정밀_규칙	rules	experiments/configs/main_lunarlander.yaml
 5_LL정밀_학습	train	experiments/configs/main_lunarlander.yaml:10
-1B_재격자_규칙	rules	experiments/configs/regrid_mc_1M.yaml
-1B_재격자_학습	train	experiments/configs/regrid_mc_1M.yaml:10
 4_MinAtar_규칙	rules	experiments/configs/main_minatar_freeway.yaml
 4_MinAtar_학습	train	experiments/configs/main_minatar_freeway.yaml:10
+1C_공정성확장_LL	train	experiments/configs/fair_ll_1M.yaml:10
+1C_공정성확장_MinAtar	train	experiments/configs/fair_minatar_1M.yaml:10
