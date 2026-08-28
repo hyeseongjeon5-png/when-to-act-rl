@@ -87,6 +87,28 @@ def test_lambda_monotonic():
         prev = ret
 
 
+def test_switch_cost_charges_only_on_change():
+    """전환 비용(per_switch): 같은 행동을 붙잡고 있으면 공짜, 바뀔 때만 과금."""
+    env = make_cost_env("MountainCar-v0", lam=1.0, cost_mode="per_switch")
+    env.reset(seed=0)
+    total = 0.0
+    for a in [2, 2, 2, 1, 1, 2]:      # 2유지 → 1로 전환 → 1유지 → 2로 전환
+        _, _, _, _, info = env.step(a)
+        total += info["action_cost"]
+    assert total == 3.0, f"전환 3번이어야 하는데 {total}"
+    env.close()
+
+
+def test_switch_cost_zero_lambda_matches_original():
+    """전환 비용 방식에서도 λ=0이면 원래 환경과 같아야 한다."""
+    env = make_cost_env("MountainCar-v0", lam=0.0, cost_mode="per_switch")
+    env.reset(seed=0)
+    for a in [0, 2, 1, 2]:
+        _, r, _, _, info = env.step(a)
+        assert r == info["raw_reward"], "λ=0인데 보상이 달라졌다"
+    env.close()
+
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in fns:

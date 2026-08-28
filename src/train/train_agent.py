@@ -90,6 +90,8 @@ def fingerprint(cfg: dict, agent_name: str) -> str:
         key["variant"] = cfg["variant"]
     if float(cfg.get("cost_warmup_frac", 0.0) or 0.0) > 0:
         key["cost_warmup_frac"] = float(cfg["cost_warmup_frac"])
+    if cfg.get("cost_mode", "per_step") != "per_step":
+        key["cost_mode"] = cfg["cost_mode"]
     return hashlib.sha1(json.dumps(key, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:12]
 
 
@@ -140,8 +142,9 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
     # 이렇게 하면 "비용이 있는 세상에서 못 하는 이유가 탐험 실패인가"를 가를 수 있다:
     #   비용을 나중에 켠 쪽이 잘하면 → 비용 자체가 아니라 '비용 때문에 탐험을 못 해서' 무너진 것.
     warm = warmup_steps(cfg)
-    env = make_cost_env(env_id, lam=(0.0 if warm > 0 else lam), **env_kwargs)
-    eval_env = make_cost_env(env_id, lam=lam, **env_kwargs)
+    cost_mode = cfg.get("cost_mode", "per_step")
+    env = make_cost_env(env_id, lam=(0.0 if warm > 0 else lam), cost_mode=cost_mode, **env_kwargs)
+    eval_env = make_cost_env(env_id, lam=lam, cost_mode=cost_mode, **env_kwargs)
     obs_dim = int(np.prod(env.observation_space.shape))
     n_actions = int(env.action_space.n)
     agent = build_agent(agent_name, obs_dim, n_actions, cfg, seed, env_id)
@@ -246,7 +249,7 @@ def train_one(cfg: dict, agent_name: str, lam: float, seed: int, quiet: bool = F
         "total_steps": total_steps, "elapsed_sec": round(elapsed, 1),
         "config_name": cfg.get("name"), "env_kwargs": env_kwargs,
         "variant": cfg.get("variant"), "cost_warmup_frac": float(cfg.get("cost_warmup_frac", 0.0) or 0.0),
-        "cost_warmup_steps": warm,
+        "cost_warmup_steps": warm, "cost_mode": cost_mode,
         "final": final,
         "n_eval_episodes_final": n_eval_final,
         "final_snapshots": snap_steps,

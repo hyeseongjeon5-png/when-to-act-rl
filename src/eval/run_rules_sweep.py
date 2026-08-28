@@ -92,6 +92,7 @@ def main() -> None:
     env_kwargs = dict(cfg.get("env_kwargs", {}))
     lams = [float(x) for x in cfg["lambdas"]]
     room = raw_dir_name(cfg)
+    cost_mode = cfg.get("cost_mode", "per_step")
 
     for spec in cfg["rules"]:
         agent_id = "rule_" + spec["id"]
@@ -100,7 +101,7 @@ def main() -> None:
             d.mkdir(parents=True, exist_ok=True)
         # λ=0(없으면 가장 작은 λ)에서 한 번만 굴리고, 나머지 λ는 회계만 다시 한다
         base_lam = 0.0 if 0.0 in lams else min(lams)
-        env = make_cost_env(env_id, lam=base_lam, **env_kwargs)
+        env = make_cost_env(env_id, lam=base_lam, cost_mode=cost_mode, **env_kwargs)
         t_run = t_derive = 0.0
         n_run = n_derive = 0
         for seed in seeds:
@@ -122,7 +123,7 @@ def main() -> None:
                     "total_steps": 0, "elapsed_sec": round(time.time() - t1, 3),
                     "config_name": cfg.get("name"), "env_kwargs": env_kwargs,
                     "n_eval_episodes_final": n_final, "rule_spec": spec,
-                    "derived_from_lam": base_lam,
+                    "cost_mode": cost_mode, "derived_from_lam": base_lam,
                     "derivation": "고정 규칙의 궤적은 λ와 무관하므로 λ=" + format(base_lam, "g")
                                   + "에서 굴린 에피소드로부터 r' = r − λ×행동횟수 로 환산했다",
                 })
