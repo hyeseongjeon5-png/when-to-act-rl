@@ -1,0 +1,63 @@
+{
+  "설명": "고정 규칙의 과금 횟수를 두 비용 방식으로 재고, 무행동이 규칙을 이기기 시작하는 λ를 계산했다. λ_교차 = (규칙 점수 − 무행동 점수) / 규칙의 과금 횟수. 규칙은 학습이 없어 결정적이므로 이 값은 근사가 아니다.",
+  "평가": "각 조건 100 에피소드, 평가 시드 500000~",
+  "results": [
+    {
+      "env_id": "MountainCar-v0",
+      "rule": "pump 규칙",
+      "per_step": {
+        "raw_return_iqm": -119.8,
+        "charged_mean": 119.21,
+        "steps_mean": 119.21,
+        "noop_raw_return_iqm": -200.0,
+        "lam_cross": 0.6727623521516651
+      },
+      "per_switch": {
+        "raw_return_iqm": -119.8,
+        "charged_mean": 3.0,
+        "steps_mean": 119.21,
+        "noop_raw_return_iqm": -200.0,
+        "lam_cross": 26.733333333333334
+      },
+      "lam_cross_ratio": 39.736666666666665
+    },
+    {
+      "env_id": "LunarLander-v3",
+      "rule": "임계값 규칙",
+      "per_step": {
+        "raw_return_iqm": 38.283954362074816,
+        "charged_mean": 123.7,
+        "steps_mean": 193.89,
+        "noop_raw_return_iqm": -136.31986606681264,
+        "lam_cross": 1.4115102702416122
+      },
+      "per_switch": {
+        "raw_return_iqm": 38.283954362074816,
+        "charged_mean": 128.23,
+        "steps_mean": 193.89,
+        "noop_raw_return_iqm": -136.31986606681264,
+        "lam_cross": 1.3616456400911445
+      },
+      "lam_cross_ratio": 0.9646728534664276
+    },
+    {
+      "env_id": "MinAtar/Freeway-v1",
+      "rule": "신중 규칙",
+      "per_step": {
+        "raw_return_iqm": 18.5,
+        "charged_mean": 299.0,
+        "steps_mean": 1000.0,
+        "noop_raw_return_iqm": 0.0,
+        "lam_cross": 0.061872909698996656
+      },
+      "per_switch": {
+        "raw_return_iqm": 18.5,
+        "charged_mean": 591.72,
+        "steps_mean": 1000.0,
+        "noop_raw_return_iqm": 0.0,
+        "lam_cross": 0.03126478739944568
+      },
+      "lam_cross_ratio": 0.5053065639153653
+    }
+  ]
+}
