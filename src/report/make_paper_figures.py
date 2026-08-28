@@ -263,6 +263,22 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
         ax.set_ylabel(ylab, fontsize=9.5)
         ax.grid(alpha=0.25)
         ax.tick_params(labelsize=8.5)
+    # 두 단계 구조를 눈으로 보이게 한다: '도달률이 절반이 되는 λ'를 **왼쪽 패널에도** 세로선으로
+    # 표시한다. 그 지점에서 행동 횟수는 아직 λ=0과 비슷하다는 것이 이 그림의 요점이다.
+    for a in learners:
+        g0 = agg[(agg.agent == a) & (agg.lam == 0.0)]
+        g = agg[(agg.agent == a) & (agg.lam > 0)].sort_values("lam")
+        if g0.empty or g.empty:
+            continue
+        half = g[g.solved_iqm < float(g0.iloc[0].solved_iqm) * 0.5]
+        if half.empty:
+            continue
+        lam_h = float(half.iloc[0].lam)
+        for ax in axes:
+            ax.axvline(lam_h, color=COLOR[a], ls=":", lw=1.1, alpha=0.55, zorder=1)
+    axes[0].annotate("점선 = 목표 도달률이 절반이 되는 λ" + chr(10) + "(그 지점에서 행동 횟수는 아직 높다)",
+                     xy=(0.02, 0.06), xycoords="axes fraction", fontsize=7.4, color="#555555",
+                     va="bottom")
     axes[0].legend(fontsize=7.8, loc="best", framealpha=0.92)
     n_seeds = int(agg.n_seeds.max())
     # 시드 수는 그림 안에 적지 않는다 — 오른쪽 패널에서 기준 규칙 점선과 겹친다. 캡션에 넣는다.
