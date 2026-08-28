@@ -48,8 +48,16 @@ def lam_star_table() -> list[str]:
             v = by.get(ag, {}).get("lam_star_pt")
             cells.append("**격자 밖**" if v is None else f"**{float(v):g}**")
         seeds = min((r.get("min_seeds", 0) for r in d.get("results", [])), default=0)
-        note = ("λ=0에서도 규칙을 넘어서지 못한다" if all(c == "**0**" for c in cells)
-                else "넓은 비용 구간에서 학습이 이긴다")
+        vals = [by.get(ag, {}).get("lam_star_pt") for ag in ("dqn", "temporl", "lazy")]
+        zeros = sum(1 for v in vals if v == 0.0)
+        if zeros == 3:
+            note = "세 계열 모두 λ=0에서도 규칙을 넘어서지 못한다"
+        elif zeros:
+            note = f"{zeros}개 계열은 λ=0에서도 못 이긴다 — 방법에 따라 크게 갈린다"
+        elif len({v for v in vals if v is not None}) > 1:
+            note = "학습이 이기지만 방법에 따라 이기는 구간이 다르다"
+        else:
+            note = "넓은 비용 구간에서 학습이 이긴다"
         rows.append(f"| {env} | " + " | ".join(cells) + f" | {seeds} | {note} |")
         any_row = True
     return rows if any_row else []

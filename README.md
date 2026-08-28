@@ -87,8 +87,8 @@ python -m src.report.make_report --session results/session_2026-08-24.json
 
 | 환경 | 표준 DQN | TempoRL | Lazy-MDP | 시드 | 해석 |
 |---|---|---|---|---|---|
-| MountainCar-v0 | **0** | **0** | **0** | 7 | λ=0에서도 규칙을 넘어서지 못한다 |
-| LunarLander-v3 | **1** | **0** | **2** | 10 | 넓은 비용 구간에서 학습이 이긴다 |
+| MountainCar-v0 | **0** | **0** | **0** | 7 | 세 계열 모두 λ=0에서도 규칙을 넘어서지 못한다 |
+| LunarLander-v3 | **1** | **0** | **2** | 10 | 1개 계열은 λ=0에서도 못 이긴다 — 방법에 따라 크게 갈린다 |
 
 ### MountainCar-v0 — 보상이 희소하고 좋은 규칙이 있다
 
