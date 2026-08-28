@@ -104,18 +104,43 @@ def action_table(agg: pd.DataFrame, env_id: str) -> str:
     return "\n".join(lines)
 
 
+def _tie_or_loss(agg: pd.DataFrame, agent: str, rule: str, lam: float = 0.0,
+                 metric: str = "cost_return") -> str:
+    """λ=0에서 '못 이겼다'가 '졌다'인지 '동률'인지 가른다.
+
+    신뢰구간이 겹치면 우열을 말하지 않는 것이 이 연구의 원칙이다(Ⅲ장 §5).
+    그런데 λ*만 보면 '졌다'와 '비겼다'가 똑같이 λ*=0으로 찍혀 구분이 사라진다.
+    """
+    a = agg[(agg.agent == agent) & (agg.lam == lam)]
+    r = agg[(agg.agent == rule) & (agg.lam == lam)]
+    if a.empty or r.empty:
+        return "이기지 못했다"
+    a, r = a.iloc[0], r.iloc[0]
+    if a[metric + "_ci_hi"] < r[metric + "_ci_lo"]:
+        return "졌다"
+    if a[metric + "_ci_lo"] > r[metric + "_ci_hi"]:
+        return "이겼다"
+    return "비겼다(신뢰구간이 겹쳐 우열을 말할 수 없다)"
+
+
 def star_facts(env_id: str) -> list[str]:
     p = AGG / (env_id + "_lambda_star.json")
     if not p.exists():
         return []
     st = json.loads(p.read_text(encoding="utf-8"))
     ref = st.get("rule", "")
+    agg_p = AGG / (env_id + "_iqm.csv")
+    agg = pd.read_csv(agg_p) if agg_p.exists() else pd.DataFrame()
     out = []
     for s in st.get("results", []):
         lname = eun(s["learner"])
         if s.get("lam_star_pt") == 0.0:
-            out.append(lname + " λ=0에서도 " + RULE_LABEL.get(ref, ref)
-                       + "을 이기지 못했다. 비용 때문이 아니라 학습된 정책 자체가 규칙보다 약하다는 뜻이다.")
+            how = _tie_or_loss(agg, s["learner"], ref) if not agg.empty else "이기지 못했다"
+            tail = ("어느 쪽이든 '비용 때문에 졌다'고 말할 수 없다 — 비용이 0인 조건이다."
+                    if how.startswith("비겼다")
+                    else "비용 때문이 아니라 학습된 정책 자체가 규칙보다 약하다는 뜻이다.")
+            out.append(lname + " 비용이 아예 없는 λ=0에서 " + RULE_LABEL.get(ref, ref)
+                       + "에 " + how + ". " + tail)
         elif s.get("lam_star_pt") is not None:
             extra = ("" if s.get("lam_star_ci") is None
                      else " 통계적으로 확실한 우위는 λ=" + format(float(s["lam_star_ci"]), "g")
