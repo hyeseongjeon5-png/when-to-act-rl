@@ -388,6 +388,46 @@ HEADER_TMPL = """# Ⅳ. Experimental Results
 ## 4. 환경별 λ-성능 지도
 """
 
+def baseline_audit_section() -> str:
+    """기준선 감사 절 — 비교 상대인 규칙을 성의 있게 만들었는가."""
+    p = AGG / "baseline_audit.json"
+    if not p.exists():
+        return ""
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    res = d.get("results", {})
+    if not res:
+        return ""
+    rows = []
+    for env, r in res.items():
+        rows.append("| " + env + " | " + r["rule"] + " | "
+                    + num(r["현재"]["eval_iqm"]) + " | " + num(r["튜닝셋 최고"]["eval_iqm"]) + " | "
+                    + num(r["차이"]) + " | " + r["판정"] + " |")
+    return "\n".join([
+        "## 6. 기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가",
+        "",
+        "\"학습이 단순 규칙을 이긴다\"는 주장은 그 규칙을 얼마나 잘 만들었는지에 달려 있다. "
+        "환경마다 기준 규칙의 계수를 격자로 훑어 더 나은 것이 있는지 확인했다. "
+        "튜닝은 평가에 쓰지 않는 에피소드에서 하고, 거기서 고른 하나만 평가용 에피소드로 다시 쟀다(Ⅲ장 6.2절).",
+        "",
+        "<!--TABCAP: 기준 규칙의 계수를 다시 골랐을 때 | Re-selecting the coefficients of each baseline rule -->",
+        "| 환경 | 규칙 | 현재 계수 r IQM | 다시 고른 계수 r IQM | 차이 | 판정 |",
+        "|---|---|---|---|---|---|",
+    ] + rows + [
+        "",
+        "세 환경 중 하나에서만 문제가 나왔다. MountainCar와 MinAtar의 기준 규칙은 이미 최선이었고, "
+        "**LunarLander의 임계값 규칙만 계수를 다시 고르는 것으로 141점이 올랐다**(같은 형태의 규칙, "
+        "계수만 다름). 그 결과 그 환경의 임계 비용 λ*가 바뀌었다 — 표 1의 값은 다시 고른 규칙을 "
+        "포함한 것이다.",
+        "",
+        "이 비대칭이 중요하다. MountainCar에서 '학습이 규칙에 진다'는 결론은 기준선이 이미 최선이었으므로 "
+        "더 단단해졌고, LunarLander에서 '학습이 이긴다'는 결론만 약한 기준선의 덕을 보고 있었다.",
+        "",
+    ])
+
+
 FAIRNESS_TMPL = """## 5. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
 
 MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습이 규칙에 진다"는 뜻이다.
@@ -428,7 +468,8 @@ def main() -> None:
            "설계 결정과 도중에 고친 버그는 docs/실험일지.md 참조. -->\n")
     out = Path(a.out) if a.out else OUT
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(HEADER_TMPL + "\n" + body + "\n" + FAIRNESS_TMPL + src, encoding="utf-8")
+    out.write_text(HEADER_TMPL + "\n" + body + "\n" + FAIRNESS_TMPL
+                   + "\n" + baseline_audit_section() + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
 
 

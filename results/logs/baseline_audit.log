@@ -1,0 +1,6 @@
+환경                    규칙              현재 r IQM    최고 r IQM       차이  판정
+MountainCar-v0        pump 규칙          -119.80     -119.80      0.0  현재 기준선이 이미 최선이다
+LunarLander-v3        임계값 규칙             38.28      179.84    141.6  더 나은 계수가 있다 (평가셋에서 +141.6)
+MinAtar/Freeway-v1    신중 규칙              18.50       18.50      0.0  현재 기준선이 이미 최선이다
+
+저장: results\aggregate\baseline_audit.json

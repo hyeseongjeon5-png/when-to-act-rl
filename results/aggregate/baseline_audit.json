@@ -1,0 +1,289 @@
+{
+  "설명": "기준 규칙의 계수를 격자로 훑어 더 나은 것이 있는지 확인한다. 튜닝은 평가에 쓰지 않는 에피소드(시드 900000~)에서 하고, 고른 하나만 평가용 에피소드(시드 500000~)로 다시 잰다.",
+  "왜": "'학습이 단순 규칙을 이긴다'는 주장은 그 규칙을 얼마나 성의 있게 만들었는지를 밝혀야 의미가 있다. 대충 만든 규칙을 이기는 것은 쉽다.",
+  "results": {
+    "MountainCar-v0": {
+      "rule": "pump 규칙",
+      "현재": {
+        "params": {
+          "act_threshold": 0.0
+        },
+        "eval_iqm": -119.8,
+        "actions": 119.21,
+        "solved": 1.0
+      },
+      "튜닝셋 최고": {
+        "params": {
+          "act_threshold": 0.0
+        },
+        "eval_iqm": -119.8,
+        "actions": 119.21,
+        "solved": 1.0
+      },
+      "차이": 0.0,
+      "판정": "현재 기준선이 이미 최선이다",
+      "후보들(튜닝셋)": [
+        {
+          "params": {
+            "act_threshold": 0.0
+          },
+          "tune_iqm": -121.2
+        },
+        {
+          "params": {
+            "act_threshold": 0.005
+          },
+          "tune_iqm": -200.0
+        },
+        {
+          "params": {
+            "act_threshold": 0.01
+          },
+          "tune_iqm": -200.0
+        },
+        {
+          "params": {
+            "act_threshold": 0.015
+          },
+          "tune_iqm": -200.0
+        },
+        {
+          "params": {
+            "act_threshold": 0.02
+          },
+          "tune_iqm": -200.0
+        },
+        {
+          "params": {
+            "act_threshold": 0.03
+          },
+          "tune_iqm": -200.0
+        },
+        {
+          "params": {
+            "act_threshold": 0.05
+          },
+          "tune_iqm": -125.0
+        }
+      ]
+    },
+    "LunarLander-v3": {
+      "rule": "임계값 규칙",
+      "현재": {
+        "params": {
+          "angle_thresh": 0.1,
+          "vy_thresh": -0.35,
+          "angle_gain": 0.5
+        },
+        "eval_iqm": 38.283954362074816,
+        "actions": 123.7,
+        "solved": 1.0
+      },
+      "튜닝셋 최고": {
+        "params": {
+          "angle_thresh": 0.05,
+          "vy_thresh": -0.25,
+          "angle_gain": 1.0
+        },
+        "eval_iqm": 179.8368347707913,
+        "actions": 169.64,
+        "solved": 0.98
+      },
+      "차이": 141.5528804087165,
+      "판정": "더 나은 계수가 있다 (평가셋에서 +141.6)",
+      "후보들(튜닝셋)": [
+        {
+          "params": {
+            "angle_thresh": 0.05,
+            "vy_thresh": -0.25,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 154.3933881085831
+        },
+        {
+          "params": {
+            "angle_thresh": 0.05,
+            "vy_thresh": -0.25,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 198.20542492723933
+        },
+        {
+          "params": {
+            "angle_thresh": 0.05,
+            "vy_thresh": -0.35,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 42.486746077277104
+        },
+        {
+          "params": {
+            "angle_thresh": 0.05,
+            "vy_thresh": -0.35,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 44.28485350925132
+        },
+        {
+          "params": {
+            "angle_thresh": 0.05,
+            "vy_thresh": -0.5,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 36.775963080534325
+        },
+        {
+          "params": {
+            "angle_thresh": 0.05,
+            "vy_thresh": -0.5,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 34.522587078169614
+        },
+        {
+          "params": {
+            "angle_thresh": 0.1,
+            "vy_thresh": -0.25,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 35.25913298172531
+        },
+        {
+          "params": {
+            "angle_thresh": 0.1,
+            "vy_thresh": -0.25,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 93.30078905062794
+        },
+        {
+          "params": {
+            "angle_thresh": 0.1,
+            "vy_thresh": -0.35,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 34.69455956535072
+        },
+        {
+          "params": {
+            "angle_thresh": 0.1,
+            "vy_thresh": -0.35,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 40.528965760954264
+        },
+        {
+          "params": {
+            "angle_thresh": 0.1,
+            "vy_thresh": -0.5,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 36.20371557494332
+        },
+        {
+          "params": {
+            "angle_thresh": 0.1,
+            "vy_thresh": -0.5,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 35.755236670800045
+        },
+        {
+          "params": {
+            "angle_thresh": 0.2,
+            "vy_thresh": -0.25,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": 3.754196159182766
+        },
+        {
+          "params": {
+            "angle_thresh": 0.2,
+            "vy_thresh": -0.25,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 35.532771238479036
+        },
+        {
+          "params": {
+            "angle_thresh": 0.2,
+            "vy_thresh": -0.35,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": -6.731257842308191
+        },
+        {
+          "params": {
+            "angle_thresh": 0.2,
+            "vy_thresh": -0.35,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 35.51100206698699
+        },
+        {
+          "params": {
+            "angle_thresh": 0.2,
+            "vy_thresh": -0.5,
+            "angle_gain": 0.5
+          },
+          "tune_iqm": -19.558512395756416
+        },
+        {
+          "params": {
+            "angle_thresh": 0.2,
+            "vy_thresh": -0.5,
+            "angle_gain": 1.0
+          },
+          "tune_iqm": 33.65049872385093
+        }
+      ]
+    },
+    "MinAtar/Freeway-v1": {
+      "rule": "신중 규칙",
+      "현재": {
+        "params": {
+          "danger": 0
+        },
+        "eval_iqm": 18.5,
+        "actions": 299.0,
+        "solved": 0.0
+      },
+      "튜닝셋 최고": {
+        "params": {
+          "danger": 0
+        },
+        "eval_iqm": 18.5,
+        "actions": 299.0,
+        "solved": 0.0
+      },
+      "차이": 0.0,
+      "판정": "현재 기준선이 이미 최선이다",
+      "후보들(튜닝셋)": [
+        {
+          "params": {
+            "danger": 0
+          },
+          "tune_iqm": 19.475
+        },
+        {
+          "params": {
+            "danger": 1
+          },
+          "tune_iqm": 14.75
+        },
+        {
+          "params": {
+            "danger": 2
+          },
+          "tune_iqm": 4.425
+        },
+        {
+          "params": {
+            "danger": 3
+          },
+          "tune_iqm": 0.15
+        }
+      ]
+    }
+  }
+}
