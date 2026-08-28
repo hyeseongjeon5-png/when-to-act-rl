@@ -39,3 +39,4 @@ results/reports/_docx_smoke.docx
 # 도구가 만든 임시 산출물
 .playwright-mcp/
 thesis_*.png
+results/queue_supervisor.lock

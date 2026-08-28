@@ -1,24 +1,29 @@
 {
  "done": [
-  "1_공정성파일럿"
+  "1_공정성파일럿",
+  "2_붕괴문턱_규칙"
  ],
  "current": {
-  "label": "2_붕괴문턱_규칙",
-  "kind": "rules",
-  "spec": "experiments/configs/main_mountaincar.yaml",
-  "started_at": 1787939279.6587608,
-  "started_text": "2026-08-29 02:47:59"
+  "label": "2_붕괴문턱_학습",
+  "kind": "train",
+  "spec": "experiments/configs/main_mountaincar.yaml:10",
+  "started_at": 1787939561.433379,
+  "started_text": "2026-08-29 02:52:41"
  },
  "history": [
   {
    "label": "1_공정성파일럿",
-   "hours": 0.13,
+   "hours": 1.85,
    "exit": 1,
-   "finished_text": "2026-08-29 02:47:59"
+   "finished_text": "2026-08-29 02:52:07"
+  },
+  {
+   "label": "2_붕괴문턱_규칙",
+   "hours": 0.01,
+   "exit": 0,
+   "finished_text": "2026-08-29 02:52:41"
   }
  ],
- "updated_at": 1787939279.6587608,
- "updated_text": "2026-08-29 02:47:59",
- "pid": 6164,
- "queue_file": "experiments/sprint_queue.tsv"
+ "updated_at": 1787939561.433379,
+ "updated_text": "2026-08-29 02:52:41"
 }

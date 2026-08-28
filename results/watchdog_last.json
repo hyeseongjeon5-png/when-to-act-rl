@@ -1,45 +1,45 @@
 {
- "time": "2026-08-29 01:56:38",
- "ts": 1787936198.1116421,
+ "time": "2026-08-29 02:53:48",
+ "ts": 1787939628.9133546,
  "runs": [
   {
    "run": "fair_pilot_mc_A",
-   "done": 0,
+   "done": 5,
    "total": 5,
-   "running": 4,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.3,
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 2.8,
    "advanced_since_last": null,
    "eta_text": "측정 중",
-   "prev_done": 0
+   "prev_done": 5
   },
   {
    "run": "fair_pilot_mc_B",
-   "done": 0,
+   "done": 5,
    "total": 5,
-   "running": 3,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.3,
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 1.7,
    "advanced_since_last": null,
    "eta_text": "측정 중",
-   "prev_done": 0
+   "prev_done": 4
   },
   {
    "run": "fair_pilot_mc_C",
-   "done": 0,
+   "done": 3,
    "total": 5,
-   "running": 3,
+   "running": 2,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.3,
+   "stale_min": 0.0,
    "advanced_since_last": null,
-   "eta_text": "측정 중",
-   "prev_done": 0
+   "eta_text": "약 1.2시간 남음",
+   "prev_done": 3
   },
   {
    "run": "main_lunarlander",
@@ -49,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5197.1,
+   "stale_min": 5254.3,
    "advanced_since_last": null,
    "eta_text": "측정 중",
    "prev_done": 240
@@ -57,31 +57,34 @@
   {
    "run": "main_mountaincar",
    "done": 270,
-   "total": 270,
-   "running": 0,
+   "total": 420,
+   "running": 10,
    "skipped": 0,
-   "pid_alive": false,
-   "finished": true,
-   "stale_min": 4973.9,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.1,
    "advanced_since_last": null,
-   "eta_text": "측정 중",
+   "eta_text": "약 5.1시간 남음",
    "prev_done": 270
   }
  ],
  "issues": [],
  "level": "정상",
  "queue": {
-  "current": "1_공정성파일럿",
-  "done": 0,
+  "current": "2_붕괴문턱_학습",
+  "done": 2,
   "pending": 9,
-  "next": "1_공정성파일럿",
+  "next": "2_붕괴문턱_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 55.4
+  "stale_min": 1.1
+ },
+ "processes": {
+  "queue": 1
  },
  "logs": {
-  "scanned": 10,
-  "fresh": 10,
+  "scanned": 25,
+  "fresh": 15,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -91,8 +94,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 145
+  "n_expected_floor": 0
  },
- "disk_free_gb": 354.6,
- "done_conditions_total": 1530
+ "disk_free_gb": 351.1,
+ "done_conditions_total": 2203
 }

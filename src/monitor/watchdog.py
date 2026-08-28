@@ -1,12 +1,13 @@
 """자가 감시 스크립트 — 본실험이 도는 동안 1시간마다 스스로 점검한다.
 
-점검 6가지 (사용자 지시 '상시 자가 감시 루프'):
+점검 7가지 (사용자 지시 '상시 자가 감시 루프'):
   ① 러너 프로세스가 살아 있는가
   ② progress.json이 지난 점검 때보다 전진했는가 (멈춤 감지)
   ③ 최신 학습 로그에 NaN/Inf 손실·예외·반복 에러가 없는가
   ④ 디스크 여유가 있고 결과 파일이 정상적으로 쌓이는가
   ⑤ 학습 곡선이 비정상인가 (보상 바닥 고정, 행동 횟수 0 고정 등)
   ⑥ 작업 대기열이 살아 있는가 (러너가 끝났는데 다음이 안 뜨면 12코어가 조용히 논다)
+  ⑦ 같은 것이 여러 벌 돌고 있지 않은가 (감시 장치가 잘못 판단해 중복 실행하는 사고를 잡는다)
 
 결과는 results/watchdog.log에 한 줄, 자세한 내용은 results/watchdog_last.json에 남긴다.
 종료 코드: 0 정상 / 1 경고 / 2 이상(사람 또는 에이전트 개입 필요)
@@ -38,6 +39,31 @@ def pid_alive(pid: int) -> bool:
         return str(pid) in out
     except Exception:
         return False
+
+
+def process_roots(pattern: str) -> list[int]:
+    """명령줄에 pattern이 든 python 프로세스 중 '뿌리'만 센다.
+
+    왜 뿌리만 세나: .venv/Scripts/python.exe 는 실제 인터프리터를 자식으로 띄우므로
+    논리적으로 하나인 프로세스가 목록에 둘로 보인다. 부모가 같은 목록 안에 있으면 자식이다.
+
+    Git Bash에는 wmic도 ps aux도 없다 — PowerShell을 쓴다 (2026-08-29 사고에서 배운 것).
+    """
+    ps = ("Get-CimInstance Win32_Process -Filter \"name='python.exe'\" | "
+          "Where-Object { $_.CommandLine -like '*" + pattern + "*' } | "
+          "ForEach-Object { \"$($_.ProcessId) $($_.ParentProcessId)\" }")
+    try:
+        out = subprocess.run(["powershell", "-NoProfile", "-Command", ps],
+                             capture_output=True, text=True, timeout=30).stdout
+    except Exception:
+        return []
+    pairs = []
+    for line in out.splitlines():
+        parts = line.split()
+        if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+            pairs.append((int(parts[0]), int(parts[1])))
+    pids = {a for a, _ in pairs}
+    return [a for a, b in pairs if b not in pids]
 
 
 def check_logs(minutes: int = 90, fresh_minutes: int = 20) -> dict:
@@ -204,6 +230,17 @@ def main() -> int:
         except Exception as e:
             report["issues"].append(f"⑥ 대기열 상태 파일 읽기 실패: {e}")
 
+    # ---- ⑦ 중복 실행 점검 ----
+    # 2026-08-29 사고: 감시자가 잘못 판단해 대기열을 5분마다 새로 띄웠고 같은 실험이 세 벌 돌았다.
+    # '죽었는가'만 보고 '너무 많은가'를 안 보면 이런 사고를 놓친다.
+    q_roots = process_roots("sprint_queue")
+    report["processes"] = {"queue": len(q_roots)}
+    if len(q_roots) > 1:
+        report["issues"].append(
+            f"⑦ 작업 대기열이 {len(q_roots)}개 돌고 있다(pid {q_roots}) — 같은 실험이 여러 벌 돈다. "
+            f"하나만 남기고 종료할 것")
+        report["level"] = "이상"
+
     curves = check_curves()
     du = shutil.disk_usage(str(ROOT))
     free_gb = du.free / 1e9
@@ -246,7 +283,8 @@ def main() -> int:
              f"{'(' + str(q['current']) + ' 진행중)' if q.get('current') else ''}"
              f"{' [대기열죽음]' if (q['alive'] is False and q['pending']) else ''}"
              f"{' [대기열PID미상]' if q['alive'] is None else ''}") if q else ""
-    line = (f"{report['time']} [{report['level']}] {runs_txt}{q_txt} | 디스크 {free_gb:.0f}GB | "
+    p_txt = f" | 대기열 {report.get('processes', {}).get('queue', '?')}개"
+    line = (f"{report['time']} [{report['level']}] {runs_txt}{q_txt}{p_txt} | 디스크 {free_gb:.0f}GB | "
             f"완료조건 누계 {raw_files} | 비용에 의한 무행동 수렴 {curves['n_expected_floor']}건(정상) | {issues_txt}")
     with LOG.open("a", encoding="utf-8") as f:
         f.write(line + "\n")
