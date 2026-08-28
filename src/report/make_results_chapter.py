@@ -295,6 +295,52 @@ def collapse_section(sec: str) -> str:
     ])
 
 
+def causal_section(sec: str) -> str:
+    """인과 실험 절 — 비용을 켜는 시점만 바꾼 대조. 결과가 있을 때만 만든다."""
+    p = AGG / "causal_warmup.json"
+    if not p.exists():
+        return ""
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    res = d.get("results", [])
+    if not res:
+        return ""
+    lines = [
+        "### " + sec + " 무행동 붕괴는 최적해인가, 탐험 실패인가 (대조 실험)",
+        "",
+        "앞 절의 붕괴에는 두 가지 해석이 있다. **(가)** 비용을 반영하면 정말로 가만히 있는 것이 "
+        "최선이거나, **(나)** 비용 때문에 초반에 목표를 한 번도 보지 못해 굳었거나. "
+        "두 해석은 같은 관측을 낳지만 뜻이 정반대다. 이를 가르기 위해 같은 예산·시드 안에서 "
+        "**비용을 켜는 시점만** 바꾼 조건을 두었다(Ⅲ장 6.2절). 평가는 양쪽 모두 진짜 λ로 한다.",
+        "",
+        "<!--TABCAP: 비용을 처음부터 물릴 때와 절반 뒤에 켤 때 (MountainCar-v0, 같은 예산·시드)"
+        " | Charging the cost from the start versus switching it on halfway (MountainCar-v0) -->",
+        "| λ | 계열 | 비용 시점 | r′ IQM [95% CI] | 행동 횟수 | 판정 |",
+        "|---|---|---|---|---|---|",
+    ]
+    for r in res:
+        lam, ag = format(float(r["lam"]), "g"), name(r["agent"])
+        for key, label in (("from_start", "처음부터"), ("warmup", "절반 뒤")):
+            sc, ac = r[key]["score"], r[key]["actions"]
+            lines.append("| **" + lam + "** | " + ag + " | " + label + " | "
+                         + num(sc["iqm"]) + " [" + num(sc["lo"]) + ", " + num(sc["hi"]) + "] | "
+                         + num(ac["iqm"]) + " | "
+                         + (r["verdict"] if key == "warmup" else "") + " |")
+    n_expl = sum(1 for r in res if str(r["verdict"]).startswith("탐험 실패"))
+    n_opt = sum(1 for r in res if "무행동이 최적해" in str(r["verdict"]))
+    n_none = len(res) - n_expl - n_opt
+    lines += [
+        "",
+        "비교 " + str(len(res)) + "건 중 '탐험 실패'로 판정된 것이 " + str(n_expl) + "건, "
+        "'무행동이 최적해일 가능성'이 " + str(n_opt) + "건, 신뢰구간이 겹쳐 판정을 보류한 것이 "
+        + str(n_none) + "건이다.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
 HEADER_TMPL = """# Ⅳ. Experimental Results
 
 ## 1. 읽는 법
@@ -344,6 +390,10 @@ def main() -> None:
         parts.append(env_section(e, "4." + str(k)))
     k += 1
     parts.append(collapse_section("4." + str(k)))
+    cs = causal_section("4." + str(k + 1))
+    if cs:
+        k += 1
+        parts.append(cs)
     for e in envs[2:]:
         k += 1
         parts.append(env_section(e, "4." + str(k)))

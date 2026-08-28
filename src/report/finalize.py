@@ -4,13 +4,14 @@
 순서가 중요하다: 집계가 먼저여야 그림·표·원고가 같은 숫자를 본다.
 
   1. 집계        results/aggregate/*.csv, *_lambda_star.json   (IQM + 95% 계층 부트스트랩 CI)
-  2. 작업용 그림  results/figures/*.png
-  3. 논문용 그림  results/figures/paper/*.png  (300dpi, 캡션 국문·영문)
-  4. Ⅳ장 원고    paper/04_결과.md              (숫자는 집계 파일에서만)
-  5. 논문 조립    졸업논문_초안v1.docx
-  6. 미리보기     results/reports/논문_미리보기.html
-  7. 원고 점검    낡은 표현·남은 [본인 확인 필요] 표시 목록
-  8. HTML 보고서  results/reports/{날짜}_본실험보고서.html
+  2. 인과 비교   results/aggregate/causal_warmup.json          (비용을 켜는 시점만 바꾼 대조)
+  3. 작업용 그림  results/figures/*.png
+  4. 논문용 그림  results/figures/paper/*.png  (300dpi, 캡션 국문·영문)
+  5. Ⅳ장 원고    paper/04_결과.md              (숫자는 집계 파일에서만)
+  6. 논문 조립    졸업논문_초안v1.docx
+  7. 미리보기     results/reports/논문_미리보기.html
+  8. 원고 점검    낡은 표현·남은 [본인 확인 필요] 표시 목록
+  9. HTML 보고서  results/reports/{날짜}_본실험보고서.html
 
 실행: python -m src.report.finalize [--reps 10000] [--open]
 """
@@ -50,17 +51,18 @@ def main() -> None:
 
     t0 = time.time()
     steps = [
-        ("1/8 집계", ["-m", "src.analysis.aggregate", "--env", "all", "--reps", str(a.reps)]),
-        ("2/8 작업용 그림", ["-m", "src.analysis.plots", "--env", "all"]),
-        ("3/8 논문용 그림", ["-m", "src.report.make_paper_figures"]),
-        ("4/8 Ⅳ장 원고", ["-m", "src.report.make_results_chapter"]),
-        ("5/8 논문 조립", ["-m", "src.report.make_thesis_docx"]),
-        ("6/8 미리보기", ["-m", "src.report.docx_preview"]),
-        ("7/8 원고 점검", ["-m", "src.report.check_manuscript"]),
+        ("1/9 집계", ["-m", "src.analysis.aggregate", "--env", "all", "--reps", str(a.reps)]),
+        ("2/9 인과 비교", ["-m", "src.analysis.causal_compare"]),
+        ("3/9 작업용 그림", ["-m", "src.analysis.plots", "--env", "all"]),
+        ("4/9 논문용 그림", ["-m", "src.report.make_paper_figures"]),
+        ("5/9 Ⅳ장 원고", ["-m", "src.report.make_results_chapter"]),
+        ("6/9 논문 조립", ["-m", "src.report.make_thesis_docx"]),
+        ("7/9 미리보기", ["-m", "src.report.docx_preview"]),
+        ("8/9 원고 점검", ["-m", "src.report.check_manuscript"]),
     ]
     results = {t: run(t, args) for t, args in steps}
     rep = ["-m", "src.report.make_experiment_report"] + (["--open"] if a.open else [])
-    results["8/8 HTML 보고서"] = run("8/8 HTML 보고서", rep)
+    results["9/9 HTML 보고서"] = run("9/9 HTML 보고서", rep)
 
     print("\n" + "=" * 74)
     print(f"마감 처리 요약 · 총 {(time.time() - t0) / 60:.1f}분")
