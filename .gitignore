@@ -38,4 +38,4 @@ results/reports/_docx_smoke.docx
 
 # 도구가 만든 임시 산출물
 .playwright-mcp/
-thesis_preview_top.png
+thesis_*.png

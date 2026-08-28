@@ -65,15 +65,40 @@ def num(v, nd=1) -> str:
         return "—"
 
 
-def _cols(agg: pd.DataFrame, env_id: str) -> list[str]:
+def _cols(agg: pd.DataFrame, env_id: str, metric: str = "cost_return") -> list[str]:
+    """표에 넣을 열. λ 격자가 14개까지 늘어나 표가 길어지므로 **중복 열은 뺀다.**
+
+    '최강 규칙 포락선'은 대개 기준 규칙과 같은 값이다(그 규칙이 계속 최강이기 때문).
+    값이 한 번이라도 달라지는 환경에서만 열을 남긴다 — MountainCar는 빠지고,
+    LunarLander는 λ>1.37에서 최강 규칙이 무행동으로 바뀌므로 남는다.
+    """
     learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
-    rules = [r for r in (REF_RULE.get(env_id), "rule_best", "rule_noop") if r in set(agg.agent)]
+    ref = REF_RULE.get(env_id)
+    rules = [r for r in (ref,) if r in set(agg.agent)]
+    if "rule_best" in set(agg.agent) and ref in set(agg.agent):
+        a = agg[agg.agent == "rule_best"].set_index("lam")[metric + "_iqm"]
+        b = agg[agg.agent == ref].set_index("lam")[metric + "_iqm"]
+        common = a.index.intersection(b.index)
+        if len(common) and not (a.loc[common] - b.loc[common]).abs().lt(1e-9).all():
+            rules.append("rule_best")
+    if "rule_noop" in set(agg.agent):
+        rules.append("rule_noop")
     return learners + rules
+
+
+def _decimals(agg: pd.DataFrame, metric: str) -> int:
+    """숫자 자릿수. 값이 크면 소수점을 빼야 한 칸에 '값 [구간]'이 들어간다."""
+    try:
+        m = float(agg[metric + "_iqm"].abs().max())
+    except Exception:
+        return 1
+    return 0 if m >= 100 else 1
 
 
 def perf_table(agg: pd.DataFrame, env_id: str, metric: str = "cost_return") -> str:
     """λ를 세로, 계열을 가로로 놓은 표. 각 칸은 IQM [95% CI]."""
-    cols = _cols(agg, env_id)
+    cols = _cols(agg, env_id, metric)
+    nd = _decimals(agg, metric)
     lams = sorted(agg.lam.unique())
     lines = ["| λ | " + " | ".join(name(c) for c in cols) + " |",
              "|---|" + "---|" * len(cols)]
@@ -86,20 +111,20 @@ def perf_table(agg: pd.DataFrame, env_id: str, metric: str = "cost_return") -> s
                 cells.append("—")
                 continue
             r = g.loc[l]
-            cells.append(num(r[metric + "_iqm"]) + " ["
-                         + num(r[metric + "_ci_lo"]) + ", " + num(r[metric + "_ci_hi"]) + "]")
+            cells.append(num(r[metric + "_iqm"], nd) + " ["
+                         + num(r[metric + "_ci_lo"], nd) + ", " + num(r[metric + "_ci_hi"], nd) + "]")
         lines.append("| **" + format(l, "g") + "** | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
 
 def action_table(agg: pd.DataFrame, env_id: str) -> str:
-    cols = _cols(agg, env_id)
+    cols = _cols(agg, env_id, "n_actions")
     lams = sorted(agg.lam.unique())
     lines = ["| λ | " + " | ".join(name(c) for c in cols) + " |",
              "|---|" + "---|" * len(cols)]
     idx = {c: agg[agg.agent == c].set_index("lam") for c in cols}
     for l in lams:
-        cells = [num(idx[c].loc[l]["n_actions_iqm"]) if l in idx[c].index else "—" for c in cols]
+        cells = [num(idx[c].loc[l]["n_actions_iqm"], 0) if l in idx[c].index else "—" for c in cols]
         lines.append("| **" + format(l, "g") + "** | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
