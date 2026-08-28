@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 03:56:45",
- "ts": 1787943405.2728558,
+ "time": "2026-08-29 04:56:48",
+ "ts": 1787947008.4717698,
  "runs": [
   {
    "run": "fair_pilot_mc_A",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 65.7,
+   "stale_min": 125.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -21,9 +21,9 @@
    "total": 5,
    "running": 0,
    "skipped": 0,
-   "pid_alive": false,
+   "pid_alive": true,
    "finished": true,
-   "stale_min": 64.6,
+   "stale_min": 124.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,10 +36,10 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 15.1,
-   "advanced_since_last": true,
+   "stale_min": 75.2,
+   "advanced_since_last": false,
    "eta_text": "측정 중",
-   "prev_done": 3
+   "prev_done": 5
   },
   {
    "run": "main_lunarlander",
@@ -49,14 +49,14 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5317.2,
+   "stale_min": 5377.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
   },
   {
    "run": "main_mountaincar",
-   "done": 290,
+   "done": 320,
    "total": 420,
    "running": 10,
    "skipped": 0,
@@ -64,8 +64,8 @@
    "finished": false,
    "stale_min": 0.4,
    "advanced_since_last": true,
-   "eta_text": "약 4.4시간 남음",
-   "prev_done": 270
+   "eta_text": "약 3.4시간 남음",
+   "prev_done": 290
   }
  ],
  "issues": [],
@@ -73,18 +73,18 @@
  "queue": {
   "current": "2_붕괴문턱_학습",
   "done": 2,
-  "pending": 9,
+  "pending": 13,
   "next": "2_붕괴문턱_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 64.1
+  "stale_min": 124.1
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 35,
-  "fresh": 17,
+  "scanned": 52,
+  "fresh": 15,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -94,8 +94,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 2
+  "n_expected_floor": 4
  },
  "disk_free_gb": 351.0,
- "done_conditions_total": 2225
+ "done_conditions_total": 2255
 }

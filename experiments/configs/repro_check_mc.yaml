@@ -1,0 +1,98 @@
+# 재현성 검증 — 이미 끝난 조건 하나를 그대로 다시 돌려 같은 숫자가 나오는지 본다.
+# 논문 Ⅲ장 재현성 절의 주장을 실제로 확인하는 것이 목적이다.
+# 설정 지문은 variant 때문에 달라지지만 계산 자체는 동일하다(지문은 체크포인트 관리용일 뿐).
+# 원본: results/raw/MountainCar-v0/dqn/lam0.0/seed5_*
+name: repro_check_mc
+date: 2026-08-25
+env_id: MountainCar-v0
+env_kwargs: {}
+total_steps: 300000
+eval_every: 25000
+n_eval_episodes_curve: 10
+n_eval_episodes_final: 50
+n_eval_episodes_rules: 100
+final_snapshots:
+- 0.9
+- 0.95
+- 1.0
+ckpt_every: 50000
+workers: 1
+agents:
+- dqn
+lambdas:
+- 0.0
+seeds:
+- 5
+hyperparams:
+  dqn:
+    hidden:
+    - 50
+    - 50
+    lr: 0.001
+    gamma: 0.99
+    buffer_size: 100000
+    batch_size: 64
+    learn_start: 1000
+    target_update: 500
+    eps_const: 0.2
+    double_dqn: true
+  temporl:
+    hidden:
+    - 50
+    - 50
+    lr: 0.001
+    gamma: 0.99
+    buffer_size: 100000
+    batch_size: 64
+    learn_start: 1000
+    target_update: 500
+    eps_const: 0.2
+    double_dqn: true
+    max_skip: 10
+    skip_augment: true
+  lazy:
+    hidden:
+    - 50
+    - 50
+    lr: 0.001
+    gamma: 0.99
+    buffer_size: 100000
+    batch_size: 64
+    learn_start: 1000
+    target_update: 500
+    eps_const: 0.2
+    double_dqn: true
+    base_policy: pump
+    eta: 0.0
+rules:
+- id: noop
+  type: NoOpPolicy
+- id: periodic_k1
+  type: PeriodicPolicy
+  base_action: 2
+  k: 1
+- id: periodic_k2
+  type: PeriodicPolicy
+  base_action: 2
+  k: 2
+- id: periodic_k4
+  type: PeriodicPolicy
+  base_action: 2
+  k: 4
+- id: periodic_k8
+  type: PeriodicPolicy
+  base_action: 2
+  k: 8
+- id: pump
+  type: MountainCarPumpPolicy
+  act_threshold: 0.0
+notes: '기준선은 pump 규칙(r IQM −120.5, 100% 목표 도달)이다. 무행동·주기 규칙은 전부 −200으로
+
+  문제를 못 풀기 때문에, 그것을 기준으로 "학습이 이겼다"고 말하면 너무 쉬운 승리가 된다.
+
+  주기 규칙의 기저 행동 2(오른쪽 가속)는 임의값 — MountainCar에서는 어떤 단일 행동도 목표에
+
+  닿지 못해 선택이 결과를 바꾸지 않는다(전부 −200).
+
+  '
+variant: REPRO
