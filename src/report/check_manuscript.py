@@ -110,6 +110,9 @@ def main() -> None:
                 print(f"  {ln:>4}행 ({name}) {ctx}")
                 print(f"        └ {why}")
     print(f"\n확인할 곳 {n_hits}군데")
+    print(f"\n지시받은 그림·표 배치와 맞는가")
+    for line in numbering_rules():
+        print(line)
     print("\n현재 집계 기준 λ* (최강 규칙 포락선 대비) — 원고 수치와 대조할 것")
     for env, rows in numbers_in_use().items():
         bits = ", ".join(f"{k}: CI {v['CI']} / 점추정 {v['점추정']}" for k, v in rows.items())
