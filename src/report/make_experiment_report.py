@@ -124,6 +124,55 @@ def env_section(env_id: str) -> str:
             + "<h3>임계 비용 λ*</h3>" + star_html + "</section>")
 
 
+def fairness_section() -> str:
+    """공정성 점검 — 비용이 없는 λ=0에서 학습이 규칙 수준에 닿는가.
+
+    이 절이 없으면 "규칙에 진 것은 비용 때문이 아니라 학습이 덜 된 탓"이라는 반론에 답할 수 없다.
+    """
+    try:
+        from src.analysis.fairness_verdict import CANDIDATES, REF_ROOM, REF_RULE, seed_scores, summarize
+    except Exception as e:
+        return ""
+    ref = summarize(seed_scores(REF_ROOM, REF_RULE))
+    if ref is None:
+        return ""
+    rows = ('<tr class="refrule"><th>기준: pump 규칙 (학습 없음)</th>'
+            + '<td class="num">' + str(ref["n"]) + "</td>"
+            + '<td class="num"><b>' + fmt(ref["iqm"]) + "</b>"
+            + '<span class="ci">[' + fmt(ref["lo"]) + ", " + fmt(ref["hi"]) + "]</span></td>"
+            + "<td>—</td><td>—</td></tr>")
+    any_row = False
+    for room, label in CANDIDATES.items():
+        sc = seed_scores(room, "dqn")
+        st = summarize(sc)
+        if st is None:
+            continue
+        any_row = True
+        if st["lo"] > ref["hi"]:
+            v, cls = "이김", "win"
+        elif st["hi"] < ref["lo"]:
+            v, cls = "짐", "lose"
+        else:
+            v, cls = "비김 (신뢰구간 겹침)", ""
+        rows += ("<tr><th>" + esc(label) + '</th><td class="num">' + str(st["n"]) + "</td>"
+                 + '<td class="num ' + cls + '">' + fmt(st["iqm"])
+                 + '<span class="ci">[' + fmt(st["lo"]) + ", " + fmt(st["hi"]) + "]</span></td>"
+                 + '<td class="num">' + fmt(st["iqm"] - ref["iqm"]) + "</td>"
+                 + "<td>" + esc(v) + "</td></tr>")
+    if not any_row:
+        return ""
+    return ("<section><h2>공정성 점검 — 비용이 없을 때(λ=0) 학습은 규칙 수준에 닿는가</h2>"
+            + "<p>MountainCar에서 임계 비용 λ*가 0으로 나왔다는 것은 '비용이 없어도 학습이 규칙에 진다'는 뜻이다. "
+            + "그렇다면 이 결과는 비용에 대한 발견이 아니라 <b>학습이 덜 됐다는 신호</b>일 수 있다. "
+            + "그래서 학습 예산과 탐험 설정을 바꿔 가며 λ=0 성능을 다시 쟀다. "
+            + "표준 DQN 기준이며, 본실험과 같은 평가(스냅샷 3장 × 50 에피소드)를 쓴다.</p>"
+            + '<table class="grid"><thead><tr><th>설정</th><th>시드</th>'
+            + "<th>원보상 r IQM [95% CI]</th><th>규칙 대비</th><th>판정</th>"
+            + "</tr></thead><tbody>" + rows + "</tbody></table>"
+            + '<p class="cap">초록칸 = 규칙을 통계적으로 이김, 빨강칸 = 통계적으로 짐, '
+            + "무색 = 신뢰구간이 겹쳐 우열을 말할 수 없음.</p></section>")
+
+
 def status_section() -> str:
     rows = ""
     for pf in sorted((ROOT / "results").glob("progress_*.json")):
@@ -182,7 +231,7 @@ INTRO = """<section><h2>이 보고서를 읽는 법</h2>
 <p><b>가로축 λ</b>는 행동 1번의 값이다. 오른쪽으로 갈수록 "버튼 한 번 누르는 값"이 비싸진다.
 λ=0이면 원래 문제와 같고, λ가 충분히 크면 아무것도 안 하는 것이 최적이 된다.</p>
 <p><b>세로축 r'</b>은 비용까지 빼고 남은 총보상이다. 높을수록 좋다.</p>
-<p><b>기준선</b>은 학습 없는 고정 규칙 중 가장 센 것이다 (MountainCar는 pump 규칙, r IQM −120.5).
+<p><b>기준선</b>은 학습 없는 고정 규칙 중 가장 센 것이다 (MountainCar는 pump 규칙, r IQM −119.3).
 무행동(−200)처럼 문제를 아예 못 푸는 약한 규칙을 기준으로 삼으면 "학습이 이겼다"는 말이
 너무 쉬워지므로, 모든 그림과 표에서 pump 규칙을 기준으로 유지한다.</p>
 <p><b>임계 비용 λ*</b>는 학습이 이 기준 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ다.
@@ -216,14 +265,20 @@ def main() -> None:
             + "<h1>λ-성능 지도와 임계 비용 λ*</h1>"
             + '<p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — '
             + "동아대학교 졸업과제 · 전혜성</p>"
-            + key + INTRO + status_section()
+            + key + INTRO + status_section() + fairness_section()
             + "".join(env_section(e) for e in envs)
             + SOURCE + "</div></body></html>")
 
     REP.mkdir(parents=True, exist_ok=True)
-    out = Path(a.out) if a.out else REP / (time.strftime("%Y-%m-%d") + "_본실험보고서.html")
+    out = (Path(a.out).resolve() if a.out
+           else REP / (time.strftime("%Y-%m-%d") + "_본실험보고서.html"))
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
-    print("보고서 저장: " + str(out.relative_to(ROOT)))
+    try:
+        shown = str(out.relative_to(ROOT))
+    except ValueError:      # 저장소 밖 경로를 --out으로 준 경우
+        shown = str(out)
+    print("보고서 저장: " + shown)
     if a.open:
         try:
             subprocess.run(["cmd", "/c", "start", "msedge", str(out.resolve())], check=False)
