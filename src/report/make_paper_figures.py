@@ -365,14 +365,98 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
     return out
 
 
+# ── 그림 5: 공정성 점검의 학습 곡선 ──────────────────────────────────────────
+# 왜 필요한가: 논문의 가장 논쟁적인 주장이 "MountainCar에서는 비용이 없어도(λ=0)
+# 학습이 규칙을 못 이긴다"이다. 여기에 대한 첫 반론은 언제나 "학습이 덜 됐다"이다.
+# 표의 최종 점수만으로는 그 반론을 못 막는다 — **곡선이 평평해졌는데도 규칙 아래**라는
+# 것을 보여야 한다. 강화학습 논문에서 학습 곡선이 빠지면 심사자가 가장 먼저 묻는다.
+FAIR_ROOMS = [
+    ("MountainCar-v0", "본실험 (30만 스텝)", "#1f77b4", "-"),
+    ("MountainCar-v0@budget1M_epsconst", "예산 3.3배 (100만 스텝)", "#d62728", "-"),
+    ("MountainCar-v0@budget1M_epsdecay", "예산 3.3배 + ε 감소", "#ff7f0e", "--"),
+    ("MountainCar-v0@budget1M_wide", "예산 3.3배 + 신경망 확대", "#2ca02c", "-."),
+]
+
+
+def fairness_curves(env_id: str = "MountainCar-v0", tag: str = "fig5") -> Path | None:
+    """그림 5 — λ=0에서 예산·탐험·신경망을 바꿔 가며 그린 학습 곡선."""
+    import glob
+    fig, ax = plt.subplots(figsize=(7.4, 4.2), dpi=DPI)
+    drawn = 0
+    for room, label, color, ls in FAIR_ROOMS:
+        curves = []
+        for f in sorted(glob.glob(str(ROOT / "results" / "raw" / room / "dqn" / "lam0.0"
+                                       / "seed*_curve.csv"))):
+            try:
+                c = pd.read_csv(f)
+            except Exception:
+                continue
+            if {"step", "raw_return_iqm"} <= set(c.columns):
+                curves.append(c.set_index("step")["raw_return_iqm"])
+        if not curves:
+            continue
+        m = pd.concat(curves, axis=1).sort_index()
+        # 시드마다 IQM(사분위평균)을 취한다 — 표·λ 지도와 같은 잣대여야 한다
+        q1, q3 = m.quantile(0.25, axis=1), m.quantile(0.75, axis=1)
+        iqm = m.apply(lambda r: r[(r >= q1[r.name]) & (r <= q3[r.name])].mean(), axis=1)
+        ax.plot(m.index / 1000, iqm, ls, color=color, lw=1.9,
+                label=f"{label} · 시드 {m.shape[1]}개", zorder=3)
+        drawn += 1
+    if not drawn:
+        print("  [건너뜀] 공정성 곡선 — λ=0 곡선 자료가 없다")
+        plt.close(fig)
+        return None
+
+    agg = _load(env_id)
+    rule = None
+    if agg is not None and REF[env_id] in set(agg.agent):
+        g = agg[(agg.agent == REF[env_id]) & (agg.lam == 0.0)]
+        if not g.empty:
+            rule = float(g.iloc[0].raw_return_iqm)
+            ax.axhline(rule, color="#111111", ls="--", lw=2.0, zorder=4,
+                       label="고정 규칙 (pump) — 학습 없이 얻는 점수")
+            ax.annotate("어떤 조건에서도 이 선 위로 올라가지 못한다",
+                        xy=(0.99, rule), xycoords=ax.get_yaxis_transform(),
+                        xytext=(-6, 8), textcoords="offset points",
+                        ha="right", va="bottom", fontsize=8.2, color="#b3261e",
+                        fontweight="bold")
+
+    ax.set_xlabel("학습에 쓴 환경 스텝 (천 스텝)", fontsize=10)
+    ax.set_ylabel("총보상 (비용 없음, λ=0)", fontsize=10)
+    ax.grid(alpha=0.25)
+    ax.tick_params(labelsize=9)
+    ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.16),
+              ncol=2, frameon=False, handlelength=2.6, columnspacing=1.6)
+    fig.tight_layout()
+    out = OUT / f"{tag}_fairness_curves_{env_id}.png"
+    fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
+    CAPTIONS[tag] = {
+        "file": out.name,
+        "ko": "예산을 늘려도 학습 곡선은 규칙 아래에서 평평해진다 (MountainCar-v0, λ=0)",
+        "en": ("Learning curves flatten below the rule even with a larger budget "
+               "(MountainCar-v0, λ = 0)"),
+        "note": ("비용이 없는 조건(λ=0)에서만 그렸다 — 여기서 지면 비용을 논할 필요가 없기 때문이다. "
+                 "선은 시드에 대한 IQM이다. 본실험은 시드 10개, 예산을 늘린 세 조건은 "
+                 "**파일럿이라 시드 5개**이므로 이 그림은 경향을 보이는 용도이고, "
+                 "우열 판정은 시드 10개로 한 표에서만 말한다. "
+                 "곡선의 각 점은 5 에피소드 평가라 출렁인다 — 최종 판정은 "
+                 "50 에피소드 평가로 한다. "
+                 "검은 점선은 학습 없이 얻는 pump 규칙의 점수다."),
+        "source": "results/raw/MountainCar-v0*/dqn/lam0.0/seed*_curve.csv",
+    }
+    print(f"  저장: {out.relative_to(ROOT)}")
+    return out
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     fig1_method()
     lambda_map("MountainCar-v0", "fig2", symlog=True)
     lambda_map("LunarLander-v3", "fig3")
     collapse_figure("MountainCar-v0")
+    fairness_curves("MountainCar-v0", "fig5")
     # 세 번째 환경은 학습 결과가 들어온 뒤에만 그린다 (규칙만 있으면 지도가 의미 없다)
-    lambda_map("MinAtar_Freeway-v1", "fig5")
+    lambda_map("MinAtar_Freeway-v1", "fig6")
     (OUT / "captions.json").write_text(json.dumps(CAPTIONS, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"  캡션: {(OUT / 'captions.json').relative_to(ROOT)}")
 
