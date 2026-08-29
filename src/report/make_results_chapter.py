@@ -497,6 +497,7 @@ def baseline_audit_section() -> str:
     if not res:
         return ""
     rows = []
+    worst_gap = max((float(r.get("차이", 0)) for r in res.values()), default=0.0)
     for env, r in res.items():
         rows.append("| " + env + " | " + r["rule"] + " | "
                     + num(r["현재"]["eval_iqm"]) + " | " + num(r["튜닝셋 최고"]["eval_iqm"]) + " | "
@@ -517,13 +518,9 @@ def baseline_audit_section() -> str:
     ] + rows + [
         "",
         "세 환경 중 하나에서만 문제가 나왔다. MountainCar와 MinAtar의 기준 규칙은 이미 최선이었고, "
-        "**LunarLander의 임계값 규칙만 계수를 다시 고르는 것으로 141점이 올랐다**(같은 형태의 규칙, "
-        "계수만 다름). 그 결과 그 환경의 임계 비용 λ*가 바뀌었다 — 표 1의 값은 다시 고른 규칙을 "
-        "포함한 것이다.",
-        "",
-        "이 표의 평가는 100 에피소드다(다른 표는 시드 10개 × 100 에피소드). 그래서 같은 규칙의 "
-        "점수가 표마다 소수점 아래에서 조금 다를 수 있다 — pump 규칙이 여기서는 −119.8, "
-        "다른 표에서는 −119.3인 것이 그 때문이다.",
+        "**LunarLander의 임계값 규칙만 계수를 다시 고르는 것으로 " + num(worst_gap, 0) + "점이 올랐다**"
+        "(같은 형태의 규칙, 계수만 다름). 그 결과 그 환경의 임계 비용 λ*가 바뀌었다 — "
+        "표 1의 값은 다시 고른 규칙을 포함한 것이다.",
         "",
         "이 비대칭이 중요하다. MountainCar에서 '학습이 규칙에 진다'는 결론은 기준선이 이미 최선이었으므로 "
         "더 단단해졌고, LunarLander에서 '학습이 이긴다'는 결론만 약한 기준선의 덕을 보고 있었다.",

@@ -287,6 +287,13 @@ def main() -> None:
     check_citation_order()
     check_english_case()
     check_source_control_chars()
+    print(chr(10) + "손으로 옮겨 적은 표가 집계와 맞는가")
+    try:
+        from src.report.check_hand_numbers import check_switch_cost
+        for line in check_switch_cost():
+            print(line)
+    except Exception as e:
+        print(f"  [확인 못 함] {e}")
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
