@@ -174,6 +174,75 @@ def fairness_section() -> str:
             + "무색 = 신뢰구간이 겹쳐 우열을 말할 수 없음.</p></section>")
 
 
+def audit_section() -> str:
+    """기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가."""
+    p = ROOT / "results" / "aggregate" / "baseline_audit.json"
+    if not p.exists():
+        return ""
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    rows = ""
+    for env, r in d.get("results", {}).items():
+        ok = abs(float(r["차이"])) < 1e-6
+        rows += ("<tr><th>" + esc(env) + "</th><td>" + esc(r["rule"]) + "</td>"
+                 + '<td class="num">' + fmt(r["현재"]["eval_iqm"]) + "</td>"
+                 + '<td class="num ' + ("" if ok else "lose") + '">' + fmt(r["튜닝셋 최고"]["eval_iqm"]) + "</td>"
+                 + '<td class="num">' + fmt(r["차이"]) + "</td><td>" + esc(r["판정"]) + "</td></tr>")
+    if not rows:
+        return ""
+    return ("<section><h2>기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가</h2>"
+            + "<p>“학습이 단순 규칙을 이긴다”는 주장은 그 규칙을 얼마나 잘 만들었는지에 달려 있다. "
+            + "대충 만든 규칙을 이기는 것은 쉽다. 환경마다 기준 규칙의 계수를 격자로 훑어 더 나은 것이 "
+            + "있는지 확인했다. <b>튜닝은 평가에 쓰지 않는 에피소드에서 하고, 거기서 고른 하나만 "
+            + "평가용 에피소드로 다시 쟀다.</b></p>"
+            + '<table class="grid"><thead><tr><th>환경</th><th>규칙</th><th>현재 계수</th>'
+            + "<th>다시 고른 계수</th><th>차이</th><th>판정</th></tr></thead><tbody>" + rows
+            + "</tbody></table>"
+            + '<p class="cap">빨강칸 = 더 나은 계수가 있었다는 뜻. 그 환경에서는 기준 규칙을 바꾸고 '
+            + "λ*를 다시 계산했다.</p></section>")
+
+
+def causal_section_html() -> str:
+    """인과 실험 — 무행동 붕괴는 최적해인가 탐험 실패인가."""
+    p = ROOT / "results" / "aggregate" / "causal_warmup.json"
+    if not p.exists():
+        return ""
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    res = d.get("results", [])
+    if not res:
+        return ""
+    rows = ""
+    for r in res:
+        for key, label in (("from_start", "처음부터"), ("warmup", "절반 뒤")):
+            c = r[key]
+            sv = c.get("solved")
+            rows += ("<tr>" + ("<th rowspan='2'>λ=" + format(float(r["lam"]), "g")
+                               + "<br>" + esc(LABEL.get(r["agent"], r["agent"])) + "</th>"
+                               if key == "from_start" else "")
+                     + "<td>" + label + "</td>"
+                     + '<td class="num">' + fmt(c["score"]["iqm"])
+                     + '<span class="ci">[' + fmt(c["score"]["lo"]) + ", " + fmt(c["score"]["hi"]) + "]</span></td>"
+                     + '<td class="num">' + fmt(c["actions"]["iqm"], 0) + "</td>"
+                     + '<td class="num">' + (fmt(sv["iqm"] * 100, 0) + "%" if sv else "—") + "</td>"
+                     + ("<td rowspan='2'>" + esc(r["verdict"]) + "</td>" if key == "from_start" else "")
+                     + "</tr>")
+    return ("<section><h2>인과 실험 — 무행동 붕괴는 최적해인가, 탐험 실패인가</h2>"
+            + "<p>같은 예산·같은 시드 안에서 <b>비용을 켜는 시점만</b> 바꿨다. 앞 절반은 비용 없이 "
+            + "학습하고 나머지 절반에서 비용을 켠다. <b>평가는 양쪽 모두 진짜 λ로 한다</b> — "
+            + "성적표는 언제나 비용이 있는 세상에서 매긴다.</p>"
+            + '<table class="grid"><thead><tr><th>조건</th><th>비용 시점</th><th>r′ IQM [95% CI]</th>'
+            + "<th>행동</th><th>목표 도달률</th><th>판정</th></tr></thead><tbody>" + rows
+            + "</tbody></table>"
+            + '<p class="cap">워밍업 쪽이 목표에 더 자주 닿으면 → 탐험 실패다. 비용이 있는 세상에서도 '
+            + "목표에 닿는 정책이 존재하는데 처음부터 비용을 물리면 못 찾는다는 뜻이다. "
+            + "양쪽 다 무행동으로 굳으면 → 무행동이 정말 최적해다.</p></section>")
+
+
 def status_section() -> str:
     rows = ""
     for pf in sorted((ROOT / "results").glob("progress_*.json")):
@@ -266,7 +335,7 @@ def main() -> None:
             + "<h1>λ-성능 지도와 임계 비용 λ*</h1>"
             + '<p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — '
             + "동아대학교 졸업과제 · 전혜성</p>"
-            + key + INTRO + status_section() + fairness_section()
+            + key + INTRO + status_section() + fairness_section() + audit_section() + causal_section_html()
             + "".join(env_section(e) for e in envs)
             + SOURCE + "</div></body></html>")
 
