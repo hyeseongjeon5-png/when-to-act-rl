@@ -244,17 +244,39 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
                 pending_cap = None
             continue
 
+        def _take_item(start: int) -> tuple[str, int]:
+            """목록 한 항목을 이어지는 줄까지 모아 온다.
+
+            마크다운에서 항목의 둘째 줄부터는 들여쓴다. 그 줄을 따로 문단으로 만들면
+            왼쪽 정렬이 0이 되어 항목 아래로 들어가지 않고 새 문단처럼 보인다
+            (2026-08-29에 실제로 서론 기여 목록이 그렇게 쪼개져 있었다).
+            """
+            parts = [lines[start].strip()]
+            j = start + 1
+            while j < len(lines):
+                nxt = lines[j]
+                if not nxt.strip():
+                    break
+                if not nxt[:1].isspace():          # 들여쓰기가 없으면 새 덩어리다
+                    break
+                t = nxt.strip()
+                if t.startswith(("- ", "* ", "#", "|", ">", "<!--")) or re.match(r"^\d+\.\s", t):
+                    break
+                parts.append(t)
+                j += 1
+            return " ".join(parts), j
+
         # ---- 글머리표 ----
         if stripped.startswith("- ") or stripped.startswith("* "):
             indent = len(line) - len(line.lstrip())
-            B.add_bullet(doc, COMMENT.sub("", stripped[2:]).strip(), level=1 if indent >= 2 else 0)
-            i += 1
+            text, i = _take_item(i)
+            B.add_bullet(doc, COMMENT.sub("", text[2:]).strip(), level=1 if indent >= 2 else 0)
             continue
 
         # ---- 번호 목록: 번호가 이미 있으므로 점(·)을 덧붙이지 않는다 ----
         if re.match(r"^\d+\.\s", stripped):
-            B.add_numbered(doc, COMMENT.sub("", stripped).strip())
-            i += 1
+            text, i = _take_item(i)
+            B.add_numbered(doc, COMMENT.sub("", text).strip())
             continue
 
         # ---- 일반 문단: 빈 줄이 나올 때까지 이어 붙인다 ----

@@ -371,6 +371,69 @@ def check_hardcoded_refs() -> None:
         print("        └ <!--FIGREF:태그|조사--> 로 바꿀 것 (번호와 조사가 자동으로 맞는다)")
 
 
+def _plain(t: str) -> str:
+    """굵게·코드·이스케이프 표시를 떼어 낸 비교용 문자열. 정규식을 쓰지 않는다 —
+    문자 클래스 안의 역슬래시가 편집 과정에서 자주 깨졌다."""
+    for ch in ("*", '`', '\\'):
+        t = t.replace(ch, "")
+    return t.strip()
+
+
+def check_list_continuation() -> None:
+    """목록 항목의 이어지는 줄이 별도 문단으로 떨어져 나오지 않았는지 확인한다.
+
+    2026-08-29: 마크다운에서 여러 줄로 쓴 목록 항목의 둘째 줄부터가 별도 문단이 되어
+    왼쪽 정렬 0으로 빠져 있었다. 화면상 '새 문단'처럼 보여 목록이 무너진다.
+
+    확인 방법: 마크다운에서 **들여쓴 이어짐 줄**을 뽑아, 그 줄이 .docx에 **그 자체로**
+    한 문단이 되어 있으면 쪼개진 것이다. 어림짐작이 아니라 원본과 결과를 직접 맞춘다.
+    """
+    print(chr(10) + "목록 항목이 쪼개지지 않았는가 (원본과 .docx 대조)")
+    docx = ROOT / "졸업논문_초안v1.docx"
+    if not docx.exists():
+        print("  [건너뜀] .docx가 없다")
+        return
+    try:
+        from docx import Document
+    except Exception as e:
+        print(f"  [확인 못 함] {e}")
+        return
+
+    cont = set()
+    for f in sorted(PAPER.glob("*.md")):
+        if f.name.startswith("00_양식"):
+            continue
+        lines = f.read_text(encoding="utf-8").split(chr(10))
+        in_item = False
+        for line in lines:
+            t = line.strip()
+            if not t:
+                in_item = False
+                continue
+            is_item = t.startswith(("- ", "* ")) or re.match(r"^\d+\.\s", t)
+            if is_item:
+                in_item = True
+                continue
+            if in_item and line[:1].isspace():
+                cont.add(_plain(t))
+            else:
+                in_item = False
+
+    if not cont:
+        print("  [맞음] 여러 줄로 쓴 목록 항목이 없다")
+        return
+    bad = []
+    for para in Document(str(docx)).paragraphs:
+        t = _plain(para.text)
+        if t and t in cont:
+            bad.append(t)
+    if not bad:
+        print(f"  [맞음] 이어짐 줄 {len(cont)}개가 모두 앞 항목에 합쳐져 있다")
+        return
+    for t in bad[:6]:
+        print(f"  [고칠 것] 이어짐 줄이 따로 문단이 됐다: {t[:60]}…")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -409,6 +472,7 @@ def main() -> None:
     check_ordinal_order()
     check_caption_position()
     check_hardcoded_refs()
+    check_list_continuation()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
