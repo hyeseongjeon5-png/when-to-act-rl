@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import shutil
 import subprocess
@@ -62,6 +63,18 @@ def process_roots(pattern: str) -> list[int]:
         parts = line.split()
         if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
             pairs.append((int(parts[0]), int(parts[1])))
+    # 재는 쪽이 재어지는 대상에 섞이면 안 된다. 이 함수를 부르는 명령의 명령줄에 pattern이
+    # 들어 있으면(예: python -c "... process_roots('sprint_queue') ...") 자기 자신을 센다.
+    # .venv/Scripts/python.exe 는 진짜 인터프리터를 자식으로 띄우므로 **부모까지** 빼야 한다.
+    # 2026-08-29에 실제로 그렇게 '대기열 2개'로 보여 중복 실행을 의심했다.
+    parent = {a: b for a, b in pairs}
+    mine, cur = set(), os.getpid()
+    for _ in range(8):                      # 조상 사슬을 거슬러 올라간다 (무한 루프 방지로 8단계)
+        mine.add(cur)
+        cur = parent.get(cur)
+        if cur is None:
+            break
+    pairs = [(a, b) for a, b in pairs if a not in mine]
     pids = {a for a, _ in pairs}
     return [a for a, b in pairs if b not in pids]
 

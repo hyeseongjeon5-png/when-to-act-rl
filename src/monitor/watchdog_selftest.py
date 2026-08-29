@@ -116,9 +116,33 @@ def test_pid_alive() -> None:
 
 
 def test_process_roots() -> None:
-    """탐지가 '기능하는지'를 먼저 본다 — 0을 반환하는 것과 없는 것을 구분해야 한다(사고 3)."""
-    n_self = W.process_roots("watchdog_selftest")
-    record("⑦ 지금 돌고 있는 자기 자신을 찾는가", len(n_self) >= 1, f"찾은 뿌리 {n_self}")
+    """탐지가 '기능하는지'를 본다 — 0을 반환하는 것과 없는 것을 구분해야 한다(사고 3).
+
+    자기 자신으로는 시험할 수 없다. process_roots는 **재는 쪽을 일부러 제외**하기 때문이다
+    (2026-08-29: 재는 명령의 명령줄에 패턴이 들어 있어 스스로를 세는 바람에
+    '대기열 2개'로 보였다). 그래서 표식이 든 자식 프로세스를 잠깐 띄워 확인한다.
+    """
+    import subprocess
+    import sys
+    import time as _t
+
+    mark = "wd_selftest_marker_zq7"
+    child = subprocess.Popen([sys.executable, "-c",
+                              f"import time; _ = '{mark}'; time.sleep(6)"])
+    try:
+        found = []
+        for _ in range(12):                 # 프로세스 목록에 뜰 때까지 잠깐 기다린다
+            found = W.process_roots(mark)
+            if found:
+                break
+            _t.sleep(0.5)
+        record("⑦ 돌고 있는 다른 프로세스를 찾는가", len(found) >= 1, f"찾은 뿌리 {found}")
+    finally:
+        child.terminate()
+        child.wait(timeout=10)
+
+    record("⑦ 재는 쪽(자기 자신)은 세지 않는가",
+           W.process_roots("watchdog_selftest") == [], "자기 제외가 동작한다")
     n_none = W.process_roots("존재하지않는패턴_zzzq")
     record("⑦ 없는 패턴에는 0을 반환하는가", n_none == [], str(n_none))
 
