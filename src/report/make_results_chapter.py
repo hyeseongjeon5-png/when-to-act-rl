@@ -210,6 +210,56 @@ def star_facts(env_id: str) -> list[str]:
     return out
 
 
+def only_one_wins(agg, env_id: str) -> str:
+    """한 계열만 최강 규칙을 이기는 λ가 있으면 그 사실을 문장으로 만든다.
+
+    왜 뽑나: 여러 계열이 함께 이기거나 함께 지는 구간은 '환경이 쉬웠나/어려웠나'를 말해 줄 뿐이다.
+    **한 계열만 이기는 λ**가 그 계열의 구조가 실제로 무엇을 해내는지 가장 분명히 보여 준다.
+    신뢰구간이 겹치지 않는 승리만 센다 — 겹치면 우열을 말하지 않는 것이 이 논문의 원칙이다.
+    """
+    if "rule_best" not in set(agg.agent):
+        return ""
+    rows = []
+    for lam in sorted(agg.lam.unique()):
+        rb = agg[(agg.agent == "rule_best") & (agg.lam == lam)]
+        if rb.empty:
+            continue
+        rv = float(rb.iloc[0].cost_return_iqm)
+        winners = []
+        for a in ("dqn", "temporl", "lazy"):
+            g = agg[(agg.agent == a) & (agg.lam == lam)]
+            if g.empty:
+                continue
+            if float(g.iloc[0].cost_return_ci_lo) > rv:
+                winners.append((a, float(g.iloc[0].cost_return_iqm)))
+        if len(winners) == 1:
+            rows.append((lam, winners[0][0], winners[0][1], rv))
+    if not rows:
+        return ""
+    # 가장 비용이 큰 지점 하나를 대표로 든다 (거기가 구조의 차이가 가장 벌어진 곳이다)
+    lam, a, av, rv = rows[-1]
+    others = []
+    for o in ("dqn", "temporl", "lazy"):
+        if o == a:
+            continue
+        g = agg[(agg.agent == o) & (agg.lam == lam)]
+        if not g.empty:
+            others.append(name(o) + " " + num(g.iloc[0].cost_return_iqm, 0))
+    txt = ("λ=" + format(lam, "g") + "에서는 **" + name(a) + "만** 최강 규칙을 이긴다("
+           + num(av, 0) + " 대 " + num(rv, 0) + ", 신뢰구간 분리)")
+    if others:
+        txt += ". 같은 λ에서 " + " · ".join(others) + "는 규칙에 미치지 못한다"
+    if len(rows) > 1:
+        lams = ", ".join(format(l, "g") for l, _, _, _ in rows)
+        winners = {w for _, w, _, _ in rows}
+        if len(winners) == 1:
+            txt += (". 한 계열만 이기는 λ는 " + lams + " 로 " + str(len(rows)) + "개인데 "
+                    "**모두 " + name(a) + "이다** — 어느 한 지점에서 우연히 앞선 것이 아니다")
+        else:
+            txt += (". 한 계열만 이기는 λ는 " + lams + " 로 " + str(len(rows)) + "개다")
+    return txt + "."
+
+
 def action_saving_fact(agg: pd.DataFrame, env_id: str) -> str:
     """비용이 오를 때 행동을 실제로 아끼는가 — 가장 작은 λ와 가장 큰 λ의 행동 횟수를 비교."""
     learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
@@ -303,6 +353,9 @@ def env_section(env_id: str, sec: str, compact: bool = False) -> str:
     if facts:
         parts += ["표에서 읽히는 사실은 다음과 같다.", ""]
         parts += ["- " + f for f in facts]
+        one = only_one_wins(agg, env_id)
+        if one:
+            parts.append("- " + one)
         parts.append("")
     save = action_saving_fact(agg, env_id)
     if save:

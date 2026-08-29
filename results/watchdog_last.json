@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 14:57:39",
- "ts": 1787983059.5513618,
+ "time": "2026-08-29 15:57:45",
+ "ts": 1787986665.0523524,
  "runs": [
   {
    "run": "causal_warmup_mc",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 171.2,
+   "stale_min": 231.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 90
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 726.6,
+   "stale_min": 786.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 725.5,
+   "stale_min": 785.6,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,23 +49,36 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 676.1,
+   "stale_min": 736.1,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
   },
   {
    "run": "main_lunarlander",
-   "done": 338,
+   "done": 360,
    "total": 360,
+   "running": 0,
+   "skipped": 0,
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 18.0,
+   "advanced_since_last": true,
+   "eta_text": "측정 중",
+   "prev_done": 338
+  },
+  {
+   "run": "main_minatar_freeway",
+   "done": 0,
+   "total": 180,
    "running": 10,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.3,
-   "advanced_since_last": true,
-   "eta_text": "약 0.5시간 남음",
-   "prev_done": 300
+   "stale_min": 0.2,
+   "advanced_since_last": null,
+   "eta_text": "측정 중",
+   "prev_done": null
   },
   {
    "run": "main_mountaincar",
@@ -75,7 +88,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 388.7,
+   "stale_min": 448.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -84,20 +97,20 @@
  "issues": [],
  "level": "정상",
  "queue": {
-  "current": "5_LL정밀_학습",
-  "done": 6,
-  "pending": 13,
-  "next": "5_LL정밀_학습",
+  "current": "4_MinAtar_학습",
+  "done": 8,
+  "pending": 11,
+  "next": "4_MinAtar_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 170.7
+  "stale_min": 17.8
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 64,
-  "fresh": 24,
+  "scanned": 53,
+  "fresh": 12,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -107,8 +120,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 16
+  "n_expected_floor": 15
  },
- "disk_free_gb": 343.5,
- "done_conditions_total": 3084
+ "disk_free_gb": 326.4,
+ "done_conditions_total": 3106
 }
