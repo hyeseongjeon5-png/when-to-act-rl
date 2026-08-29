@@ -101,40 +101,40 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 14.533333333333333,
+          "n_seeds": 2,
+          "learner_iqm": 13.655555555555555,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 1,
-          "learner_iqm": 12.266888888888795,
+          "n_seeds": 2,
+          "learner_iqm": 12.559999999999924,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 1,
-          "learner_iqm": 11.917333333333366,
+          "n_seeds": 2,
+          "learner_iqm": 10.841555555555583,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.02,
-          "n_seeds": 1,
-          "learner_iqm": 10.077777777777847,
+          "n_seeds": 2,
+          "learner_iqm": 8.61311111111117,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.04,
-          "n_seeds": 1,
-          "learner_iqm": 3.0044444444444443,
+          "n_seeds": 2,
+          "learner_iqm": 1.8595555555555574,
           "rule_iqm": 4.984133333333333,
           "wins_ci": false,
           "wins_pt": false
@@ -176,16 +176,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 9.666666666666666,
+          "n_seeds": 2,
+          "learner_iqm": 8.911111111111111,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 1,
-          "learner_iqm": 2.3045555555555923,
+          "n_seeds": 2,
+          "learner_iqm": 3.3431666666667064,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
@@ -329,40 +329,40 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 14.533333333333333,
+          "n_seeds": 2,
+          "learner_iqm": 13.655555555555555,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 1,
-          "learner_iqm": 12.266888888888795,
+          "n_seeds": 2,
+          "learner_iqm": 12.559999999999924,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 1,
-          "learner_iqm": 11.917333333333366,
+          "n_seeds": 2,
+          "learner_iqm": 10.841555555555583,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.02,
-          "n_seeds": 1,
-          "learner_iqm": 10.077777777777847,
+          "n_seeds": 2,
+          "learner_iqm": 8.61311111111117,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.04,
-          "n_seeds": 1,
-          "learner_iqm": 3.0044444444444443,
+          "n_seeds": 2,
+          "learner_iqm": 1.8595555555555574,
           "rule_iqm": 6.568933333333333,
           "wins_ci": false,
           "wins_pt": false
@@ -404,16 +404,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 9.666666666666666,
+          "n_seeds": 2,
+          "learner_iqm": 8.911111111111111,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 1,
-          "learner_iqm": 2.3045555555555923,
+          "n_seeds": 2,
+          "learner_iqm": 3.3431666666667064,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
