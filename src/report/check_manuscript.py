@@ -434,6 +434,42 @@ def check_list_continuation() -> None:
         print(f"  [고칠 것] 이어짐 줄이 따로 문단이 됐다: {t[:60]}…")
 
 
+# 자동 생성되는 장은 환경마다 같은 문장을 쓰는 것이 정상이다(병렬 구조).
+HAND_WRITTEN = ("00_초록.md", "01_서론.md", "02_관련연구.md", "03_방법.md", "05_결론.md")
+
+
+def check_duplicate_sentences() -> None:
+    """사람이 쓴 장에 같은 문장이 두 번 들어가 있지 않은지 본다.
+
+    2026-08-29: Ⅲ장에 "두 가지 엄격도로 함께 보고한다."가 연달아 두 번 있었다.
+    문단을 고쳐 쓰다 남은 흔적인데, 읽으면 바로 걸리는데도 눈으로는 잘 안 보인다.
+    """
+    print(chr(10) + "같은 문장이 두 번 들어가 있지 않은가 (사람이 쓴 장)")
+    found = 0
+    for name in HAND_WRITTEN:
+        f = PAPER / name
+        if not f.exists():
+            continue
+        sents = []
+        for line in f.read_text(encoding="utf-8").split(chr(10)):
+            t = line.strip()
+            if not t or t.startswith(("|", "#", "<!--", ">", "-", "*")):
+                continue
+            for x in re.split(r"(?<=다[.])\s+", t):
+                x = x.strip()
+                if len(x) > 14:
+                    sents.append(x)
+        seen = {}
+        for x in sents:
+            seen[x] = seen.get(x, 0) + 1
+        for x, n in seen.items():
+            if n > 1:
+                print(f"  [고칠 것] {name}: {n}회 반복 — {x[:58]}…")
+                found += 1
+    if not found:
+        print("  [맞음] 사람이 쓴 장에 그대로 반복된 문장이 없다")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -487,6 +523,7 @@ def main() -> None:
                 print("  " + t)
     except Exception as e:
         print(f"  [확인 못 함] {e}")
+    check_duplicate_sentences()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
