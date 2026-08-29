@@ -24,19 +24,33 @@ from src.baselines.fixed_rules import (
     MountainCarPumpPolicy,
 )
 from src.envs.cost_wrapper import make_cost_env
-from src.eval.evaluate import evaluate, summarize
+import numpy as np
+
+from src.eval.evaluate import evaluate, iqm, summarize
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "aggregate" / "baseline_audit.json"
 
 TUNE_SEEDS = 80    # 시드 900000~ (평가에 쓰지 않는 구간)
-EVAL_SEEDS = 100   # 시드 500000~ (본실험 평가와 같은 구간)
+EVAL_SEEDS = 100   # 시드당 에피소드 수 (본실험 규칙 평가와 같다)
+EVAL_RUNS = 10     # 시드 10개 — 본실험과 같은 수
+
+# 왜 시드로 나누어 재나 (2026-08-29 수정):
+#   처음에는 평가 에피소드 100개를 한 덩어리로 놓고 그 IQM을 썼다. 그런데 논문이 선언한
+#   프로토콜(Agarwal et al. 2021)은 **시드마다 점수를 내고 그 시드 점수들의 IQM**을 쓰는 것이다.
+#   같은 규칙인데 추정 방식이 달라 값이 어긋났다 — 감사 표는 179.8, λ 지도 표는 162.3.
+#   둘 다 틀린 값은 아니지만 한 논문 안에서 같은 것을 두 잣대로 재면 안 된다.
+#   본실험과 같은 잣대로 통일한다.
+
+
+def eval_seeds(run: int) -> list[int]:
+    """본실험 규칙 평가와 **완전히 같은** 에피소드 시드를 만든다 (500000 + 시드×1000 + i)."""
+    return [500_000 + run * 1000 + i for i in range(EVAL_SEEDS)]
 
 
 def sweep(env_id: str, current: dict, candidates: list[dict], make) -> dict:
     env = make_cost_env(env_id, lam=0.0)
     tune = [900_000 + i for i in range(TUNE_SEEDS)]
-    ev = [500_000 + i for i in range(EVAL_SEEDS)]
     rows = []
     for params in candidates:
         st = summarize(evaluate(env, make(**params), tune))
@@ -45,9 +59,16 @@ def sweep(env_id: str, current: dict, candidates: list[dict], make) -> dict:
     # 튜닝셋에서 고른 하나와 현재 쓰는 것만 평가셋으로 잰다
     out = {}
     for tag, params in (("현재", current), ("튜닝셋 최고", best["params"])):
-        se = summarize(evaluate(env, make(**params), ev))
-        out[tag] = {"params": params, "eval_iqm": se["raw_return_iqm"],
-                    "actions": se["n_actions_mean"], "solved": se["solved_rate"]}
+        pol = make(**params)
+        per_seed = [summarize(evaluate(env, pol, eval_seeds(r))) for r in range(EVAL_RUNS)]
+        out[tag] = {
+            "params": params,
+            # 시드마다 평균을 내고, 그 시드 점수들의 IQM을 쓴다 (본실험과 같은 잣대)
+            "eval_iqm": iqm([x["raw_return_mean"] for x in per_seed]),
+            "actions": float(np.mean([x["n_actions_mean"] for x in per_seed])),
+            "solved": float(np.mean([x["solved_rate"] for x in per_seed])),
+            "n_seeds": EVAL_RUNS, "n_episodes_per_seed": EVAL_SEEDS,
+        }
     env.close()
     gap = out["튜닝셋 최고"]["eval_iqm"] - out["현재"]["eval_iqm"]
     out["차이"] = gap

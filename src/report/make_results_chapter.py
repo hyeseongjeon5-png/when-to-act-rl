@@ -506,9 +506,12 @@ def baseline_audit_section() -> str:
         "",
         "\"학습이 단순 규칙을 이긴다\"는 주장은 그 규칙을 얼마나 잘 만들었는지에 달려 있다. "
         "환경마다 기준 규칙의 계수를 격자로 훑어 더 나은 것이 있는지 확인했다. "
-        "튜닝은 평가에 쓰지 않는 에피소드에서 하고, 거기서 고른 하나만 평가용 에피소드로 다시 쟀다(Ⅲ장 6.2절).",
+        "튜닝은 평가에 쓰지 않는 에피소드에서 하고, 거기서 고른 하나만 평가용 에피소드로 다시 쟀다(Ⅲ장 6.2절). "
+        "재는 잣대는 본실험과 같다 — 시드마다 점수를 내고 그 시드 점수들의 IQM을 쓴다.",
         "",
-        "<!--TABCAP: 기준 규칙의 계수를 다시 골랐을 때 (평가 100 에피소드) | Re-selecting the coefficients of each baseline rule (100 evaluation episodes) -->",
+        "<!--TABCAP: 기준 규칙의 계수를 다시 골랐을 때 (시드 10개 × 100 에피소드, 본실험과 같은 잣대)"
+        " | Re-selecting the coefficients of each baseline rule "
+        "(10 seeds x 100 episodes, the same estimator as the main experiment) -->",
         "| 환경 | 규칙 | 현재 계수 r IQM | 다시 고른 계수 r IQM | 차이 | 판정 |",
         "|---|---|---|---|---|---|",
     ] + rows + [

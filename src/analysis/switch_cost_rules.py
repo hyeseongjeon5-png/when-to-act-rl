@@ -24,8 +24,10 @@ from src.baselines.fixed_rules import (
     MountainCarPumpPolicy,
     NoOpPolicy,
 )
+import numpy as np
+
 from src.envs.cost_wrapper import make_cost_env
-from src.eval.evaluate import evaluate, summarize
+from src.eval.evaluate import evaluate, iqm, summarize
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "aggregate" / "switch_cost_rules.json"
@@ -38,13 +40,22 @@ SETUPS = [
 ]
 
 
+# 본실험과 같은 잣대로 잰다: 시드마다 점수를 내고 **시드 점수들의 IQM**을 쓴다.
+# 에피소드를 한 덩어리로 놓고 IQM을 내면 논문이 선언한 프로토콜과 달라진다
+# (2026-08-29 — 기준선 감사에서 같은 불일치를 발견해 함께 고쳤다).
+N_EVAL_RUNS = 10
+
+
 def measure(env_id: str, make_pol, mode: str) -> dict:
     env = make_cost_env(env_id, lam=0.0, cost_mode=mode)
-    seeds = [500_000 + i for i in range(N_EPISODES)]
-    s = summarize(evaluate(env, make_pol(), seeds))
+    pol = make_pol()
+    per_seed = [summarize(evaluate(env, pol, [500_000 + r * 1000 + i for i in range(N_EPISODES)]))
+                for r in range(N_EVAL_RUNS)]
     env.close()
-    return {"raw_return_iqm": s["raw_return_iqm"], "charged_mean": s["n_actions_mean"],
-            "steps_mean": s["steps_mean"]}
+    return {"raw_return_iqm": iqm([x["raw_return_mean"] for x in per_seed]),
+            "charged_mean": float(np.mean([x["n_actions_mean"] for x in per_seed])),
+            "steps_mean": float(np.mean([x["steps_mean"] for x in per_seed])),
+            "n_seeds": N_EVAL_RUNS, "n_episodes_per_seed": N_EPISODES}
 
 
 def main() -> None:
