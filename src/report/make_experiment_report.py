@@ -391,11 +391,8 @@ def main() -> None:
         shown = str(out)
     print("보고서 저장: " + shown)
     if a.open:
-        try:
-            subprocess.run(["cmd", "/c", "start", "msedge", str(out.resolve())], check=False)
-            print("Microsoft Edge로 열었다")
-        except Exception as e:
-            print("Edge 열기 실패(" + str(e) + ") — 파일을 직접 열 것: " + str(out.resolve()))
+        from src.report.open_edge import open_in_edge
+        open_in_edge(out)
 
 
 if __name__ == "__main__":

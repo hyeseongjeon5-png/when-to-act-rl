@@ -149,8 +149,8 @@ def main() -> None:
     a = ap.parse_args()
     p = build()
     if a.open:
-        subprocess.run(["cmd", "/c", "start", "msedge", str(p)], check=False)
-        print("  Edge로 열었다")
+        from src.report.open_edge import open_in_edge
+        open_in_edge(p)
 
 
 if __name__ == "__main__":
