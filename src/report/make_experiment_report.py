@@ -54,7 +54,7 @@ def fmt(v, nd=1) -> str:
 def env_section(env_id: str) -> str:
     iqm_p = AGG / (env_id + "_iqm.csv")
     if not iqm_p.exists():
-        return "<section><h2>" + esc(env_id) + '</h2><p class="missing">집계 결과가 아직 없다.</p></section>'
+        return '<section id="env-' + esc(env_id) + '"><h2>' + esc(env_id) + '</h2><p class="missing">집계 결과가 아직 없다.</p></section>'
     agg = pd.read_csv(iqm_p)
     ref = REF_RULE.get(env_id, "rule_pump")
     learners = [a for a in sorted(agg.agent.unique()) if not str(a).startswith("rule_")]
@@ -119,7 +119,7 @@ def env_section(env_id: str) -> str:
 
     figs = "".join(img(FIG / (env_id + "_" + n + ".png")) for n in
                    ["lambda_map_cost_return", "action_map", "learning_curves"])
-    return ("<section><h2>" + esc(env_id) + "</h2>"
+    return ('<section id="env-' + esc(env_id) + '"><h2>' + esc(env_id) + "</h2>"
             + "<h3>λ-성능 지도</h3>" + figs
             + "<h3>조건별 성능표</h3>" + table
             + "<h3>임계 비용 λ*</h3>" + star_html + "</section>")
@@ -162,7 +162,7 @@ def fairness_section() -> str:
                  + "<td>" + esc(v) + "</td></tr>")
     if not any_row:
         return ""
-    return ("<section><h2>공정성 점검 — 비용이 없을 때(λ=0) 학습은 규칙 수준에 닿는가</h2>"
+    return ('<section id="fair"><h2>공정성 점검 — 비용이 없을 때(λ=0) 학습은 규칙 수준에 닿는가</h2>'
             + "<p>MountainCar에서 임계 비용 λ*가 0으로 나왔다는 것은 '비용이 없어도 학습이 규칙에 진다'는 뜻이다. "
             + "그렇다면 이 결과는 비용에 대한 발견이 아니라 <b>학습이 덜 됐다는 신호</b>일 수 있다. "
             + "그래서 학습 예산과 탐험 설정을 바꿔 가며 λ=0 성능을 다시 쟀다. "
@@ -192,7 +192,7 @@ def audit_section() -> str:
                  + '<td class="num">' + fmt(r["차이"]) + "</td><td>" + esc(r["판정"]) + "</td></tr>")
     if not rows:
         return ""
-    return ("<section><h2>기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가</h2>"
+    return ('<section id="audit"><h2>기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가</h2>'
             + "<p>“학습이 단순 규칙을 이긴다”는 주장은 그 규칙을 얼마나 잘 만들었는지에 달려 있다. "
             + "대충 만든 규칙을 이기는 것은 쉽다. 환경마다 기준 규칙의 계수를 격자로 훑어 더 나은 것이 "
             + "있는지 확인했다. <b>튜닝은 평가에 쓰지 않는 에피소드에서 하고, 거기서 고른 하나만 "
@@ -231,7 +231,7 @@ def causal_section_html() -> str:
                      + '<td class="num">' + (fmt(sv["iqm"] * 100, 0) + "%" if sv else "—") + "</td>"
                      + ("<td rowspan='2'>" + esc(r["verdict"]) + "</td>" if key == "from_start" else "")
                      + "</tr>")
-    return ("<section><h2>인과 실험 — 무행동 붕괴는 최적해인가, 탐험 실패인가</h2>"
+    return ('<section id="causal"><h2>인과 실험 — 무행동 붕괴는 최적해인가, 탐험 실패인가</h2>'
             + "<p>같은 예산·같은 시드 안에서 <b>비용을 켜는 시점만</b> 바꿨다. 앞 절반은 비용 없이 "
             + "학습하고 나머지 절반에서 비용을 켠다. <b>평가는 양쪽 모두 진짜 λ로 한다</b> — "
             + "성적표는 언제나 비용이 있는 세상에서 매긴다.</p>"
@@ -263,7 +263,7 @@ def status_section() -> str:
         log = "<pre class='log'>" + esc("\n".join(lines)) + "</pre>"
     if not rows:
         rows = '<tr><td colspan="5" class="missing">실행 기록 없음</td></tr>'
-    return ("<section><h2>실험 진행 상태</h2>"
+    return ('<section id="status"><h2>실험 진행 상태</h2>'
             + '<table class="grid"><thead><tr><th>실험</th><th>완료 조건</th><th>건너뜀</th>'
             + "<th>남은 시간</th><th>상태</th></tr></thead><tbody>" + rows + "</tbody></table>"
             + "<h3>자가 감시 기록 (최근 12줄)</h3>"
@@ -295,6 +295,14 @@ pre.log{background:#1e2228;color:#dfe3e8;padding:12px;border-radius:8px;overflow
 .key{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
 .key div{background:#f0f2f5;border-radius:8px;padding:10px 14px;font-size:.86rem}
 .key b{display:block;font-size:1.25rem}
+/* 목차 — 제목이 서른 개 넘는 문서라 없으면 스크롤로 찾아야 한다 */
+.toc{background:#fff;border:1px solid #e3e6ea;border-radius:12px;padding:16px 22px;margin:14px 0 22px}
+.toc b{font-size:.9rem;color:#5b636d}
+.toc ul{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px 18px}
+.toc a{color:#1a56b8;text-decoration:none;font-size:.9rem}
+.toc a:hover{text-decoration:underline}
+/* 보조 실험 방 안내는 절 카드가 아니라 구분선처럼 보이게 */
+h2#rooms{margin-top:34px;font-size:1.15rem;color:#5b636d;border-bottom:2px dashed #ccd2d9}
 """
 
 INTRO = """<section><h2>이 보고서를 읽는 법</h2>
@@ -314,15 +322,45 @@ SOURCE = """<section><h2>출처</h2>
 설계 결정과 도중에 고친 버그는 <code>docs/실험일지.md</code>에 날짜와 함께 기록돼 있다.</p></section>"""
 
 
+ROOM_INTRO = (
+    '<h2 id="rooms">보조 실험 방 — 한 가지만 바꿔 본 대조 조건</h2>'
+    "<p>아래는 주 실험과 <b>딱 한 가지만</b> 다르게 두고 돌린 방들이다. 결론을 말하기 위한 것이 아니라, "
+    "결론에 대한 반론을 확인하기 위한 것이다. 시드 수가 주 실험보다 적을 수 있으므로 "
+    "<b>우열 판정은 주 실험 표에서만</b> 한다.</p>"
+    "<ul>"
+    "<li><b>@budget1M_epsconst / epsdecay / wide</b> — λ=0에서 예산·탐험·신경망을 바꿨다 (공정성 점검)</li>"
+    "<li><b>@warmup50</b> — 예산의 앞 절반만 비용 없이 학습시켰다 (인과 실험)</li>"
+    "</ul>")
+
+
+def toc(mains: list[str], rooms: list[str]) -> str:
+    """제목이 서른 개 넘는 문서에 목차가 없으면 읽는 사람이 스크롤로 찾아야 한다."""
+    items = ['<li><a href="#status">실험 진행 상태</a></li>',
+             '<li><a href="#fair">공정성 점검</a></li>',
+             '<li><a href="#audit">기준선 감사</a></li>',
+             '<li><a href="#causal">인과 실험</a></li>']
+    items += ['<li><a href="#env-' + e + '">' + e + '</a></li>' for e in mains]
+    if rooms:
+        items.append('<li><a href="#rooms">보조 실험 방 (' + str(len(rooms)) + '개)</a></li>')
+    return '<div class="toc"><b>목차</b><ul>' + "".join(items) + "</ul></div>"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--open", action="store_true", help="Microsoft Edge로 자동 열기")
     ap.add_argument("--out", default=None)
     a = ap.parse_args()
 
-    envs = sorted({p.name.replace("_iqm.csv", "") for p in AGG.glob("*_iqm.csv")}) if AGG.exists() else []
-    if not envs:
-        envs = [p.name for p in (ROOT / "results" / "raw").iterdir() if p.is_dir()]
+    found = sorted({p.name.replace("_iqm.csv", "") for p in AGG.glob("*_iqm.csv")}) if AGG.exists() else []
+    if not found:
+        found = [p.name for p in (ROOT / "results" / "raw").iterdir() if p.is_dir()]
+    # 알파벳 순으로 늘어놓으면 보조 실험 방(@budget1M 등)이 주 환경 사이에 끼어 읽기 나쁘다.
+    # 논문에서 다루는 순서(주 환경 3종)를 먼저, 보조 방을 뒤에 둔다.
+    MAIN = ["MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1"]
+    mains = [e for e in MAIN if e in found]
+    mains += [e for e in found if "@" not in e and e not in mains]
+    rooms = [e for e in found if "@" in e]
+    envs = mains + rooms
 
     n_done = sum(1 for _ in (ROOT / "results" / "raw").rglob("seed*_meta.json"))
     key = ('<div class="key"><div>완료 조건 수<b>' + str(n_done) + "</b></div>"
@@ -335,8 +373,11 @@ def main() -> None:
             + "<h1>λ-성능 지도와 임계 비용 λ*</h1>"
             + '<p class="sub">행동 1번에 비용 λ를 물렸을 때, 학습이 단순 고정 규칙을 언제까지 이기는가 — '
             + "동아대학교 졸업과제 · 전혜성</p>"
-            + key + INTRO + status_section() + fairness_section() + audit_section() + causal_section_html()
-            + "".join(env_section(e) for e in envs)
+            + key + toc(mains, rooms) + INTRO + status_section() + fairness_section()
+            + audit_section() + causal_section_html()
+            + "".join(env_section(e) for e in mains)
+            + (ROOM_INTRO if rooms else "")
+            + "".join(env_section(e) for e in rooms)
             + SOURCE + "</div></body></html>")
 
     REP.mkdir(parents=True, exist_ok=True)
