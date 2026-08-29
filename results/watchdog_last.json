@@ -1,19 +1,19 @@
 {
- "time": "2026-08-29 09:57:10",
- "ts": 1787965030.9058084,
+ "time": "2026-08-29 11:57:18",
+ "ts": 1787972238.7067828,
  "runs": [
   {
    "run": "causal_warmup_mc",
-   "done": 37,
+   "done": 88,
    "total": 90,
-   "running": 10,
+   "running": 2,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.1,
+   "stale_min": 0.2,
    "advanced_since_last": true,
-   "eta_text": "약 1.9시간 남음",
-   "prev_done": 7
+   "eta_text": "약 0.1시간 남음",
+   "prev_done": 59
   },
   {
    "run": "fair_pilot_mc_A",
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 426.1,
+   "stale_min": 546.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 425.1,
+   "stale_min": 545.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 375.6,
+   "stale_min": 495.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -62,7 +62,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5677.7,
+   "stale_min": 5797.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 240
@@ -75,7 +75,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 88.2,
+   "stale_min": 208.4,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -90,14 +90,14 @@
   "next": "3_인과_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 87.8
+  "stale_min": 207.9
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 54,
-  "fresh": 17,
+  "scanned": 40,
+  "fresh": 8,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -107,8 +107,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 7
+  "n_expected_floor": 17
  },
- "disk_free_gb": 345.1,
- "done_conditions_total": 2933
+ "disk_free_gb": 345.0,
+ "done_conditions_total": 2984
 }

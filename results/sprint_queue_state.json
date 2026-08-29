@@ -3,14 +3,16 @@
   "1_공정성파일럿",
   "2_붕괴문턱_규칙",
   "2_붕괴문턱_학습",
-  "3_인과_규칙"
+  "3_인과_규칙",
+  "3_인과_학습",
+  "5_LL정밀_규칙"
  ],
  "current": {
-  "label": "3_인과_학습",
+  "label": "5_LL정밀_학습",
   "kind": "train",
-  "spec": "experiments/configs/causal_warmup_mc.yaml:10",
-  "started_at": 1787959765.427481,
-  "started_text": "2026-08-29 08:29:25"
+  "spec": "experiments/configs/main_lunarlander.yaml:10",
+  "started_at": 1787972815.431251,
+  "started_text": "2026-08-29 12:06:55"
  },
  "history": [
   {
@@ -36,8 +38,20 @@
    "hours": 0.01,
    "exit": 0,
    "finished_text": "2026-08-29 08:29:25"
+  },
+  {
+   "label": "3_인과_학습",
+   "hours": 3.62,
+   "exit": 0,
+   "finished_text": "2026-08-29 12:06:30"
+  },
+  {
+   "label": "5_LL정밀_규칙",
+   "hours": 0.01,
+   "exit": 0,
+   "finished_text": "2026-08-29 12:06:55"
   }
  ],
- "updated_at": 1787959765.427481,
- "updated_text": "2026-08-29 08:29:25"
+ "updated_at": 1787972815.431251,
+ "updated_text": "2026-08-29 12:06:55"
 }
