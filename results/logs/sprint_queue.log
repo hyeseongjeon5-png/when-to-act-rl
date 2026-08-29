@@ -3,13 +3,27 @@
 [2026-08-29 01:01:16]   ▶ experiments/configs/fair_pilot_mc_A.yaml (워커 4)
 [2026-08-29 01:01:16]   ▶ experiments/configs/fair_pilot_mc_B.yaml (워커 3)
 [2026-08-29 01:01:16]   ▶ experiments/configs/fair_pilot_mc_C.yaml (워커 3)
-[2026-08-29 02:40:03] 대기열 감시 시작
-[2026-08-29 02:40:03] === 작업 시작: 1_공정성파일럿 (train) ===
-[2026-08-29 02:40:03]   ▶ experiments/configs/fair_pilot_mc_A.yaml (워커 4)
-[2026-08-29 02:40:03]   ▶ experiments/configs/fair_pilot_mc_B.yaml (워커 3)
-[2026-08-29 02:40:03]   ▶ experiments/configs/fair_pilot_mc_C.yaml (워커 3)
-[2026-08-29 02:47:59] === 작업 완료: 1_공정성파일럿 | 0.13시간 | 종료코드 1 ===
-[2026-08-29 02:47:59] === 작업 시작: 2_붕괴문턱_규칙 (rules) ===
-r_pilot_mc_A.yaml (워커 4)
-[2026-08-29 02:45:24]   ▶ experiments/configs/fair_pilot_mc_B.yaml (워커 3)
-[2026-08-29 02:45:24]   ▶ experiments/configs/fair_pilot_mc_C.yaml (워커 3)
+[2026-08-29 02:52:07] === 작업 완료: 1_공정성파일럿 | 1.85시간 | 종료코드 1 ===
+[2026-08-29 02:52:07] === 작업 시작: 2_붕괴문턱_규칙 (rules) ===
+[2026-08-29 02:52:07]   ▶ 고정 규칙 experiments/configs/main_mountaincar.yaml
+[2026-08-29 02:52:41] === 작업 완료: 2_붕괴문턱_규칙 | 0.01시간 | 종료코드 0 ===
+[2026-08-29 02:52:41] === 작업 시작: 2_붕괴문턱_학습 (train) ===
+[2026-08-29 02:52:41]   ▶ experiments/configs/main_mountaincar.yaml (워커 10)
+[2026-08-29 08:28:57] === 작업 완료: 2_붕괴문턱_학습 | 5.60시간 | 종료코드 0 ===
+[2026-08-29 08:28:57] === 작업 시작: 3_인과_규칙 (rules) ===
+[2026-08-29 08:28:57]   ▶ 고정 규칙 experiments/configs/causal_warmup_mc.yaml
+[2026-08-29 08:29:25] === 작업 완료: 3_인과_규칙 | 0.01시간 | 종료코드 0 ===
+[2026-08-29 08:29:25] === 작업 시작: 3_인과_학습 (train) ===
+[2026-08-29 08:29:25]   ▶ experiments/configs/causal_warmup_mc.yaml (워커 10)
+[2026-08-29 12:06:30] === 작업 완료: 3_인과_학습 | 3.62시간 | 종료코드 0 ===
+[2026-08-29 12:06:30] === 작업 시작: 5_LL정밀_규칙 (rules) ===
+[2026-08-29 12:06:30]   ▶ 고정 규칙 experiments/configs/main_lunarlander.yaml
+[2026-08-29 12:06:55] === 작업 완료: 5_LL정밀_규칙 | 0.01시간 | 종료코드 0 ===
+[2026-08-29 12:06:55] === 작업 시작: 5_LL정밀_학습 (train) ===
+[2026-08-29 12:06:55]   ▶ experiments/configs/main_lunarlander.yaml (워커 10)
+[2026-08-29 15:39:47] === 작업 완료: 5_LL정밀_학습 | 3.55시간 | 종료코드 0 ===
+[2026-08-29 15:39:47] === 작업 시작: 4_MinAtar_규칙 (rules) ===
+[2026-08-29 15:39:47]   ▶ 고정 규칙 experiments/configs/main_minatar_freeway.yaml
+[2026-08-29 15:39:57] === 작업 완료: 4_MinAtar_규칙 | 0.00시간 | 종료코드 0 ===
+[2026-08-29 15:39:57] === 작업 시작: 4_MinAtar_학습 (train) ===
+[2026-08-29 15:39:57]   ▶ experiments/configs/main_minatar_freeway.yaml (워커 10)

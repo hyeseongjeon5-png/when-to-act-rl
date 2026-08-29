@@ -78,6 +78,24 @@ class TempoRLAgent(DQNAgent):
 
     # ---------- 상호작용: 한 번 결정하고 j스텝 실행 ----------
     def interact(self, env, obs, t: int, global_step: int):
+        """한 번의 결정으로 환경을 여러 스텝 진행시킨다 (TempoRL의 핵심).
+
+        표준 DQN이 "무엇을 할지"만 고르는 데 비해, 여기서는 두 가지를 함께 고른다.
+
+          1. **행동 a** — 행동망 Q(s, a)에서 (ε-greedy)
+          2. **지속 길이 j** — 지속망 Q_skip(s, a, j)에서 (ε-greedy), 1 ≤ j ≤ max_skip
+
+        고른 a를 j스텝 동안 그대로 내보낸다. 중간에 에피소드가 끝나면 거기서 멈춘다.
+
+        학습은 두 갈래로 넣는다.
+          · 행동망에는 **매 스텝 전이**를 그대로 넣는다 (표준 DQN과 같은 자료)
+          · 지속망에는 (s0, a, j) → j스텝 누적 보상 + γ^j·max Q(s_j) 를 넣는다.
+            `skip_augment`가 켜져 있으면 **j보다 짧은 길이의 표본도 함께** 만들어 넣는다
+            (원 논문의 skip experience augmentation — 한 번의 경험을 여러 길이로 재활용한다)
+
+        반환은 (소비한 환경 스텝 수, 에피소드 종료 여부)다. 이 연구는 예산을 **환경 스텝**으로
+        세므로, 한 결정이 여러 스텝을 먹는다는 사실이 여기서 정확히 반영돼야 공정 비교가 된다.
+        """
         eps = self.eps(global_step)
         if self.rng.random() < eps:
             action = int(self.rng.integers(self.n_actions))
