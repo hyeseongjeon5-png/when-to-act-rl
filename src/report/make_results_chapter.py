@@ -406,6 +406,54 @@ def causal_section(sec: str) -> str:
     return "\n".join(lines)
 
 
+def lam_star_lead() -> str:
+    """표 1 앞에 붙일 요약 문장. 결론을 표보다 먼저 말한다.
+
+    이 저장소의 글쓰기 규칙은 "결론을 맨 위에 쓴다"이다. 논문에서 가장 중요한 절이
+    아무 문장 없이 표부터 시작하고 있었다 — 심사자는 표를 스스로 해석해야 했다.
+    문장 안의 숫자는 전부 results/aggregate/*_lambda_star.json 에서 읽는다.
+    """
+    rows = []
+    for env in ENV_ORDER:
+        p = AGG / (env + "_lambda_star.json")
+        if not p.exists():
+            continue
+        st = json.loads(p.read_text(encoding="utf-8"))
+        by = {r["learner"]: r.get("lam_star_pt")
+              for r in st.get("results_vs_best_rule", st.get("results", []))}
+        if not by:
+            continue
+        rows.append((env, by))
+    if not rows:
+        return ""
+
+    zero_envs = [e for e, by in rows if all(v == 0.0 for v in by.values() if v is not None)]
+    win_envs = [e for e, by in rows if any((v or 0) > 0 for v in by.values())]
+    out = ["**결론부터 적는다. 임계 비용 λ\*는 하나의 숫자로 정해지지 않는다 — 환경에 따라 갈린다.**", ""]
+    if zero_envs:
+        out.append("")
+        out.append("**" + ", ".join(zero_envs) + "**에서는 세 학습 계열 모두 λ\*가 0이다. "
+                   "비용을 전혀 물리지 않아도 학습이 고정 규칙을 넘어서지 못한다는 뜻이며, "
+                   "이 환경에서는 '언제 행동할지를 배우는 것'이 아니라 '학습이라는 접근 자체'가 열세다.")
+    if win_envs:
+        parts = []
+        for e, by in rows:
+            if e not in win_envs:
+                continue
+            for ag in ("dqn", "temporl", "lazy"):
+                v = by.get(ag)
+                if v is not None:
+                    parts.append(f"{name(ag)} λ\*={format(float(v), 'g')}")
+            out.append("")
+            out.append("**" + e + "**에서는 계열마다 다르다 — " + ", ".join(parts) + ". "
+                       "같은 환경·같은 예산인데도 방법에 따라 버티는 비용 구간이 다르다는 것은, "
+                       "λ\*가 환경만의 성질이 아니라 **환경과 방법의 짝**에 붙는 값이라는 뜻이다.")
+            parts = []
+    out += ["", "아래 표가 그 값들이다. 두 가지 엄격도로 함께 적었다 — "
+                "신뢰구간이 겹치기 시작하는 λ(엄격)와 IQM이 교차하는 λ(느슨)다."]
+    return chr(10).join(out)
+
+
 HEADER_TMPL = """# Ⅳ. Experimental Results
 
 ## 1. 읽는 법
@@ -419,13 +467,21 @@ HEADER_TMPL = """# Ⅳ. Experimental Results
 
 ## 2. 핵심 결과 — 임계 비용 λ*
 
+<!--LEAD:tab1-->
+
 <!--TABLE:tab1-->
 
 ## 3. 실험 설정
 
+아래 표의 조건은 세 환경에 공통으로 적용된다. **λ를 뺀 모든 것을 같게 맞추는 것**이
+이 연구의 설계 전체이므로, 예산·시드·평가 방식·초매개변수를 한자리에 모아 둔다.
+
 <!--TABLE:tab2-->
 
 ## 4. 환경별 λ-성능 지도
+
+환경마다 λ\*가 왜 그렇게 갈렸는지를 하나씩 본다. 순서는 **가장 극단적인 환경부터**다 —
+MountainCar에서 무엇이 무너지는지를 먼저 보면, LunarLander가 왜 다른지가 대비로 드러난다.
 """
 
 def baseline_audit_section() -> str:
@@ -524,7 +580,8 @@ def main() -> None:
            "설계 결정과 도중에 고친 버그는 docs/실험일지.md 참조. -->\n")
     out = Path(a.out) if a.out else OUT
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(HEADER_TMPL + "\n" + body + "\n" + FAIRNESS_TMPL
+    head = HEADER_TMPL.replace("<!--LEAD:tab1-->", lam_star_lead())
+    out.write_text(head + "\n" + body + "\n" + FAIRNESS_TMPL
                    + "\n" + baseline_audit_section() + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
 

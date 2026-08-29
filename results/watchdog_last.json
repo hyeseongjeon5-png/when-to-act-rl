@@ -1,19 +1,19 @@
 {
- "time": "2026-08-29 11:57:18",
- "ts": 1787972238.7067828,
+ "time": "2026-08-29 12:57:29",
+ "ts": 1787975849.6747718,
  "runs": [
   {
    "run": "causal_warmup_mc",
-   "done": 88,
+   "done": 90,
    "total": 90,
-   "running": 2,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.2,
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 51.0,
    "advanced_since_last": true,
-   "eta_text": "약 0.1시간 남음",
-   "prev_done": 59
+   "eta_text": "측정 중",
+   "prev_done": 88
   },
   {
    "run": "fair_pilot_mc_A",
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 546.3,
+   "stale_min": 606.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 545.2,
+   "stale_min": 605.4,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,22 +49,22 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 495.7,
+   "stale_min": 555.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
   },
   {
    "run": "main_lunarlander",
-   "done": 240,
-   "total": 240,
-   "running": 0,
+   "done": 266,
+   "total": 360,
+   "running": 10,
    "skipped": 0,
-   "pid_alive": false,
-   "finished": true,
-   "stale_min": 5797.8,
-   "advanced_since_last": false,
-   "eta_text": "측정 중",
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.3,
+   "advanced_since_last": true,
+   "eta_text": "약 2.2시간 남음",
    "prev_done": 240
   },
   {
@@ -75,7 +75,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 208.4,
+   "stale_min": 268.6,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -84,20 +84,20 @@
  "issues": [],
  "level": "정상",
  "queue": {
-  "current": "3_인과_학습",
-  "done": 4,
-  "pending": 15,
-  "next": "3_인과_학습",
+  "current": "5_LL정밀_학습",
+  "done": 6,
+  "pending": 13,
+  "next": "5_LL정밀_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 207.9
+  "stale_min": 50.6
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 40,
-  "fresh": 8,
+  "scanned": 51,
+  "fresh": 20,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -109,6 +109,6 @@
   "n_floor": 0,
   "n_expected_floor": 17
  },
- "disk_free_gb": 345.0,
- "done_conditions_total": 2984
+ "disk_free_gb": 343.7,
+ "done_conditions_total": 3012
 }

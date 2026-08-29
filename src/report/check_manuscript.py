@@ -119,6 +119,37 @@ def numbering_rules() -> list[str]:
     return out
 
 
+def check_dangling_headings() -> None:
+    """제목 바로 뒤에 또 제목이 오는 곳을 찾는다.
+
+    그런 절은 "무엇을 말하는 절인지" 한 문장도 없이 시작한다. 실제로 이 원고의
+    Ⅳ장 2절(가장 중요한 절)이 아무 문장 없이 표부터 시작하고 있었다 —
+    심사자가 표를 스스로 해석해야 했다. 이 저장소의 글쓰기 규칙은 "결론을 맨 위에 쓴다"이다.
+    """
+    print(chr(10) + "절이 문장 없이 시작하지 않는가")
+    bad = []
+    for f in sorted(PAPER.glob("*.md")):
+        if f.name.startswith("00_양식"):
+            continue
+        lines = f.read_text(encoding="utf-8").split(chr(10))
+        for i, l in enumerate(lines):
+            if not re.match(r"^#{2,3} ", l):
+                continue
+            for j in range(i + 1, len(lines)):
+                t = lines[j].strip()
+                if not t:
+                    continue
+                if re.match(r"^#{2,3} ", t):
+                    bad.append((f.name, i + 1, l.strip(), t))
+                break
+    if not bad:
+        print("  [맞음] 모든 절이 문장이나 목록으로 시작한다")
+        return
+    for fn_, ln, h, nxt in bad:
+        print(f"  [고칠 것] {fn_}:{ln} '{h[:38]}' 바로 뒤에 '{nxt[:30]}'")
+        print("        └ 이 절이 무엇을 말하는지 한 문장을 앞에 둘 것")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -143,6 +174,7 @@ def main() -> None:
                 print(f"  {ln:>4}행 ({name}) {ctx}")
                 print(f"        └ {why}")
     print(f"\n확인할 곳 {n_hits}군데")
+    check_dangling_headings()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
