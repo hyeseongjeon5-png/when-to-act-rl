@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 17:58:00",
- "ts": 1787993880.5806344,
+ "time": "2026-08-29 18:58:09",
+ "ts": 1787997489.252654,
  "runs": [
   {
    "run": "causal_warmup_mc",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 351.5,
+   "stale_min": 411.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 90
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 907.0,
+   "stale_min": 967.1,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 905.9,
+   "stale_min": 966.0,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 856.4,
+   "stale_min": 916.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -62,23 +62,23 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 138.2,
+   "stale_min": 198.4,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 360
   },
   {
    "run": "main_minatar_freeway",
-   "done": 14,
+   "done": 24,
    "total": 180,
    "running": 10,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.1,
+   "stale_min": 0.0,
    "advanced_since_last": true,
-   "eta_text": "약 17.7시간 남음",
-   "prev_done": 6
+   "eta_text": "약 16.2시간 남음",
+   "prev_done": 14
   },
   {
    "run": "main_mountaincar",
@@ -88,7 +88,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 569.1,
+   "stale_min": 629.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -103,13 +103,13 @@
   "next": "4_MinAtar_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 138.1
+  "stale_min": 198.2
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 22,
+  "scanned": 21,
   "fresh": 10,
   "fresh_minutes": 20,
   "traceback_logs": [],
@@ -120,8 +120,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 18
+  "n_expected_floor": 20
  },
- "disk_free_gb": 329.8,
- "done_conditions_total": 3120
+ "disk_free_gb": 326.7,
+ "done_conditions_total": 3131
 }
