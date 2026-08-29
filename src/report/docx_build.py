@@ -158,22 +158,64 @@ def no_widow(p):
     return p
 
 
-def table_no_split(t, repeat_header: bool = True):
-    """표가 쪽 경계에서 갈라지지 않게 한다.
+# 표를 통째로 붙들지 말지의 기준 높이(cm). 본문 높이는 24.7cm이므로 약 절반이다.
+# 붙들린 표는 앞 쪽의 남은 자리를 통째로 버리므로, 반 쪽을 넘는 표는 붙들지 않는다.
+KEEP_WHOLE_MAX_CM = 13.5
 
-    · cantSplit  : 한 줄(row)이 두 쪽에 걸쳐 잘리는 것을 막는다
-    · tblHeader  : 표가 여러 쪽에 걸칠 만큼 길면 머리글 줄을 각 쪽에 다시 그린다
+# 9pt에서 글자 하나의 가로 길이(cm) 어림. 한글은 ASCII의 약 두 배.
+_W_ASCII, _W_HANGUL = 9.0 * 0.0197, 9.0 * 0.0353
+# 아래 어림식은 A4 미리보기에서 실제로 렌더된 표 11개와 대조해 보정한 값이다.
+# 보정 전에는 일정하게 1.7~1.9배 작게 나왔다(2026-08-29 측정).
+_CALIB = 1.8
+
+
+def _text_cm(s: str) -> float:
+    ko = sum(1 for c in s if ord(c) > 0x1100)
+    return (len(s) - ko) * _W_ASCII + ko * _W_HANGUL
+
+
+def estimate_table_cm(rows: list[list[str]], content_cm: float = 16.0) -> float:
+    """표의 높이를 어림한다. 정확한 조판이 아니라 '반 쪽을 넘는가'만 가른다.
+
+    Word의 자동 맞춤을 흉내 내어, 각 열이 그 열에서 가장 긴 내용에 비례해
+    폭을 나눠 갖는다고 본다.
+    """
+    if not rows:
+        return 0.0
+    import math
+    n = len(rows[0])
+    want = [max(_text_cm(r[i]) for r in rows if i < len(r)) + 0.2 for i in range(n)]
+    tot = sum(want) or 1.0
+    w = [max(1.1, content_cm * x / tot) for x in want] if tot > content_cm else want
+    h = 0.0
+    for r in rows:
+        lines = max((math.ceil(_text_cm(c) / w[i]) if i < len(w) else 1)
+                    for i, c in enumerate(r)) if r else 1
+        h += max(1, lines) * 0.365 + 0.14
+    return h * _CALIB
+
+
+def table_no_split(t, repeat_header: bool = True):
+    """표가 쪽 경계에서 어떻게 나뉠지를 정한다.
+
+    · cantSplit  : 한 줄(row)이 두 쪽에 걸쳐 잘리는 것을 막는다 — **모든 표에 적용**
+    · tblHeader  : 표가 여러 쪽에 걸치면 머리글 줄을 각 쪽에 다시 그린다
                    (머리글 없이 이어지는 표는 읽을 수 없다)
-    · 마지막 줄을 뺀 모든 줄에 keep_with_next — 짧은 표는 통째로 다음 쪽으로 밀린다
+    · keep_with_next : 표를 통째로 붙들어 다음 쪽으로 넘긴다 — **짧은 표에만**
+
+    긴 표까지 통째로 붙들면 앞 쪽이 통째로 버려진다. 실제로 표 3(23cm)을
+    붙들었더니 앞 쪽이 8%만 찬 채 비었다. 반 쪽을 넘는 표는 붙들지 말고
+    머리글을 반복하며 나뉘게 두는 것이 논문 조판의 관례다.
     """
     rows = t.rows
+    texts = [[c.text for c in r.cells] for r in rows]
+    keep_whole = estimate_table_cm(texts) <= KEEP_WHOLE_MAX_CM
     for i, r in enumerate(rows):
         trPr = r._tr.get_or_add_trPr()
-        cant = OxmlElement("w:cantSplit")
-        trPr.append(cant)
+        trPr.append(OxmlElement("w:cantSplit"))
         if i == 0 and repeat_header:
             trPr.append(OxmlElement("w:tblHeader"))
-        if i < len(rows) - 1:
+        if keep_whole and i < len(rows) - 1:
             for c in r.cells:
                 for par in c.paragraphs:
                     par.paragraph_format.keep_with_next = True

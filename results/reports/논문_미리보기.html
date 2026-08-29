@@ -59,7 +59,12 @@ document.querySelectorAll('table').forEach(function (t) {
     return b;
   }
   var pushed = 0, stuck = [];
+  // docx_build.KEEP_WHOLE_MAX_CM 과 같은 기준이다. 여기서는 어림하지 않고 실제로 잰다.
+  // 반 쪽을 넘는 표는 .docx에서도 통째로 붙들지 않으므로, 여기서도 밀지 않는다.
+  var KEEP_WHOLE_MAX_CM = 13.5;
   document.querySelectorAll('table, img').forEach(function (el) {
+    if (el.tagName === 'TABLE' &&
+        el.getBoundingClientRect().height > KEEP_WHOLE_MAX_CM * CM) return;
     var blk = blockOf(el);
     for (var pass = 0; pass < 2; pass++) {
       var pr = page.getBoundingClientRect();
