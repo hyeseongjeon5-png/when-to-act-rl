@@ -153,7 +153,7 @@ def fig1_method() -> Path:
 
 ENV_KO = {"MountainCar-v0": "MountainCar-v0 (보상이 희소한 환경)",
           "LunarLander-v3": "LunarLander-v3 (보상이 조밀한 환경)",
-          "MinAtar_Freeway-v1": "MinAtar Freeway (규칙이 쓸 만하지만 이길 여지가 있는 환경)"}
+          "MinAtar_Freeway-v1": "MinAtar Freeway (규칙 품질은 가운데, 보상은 희소한 환경)"}
 
 
 def _load(env_id: str) -> pd.DataFrame | None:
@@ -550,6 +550,12 @@ RULE_MARK = {"rule_noop": ("무행동", "s"), "rule_pump": ("pump 규칙", "*"),
              "rule_cautious": ("신중 규칙", "*")}
 
 
+# 패널이 여럿인 그림용 짧은 이름. 긴 ENV_KO를 쓰면 제목끼리 겹친다.
+ENV_SHORT = {"MountainCar-v0": "MountainCar (희소)",
+             "LunarLander-v3": "LunarLander (조밀)",
+             "MinAtar_Freeway-v1": "MinAtar Freeway (희소·규칙 중간)"}
+
+
 def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
     """행동 횟수 대 원보상. 고정 규칙이 지배하는 영역을 함께 칠한다."""
     envs = []
@@ -608,7 +614,8 @@ def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
             ax.set_xlim(x0, x1); ax.set_ylim(y0, y1)
         ax.set_xlabel("에피소드당 행동 횟수 (적을수록 아낀다)", fontsize=9.5 * fs)
         ax.set_ylabel("원보상 r  (비용 빼기 전)", fontsize=9.5 * fs)
-        ax.set_title(ENV_KO.get(env, env), fontsize=10 * fs, fontweight="bold")
+        ax.set_title(ENV_SHORT.get(env, ENV_KO.get(env, env)), fontsize=10 * fs,
+                     fontweight="bold")
         ax.grid(alpha=0.25)
         ax.tick_params(labelsize=8.5 * fs)
         ax.legend(fontsize=7.4 * fs, loc="upper center", bbox_to_anchor=(0.5, -0.17),
