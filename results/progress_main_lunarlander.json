@@ -4,26 +4,22 @@
  "pid": 4656,
  "workers": 10,
  "started_at": 1787972823.9244912,
- "updated_at": 1787984993.4339187,
- "wall_elapsed_sec": 12169.5,
+ "updated_at": 1787985083.6222441,
+ "wall_elapsed_sec": 12259.7,
  "total": 360,
- "done": 352,
- "running": 8,
+ "done": 356,
+ "running": 4,
  "failed": 0,
  "skipped": 0,
  "pending": 0,
- "avg_sec_per_cond": 895.1,
- "eta_sec": 716.1,
- "eta_text": "약 0.2시간 남음",
+ "avg_sec_per_cond": 893.6,
+ "eta_sec": 357.5,
+ "eta_text": "약 0.1시간 남음",
  "running_now": [
   "LunarLander-v3/temporl/lam1.2/seed9",
   "LunarLander-v3/temporl/lam1.6/seed9",
   "LunarLander-v3/temporl/lam1.8/seed9",
-  "LunarLander-v3/temporl/lam2.5/seed9",
-  "LunarLander-v3/lazy/lam1.2/seed9",
-  "LunarLander-v3/lazy/lam1.6/seed9",
-  "LunarLander-v3/lazy/lam1.8/seed9",
-  "LunarLander-v3/lazy/lam2.5/seed9"
+  "LunarLander-v3/temporl/lam2.5/seed9"
  ],
  "conditions": {
   "LunarLander-v3/dqn/lam0.0/seed0": {
@@ -3910,9 +3906,9 @@
    "seed": 9
   },
   "LunarLander-v3/lazy/lam1.2/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 771.3,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -3932,9 +3928,9 @@
    "seed": 9
   },
   "LunarLander-v3/lazy/lam1.6/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 758.8,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -3943,9 +3939,9 @@
    "seed": 9
   },
   "LunarLander-v3/lazy/lam1.8/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 754.7,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -3965,9 +3961,9 @@
    "seed": 9
   },
   "LunarLander-v3/lazy/lam2.5/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 766.9,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",

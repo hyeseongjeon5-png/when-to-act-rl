@@ -602,7 +602,7 @@ def baseline_audit_section() -> str:
                     + num(r["현재"]["eval_iqm"]) + " | " + num(r["튜닝셋 최고"]["eval_iqm"]) + " | "
                     + num(r["차이"]) + " | " + r["판정"] + " |")
     return "\n".join([
-        "## 6. 기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가",
+        "## 7. 기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가",
         "",
         "\"학습이 단순 규칙을 이긴다\"는 주장은 그 규칙을 얼마나 잘 만들었는지에 달려 있다. "
         "환경마다 기준 규칙의 계수를 격자로 훑어 더 나은 것이 있는지 확인했다. "
@@ -627,7 +627,7 @@ def baseline_audit_section() -> str:
     ])
 
 
-FAIRNESS_TMPL = """## 5. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
+FAIRNESS_TMPL = """## 6. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
 
 MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습이 규칙에 진다"는 뜻이다.
 그렇다면 이 결과는 비용에 대한 발견이 아니라 학습이 덜 됐다는 신호일 수 있다.
@@ -664,19 +664,29 @@ def main() -> None:
     for e in envs[:2]:
         k += 1
         parts.append(env_section(e, "4." + str(k), a.compact))
-    k += 1
-    parts.append(collapse_section("4." + str(k)))
-    cs = causal_section("4." + str(k + 1))
-    if cs:
-        k += 1
-        parts.append(cs)
-    ts = tradeoff_section("4." + str(k + 1))
-    if ts:
-        k += 1
-        parts.append(ts)
     for e in envs[2:]:
         k += 1
         parts.append(env_section(e, "4." + str(k), a.compact))
+
+    # 5절: 두 환경이 갈린 원인을 파고든다
+    parts.append("## 5. 무엇이 두 환경을 갈랐나")
+    parts.append("")
+    parts.append("앞 절은 **무슨 일이 일어났는지**를 보였다. 이 절은 **왜 그런지**를 묻는다. "
+                 "보상이 희소한 환경에서 학습이 무너지는 방식을 먼저 보고(5.1), 그것이 "
+                 "최적해인지 탐험 실패인지를 대조 실험으로 가른 뒤(5.2), "
+                 "아낀 행동으로 무엇을 얻었는지를 본다(5.3).")
+    parts.append("")
+    j = 0
+    j += 1
+    parts.append(collapse_section("5." + str(j)))
+    cs = causal_section("5." + str(j + 1))
+    if cs:
+        j += 1
+        parts.append(cs)
+    ts = tradeoff_section("5." + str(j + 1))
+    if ts:
+        j += 1
+        parts.append(ts)
     body = "\n".join(x for x in parts if x)
     src = ("\n<!-- 출처: results/aggregate/" + "{" + ",".join(envs) + "}_iqm.csv, "
            "*_lambda_star.json. 조건별 원본은 results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv. "
