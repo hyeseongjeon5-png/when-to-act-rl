@@ -1,1 +1,1 @@
-{"ts": 1787961423.236436, "min_gap_min": 40, "runs": {"causal_warmup_mc": {"done": 7}, "fair_pilot_mc_A": {"done": 5}, "fair_pilot_mc_B": {"done": 5}, "fair_pilot_mc_C": {"done": 5}, "main_lunarlander": {"done": 240}, "main_mountaincar": {"done": 420}}}
+{"ts": 1787965030.9058084, "min_gap_min": 40, "runs": {"causal_warmup_mc": {"done": 37}, "fair_pilot_mc_A": {"done": 5}, "fair_pilot_mc_B": {"done": 5}, "fair_pilot_mc_C": {"done": 5}, "main_lunarlander": {"done": 240}, "main_mountaincar": {"done": 420}}}
