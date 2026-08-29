@@ -106,3 +106,11 @@ agent      lam  n_seeds  cost_return_iqm  cost_return_ci_lo  cost_return_ci_hi  
   저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
 보고서 저장: results\reports\2026-08-29_본실험보고서.html
 Ⅳ장 생성: paper\04_결과.md
+===== 2026-08-29 15:25:38 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-08-29_본실험보고서.html
