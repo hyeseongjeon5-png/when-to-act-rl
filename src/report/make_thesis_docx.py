@@ -40,21 +40,27 @@ CHAPTERS = [
 
 # 서지는 thesis-writing 스킬의 확인된 목록을 그대로 옮긴 것이다.
 # **확인되지 않은 항목(권·페이지 등)은 넣지 않는다.** 지어낸 서지는 논문에서 가장 나쁜 종류의 오류다.
-# 제출 전 원문에서 권·호·페이지를 확인해 [본인 확인 필요] 자리를 채울 것.
+#
+# 2026-08-29 확인: 비어 있던 [2]·[3]의 페이지 번호를 DBLP에서 확인해 채웠다.
+#   [2] https://dblp.org/pid/176/5465.html → "AAMAS 2022: 669-677"
+#       IFAAMAS 원문 파일명 p669.pdf 로 시작 쪽이 교차 확인됨
+#       (https://ifaamas.org/Proceedings/aamas2022/pdfs/p669.pdf)
+#   [3] https://dblp.org/rec/conf/nips/AgarwalSCCB21.html → "NeurIPS 2021: 29304-29320"
+# 제출 전 본인이 원문으로 한 번 더 대조할 것 — 여기 적힌 것은 서지 데이터베이스 기준이다.
 REFERENCES = [
     'A. Biedenkapp, R. Rajan, F. Hutter, and M. Lindauer, "TempoRL: Learning when to act," '
     'Proceedings of the 38th International Conference on Machine Learning (ICML), PMLR Vol.139, '
     'pp.914-924, 2021.',
     'A. Jacq, J. Ferret, O. Pietquin, and M. Geist, "Lazy-MDPs: Towards interpretable '
     'reinforcement learning by learning when to act," Proceedings of the 21st International '
-    'Conference on Autonomous Agents and Multiagent Systems (AAMAS), 2022. '
-    '[본인 확인 필요 — 페이지 번호]',
+    'Conference on Autonomous Agents and Multiagent Systems (AAMAS), pp.669-677, 2022.',
     'R. Agarwal, M. Schwarzer, P. S. Castro, A. Courville, and M. G. Bellemare, "Deep '
     'reinforcement learning at the edge of the statistical precipice," Advances in Neural '
-    'Information Processing Systems (NeurIPS), 2021. [본인 확인 필요 — 권·페이지 번호]',
+    'Information Processing Systems (NeurIPS), Vol.34, pp.29304-29320, 2021.',
 ]
 
-FIG_WIDTH = {"fig1": 16.0, "fig2": 14.0, "fig3": 14.0, "fig4": 16.0}
+FIG_WIDTH = {"fig1": 16.0, "fig2": 14.0, "fig3": 14.0, "fig4": 16.0, "fig5": 14.0,
+             "fig6": 14.0}
 
 
 def _read(path: str) -> str | None:
