@@ -1,7 +1,87 @@
 {
   "env_id": "MinAtar_Freeway-v1",
   "rule": "rule_cautious",
-  "results": [],
+  "results": [
+    {
+      "learner": "dqn",
+      "rule": "rule_cautious",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0,
+        0.005,
+        0.01,
+        0.02,
+        0.04,
+        0.06
+      ],
+      "lams_compared": [
+        0.0,
+        0.005
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 1,
+          "learner_iqm": 8.688888888888888,
+          "rule_iqm": 16.936666666666664,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.005,
+          "n_seeds": 1,
+          "learner_iqm": 2.8807777777778054,
+          "rule_iqm": 15.4426,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "2/6 λ",
+      "min_seeds": 1,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
+    }
+  ],
   "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
-  "results_vs_best_rule": []
+  "results_vs_best_rule": [
+    {
+      "learner": "dqn",
+      "rule": "rule_best",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0,
+        0.005,
+        0.01,
+        0.02,
+        0.04,
+        0.06
+      ],
+      "lams_compared": [
+        0.0,
+        0.005
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 1,
+          "learner_iqm": 8.688888888888888,
+          "rule_iqm": 16.936666666666664,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.005,
+          "n_seeds": 1,
+          "learner_iqm": 2.8807777777778054,
+          "rule_iqm": 15.4426,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "2/6 λ",
+      "min_seeds": 1,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
+    }
+  ]
 }

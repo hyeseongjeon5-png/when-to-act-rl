@@ -473,6 +473,20 @@ def main() -> None:
     check_caption_position()
     check_hardcoded_refs()
     check_list_continuation()
+    print(chr(10) + "논문이 적은 설정이 실제 config와 같은가")
+    try:
+        from src.report.check_paper_vs_config import main as _cfg_check
+        import io
+        import contextlib
+        b = io.StringIO()
+        with contextlib.redirect_stdout(b):
+            _cfg_check()
+        for line in b.getvalue().splitlines():
+            t = line.strip()
+            if t and not t.startswith("=") and "논문이 적은 설정이" not in t:
+                print("  " + t)
+    except Exception as e:
+        print(f"  [확인 못 함] {e}")
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)

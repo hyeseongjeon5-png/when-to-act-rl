@@ -44,6 +44,7 @@ ENV_NOTE = {
                            "({규칙_대비}) 최적과는 거리가 있어 학습이 이길 여지가 남아 있다. "
                            "에피소드가 1000스텝으로 고정돼 행동 비용의 압력이 두 환경보다 뚜렷하다."),
 }
+MIN_SEEDS_FOR_SECTION = 5   # 이보다 적으면 그 환경 절을 만들지 않는다
 ENV_ORDER = ["MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1"]
 ENV_FIG = {"MountainCar-v0": "fig2", "LunarLander-v3": "fig3",
            "MinAtar_Freeway-v1": "fig_minatar"}
@@ -328,6 +329,15 @@ def env_section(env_id: str, sec: str, compact: bool = False) -> str:
     if sub.empty:
         return ""
     lo_s, hi_s = int(sub.n_seeds.min()), int(sub.n_seeds.max())
+    # 시드가 너무 적으면 절을 아예 만들지 않는다.
+    # 이 저장소의 절대 규칙은 "시드 10개 이상 + IQM + 신뢰구간으로만 결론을 말한다"이다.
+    # 실험이 도는 중에 시간당 자동 갱신이 돌면 시드 1~2개짜리 표가 논문에 들어간다
+    # (2026-08-29에 실제로 MinAtar 절이 시드 1개로 생성됐다). 경고 문구를 붙여도
+    # 표에 숫자가 찍혀 있으면 읽는 사람은 그것을 결과로 본다.
+    if lo_s < MIN_SEEDS_FOR_SECTION:
+        print(f"  [건너뜀] {env_id} — 시드 {lo_s}개뿐이라 절을 만들지 않는다 "
+              f"(최소 {MIN_SEEDS_FOR_SECTION}개). 실험이 끝나면 저절로 들어온다")
+        return ""
     steps = int(sub.total_steps.max())
     n_lam = sub.lam.nunique()
     n_grid = agg.lam.nunique()
