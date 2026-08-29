@@ -49,6 +49,39 @@ def numbers_in_use() -> dict:
     return out
 
 
+def section_refs() -> list[str]:
+    """원고가 가리키는 절 번호가 실제로 있는지 본다.
+
+    왜 필요한가: 절을 하나 끼워 넣으면 뒤 번호가 밀리는데, **그 절을 가리키던 다른 장의 문장은
+    그대로 남는다.** 실제로 Ⅲ장에 기준선 감사를 6.2로 넣자 인과 검사가 6.3이 되었고,
+    Ⅴ장이 여전히 '6.2절'을 가리키고 있었다. 읽는 사람은 엉뚱한 절로 간다.
+    """
+    heads = {}
+    for f in sorted(PAPER.glob("0[0-9]_*.md")):
+        ch = None
+        for line in f.read_text(encoding="utf-8").splitlines():
+            m = re.match(r"^# ([ⅠⅡⅢⅣⅤ])\.", line.strip())
+            if m:
+                ch = m.group(1)
+            m2 = re.match(r"^#{2,3}\s*(\d+(?:\.\d+)?)[\.\s]", line.strip())
+            if m2 and ch:
+                heads.setdefault(ch, set()).add(m2.group(1))
+    out, bad = [], 0
+    for f in sorted(PAPER.glob("0[0-9]_*.md")):
+        text = f.read_text(encoding="utf-8")
+        for m in re.finditer(r"([ⅠⅡⅢⅣⅤ])장\s*(\d+(?:\.\d+)?)절", text):
+            ch, sec = m.group(1), m.group(2)
+            if sec not in heads.get(ch, set()):
+                ln = text[:m.start()].count(chr(10)) + 1
+                out.append(f"  [없는 절] {f.name} {ln}행: '{ch}장 {sec}절' — "
+                           f"{ch}장에 있는 절: {sorted(heads.get(ch, []))}")
+                bad += 1
+    if not out:
+        n = sum(len(v) for v in heads.values())
+        out = [f"  [맞음] 원고가 가리키는 절 번호가 모두 실제로 있다 (절 {n}개 확인)"]
+    return out
+
+
 def numbering_rules() -> list[str]:
     """조립된 .docx에서 그림·표 번호가 지시받은 배치와 맞는지 본다.
 
@@ -110,6 +143,9 @@ def main() -> None:
                 print(f"  {ln:>4}행 ({name}) {ctx}")
                 print(f"        └ {why}")
     print(f"\n확인할 곳 {n_hits}군데")
+    print(f"\n절 참조가 맞는가")
+    for line in section_refs():
+        print(line)
     print(f"\n지시받은 그림·표 배치와 맞는가")
     for line in numbering_rules():
         print(line)
