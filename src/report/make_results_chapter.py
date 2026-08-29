@@ -45,7 +45,7 @@ ENV_NOTE = {
 }
 ENV_ORDER = ["MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1"]
 ENV_FIG = {"MountainCar-v0": "fig2", "LunarLander-v3": "fig3",
-           "MinAtar_Freeway-v1": "fig5"}
+           "MinAtar_Freeway-v1": "fig_minatar"}
 
 
 def name(a: str) -> str:
@@ -325,7 +325,8 @@ def collapse_section(sec: str) -> str:
     lines = []
     if rows:
         lines = [
-            "<!--TABCAP: 무행동 붕괴의 세 문턱 — 성능이 먼저 무너지고 행동이 나중에 멈춘다 "
+            "<!--TABTAG:tab_collapse-->",
+        "<!--TABCAP: 무행동 붕괴의 세 문턱 — 성능이 먼저 무너지고 행동이 나중에 멈춘다 "
             "| Three thresholds of the collapse: performance degrades before the agent stops acting -->",
             "| 계열 | 도달률이 절반이 되는 첫 λ | 행동이 절반이 되는 첫 λ | 행동이 0이 되는 첫 λ | λ=0 기준값 |",
             "|---|---|---|---|---|",
@@ -381,6 +382,12 @@ def causal_section(sec: str) -> str:
         "앞 절에서 본 두 단계 구조 때문에 점수·행동뿐 아니라 **목표 도달률**을 함께 본다 — "
         "행동은 유지되는데 성능만 무너지는 구간에서 워밍업 쪽이 도달률을 지켜 낸다면, "
         "그것이 탐험 실패의 가장 직접적인 증거다.",
+        "",
+        "<!--FIGREF:fig_causal|가--> 그 결과다. 화살표는 **같은 λ·같은 예산·같은 시드에서 "
+        "비용을 켜는 시점만 바꿨을 때**의 변화다. 아홉 조건 모두 도달률이 올라갔고, "
+        "내려간 조건은 하나도 없다.",
+        "",
+        "<!--FIG:fig_causal-->",
         "",
         "<!--TABCAP: 비용을 처음부터 물릴 때와 절반 뒤에 켤 때 (MountainCar-v0, 같은 예산·시드)"
         " | Charging the cost from the start versus switching it on halfway (MountainCar-v0) -->",
@@ -547,7 +554,7 @@ def baseline_audit_section() -> str:
         "세 환경 중 하나에서만 문제가 나왔다. MountainCar와 MinAtar의 기준 규칙은 이미 최선이었고, "
         "**LunarLander의 임계값 규칙만 계수를 다시 고르는 것으로 " + num(worst_gap, 0) + "점이 올랐다**"
         "(같은 형태의 규칙, 계수만 다름). 그 결과 그 환경의 임계 비용 λ*가 바뀌었다 — "
-        "표 1의 값은 다시 고른 규칙을 포함한 것이다.",
+        "<!--TABREF:tab1|의--> 값은 다시 고른 규칙을 포함한 것이다.",
         "",
         "이 비대칭이 중요하다. MountainCar에서 '학습이 규칙에 진다'는 결론은 기준선이 이미 최선이었으므로 "
         "더 단단해졌고, LunarLander에서 '학습이 이긴다'는 결론만 약한 기준선의 덕을 보고 있었다.",
@@ -564,12 +571,12 @@ MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습
 <!--TABLE:tab3-->
 
 최종 점수만으로는 "예산을 더 주면 달라졌을 것"이라는 반론에 답할 수 없다.
-답이 되는 것은 **곡선이 평평해졌는가**이다. 그림 5는 λ=0에서 예산을 3.3배로 늘리고
+답이 되는 것은 **곡선이 평평해졌는가**이다. <!--FIGREF:fig_fair|는--> λ=0에서 예산을 3.3배로 늘리고
 탐험과 신경망까지 바꿔 가며 그린 학습 곡선이다. 세 조건 모두 30만 스텝 부근에서
 오르기를 멈추고, 남은 70만 스텝 동안 규칙 선 아래에서 오르내릴 뿐이다.
 **예산이 모자라서가 아니라, 이 환경에서 이 학습기가 닿는 높이가 거기까지다.**
 
-<!--FIG:fig5-->
+<!--FIG:fig_fair-->
 """
 
 

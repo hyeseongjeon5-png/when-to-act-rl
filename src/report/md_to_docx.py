@@ -29,7 +29,88 @@ FIGDIR = ROOT / "results" / "figures" / "paper"
 FIG_MARK = re.compile(r"<!--\s*FIG:([A-Za-z0-9_]+)\s*-->")
 TAB_MARK = re.compile(r"<!--\s*TABLE:([A-Za-z0-9_]+)\s*-->")
 TABCAP_MARK = re.compile(r"<!--\s*TABCAP:\s*(.+?)\s*\|\s*(.+?)\s*-->")
+# 원고 안에서 만들어지는 표(TABCAP)에 이름표를 달아 본문이 가리킬 수 있게 한다.
+TABTAG_MARK = re.compile(r"<!--\s*TABTAG:([A-Za-z0-9_]+)\s*-->")
 COMMENT = re.compile(r"<!--.*?-->", re.S)
+
+
+FIGREF_MARK = re.compile(r"<!--\s*FIGREF:([A-Za-z0-9_]+)(?:\|(\S+?))?\s*-->")
+TABREF_MARK = re.compile(r"<!--\s*TABREF:([A-Za-z0-9_]+)(?:\|(\S+?))?\s*-->")
+
+# 한국어 조사는 앞 글자의 받침 유무로 갈린다. 번호가 바뀌면 조사도 바뀌어야 한다.
+#   1(일)·3(삼)·6(육)·7(칠)·8(팔)·10(십) → 받침 있음 → 은/이/을/과/으로
+#   2(이)·4(사)·5(오)·9(구)             → 받침 없음 → 는/가/를/와/로
+_HAS_FINAL = {0: True, 1: True, 3: True, 6: True, 7: True, 8: True}   # 0(영)·10(십)도 받침
+_JOSA = {"은": ("은", "는"), "는": ("은", "는"), "이": ("이", "가"), "가": ("이", "가"),
+         "을": ("을", "를"), "를": ("을", "를"), "과": ("과", "와"), "와": ("과", "와"),
+         "으로": ("으로", "로"), "로": ("으로", "로")}
+
+
+def _josa(n: int, want: str) -> str:
+    """번호 n 뒤에 붙일 조사를 고른다. 10 이상은 마지막 자리로 판단한다(11=십일 …)."""
+    pair = _JOSA.get(want)
+    if not pair:
+        return want
+    last = n % 10 if n >= 10 and n % 10 else n
+    if n >= 10 and n % 10 == 0:
+        last = 0                      # 10·20 … = '십' → 받침 있음
+    return pair[0] if _HAS_FINAL.get(last, False) else pair[1]
+
+
+def scan_numbers(md_texts: list[str]) -> dict:
+    """본문을 미리 훑어 '어떤 그림·표가 몇 번이 될지'를 알아낸다.
+
+    왜 필요한가: 번호는 등장 순서로 매겨지는데, 본문이 그림을 **가리키는 문장**은
+    그림보다 먼저 나온다. 한 번만 훑어서는 앞을 내다볼 수 없어 "그림 5는 …" 같은
+    참조를 손으로 적게 되고, 그림을 하나 끼워 넣는 순간 조용히 어긋난다.
+    (2026-08-29: 실제로 인과 실험 그림을 넣으려다 이 문제를 발견했다.)
+
+    그래서 먼저 번호만 세고, 그 표를 들고 본문을 렌더한다.
+    """
+    st = {"fig": 0, "tab": 0}
+    out = {}
+    pending_tag = None
+    for md in md_texts:
+        for line in md.splitlines():
+            t = line.strip()
+            m = FIG_MARK.search(t)
+            if m:
+                st["fig"] += 1
+                out[m.group(1)] = st["fig"]
+                continue
+            m = TAB_MARK.search(t)
+            if m:
+                st["tab"] += 1
+                out[m.group(1)] = st["tab"]
+                continue
+            m = TABTAG_MARK.search(t)
+            if m:
+                pending_tag = m.group(1)
+                continue
+            if TABCAP_MARK.search(t):
+                st["tab"] += 1
+                if pending_tag:
+                    out[pending_tag] = st["tab"]
+                    pending_tag = None
+    return out
+
+
+def resolve_refs(md: str, numbers: dict) -> str:
+    """<!--FIGREF:tag--> / <!--TABREF:tag--> 를 실제 번호로 바꾼다."""
+    def _one(kind: str, m):
+        n = numbers.get(m.group(1))
+        if not n:
+            return f"{kind} ?"
+        want = m.group(2)
+        return f"{kind} {n}" + (_josa(n, want) if want else "")
+
+    def fig(m):
+        return _one("그림", m)
+
+    def tab(m):
+        return _one("표", m)
+
+    return TABREF_MARK.sub(tab, FIGREF_MARK.sub(fig, md))
 
 
 def _captions() -> dict:
@@ -59,8 +140,11 @@ def _numbered(kind: str, st: dict, ko: str, en: str) -> tuple[str, str]:
 
 
 def render(doc, md_text: str, auto_tables: dict | None = None,
-           fig_width: dict | None = None, counter: dict | None = None) -> None:
-    """마크다운 한 장을 doc에 이어 붙인다."""
+           fig_width: dict | None = None, counter: dict | None = None,
+           numbers: dict | None = None) -> None:
+    """마크다운 한 장을 doc에 이어 붙인다. numbers를 주면 FIGREF/TABREF를 번호로 바꾼다."""
+    if numbers:
+        md_text = resolve_refs(md_text, numbers)
     caps = _captions()
     auto_tables = auto_tables or {}
     fig_width = fig_width or {}

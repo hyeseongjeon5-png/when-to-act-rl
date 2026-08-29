@@ -62,8 +62,8 @@ REFERENCES = [
 # 본문 폭은 16cm(A4 21 − 여백 2.5×2)다. 그림을 그보다 좁게 넣으면 그림 안의 글자도
 # 같은 비율로 작아진다 — 14cm면 범례가 6pt가 되어 본문 10pt보다 작아진다.
 # 논문의 핵심 근거인 λ 지도가 가장 읽기 어려워서는 안 되므로 전부 본문 폭에 맞춘다.
-FIG_WIDTH = {"fig1": 16.0, "fig2": 16.0, "fig3": 16.0, "fig4": 16.0, "fig5": 16.0,
-             "fig6": 16.0}
+FIG_WIDTH = {"fig1": 16.0, "fig2": 16.0, "fig3": 16.0, "fig4": 16.0,
+             "fig_causal": 16.0, "fig_fair": 16.0, "fig_minatar": 16.0}
 
 
 def _read(path: str) -> str | None:
@@ -131,12 +131,16 @@ def build() -> Path:
     doc = B.new_document()
     title_block(doc)
     abstract_block(doc)
+    # 먼저 번호만 세어 둔다 — 본문이 그림을 가리키는 문장은 그림보다 앞에 나오기 때문이다
+    numbers = M.scan_numbers([(ROOT / p).read_text(encoding="utf-8")
+                              for p, _ in CHAPTERS if (ROOT / p).exists()])
     counter = M.new_counter()
     for path, _ in CHAPTERS:
         md = _read(path)
         if md is None:
             continue
-        M.render(doc, md, auto_tables=tables, fig_width=FIG_WIDTH, counter=counter)
+        M.render(doc, md, auto_tables=tables, fig_width=FIG_WIDTH, counter=counter,
+                 numbers=numbers)
     references_block(doc)
     doc.save(OUT)
     n_par = len(doc.paragraphs)

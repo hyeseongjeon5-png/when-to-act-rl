@@ -378,7 +378,7 @@ FAIR_ROOMS = [
 ]
 
 
-def fairness_curves(env_id: str = "MountainCar-v0", tag: str = "fig5") -> Path | None:
+def fairness_curves(env_id: str = "MountainCar-v0", tag: str = "fig_fair") -> Path | None:
     """그림 5 — λ=0에서 예산·탐험·신경망을 바꿔 가며 그린 학습 곡선."""
     import glob
     fig, ax = plt.subplots(figsize=(7.4, 4.2), dpi=DPI)
@@ -448,15 +448,96 @@ def fairness_curves(env_id: str = "MountainCar-v0", tag: str = "fig5") -> Path |
     return out
 
 
+# ── 인과 실험 그림: 비용을 켜는 시점만 바꾼 대조 ────────────────────────────
+# 왜 필요한가: 이 논문의 다섯 기여 중 '무행동 붕괴는 탐험 실패다'만 그림이 없었다.
+# 표 8이 숫자를 다 담고 있지만, "같은 비용·같은 예산인데 켜는 시점만 바꿨더니
+# 0%가 66%가 되었다"는 것은 **선 두 개의 간격**으로 보여 줄 때 가장 빨리 읽힌다.
+def causal_figure(tag: str = "fig_causal") -> Path | None:
+    """비용을 처음부터 물릴 때 vs 절반 뒤에 켤 때 — 도달률과 행동 횟수."""
+    p = AGG / "causal_warmup.json"
+    if not p.exists():
+        print("  [건너뜀] 인과 실험 집계가 아직 없다")
+        return None
+    try:
+        res = json.loads(p.read_text(encoding="utf-8")).get("results", [])
+    except Exception:
+        return None
+    if not res:
+        return None
+    lams = sorted({float(r["lam"]) for r in res})
+    ags = [a for a in ("dqn", "temporl", "lazy") if any(r["agent"] == a for r in res)]
+
+    fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.9), dpi=DPI)
+    panels = [("solved", "목표 도달률", lambda v: v * 100, "%"),
+              ("actions", "에피소드당 행동 횟수", lambda v: v, "회")]
+    for ax, (key, ylab, conv, unit) in zip(axes, panels):
+        xs, xticks = [], []
+        pos = 0
+        for lam in lams:
+            for ag in ags:
+                r = next((x for x in res if float(x["lam"]) == lam and x["agent"] == ag), None)
+                if r is None or not r["from_start"].get(key) or not r["warmup"].get(key):
+                    pos += 1
+                    continue
+                a = conv(r["from_start"][key]["iqm"])
+                b = conv(r["warmup"][key]["iqm"])
+                ax.plot([pos, pos], [a, b], color="#bbbbbb", lw=1.6, zorder=1)
+                ax.plot(pos, a, "o", ms=7, color="#ffffff", mec=COLOR[ag], mew=2.0, zorder=3)
+                ax.plot(pos, b, "o", ms=7, color=COLOR[ag], mec=COLOR[ag], zorder=3)
+                ax.annotate("", xy=(pos, b), xytext=(pos, a), zorder=2,
+                            arrowprops=dict(arrowstyle="-|>", color=COLOR[ag], lw=1.4,
+                                            shrinkA=7, shrinkB=7, alpha=0.75))
+                xs.append(pos)
+                xticks.append(SHORT[ag])
+                pos += 1
+            pos += 0.8
+        step = len(ags) + 0.8
+        ax.set_xticks([i * step + (len(ags) - 1) / 2 for i in range(len(lams))])
+        ax.set_xticklabels(["λ=" + format(l, "g") for l in lams], fontsize=9.5, fontweight="bold")
+        ax.set_ylabel(ylab + (" (%)" if unit == "%" else " (회)"), fontsize=9.5)
+        ax.grid(alpha=0.25, axis="y")
+        ax.tick_params(labelsize=9, length=0)
+        for i in range(1, len(lams)):        # λ 구간 사이에 옅은 칸막이
+            ax.axvline(i * step - 0.9, color="#dddddd", lw=1.0, zorder=0)
+    hs = [axes[0].plot([], [], "o", ms=7, color=COLOR[a], mec=COLOR[a], label=LABEL[a])[0]
+          for a in ags]
+    hs.append(axes[0].plot([], [], "o", ms=7, color="#ffffff", mec="#555555", mew=2.0,
+                           label="처음부터 비용")[0])
+    hs.append(axes[0].plot([], [], "o", ms=7, color="#555555", mec="#555555",
+                           label="절반 뒤 비용")[0])
+    fig.legend(handles=hs, fontsize=8.6, loc="lower center", ncol=5, frameon=False,
+               bbox_to_anchor=(0.5, 0.0), columnspacing=1.4, handletextpad=0.4)
+    fig.tight_layout(rect=(0, 0.075, 1, 1))
+    out = OUT / (tag + "_warmup_vs_from_start.png")
+    fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
+
+    n_expl = sum(1 for r in res if str(r["verdict"]).startswith("탐험 실패"))
+    CAPTIONS[tag] = {
+        "file": out.name,
+        "ko": "비용을 켜는 시점만 바꾸면 결과가 달라진다 — 무행동 붕괴는 탐험 실패다 (MountainCar-v0)",
+        "en": ("Only the moment the cost is switched on differs: the collapse to inaction is an "
+               "exploration failure, not an optimum (MountainCar-v0)"),
+        "note": ("빈 점은 처음부터 비용을 문 조건, 채운 점은 예산의 앞 절반을 비용 없이 학습시킨 조건이며 "
+                 "화살표는 그 변화다. 두 조건은 환경 스텝 예산·시드·평가 방식이 모두 같고 "
+                 "**학습 중 보상 신호만** 다르다. 평가는 양쪽 모두 진짜 λ로 한다 — 성적표는 언제나 "
+                 f"비용이 있는 세상에서 매긴다. 비교 {len(res)}건 중 {n_expl}건이 '탐험 실패'로 판정됐고, "
+                 "'무행동이 최적'을 지지하는 조건은 하나도 없었다."),
+        "source": "results/aggregate/causal_warmup.json",
+    }
+    print(f"  저장: {out.relative_to(ROOT)}")
+    return out
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     fig1_method()
     lambda_map("MountainCar-v0", "fig2", symlog=True)
     lambda_map("LunarLander-v3", "fig3")
     collapse_figure("MountainCar-v0")
-    fairness_curves("MountainCar-v0", "fig5")
+    causal_figure("fig_causal")
+    fairness_curves("MountainCar-v0", "fig_fair")
     # 세 번째 환경은 학습 결과가 들어온 뒤에만 그린다 (규칙만 있으면 지도가 의미 없다)
-    lambda_map("MinAtar_Freeway-v1", "fig6")
+    lambda_map("MinAtar_Freeway-v1", "fig_minatar")
     (OUT / "captions.json").write_text(json.dumps(CAPTIONS, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"  캡션: {(OUT / 'captions.json').relative_to(ROOT)}")
 

@@ -338,6 +338,39 @@ def check_caption_position() -> None:
         print(f"  [맞음] 그림 {n_fig}개는 제목이 아래, 표 {n_tab}개는 제목이 위에 있다")
 
 
+def check_hardcoded_refs() -> None:
+    """본문이 그림·표를 **번호로 직접** 가리키고 있지 않은지 본다.
+
+    번호는 등장 순서로 자동 부여되므로, 그림을 하나 끼워 넣으면 손으로 적은 번호가
+    조용히 어긋난다. 실제로 인과 실험 그림을 넣자 '그림 5는 …'이 다른 그림을 가리키게 됐다.
+    대신 <!--FIGREF:태그|조사--> 를 쓰면 번호와 조사가 함께 맞춰진다.
+
+    표 제목("표 3. …")과 그림 제목("그림 2. …") 자체는 참조가 아니므로 뺀다.
+    """
+    print(chr(10) + "본문이 그림·표 번호를 손으로 적고 있지 않은가")
+    hits = []
+    pat = re.compile(r"(?<!<!--)(그림|표)\s(\d+)(?!\.)")
+    for f in sorted(PAPER.glob("*.md")):
+        if f.name.startswith("00_양식"):
+            continue
+        for ln, line in enumerate(f.read_text(encoding="utf-8").split(chr(10)), 1):
+            t = line.strip()
+            if t.startswith(("|", "<!--")):
+                continue
+            # 양식 규칙 자체를 설명하는 문장은 번호가 고정이다
+            # ("학교 양식 지시에 따라 표 1은 임계 비용 λ*, 표 2는 실험 설정이다")
+            if "양식" in t:
+                continue
+            for m in pat.finditer(t):
+                hits.append((f.name, ln, m.group(0), t[max(0, m.start() - 18):m.end() + 18]))
+    if not hits:
+        print("  [맞음] 번호를 손으로 적은 곳이 없다 (전부 FIGREF/TABREF로 자동 부여)")
+        return
+    for name, ln, what, ctx in hits:
+        print(f"  [고칠 것] {name}:{ln} '{what}' — …{ctx}…")
+        print("        └ <!--FIGREF:태그|조사--> 로 바꿀 것 (번호와 조사가 자동으로 맞는다)")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -375,6 +408,7 @@ def main() -> None:
         print(f"  [확인 못 함] {e}")
     check_ordinal_order()
     check_caption_position()
+    check_hardcoded_refs()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
