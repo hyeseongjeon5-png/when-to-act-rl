@@ -543,7 +543,7 @@ def causal_figure(tag: str = "fig_causal") -> Path | None:
 # 왼쪽 위로 갈수록 좋다(적게 움직이고 많이 받는다). 그리고 이 축에서는
 # 같은 r′를 주는 점들이 기울기 λ인 직선을 이루므로, 독자가 직선을 기울여 보며
 # "λ가 이만큼일 때 누가 이기나"를 읽을 수 있다.
-TRADEOFF_ENVS = ["MountainCar-v0", "LunarLander-v3"]
+TRADEOFF_ENVS = ["MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1"]
 RULE_MARK = {"rule_noop": ("무행동", "s"), "rule_pump": ("pump 규칙", "*"),
              "rule_threshold": ("임계값 규칙(처음)", "P"),
              "rule_threshold_tuned": ("임계값 규칙(튜닝)", "*"),
@@ -552,10 +552,25 @@ RULE_MARK = {"rule_noop": ("무행동", "s"), "rule_pump": ("pump 규칙", "*"),
 
 def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
     """행동 횟수 대 원보상. 고정 규칙이 지배하는 영역을 함께 칠한다."""
-    envs = [e for e in TRADEOFF_ENVS if (AGG / (e + "_iqm.csv")).exists()]
+    envs = []
+    for e in TRADEOFF_ENVS:
+        f = AGG / (e + "_iqm.csv")
+        if not f.exists():
+            continue
+        a = pd.read_csv(f)
+        L = a[a.agent.isin(["dqn", "temporl", "lazy"])]
+        if L.empty:
+            continue
+        if int(L.n_seeds.min()) < MIN_SEEDS_FOR_FIGURE:
+            print(f"  [건너뜀] 상충 그림에서 {e} 제외 — 시드 {int(L.n_seeds.min())}개뿐")
+            continue
+        envs.append(e)
     if not envs:
         return None
-    fig, axes = plt.subplots(1, len(envs), figsize=(9.2, 4.6), dpi=DPI)
+    n = len(envs)
+    fig, axes = plt.subplots(1, n, figsize=(4.4 * n, 4.6), dpi=DPI)
+    # 두 패널일 때를 기준으로, 패널이 늘어난 만큼 글자를 키운다
+    fs = 1.0 if n <= 2 else (2 / n) ** -0.85
     axes = [axes] if len(envs) == 1 else list(axes)
     for ax, env in zip(axes, envs):
         agg = _load(env)
@@ -570,9 +585,9 @@ def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
                     color=COLOR[a], alpha=0.9, label=LABEL[a], zorder=3)
             f, l = d.iloc[0], d.iloc[-1]
             ax.annotate("λ=0", xy=(f.n_actions_iqm, f.raw_return_iqm), xytext=(4, 5),
-                        textcoords="offset points", fontsize=7.2, color=COLOR[a])
+                        textcoords="offset points", fontsize=7.2 * fs, color=COLOR[a])
             ax.annotate(f"λ={l.lam:g}", xy=(l.n_actions_iqm, l.raw_return_iqm), xytext=(4, -10),
-                        textcoords="offset points", fontsize=7.2, color=COLOR[a])
+                        textcoords="offset points", fontsize=7.2 * fs, color=COLOR[a])
         for rname, (ko, mk) in RULE_MARK.items():
             if rname not in set(agg.agent):
                 continue
@@ -591,15 +606,15 @@ def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
             ax.add_patch(Rectangle((rx, y0), max(0.0, x1 - rx), max(0.0, ry - y0),
                                    color="#d62728", alpha=0.07, lw=0, zorder=0))
             ax.set_xlim(x0, x1); ax.set_ylim(y0, y1)
-        ax.set_xlabel("에피소드당 행동 횟수 (적을수록 아낀다)", fontsize=9.5)
-        ax.set_ylabel("원보상 r  (비용 빼기 전)", fontsize=9.5)
-        ax.set_title(ENV_KO.get(env, env), fontsize=10, fontweight="bold")
+        ax.set_xlabel("에피소드당 행동 횟수 (적을수록 아낀다)", fontsize=9.5 * fs)
+        ax.set_ylabel("원보상 r  (비용 빼기 전)", fontsize=9.5 * fs)
+        ax.set_title(ENV_KO.get(env, env), fontsize=10 * fs, fontweight="bold")
         ax.grid(alpha=0.25)
-        ax.tick_params(labelsize=8.5)
-        ax.legend(fontsize=7.4, loc="upper center", bbox_to_anchor=(0.5, -0.17),
+        ax.tick_params(labelsize=8.5 * fs)
+        ax.legend(fontsize=7.4 * fs, loc="upper center", bbox_to_anchor=(0.5, -0.17),
                   ncol=2, frameon=False, columnspacing=1.2, handletextpad=0.4)
         ax.annotate("← 좋아지는 방향 (적게 움직이고 많이 받는다)", xy=(0.03, 0.965),
-                    xycoords="axes fraction", fontsize=7.6, color="#2e7d32", fontweight="bold")
+                    xycoords="axes fraction", fontsize=7.6 * fs, color="#2e7d32", fontweight="bold")
     fig.tight_layout()
     out = OUT / (tag + "_actions_vs_return.png")
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
