@@ -81,11 +81,50 @@ def check_switch_cost() -> list[str]:
     return msgs
 
 
+def check_collapse_ratio() -> list[str]:
+    """Ⅴ장의 "행동이 완전히 멈추는 것은 그보다 N~M배 비싸진 뒤다"를 집계에서 다시 계산해 본다.
+
+    2026-08-29에 이 자리에 '3~10배'가 적혀 있었으나 실제로는 4~27배였다.
+    이 논문의 핵심 발견(붕괴가 두 단계다)에 붙은 숫자라 틀리면 안 된다.
+    """
+    import pandas as pd
+    csv = AGG / "MountainCar-v0_iqm.csv"
+    src = ROOT / "paper" / "05_결론.md"
+    if not csv.exists() or not src.exists():
+        return ["  [건너뜀] MountainCar 집계나 Ⅴ장 원고가 없다"]
+    m = re.search(r"행동이 완전히 멈추는 것은 그보다 (\d+)~(\d+)배", src.read_text(encoding="utf-8"))
+    if not m:
+        return ["  [건너뜀] Ⅴ장에서 붕괴 배수 문장을 찾지 못했다"]
+    a = pd.read_csv(csv)
+    ratios = []
+    for ag in ("dqn", "temporl", "lazy"):
+        z = a[(a.agent == ag) & (a.lam == 0.0)]
+        g = a[(a.agent == ag) & (a.lam > 0)].sort_values("lam")
+        if z.empty or g.empty:
+            continue
+        z = z.iloc[0]
+        half = g[g.solved_iqm < z.solved_iqm * 0.5]
+        zero = g[g.n_actions_iqm <= 1e-9]
+        if half.empty or zero.empty:
+            continue
+        ratios.append(float(zero.iloc[0].lam) / float(half.iloc[0].lam))
+    if not ratios:
+        return ["  [건너뜀] 배수를 계산할 조건이 모자란다"]
+    lo, hi = round(min(ratios)), round(max(ratios))
+    got = (int(m.group(1)), int(m.group(2)))
+    if got == (lo, hi):
+        return [f"  [맞음] 붕괴 배수 {lo}~{hi}배가 집계와 일치한다"]
+    return [f"  [고칠 것] 붕괴 배수: 원고 {got[0]}~{got[1]}배 · 집계 {lo}~{hi}배",
+            "        └ Ⅴ장 '넷째' 문단의 배수를 고칠 것"]
+
+
 def main() -> None:
     print("=" * 74)
     print("손으로 옮겨 적은 숫자가 집계와 맞는가")
     print("=" * 74)
     for line in check_switch_cost():
+        print(line)
+    for line in check_collapse_ratio():
         print(line)
     print("=" * 74)
 
