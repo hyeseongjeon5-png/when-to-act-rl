@@ -474,6 +474,38 @@ def check_duplicate_sentences() -> None:
         print("  [맞음] 사람이 쓴 장에 그대로 반복된 문장이 없다")
 
 
+def check_docx_package() -> None:
+    """조립된 .docx 안에 그림이 실제로 들어갔는지 패키지 수준에서 본다.
+
+    미리보기(mammoth)는 깨진 참조를 조용히 넘길 수 있다. 최종 제출물은 .docx이므로
+    그 파일 자체를 열어 확인한다 — 본문이 가리키는 그림이 관계 파일에 있고,
+    그 파일이 실제로 패키지 안에 있는지.
+    """
+    print(chr(10) + "제출물(.docx) 안에 그림이 온전히 들어갔는가")
+    docx = ROOT / "졸업논문_초안v1.docx"
+    if not docx.exists():
+        print("  [건너뜀] .docx가 없다")
+        return
+    import zipfile
+    z = zipfile.ZipFile(str(docx))
+    names = z.namelist()
+    doc = z.read("word/document.xml").decode("utf-8")
+    rels = z.read("word/_rels/document.xml.rels").decode("utf-8")
+    embeds = re.findall(r'r:embed="(rId\d+)"', doc)
+    tmap = dict(re.findall(r'Id="(rId\d+)"[^>]*Target="(media/[^"]+)"', rels))
+    no_rel = [e for e in embeds if e not in tmap]
+    broken = [e for e in embeds if e in tmap and "word/" + tmap[e] not in names]
+    media = [n for n in names if n.startswith("word/media/")]
+    if no_rel or broken:
+        for e in no_rel:
+            print(f"  [고칠 것] 본문이 가리키는 {e} 가 관계 파일에 없다")
+        for e in broken:
+            print(f"  [고칠 것] {e} 가 가리키는 파일이 패키지에 없다: {tmap[e]}")
+        return
+    print(f"  [맞음] 그림 {len(embeds)}개가 모두 온전하다 "
+          f"(패키지 안 그림 파일 {len(media)}개, 깨진 참조 0건)")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -528,6 +560,7 @@ def main() -> None:
     except Exception as e:
         print(f"  [확인 못 함] {e}")
     check_duplicate_sentences()
+    check_docx_package()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
