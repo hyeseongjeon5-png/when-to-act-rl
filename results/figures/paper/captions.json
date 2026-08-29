@@ -45,12 +45,5 @@
   "en": "Learning curves flatten below the rule even with a larger budget (MountainCar-v0, λ = 0)",
   "note": "비용이 없는 조건(λ=0)에서만 그렸다 — 여기서 지면 비용을 논할 필요가 없기 때문이다. 선은 시드에 대한 IQM이다. 본실험은 시드 10개, 예산을 늘린 세 조건은 **파일럿이라 시드 5개**이므로 이 그림은 경향을 보이는 용도이고, 우열 판정은 시드 10개로 한 표에서만 말한다. 곡선의 각 점은 5 에피소드 평가라 출렁인다 — 최종 판정은 50 에피소드 평가로 한다. 검은 점선은 학습 없이 얻는 pump 규칙의 점수다.",
   "source": "results/raw/MountainCar-v0*/dqn/lam0.0/seed*_curve.csv"
- },
- "fig_minatar": {
-  "file": "fig_minatar_lambda_map_MinAtar_Freeway-v1.png",
-  "ko": "λ-성능 지도 — MinAtar Freeway (규칙이 쓸 만하지만 이길 여지가 있는 환경)",
-  "en": "Performance map over action cost λ on MinAtar_Freeway-v1",
-  "note": "선은 IQM(사분위평균), 띠는 95% 계층 부트스트랩 신뢰구간(시드 10개). 검은 점선은 기준이 되는 최고 고정 규칙, 보라 일점쇄선은 λ마다 가장 센 규칙의 포락선이다.",
-  "source": "results/aggregate/MinAtar_Freeway-v1_iqm.csv"
  }
 }

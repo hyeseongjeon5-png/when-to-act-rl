@@ -20,6 +20,7 @@ from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 ROOT = Path(__file__).resolve().parents[2]
 AGG = ROOT / "results" / "aggregate"
 OUT = ROOT / "results" / "figures" / "paper"
+MIN_SEEDS_FOR_FIGURE = 5   # 이보다 적으면 λ 지도를 그리지 않는다
 DPI = 300
 
 for f in ("Malgun Gothic", "NanumGothic", "AppleGothic", "DejaVu Sans"):
@@ -172,6 +173,11 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
     learners = [a for a in ("dqn", "temporl", "lazy") if a in set(agg.agent)]
     if not learners:
         print(f"  [건너뜀] {env_id} — 학습 계열 결과가 아직 없다 (규칙만으로는 지도를 그리지 않는다)")
+        return None
+    n_min = int(agg[agg.agent.isin(learners)].n_seeds.min())
+    if n_min < MIN_SEEDS_FOR_FIGURE:
+        print(f"  [건너뜀] {env_id} — 시드 {n_min}개뿐이라 지도를 그리지 않는다 "
+              f"(최소 {MIN_SEEDS_FOR_FIGURE}개)")
         return None
 
     fig, ax = plt.subplots(figsize=(7.4, 4.5), dpi=DPI)

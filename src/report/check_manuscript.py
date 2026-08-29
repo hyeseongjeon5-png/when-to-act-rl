@@ -206,9 +206,13 @@ def check_english_case() -> None:
     if caps.exists():
         for k, v in json.loads(caps.read_text(encoding="utf-8")).items():
             texts.append((k, v.get("en", "")))
+    env_ids = ["MinAtar_Freeway-v1", "MinAtar/Freeway-v1", "MountainCar-v0", "LunarLander-v3",
+               "LunarLander-v2", "ActionCostWrapper", "Lazy-MDP", "TempoRL"]
     for where, en in texts:
         if not en or not re.search(r"[A-Za-z]", en):
             continue
+        for e in env_ids:
+            en = en.replace(e, " ")
         words = re.findall("[A-Za-z][A-Za-z-]*", en)
         hits = [w for i, w in enumerate(words)
                 if i > 0 and w[0].isupper() and w not in PROPER_NOUNS

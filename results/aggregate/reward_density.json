@@ -1,0 +1,44 @@
+{
+  "설명": "보상이 상태를 구분해 주는 정도. '보상이 0이 아닌 비율'은 쓰지 않는다 — MountainCar는 매 스텝 −1을 주지만 그 −1은 어느 상태에서나 같아 정보가 없다.",
+  "측정": "각 환경의 기준 고정 규칙으로 60 에피소드 (평가 시드 500000~)",
+  "지표": {
+    "distinct_rewards": "서로 다른 보상 값의 개수 (1이면 상태를 전혀 구분 못 한다)",
+    "informative_step_rate": "최빈 보상이 아닌 보상을 받은 스텝의 비율",
+    "reward_std_per_step": "스텝별 보상의 표준편차"
+  },
+  "results": [
+    {
+      "env_id": "MountainCar-v0",
+      "n_episodes": 60,
+      "n_steps": 7135,
+      "distinct_rewards": 1,
+      "modal_reward": -1.0,
+      "informative_step_rate": 0.0,
+      "reward_std_per_step": 0.0,
+      "episode_return_mean": -118.91666666666667,
+      "rule": "pump 규칙"
+    },
+    {
+      "env_id": "LunarLander-v3",
+      "n_episodes": 60,
+      "n_steps": 17071,
+      "distinct_rewards": 16717,
+      "modal_reward": -0.0,
+      "informative_step_rate": 0.9981254759533712,
+      "reward_std_per_step": 6.361057497352012,
+      "episode_return_mean": 157.25147683880533,
+      "rule": "임계값 규칙(튜닝)"
+    },
+    {
+      "env_id": "MinAtar/Freeway-v1",
+      "n_episodes": 60,
+      "n_steps": 60000,
+      "distinct_rewards": 2,
+      "modal_reward": 0.0,
+      "informative_step_rate": 0.016149999999999998,
+      "reward_std_per_step": 0.12605228082030093,
+      "episode_return_mean": 16.15,
+      "rule": "신중 규칙"
+    }
+  ]
+}
