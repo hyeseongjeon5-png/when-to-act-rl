@@ -259,6 +259,39 @@ def check_source_control_chars() -> None:
         print("        └ 정규식이라면 아무것도 못 찾고 조용히 통과했을 수 있다")
 
 
+ORDINALS = ["첫", "둘", "셋", "넷", "다섯", "여섯", "일곱", "여덟", "아홉", "열"]
+
+
+def check_ordinal_order() -> None:
+    """'첫째·둘째·셋째…'가 순서대로 나오는지 본다.
+
+    2026-08-29에 실제로 Ⅴ장이 첫째 → 둘째 → 셋째 → **다섯째 → 넷째** 순으로 나와 있었다.
+    문단을 옮기다 생긴 것으로, 눈으로 훑으면 잘 안 보이는데 심사자는 바로 본다.
+    """
+    print(chr(10) + "'첫째·둘째…'가 순서대로 나오는가")
+    bad = []
+    for f in sorted(PAPER.glob("*.md")):
+        if f.name.startswith("00_양식"):
+            continue
+        seen = []
+        for ln, line in enumerate(f.read_text(encoding="utf-8").split(chr(10)), 1):
+            t = line.strip().lstrip("*").strip()
+            for i, o in enumerate(ORDINALS):
+                if t.startswith(o + "째"):
+                    seen.append((i + 1, ln))
+                    break
+        nums = [n for n, _ in seen]
+        if nums and nums != sorted(nums):
+            bad.append((f.name, seen))
+    if not bad:
+        print("  [맞음] 차례를 세는 표현이 모두 순서대로 나온다")
+        return
+    for name, seen in bad:
+        order = " → ".join(ORDINALS[n - 1] + "째" for n, _ in seen)
+        print(f"  [고칠 것] {name}: {order}")
+        print(f"        └ 나온 줄: {[ln for _, ln in seen]}")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -294,6 +327,7 @@ def main() -> None:
             print(line)
     except Exception as e:
         print(f"  [확인 못 함] {e}")
+    check_ordinal_order()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
