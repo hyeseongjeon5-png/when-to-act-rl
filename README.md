@@ -176,6 +176,9 @@ python -m src.train.train_agent --config experiments/configs/main_mountaincar.ya
 # 본실험 (조건 병렬 실행 + progress.json 기록, 그냥 다시 실행하면 이어서 함)
 python -m src.train.runner --config experiments/configs/main_mountaincar.yaml
 
+# 자동 테스트 (비용 래퍼 8종 + MinAtar 어댑터 5종)
+python tests/run_all.py
+
 # 자가 감시 (프로세스 생존·진행 정체·로그 예외/NaN·디스크·학습 곡선 이상·대기열·중복 실행)
 python -m src.monitor.watchdog
 
