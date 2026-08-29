@@ -27,7 +27,7 @@ body { margin:0; background:#8a8a8a; font-family:"바탕","Batang",serif; color:
   width: 21cm; min-height: 29.7cm; padding: 2.5cm;
   margin: 1.2cm auto; background:#fff; box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
-p { font-size: 10pt; line-height: 2.0; margin: 0 0 0 0; text-align: justify; text-indent: 10pt; }
+p { font-size: 10pt; line-height: 2.0; margin: 0 0 0 0; text-align: justify; text-indent: 20pt; }
 h1,h2,h3 { font-family:"맑은 고딕","Malgun Gothic",sans-serif; line-height:1.3; margin:14pt 0 6pt; }
 h1 { font-size: 13pt; } h2 { font-size: 11pt; } h3 { font-size: 10pt; }
 img { max-width: 100%; display:block; margin: 8pt auto 2pt; }

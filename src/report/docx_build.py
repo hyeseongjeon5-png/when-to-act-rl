@@ -86,17 +86,32 @@ def add_page_number_footer(doc: Document) -> None:
     set_run_font(p.add_run(" -"), HEAD_FONT, 9)
 
 
+# 문단 사이 간격은 0이다. 더블 스페이싱 원고에서 문단을 구분하는 정석은 간격이 아니라
+# **첫 줄 들여쓰기**이기 때문이다(APA 등도 그렇다). 아래 first_line_indent를 두 글자로 둔다.
+#
+# 2026-08-29 측정 — 무엇이 얼마나 드는가 (본문 26,510자 기준):
+#   간격 0 · 들여쓰기 1글자 : 26쪽 · 장당 1,020자   ← 문단 경계가 거의 안 보였다
+#   간격 0 · 들여쓰기 2글자 : 28쪽 · 장당   947자   ← 채택
+#   간격 3pt · 들여쓰기 1글자: 28쪽 · 장당   947자
+#   간격 6pt · 들여쓰기 1글자: 29쪽 · 장당   914자
+# 양식이 기대하는 밀도가 '장당 1,000자 내외'라 그 부근을 유지하는 쪽을 골랐다.
+BODY_AFTER_PT = 0
+
+
 def para(doc, text: str = "", *, align=WD_ALIGN_PARAGRAPH.JUSTIFY, size=BODY_PT,
-         font=BODY_FONT, bold=False, line=LINE, before=0, after=0, first_indent=True):
+         font=BODY_FONT, bold=False, line=LINE, before=0, after=None, first_indent=True):
     p = doc.add_paragraph()
     p.alignment = align
     pf = p.paragraph_format
     pf.line_spacing = line
     pf.widow_control = True        # 문단의 첫·마지막 한 줄이 혼자 다른 쪽에 남지 않게
+    is_body = first_indent and align == WD_ALIGN_PARAGRAPH.JUSTIFY
+    if after is None:
+        after = BODY_AFTER_PT if is_body else 0
     pf.space_before = Pt(before)
     pf.space_after = Pt(after)
-    if first_indent and align == WD_ALIGN_PARAGRAPH.JUSTIFY:
-        pf.first_line_indent = Pt(BODY_PT)   # 국문 논문 관례: 문단 첫 줄 한 글자 들여쓰기
+    if is_body:
+        pf.first_line_indent = Pt(BODY_PT * 2)   # 국문 논문 관례: 문단 첫 줄 한 글자 들여쓰기
     if text:
         add_rich_text(p, text, size=size, font=font, bold=bold)
     return p

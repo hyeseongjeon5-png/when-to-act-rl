@@ -51,24 +51,24 @@ CAPTIONS: dict[str, dict] = {}
 
 def _box(ax, x, y, w, h, text, fc, ec, fs=9, weight="normal"):
     ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.006,rounding_size=0.018",
-                                fc=fc, ec=ec, lw=1.3, zorder=2))
+                                fc=fc, ec=ec, lw=1.3, zorder=2, clip_on=False))
     ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs,
-            zorder=3, linespacing=1.5, fontweight=weight)
+            zorder=3, linespacing=1.5, fontweight=weight, clip_on=False)
 
 
 def _arrow(ax, p0, p1, text=None, color="#333333", fs=7.6, rad=0.0, dy=0.016):
     ax.add_patch(FancyArrowPatch(p0, p1, arrowstyle="-|>", mutation_scale=13, lw=1.2,
-                                 color=color, zorder=4,
+                                 color=color, zorder=4, clip_on=False,
                                  connectionstyle=f"arc3,rad={rad}"))
     if text:
         ax.text((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2 + dy, text, ha="center", va="bottom",
-                fontsize=fs, color=color, zorder=5)
+                fontsize=fs, color=color, zorder=5, clip_on=False)
 
 
 def fig1_method() -> Path:
     """그림 1 — 비용 래퍼 한 겹과 비교 4계열의 구조."""
     fig, ax = plt.subplots(figsize=(9.2, 5.0), dpi=DPI)
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
+    ax.set_xlim(-0.015, 1.015); ax.set_ylim(-0.02, 1.02); ax.axis("off")
 
     # ── 왼쪽: 비용 래퍼가 끼어드는 자리 ──────────────────────────────
     ax.text(0.005, 0.965, "① 행동 비용 래퍼 — 환경과 학습기 사이에 한 겹",
@@ -140,7 +140,7 @@ def fig1_method() -> Path:
 
     fig.tight_layout()
     p = OUT / "fig1_method.png"
-    fig.savefig(p, bbox_inches="tight", facecolor="white"); plt.close(fig)
+    fig.savefig(p, bbox_inches="tight", pad_inches=0.06, facecolor="white"); plt.close(fig)
     CAPTIONS["fig1"] = {
         "file": p.name,
         "ko": "행동 비용 래퍼와 비교 4계열의 구조",
