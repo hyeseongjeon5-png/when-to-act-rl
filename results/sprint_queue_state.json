@@ -5,14 +5,16 @@
   "2_붕괴문턱_학습",
   "3_인과_규칙",
   "3_인과_학습",
-  "5_LL정밀_규칙"
+  "5_LL정밀_규칙",
+  "5_LL정밀_학습",
+  "4_MinAtar_규칙"
  ],
  "current": {
-  "label": "5_LL정밀_학습",
+  "label": "4_MinAtar_학습",
   "kind": "train",
-  "spec": "experiments/configs/main_lunarlander.yaml:10",
-  "started_at": 1787972815.431251,
-  "started_text": "2026-08-29 12:06:55"
+  "spec": "experiments/configs/main_minatar_freeway.yaml:10",
+  "started_at": 1787985597.1058633,
+  "started_text": "2026-08-29 15:39:57"
  },
  "history": [
   {
@@ -50,8 +52,20 @@
    "hours": 0.01,
    "exit": 0,
    "finished_text": "2026-08-29 12:06:55"
+  },
+  {
+   "label": "5_LL정밀_학습",
+   "hours": 3.55,
+   "exit": 0,
+   "finished_text": "2026-08-29 15:39:47"
+  },
+  {
+   "label": "4_MinAtar_규칙",
+   "hours": 0.0,
+   "exit": 0,
+   "finished_text": "2026-08-29 15:39:57"
   }
  ],
- "updated_at": 1787972815.431251,
- "updated_text": "2026-08-29 12:06:55"
+ "updated_at": 1787985597.1058633,
+ "updated_text": "2026-08-29 15:39:57"
 }

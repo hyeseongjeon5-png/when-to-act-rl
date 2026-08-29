@@ -37,10 +37,11 @@ ENV_NOTE = {
                        "학습 없이도 문제를 푸는 강한 고정 규칙(pump)이 존재한다."),
     "LunarLander-v3": ("보상이 조밀한 제어 문제다. 매 스텝 자세·속도·연료에 대한 신호가 들어오고, "
                        "표준 DQN이 정상적으로 학습된다. 고정 규칙은 처음 손으로 짠 계수로는 점수가 "
-                       "낮았지만(36), 계수를 다시 고르자 162까지 올라 학습에 근접한다(Ⅲ장 6.2절의 "
+                       "낮았지만({규칙_처음}), 계수를 다시 고르자 {규칙_튜닝}까지 올라 학습에 "
+                       "근접한다(Ⅲ장 6.2절의 "
                        "기준선 감사). 표에는 두 규칙을 함께 실어 그 차이를 보인다."),
     "MinAtar_Freeway-v1": ("앞의 두 환경 사이에 있는 세 번째 경우다. 손으로 짠 신중 규칙이 쓸 만하지만"
-                           "(무작위 0점 대비 17.8점) 최적과는 거리가 있어 학습이 이길 여지가 남아 있다. "
+                           "({규칙_대비}) 최적과는 거리가 있어 학습이 이길 여지가 남아 있다. "
                            "에피소드가 1000스텝으로 고정돼 행동 비용의 압력이 두 환경보다 뚜렷하다."),
 }
 ENV_ORDER = ["MountainCar-v0", "LunarLander-v3", "MinAtar_Freeway-v1"]
@@ -227,6 +228,46 @@ def action_saving_fact(agg: pd.DataFrame, env_id: str) -> str:
     return "; ".join(bits)
 
 
+def _fill_intro(env_id: str, text: str) -> str:
+    """환경 소개 문장 안의 자리표시를 집계 값으로 채운다.
+
+    2026-08-29: 여기 숫자가 손으로 적혀 있었다(36 · 162). 기준선 감사를 다시 돌리면
+    조용히 낡는다 — 실제로 감사의 잣대를 고쳤을 때 논문 세 곳이 한꺼번에 낡았다.
+    """
+    if "{" not in text:
+        return text
+    vals = {"규칙_처음": "—", "규칙_튜닝": "—", "규칙_대비": "—"}
+    # MinAtar 소개용: 무행동·주기 규칙과 견준 신중 규칙 점수 (전부 잰 값이다)
+    csv = AGG / (env_id + "_iqm.csv")
+    if csv.exists():
+        try:
+            a = pd.read_csv(csv)
+            z = a[a.lam == 0.0]
+            def _v(name):
+                g = z[z.agent == name]
+                return None if g.empty else float(g.iloc[0].raw_return_iqm)
+            ref, noop, per = _v(REF_RULE.get(env_id, "")), _v("rule_noop"), _v("rule_periodic_k1")
+            bits = []
+            if noop is not None:
+                bits.append("무행동 " + num(noop) + "점")
+            if per is not None:
+                bits.append("매 스텝 주기 " + num(per) + "점")
+            if ref is not None:
+                vals["규칙_대비"] = (", ".join(bits) + " 대비 " + num(ref) + "점") if bits                     else num(ref) + "점"
+        except Exception:
+            pass
+    p = AGG / "baseline_audit.json"
+    if p.exists():
+        try:
+            r = json.loads(p.read_text(encoding="utf-8"))["results"].get(env_id)
+            if r:
+                vals["규칙_처음"] = num(r["현재"]["eval_iqm"])
+                vals["규칙_튜닝"] = num(r["튜닝셋 최고"]["eval_iqm"])
+        except Exception:
+            pass
+    return text.format(**vals)
+
+
 def env_section(env_id: str, sec: str, compact: bool = False) -> str:
     p = AGG / (env_id + "_iqm.csv")
     if not p.exists():
@@ -249,7 +290,7 @@ def env_section(env_id: str, sec: str, compact: bool = False) -> str:
     parts = [
         "### " + sec + " " + env_id,
         "",
-        ENV_NOTE.get(env_id, "") + " " + status,
+        _fill_intro(env_id, ENV_NOTE.get(env_id, "")) + " " + status,
         "",
         "<!--TABCAP: " + env_id + "의 비용 반영 총보상 r′ — IQM [95% 신뢰구간]"
         " | Cost-adjusted return r′ on " + env_id + " (IQM [95% CI]) -->",

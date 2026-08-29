@@ -1,0 +1,8 @@
+
+===== 2026-08-29 15:39:47 experiments/configs/main_minatar_freeway.yaml =====
+[규칙 rule_noop           ] 굴린 시드 0개 0.0초 · 환산 0건 0.00초 · λ 6개
+[규칙 rule_periodic_k1    ] 굴린 시드 0개 0.0초 · 환산 0건 0.00초 · λ 6개
+[규칙 rule_periodic_k3    ] 굴린 시드 0개 0.0초 · 환산 0건 0.00초 · λ 6개
+[규칙 rule_periodic_k8    ] 굴린 시드 0개 0.0초 · 환산 0건 0.00초 · λ 6개
+[규칙 rule_cautious       ] 굴린 시드 0개 0.0초 · 환산 0건 0.00초 · λ 6개
+[규칙 rule_cautious_d1    ] 굴린 시드 0개 0.0초 · 환산 0건 0.00초 · λ 6개
