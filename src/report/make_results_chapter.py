@@ -54,11 +54,18 @@ def name(a: str) -> str:
 
 # 로마자 약어 뒤의 은/는은 읽는 소리로 정해진다 (DQN=디큐엔 → 은, MDP=엠디피 → 는)
 EUN = {"표준 DQN": "은", "TempoRL": "은", "Lazy-MDP": "는"}
+# 받침이 있으면 은/이, 없으면 는/가. 계열 이름이 늘어나면 여기에 추가한다.
+GA = {"표준 DQN": "이", "TempoRL": "이", "Lazy-MDP": "가"}
 
 
 def eun(a: str) -> str:
     n = name(a)
     return n + EUN.get(n, "은")
+
+
+def ga(a: str) -> str:
+    n = name(a)
+    return n + GA.get(n, "이")
 
 
 def num(v, nd=1) -> str:
@@ -294,6 +301,64 @@ def cost_share(agg) -> str:
     lo, hi = f"{min(shares):.1f}", f"{max(shares):.1f}"
     rng = lo + "%" if lo == hi else lo + "~" + hi + "%"
     return f"에피소드에서 물게 되는 비용 총액이 그 크기의 {rng}(1% 미만)만 되어도"
+
+
+def tradeoff_section(sec: str) -> str:
+    """행동-성능 상충 절. 문장 안 숫자는 전부 집계에서 계산한다."""
+    envs = [e for e in ("MountainCar-v0", "LunarLander-v3") if (AGG / (e + "_iqm.csv")).exists()]
+    if not envs:
+        return ""
+    lines = [
+        "### " + sec + " 행동을 아낀 만큼 무엇을 얻었는가",
+        "",
+        "앞의 지도는 비용까지 반영한 점수 r′만 보여 준다. 그래서 **행동을 줄여서 이긴 것**과 "
+        "**그냥 잘해서 이긴 것**이 구분되지 않는다. 가로를 행동 횟수, 세로를 "
+        "**비용 빼기 전** 원보상 r로 놓으면 그 둘이 갈라진다. 왼쪽 위로 갈수록 좋다 — "
+        "적게 움직이고 많이 받는 쪽이다.",
+        "",
+        "<!--FIG:fig_tradeoff-->",
+        "",
+    ]
+    facts = []
+    for env in envs:
+        agg = pd.read_csv(AGG / (env + "_iqm.csv"))
+        ref = REF_RULE.get(env)
+        g = agg[agg.agent == ref]
+        if g.empty:
+            continue
+        rx, ry = float(g.iloc[0].n_actions_iqm), float(g.iloc[0].raw_return_iqm)
+        best = None
+        for a in ("dqn", "temporl", "lazy"):
+            d = agg[agg.agent == a]
+            for _, r in d.iterrows():
+                if r.n_actions_iqm <= rx and r.raw_return_iqm > ry:
+                    gain = float(r.raw_return_iqm) - ry
+                    if best is None or gain > best[0]:
+                        best = (gain, a, float(r.n_actions_iqm), float(r.raw_return_iqm),
+                                float(r.lam))
+        rule_ko = name(ref)
+        if best is None:
+            facts.append(
+                "**" + env + "**에서는 어떤 계열도 " + rule_ko + "(" + num(rx, 0) + "회 · "
+                + num(ry, 0) + "점)보다 **행동은 적게 쓰면서 보상은 더 받는** 지점에 닿지 못했다. "
+                "그림에서 모든 궤적이 규칙 아래에 있다 — 비용을 어떻게 매기든 이 규칙을 이길 수 없다는 뜻이다.")
+        else:
+            gain, a, bx, by, blam = best
+            facts.append(
+                "**" + env + "**에서는 " + ga(a) + " λ=" + format(blam, "g") + "에서 "
+                + num(bx, 0) + "회 · " + num(by, 0) + "점에 닿는다. " + rule_ko + "("
+                + num(rx, 0) + "회 · " + num(ry, 0) + "점)보다 **행동은 " + num(rx - bx, 0)
+                + "회 적게 쓰면서 보상은 " + num(gain, 0) + "점 더 받는다.** "
+                "학습이 규칙을 이긴 것이 '행동을 줄여서'가 아니라 '같은 행동으로 더 잘해서'라는 뜻이다.")
+    for f in facts:
+        if f:
+            lines += [f, ""]
+    lines += ["",
+              "이 축에서 같은 r′를 주는 점들은 기울기 λ인 직선을 이룬다. 그래서 독자는 직선을 "
+              "기울여 보며 '비용이 이만큼일 때 누가 이기는가'를 직접 읽을 수 있다. "
+              "λ\*는 그 직선이 규칙을 지나면서 학습 궤적을 처음으로 완전히 아래에 두는 기울기다.",
+              ""]
+    return chr(10).join(lines)
 
 
 def collapse_section(sec: str) -> str:
@@ -605,6 +670,10 @@ def main() -> None:
     if cs:
         k += 1
         parts.append(cs)
+    ts = tradeoff_section("4." + str(k + 1))
+    if ts:
+        k += 1
+        parts.append(ts)
     for e in envs[2:]:
         k += 1
         parts.append(env_section(e, "4." + str(k), a.compact))

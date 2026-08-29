@@ -32,6 +32,13 @@
   "note": "빈 점은 처음부터 비용을 문 조건, 채운 점은 예산의 앞 절반을 비용 없이 학습시킨 조건이며 화살표는 그 변화다. 두 조건은 환경 스텝 예산·시드·평가 방식이 모두 같고 **학습 중 보상 신호만** 다르다. 평가는 양쪽 모두 진짜 λ로 한다 — 성적표는 언제나 비용이 있는 세상에서 매긴다. 비교 9건 중 5건이 '탐험 실패'로 판정됐고, '무행동이 최적'을 지지하는 조건은 하나도 없었다.",
   "source": "results/aggregate/causal_warmup.json"
  },
+ "fig_tradeoff": {
+  "file": "fig_tradeoff_actions_vs_return.png",
+  "ko": "행동을 아낀 만큼 무엇을 얻었는가 — 행동 횟수와 원보상의 상충",
+  "en": "What the saved actions buy: episode actions versus raw return (before cost)",
+  "note": "세로축은 **비용을 빼기 전** 원보상이라 '행동을 줄여서 이긴 것'과 '그냥 잘해서 이긴 것'이 구분된다. 선은 λ를 0부터 키우며 이은 것이고 양 끝에 λ를 적었다. 왼쪽 위로 갈수록 좋다. 옅은 붉은 영역은 **기준 규칙보다 행동은 더 쓰고 보상은 더 적은** 자리다 — 그 안에 있으면 어떤 λ에서도 기준 규칙을 이길 수 없다. 이 축에서 같은 비용 반영 점수 r′를 주는 점들은 기울기 λ의 직선을 이룬다.",
+  "source": "results/aggregate/{MountainCar-v0,LunarLander-v3}_iqm.csv"
+ },
  "fig_fair": {
   "file": "fig_fair_fairness_curves_MountainCar-v0.png",
   "ko": "예산을 늘려도 학습 곡선은 규칙 아래에서 평평해진다 (MountainCar-v0, λ=0)",

@@ -1,6 +1,6 @@
 {
- "time": "2026-08-29 13:57:34",
- "ts": 1787979454.724473,
+ "time": "2026-08-29 14:57:39",
+ "ts": 1787983059.5513618,
  "runs": [
   {
    "run": "causal_warmup_mc",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 111.1,
+   "stale_min": 171.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 90
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 666.5,
+   "stale_min": 726.6,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 665.5,
+   "stale_min": 725.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -49,14 +49,14 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 616.0,
+   "stale_min": 676.1,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
   },
   {
    "run": "main_lunarlander",
-   "done": 300,
+   "done": 338,
    "total": 360,
    "running": 10,
    "skipped": 0,
@@ -64,8 +64,8 @@
    "finished": false,
    "stale_min": 0.3,
    "advanced_since_last": true,
-   "eta_text": "약 1.5시간 남음",
-   "prev_done": 266
+   "eta_text": "약 0.5시간 남음",
+   "prev_done": 300
   },
   {
    "run": "main_mountaincar",
@@ -75,7 +75,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 328.6,
+   "stale_min": 388.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -90,14 +90,14 @@
   "next": "5_LL정밀_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 110.7
+  "stale_min": 170.7
  },
  "processes": {
   "queue": 1
  },
  "logs": {
   "scanned": 64,
-  "fresh": 20,
+  "fresh": 24,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -107,8 +107,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 17
+  "n_expected_floor": 16
  },
- "disk_free_gb": 343.4,
- "done_conditions_total": 3046
+ "disk_free_gb": 343.5,
+ "done_conditions_total": 3084
 }

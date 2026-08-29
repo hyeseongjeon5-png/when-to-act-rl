@@ -15,7 +15,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 
 ROOT = Path(__file__).resolve().parents[2]
 AGG = ROOT / "results" / "aggregate"
@@ -528,6 +528,91 @@ def causal_figure(tag: str = "fig_causal") -> Path | None:
     return out
 
 
+# ── 행동-성능 상충 그림 ─────────────────────────────────────────────────────
+# 왜 필요한가: 심사자가 물을 만한데 지금 어떤 그림도 답하지 않는 것이 하나 있다 —
+# **"행동을 아낀 만큼 무엇을 얻었는가."** λ 지도는 비용까지 반영한 점수만 보여 주므로
+# '행동을 줄여서 이긴 것'과 '그냥 잘해서 이긴 것'이 구분되지 않는다.
+#
+# 가로를 행동 횟수, 세로를 **비용 빼기 전** 원보상으로 놓으면 그 둘이 분리된다.
+# 왼쪽 위로 갈수록 좋다(적게 움직이고 많이 받는다). 그리고 이 축에서는
+# 같은 r′를 주는 점들이 기울기 λ인 직선을 이루므로, 독자가 직선을 기울여 보며
+# "λ가 이만큼일 때 누가 이기나"를 읽을 수 있다.
+TRADEOFF_ENVS = ["MountainCar-v0", "LunarLander-v3"]
+RULE_MARK = {"rule_noop": ("무행동", "s"), "rule_pump": ("pump 규칙", "*"),
+             "rule_threshold": ("임계값 규칙(처음)", "P"),
+             "rule_threshold_tuned": ("임계값 규칙(튜닝)", "*"),
+             "rule_cautious": ("신중 규칙", "*")}
+
+
+def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
+    """행동 횟수 대 원보상. 고정 규칙이 지배하는 영역을 함께 칠한다."""
+    envs = [e for e in TRADEOFF_ENVS if (AGG / (e + "_iqm.csv")).exists()]
+    if not envs:
+        return None
+    fig, axes = plt.subplots(1, len(envs), figsize=(9.2, 4.6), dpi=DPI)
+    axes = [axes] if len(envs) == 1 else list(axes)
+    for ax, env in zip(axes, envs):
+        agg = _load(env)
+        if agg is None:
+            continue
+        ref = REF[env]
+        for a in ("dqn", "temporl", "lazy"):
+            if a not in set(agg.agent):
+                continue
+            d = agg[agg.agent == a].sort_values("lam")
+            ax.plot(d.n_actions_iqm, d.raw_return_iqm, "-o", ms=3.4, lw=1.5,
+                    color=COLOR[a], alpha=0.9, label=LABEL[a], zorder=3)
+            f, l = d.iloc[0], d.iloc[-1]
+            ax.annotate("λ=0", xy=(f.n_actions_iqm, f.raw_return_iqm), xytext=(4, 5),
+                        textcoords="offset points", fontsize=7.2, color=COLOR[a])
+            ax.annotate(f"λ={l.lam:g}", xy=(l.n_actions_iqm, l.raw_return_iqm), xytext=(4, -10),
+                        textcoords="offset points", fontsize=7.2, color=COLOR[a])
+        for rname, (ko, mk) in RULE_MARK.items():
+            if rname not in set(agg.agent):
+                continue
+            d = agg[agg.agent == rname].iloc[0]
+            big = rname == ref
+            ax.plot(d.n_actions_iqm, d.raw_return_iqm, mk, ms=15 if big else 8,
+                    color="#111111" if big else "#777777", zorder=5,
+                    label=ko + (" (기준)" if big else ""))
+        # 기준 규칙이 지배하는 영역(행동은 더 쓰고 보상은 더 적은 곳)을 칠한다.
+        # **데이터를 다 그린 뒤에** 칠해야 한다 — 먼저 칠하면 축 범위가 음영 크기로 잡힌다.
+        g = agg[agg.agent == ref]
+        if not g.empty:
+            x0, x1 = ax.get_xlim()
+            y0, y1 = ax.get_ylim()
+            rx, ry = float(g.iloc[0].n_actions_iqm), float(g.iloc[0].raw_return_iqm)
+            ax.add_patch(Rectangle((rx, y0), max(0.0, x1 - rx), max(0.0, ry - y0),
+                                   color="#d62728", alpha=0.07, lw=0, zorder=0))
+            ax.set_xlim(x0, x1); ax.set_ylim(y0, y1)
+        ax.set_xlabel("에피소드당 행동 횟수 (적을수록 아낀다)", fontsize=9.5)
+        ax.set_ylabel("원보상 r  (비용 빼기 전)", fontsize=9.5)
+        ax.set_title(ENV_KO.get(env, env), fontsize=10, fontweight="bold")
+        ax.grid(alpha=0.25)
+        ax.tick_params(labelsize=8.5)
+        ax.legend(fontsize=7.4, loc="upper center", bbox_to_anchor=(0.5, -0.17),
+                  ncol=2, frameon=False, columnspacing=1.2, handletextpad=0.4)
+        ax.annotate("← 좋아지는 방향 (적게 움직이고 많이 받는다)", xy=(0.03, 0.965),
+                    xycoords="axes fraction", fontsize=7.6, color="#2e7d32", fontweight="bold")
+    fig.tight_layout()
+    out = OUT / (tag + "_actions_vs_return.png")
+    fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
+    CAPTIONS[tag] = {
+        "file": out.name,
+        "ko": "행동을 아낀 만큼 무엇을 얻었는가 — 행동 횟수와 원보상의 상충",
+        "en": "What the saved actions buy: episode actions versus raw return (before cost)",
+        "note": ("세로축은 **비용을 빼기 전** 원보상이라 '행동을 줄여서 이긴 것'과 "
+                 "'그냥 잘해서 이긴 것'이 구분된다. 선은 λ를 0부터 키우며 이은 것이고 "
+                 "양 끝에 λ를 적었다. 왼쪽 위로 갈수록 좋다. 옅은 붉은 영역은 "
+                 "**기준 규칙보다 행동은 더 쓰고 보상은 더 적은** 자리다 — 그 안에 있으면 "
+                 "어떤 λ에서도 기준 규칙을 이길 수 없다. 이 축에서 같은 비용 반영 점수 r′를 "
+                 "주는 점들은 기울기 λ의 직선을 이룬다."),
+        "source": "results/aggregate/{MountainCar-v0,LunarLander-v3}_iqm.csv",
+    }
+    print(f"  저장: {out.relative_to(ROOT)}")
+    return out
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     fig1_method()
@@ -535,6 +620,7 @@ def main() -> None:
     lambda_map("LunarLander-v3", "fig3")
     collapse_figure("MountainCar-v0")
     causal_figure("fig_causal")
+    tradeoff_figure("fig_tradeoff")
     fairness_curves("MountainCar-v0", "fig_fair")
     # 세 번째 환경은 학습 결과가 들어온 뒤에만 그린다 (규칙만 있으면 지도가 의미 없다)
     lambda_map("MinAtar_Freeway-v1", "fig_minatar")
