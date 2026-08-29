@@ -1,0 +1,243 @@
+{
+  "env_id": "MountainCar-v0@warmup50",
+  "rule": "rule_pump",
+  "results": [
+    {
+      "learner": "dqn",
+      "rule": "rule_pump",
+      "lam_star_ci": 0.01,
+      "lam_star_pt": 0.01,
+      "lams_in_grid": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "lams_compared": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "rows": [
+        {
+          "lam": 0.01,
+          "n_seeds": 2,
+          "learner_iqm": -130.61540000000008,
+          "rule_iqm": -120.53171666666667,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.02,
+          "n_seeds": 1,
+          "learner_iqm": -125.97520000000002,
+          "rule_iqm": -121.7251,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.05,
+          "n_seeds": 1,
+          "learner_iqm": -144.87266666666667,
+          "rule_iqm": -125.30525,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "3/3 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "lazy",
+      "rule": "rule_pump",
+      "lam_star_ci": 0.01,
+      "lam_star_pt": 0.01,
+      "lams_in_grid": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "lams_compared": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "rows": [
+        {
+          "lam": 0.01,
+          "n_seeds": 1,
+          "learner_iqm": -200.0,
+          "rule_iqm": -120.53171666666667,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.02,
+          "n_seeds": 1,
+          "learner_iqm": -174.26026666666664,
+          "rule_iqm": -121.7251,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.05,
+          "n_seeds": 1,
+          "learner_iqm": -200.0,
+          "rule_iqm": -125.30525,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "3/3 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "temporl",
+      "rule": "rule_pump",
+      "lam_star_ci": 0.02,
+      "lam_star_pt": 0.02,
+      "lams_in_grid": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "lams_compared": [
+        0.02
+      ],
+      "rows": [
+        {
+          "lam": 0.02,
+          "n_seeds": 1,
+          "learner_iqm": -161.57053333333354,
+          "rule_iqm": -121.7251,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/3 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견"
+    }
+  ],
+  "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
+  "results_vs_best_rule": [
+    {
+      "learner": "dqn",
+      "rule": "rule_best",
+      "lam_star_ci": 0.01,
+      "lam_star_pt": 0.01,
+      "lams_in_grid": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "lams_compared": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "rows": [
+        {
+          "lam": 0.01,
+          "n_seeds": 2,
+          "learner_iqm": -130.61540000000008,
+          "rule_iqm": -120.53171666666667,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.02,
+          "n_seeds": 1,
+          "learner_iqm": -125.97520000000002,
+          "rule_iqm": -121.7251,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.05,
+          "n_seeds": 1,
+          "learner_iqm": -144.87266666666667,
+          "rule_iqm": -125.30525,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "3/3 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "lazy",
+      "rule": "rule_best",
+      "lam_star_ci": 0.01,
+      "lam_star_pt": 0.01,
+      "lams_in_grid": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "lams_compared": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "rows": [
+        {
+          "lam": 0.01,
+          "n_seeds": 1,
+          "learner_iqm": -200.0,
+          "rule_iqm": -120.53171666666667,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.02,
+          "n_seeds": 1,
+          "learner_iqm": -174.26026666666664,
+          "rule_iqm": -121.7251,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.05,
+          "n_seeds": 1,
+          "learner_iqm": -200.0,
+          "rule_iqm": -125.30525,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "3/3 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견 (주의: 시드 1개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "temporl",
+      "rule": "rule_best",
+      "lam_star_ci": 0.02,
+      "lam_star_pt": 0.02,
+      "lams_in_grid": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "lams_compared": [
+        0.02
+      ],
+      "rows": [
+        {
+          "lam": 0.02,
+          "n_seeds": 1,
+          "learner_iqm": -161.57053333333354,
+          "rule_iqm": -121.7251,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/3 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견"
+    }
+  ]
+}
