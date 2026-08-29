@@ -270,6 +270,32 @@ def env_section(env_id: str, sec: str, compact: bool = False) -> str:
     return "\n".join(parts)
 
 
+def cost_share(agg) -> str:
+    """붕괴 문턱에서 '한 에피소드에 물게 되는 비용 총액'이 보상 크기의 몇 %인지 문장으로 만든다.
+
+    λ 자체를 보상과 견주면 단위가 맞지 않는다 — λ는 행동 1번의 값이고, 한 에피소드에는
+    행동이 100회 넘게 들어간다. 견줄 것은 **λ × λ=0에서의 행동 횟수**다.
+    (2026-08-29: 원래 문장이 이 단위를 틀리게 적고 있었다.)
+    """
+    shares = []
+    for ag in ("dqn", "temporl", "lazy"):
+        z = agg[(agg.agent == ag) & (agg.lam == 0.0)]
+        g = agg[(agg.agent == ag) & (agg.lam > 0)].sort_values("lam")
+        if z.empty or g.empty:
+            continue
+        z = z.iloc[0]
+        hit = g[g.solved_iqm < float(z.solved_iqm) * 0.5]
+        if hit.empty:
+            continue
+        total = float(hit.iloc[0].lam) * float(z.n_actions_iqm)
+        shares.append(total / 200.0 * 100)      # 가장 나쁜 에피소드 보상(−200) 기준
+    if not shares:
+        return "아주 작은 비용만으로도"
+    lo, hi = f"{min(shares):.1f}", f"{max(shares):.1f}"
+    rng = lo + "%" if lo == hi else lo + "~" + hi + "%"
+    return f"에피소드에서 물게 되는 비용 총액이 그 크기의 {rng}(1% 미만)만 되어도"
+
+
 def collapse_section(sec: str) -> str:
     p = AGG / "MountainCar-v0_iqm.csv"
     if not p.exists():
@@ -322,7 +348,8 @@ def collapse_section(sec: str) -> str:
         "행동을 멈추는 것은 그보다 더 비싸진 뒤다. 즉 **성능이 먼저 무너지고 행동이 나중에 멈춘다.**",
         "",
         "이 문턱들은 에피소드 보상 규모에 견주면 매우 작다. MountainCar의 한 에피소드 보상은 "
-        "−200에서 −120 사이인데, 행동 1번의 값이 그 1% 수준만 되어도 학습은 행동을 포기한다.",
+        "−200에서 −120 사이인데, " + cost_share(agg) + " 학습은 목표에 닿기를 포기한다. "
+        "**행동 1번의 값이 아니라, 한 에피소드에 물게 되는 비용 총액이 그만큼이라는 뜻이다.**",
         "",
         "그런데 '성능이 먼저 무너진다'는 사실 자체는 원인을 말해 주지 않는다. 두 가지가 가능하다. "
         "**(가)** 비용이 붙은 세상에서는 그 정도가 실제로 최선이거나, "
