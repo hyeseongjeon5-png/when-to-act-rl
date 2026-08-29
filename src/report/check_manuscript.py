@@ -150,6 +150,115 @@ def check_dangling_headings() -> None:
         print("        └ 이 절이 무엇을 말하는지 한 문장을 앞에 둘 것")
 
 
+# 고유명사는 대문자 규칙의 예외다 (환경 이름·기법 이름·학회명·장 제목)
+PROPER_NOUNS = {
+    "MountainCar", "LunarLander", "MinAtar", "Freeway", "DQN", "TempoRL", "Lazy", "MDP", "MDPs",
+    "IQM", "CI", "NeurIPS", "ICML", "AAMAS", "PMLR", "Gymnasium", "Adam", "Double", "Fig", "Table",
+    "Proceedings", "International", "Conference", "Machine", "Learning", "Advances", "Neural",
+    "Information", "Processing", "Systems", "Autonomous", "Agents", "Multiagent",
+    "Introduction", "Related", "Works", "Proposed", "Method", "Experimental", "Results",
+    "Conclusions", "Abstract", "Keyword", "When", "Critical", "Summary",
+}
+
+
+def check_citation_order() -> None:
+    """양식: 참고문헌은 **본문 인용 순서대로** 번호를 매긴다.
+
+    번호를 손으로 붙이므로, 문단을 옮기거나 문헌을 추가하면 조용히 어긋난다.
+    사람 눈으로는 잘 안 보이고 심사에서는 바로 지적당하는 종류다.
+    """
+    print(chr(10) + "참고문헌 번호가 인용 순서와 맞는가")
+    order, seen = [], set()
+    for name in ("01_서론", "02_관련연구", "03_방법", "04_결과", "05_결론"):
+        f = PAPER / (name + ".md")
+        if not f.exists():
+            continue
+        for m in re.finditer(r"\[(\d+)\]", f.read_text(encoding="utf-8")):
+            n = int(m.group(1))
+            if n not in seen:
+                seen.add(n)
+                order.append((n, name))
+    nums = [n for n, _ in order]
+    if nums == sorted(nums):
+        print(f"  [맞음] 본문에 나오는 순서가 {nums} 로 번호와 일치한다")
+    else:
+        print(f"  [고칠 것] 본문에 나오는 순서가 {nums} 다 — 번호를 다시 매길 것")
+        for n, where in order:
+            print(f"        [{n}] 처음 등장: {where}")
+
+
+def check_english_case() -> None:
+    """양식: 영문은 문장의 첫 자만 대문자, 나머지는 소문자 (고유명사 제외).
+
+    영어 제목을 Title Case로 쓰는 습관 때문에 자주 어긋난다.
+    """
+    print(chr(10) + "영문 제목이 '첫 자만 대문자' 규칙을 지키는가")
+    bad = []
+    targets = list(PAPER.glob("*.md")) + [ROOT / "src" / "report" / "paper_tables.py"]
+    caps = ROOT / "results" / "figures" / "paper" / "captions.json"
+    texts = []
+    for f in targets:
+        if f.name.startswith("00_양식") or not f.exists():
+            continue
+        for m in re.finditer(r"TABCAP:[^|]*\|\s*([^>\"']*?)\s*(?:-->|\")",
+                             f.read_text(encoding="utf-8"), re.S):
+            texts.append((f.name, " ".join(m.group(1).split())))
+    if caps.exists():
+        for k, v in json.loads(caps.read_text(encoding="utf-8")).items():
+            texts.append((k, v.get("en", "")))
+    for where, en in texts:
+        if not en or not re.search(r"[A-Za-z]", en):
+            continue
+        words = re.findall("[A-Za-z][A-Za-z-]*", en)
+        hits = [w for i, w in enumerate(words)
+                if i > 0 and w[0].isupper() and w not in PROPER_NOUNS
+                and not w.startswith(("Mount", "Lunar", "Min"))]
+        if hits:
+            bad.append((where, hits, en))
+    if not bad:
+        print(f"  [맞음] 영문 제목 {len(texts)}개 모두 규칙을 지킨다")
+        return
+    for where, hits, en in bad:
+        print(f"  [고칠 것] {where}: {', '.join(hits)}")
+        print(f"        └ {en[:64]}")
+
+
+def check_source_control_chars() -> None:
+    """소스에 제어문자가 섞여 들어가지 않았는지 본다.
+
+    2026-08-29 사고: 정규식의 낱말 경계 \\b 가 편집 과정에서 **백스페이스 문자(0x08)** 로
+    바뀌어 있었다. 눈으로는 똑같아 보이고 sed/cat 출력에도 안 보이는데, 정규식이
+    아무것도 못 찾아 검사가 **항상 통과**했다. 헛도는 검사는 없는 검사보다 나쁘다 —
+    "확인했다"는 착각을 주기 때문이다.
+    """
+    print(chr(10) + "검사 도구 자체가 성한가 (소스에 제어문자)")
+    bad_codes = {7: "\\a 벨", 8: "\\b 백스페이스",
+                 11: "\\v 세로탭", 12: "\\f 폼피드", 27: "escape"}
+    hits = []
+    roots = [ROOT / "src", ROOT / "paper", ROOT / "docs", ROOT / "experiments"]
+    for root in roots:
+        if not root.exists():
+            continue
+        for f in sorted(root.rglob("*")):
+            if f.suffix not in (".py", ".md", ".yaml", ".yml", ".sh") or not f.is_file():
+                continue
+            try:
+                text = f.read_text(encoding="utf-8")
+            except Exception:
+                continue
+            for ln, line in enumerate(text.split(chr(10)), 1):
+                for ch in line:
+                    if ord(ch) in bad_codes:
+                        hits.append((f.relative_to(ROOT), ln, bad_codes[ord(ch)]))
+                        break
+    if not hits:
+        print("  [맞음] 검사 대상 소스에 제어문자가 없다")
+        return
+    for f, ln, what in hits:
+        print(f"  [고칠 것] {f}:{ln} — {what} 문자가 들어 있다")
+        print("        └ 정규식이라면 아무것도 못 찾고 조용히 통과했을 수 있다")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -175,6 +284,9 @@ def main() -> None:
                 print(f"        └ {why}")
     print(f"\n확인할 곳 {n_hits}군데")
     check_dangling_headings()
+    check_citation_order()
+    check_english_case()
+    check_source_control_chars()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)

@@ -4,28 +4,28 @@
  "pid": 4656,
  "workers": 10,
  "started_at": 1787972823.9244912,
- "updated_at": 1787976160.0417607,
- "wall_elapsed_sec": 3336.1,
+ "updated_at": 1787976851.2696052,
+ "wall_elapsed_sec": 4027.3,
  "total": 360,
- "done": 268,
+ "done": 278,
  "running": 10,
  "failed": 0,
  "skipped": 0,
- "pending": 82,
- "avg_sec_per_cond": 858.4,
- "eta_sec": 7897.3,
- "eta_text": "약 2.2시간 남음",
+ "pending": 72,
+ "avg_sec_per_cond": 865.7,
+ "eta_sec": 7098.6,
+ "eta_text": "약 2.0시간 남음",
  "running_now": [
-  "LunarLander-v3/temporl/lam1.2/seed2",
-  "LunarLander-v3/temporl/lam1.6/seed2",
-  "LunarLander-v3/temporl/lam1.8/seed2",
-  "LunarLander-v3/temporl/lam2.5/seed2",
-  "LunarLander-v3/lazy/lam1.2/seed2",
-  "LunarLander-v3/lazy/lam1.6/seed2",
-  "LunarLander-v3/lazy/lam1.8/seed2",
-  "LunarLander-v3/lazy/lam2.5/seed2",
-  "LunarLander-v3/dqn/lam1.2/seed3",
-  "LunarLander-v3/dqn/lam1.6/seed3"
+  "LunarLander-v3/dqn/lam1.8/seed3",
+  "LunarLander-v3/dqn/lam2.5/seed3",
+  "LunarLander-v3/temporl/lam1.2/seed3",
+  "LunarLander-v3/temporl/lam1.6/seed3",
+  "LunarLander-v3/temporl/lam1.8/seed3",
+  "LunarLander-v3/temporl/lam2.5/seed3",
+  "LunarLander-v3/lazy/lam1.2/seed3",
+  "LunarLander-v3/lazy/lam1.6/seed3",
+  "LunarLander-v3/lazy/lam1.8/seed3",
+  "LunarLander-v3/lazy/lam2.5/seed3"
  ],
  "conditions": {
   "LunarLander-v3/dqn/lam0.0/seed0": {
@@ -1008,9 +1008,9 @@
    "seed": 2
   },
   "LunarLander-v3/temporl/lam1.2/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1451.9,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1030,9 +1030,9 @@
    "seed": 2
   },
   "LunarLander-v3/temporl/lam1.6/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1484.5,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1041,9 +1041,9 @@
    "seed": 2
   },
   "LunarLander-v3/temporl/lam1.8/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1484.0,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1063,9 +1063,9 @@
    "seed": 2
   },
   "LunarLander-v3/temporl/lam2.5/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 1447.7,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1140,9 +1140,9 @@
    "seed": 2
   },
   "LunarLander-v3/lazy/lam1.2/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 769.3,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1162,9 +1162,9 @@
    "seed": 2
   },
   "LunarLander-v3/lazy/lam1.6/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 801.8,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1173,9 +1173,9 @@
    "seed": 2
   },
   "LunarLander-v3/lazy/lam1.8/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 784.9,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1195,9 +1195,9 @@
    "seed": 2
   },
   "LunarLander-v3/lazy/lam2.5/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 797.6,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1272,9 +1272,9 @@
    "seed": 3
   },
   "LunarLander-v3/dqn/lam1.2/seed3": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 779.8,
    "fingerprint": "67b5920e72f9",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1294,9 +1294,9 @@
    "seed": 3
   },
   "LunarLander-v3/dqn/lam1.6/seed3": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 806.5,
    "fingerprint": "67b5920e72f9",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3",
@@ -1305,8 +1305,8 @@
    "seed": 3
   },
   "LunarLander-v3/dqn/lam1.8/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "67b5920e72f9",
    "env_id": "LunarLander-v3",
@@ -1327,8 +1327,8 @@
    "seed": 3
   },
   "LunarLander-v3/dqn/lam2.5/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "67b5920e72f9",
    "env_id": "LunarLander-v3",
@@ -1404,8 +1404,8 @@
    "seed": 3
   },
   "LunarLander-v3/temporl/lam1.2/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
@@ -1426,8 +1426,8 @@
    "seed": 3
   },
   "LunarLander-v3/temporl/lam1.6/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
@@ -1437,8 +1437,8 @@
    "seed": 3
   },
   "LunarLander-v3/temporl/lam1.8/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
@@ -1459,8 +1459,8 @@
    "seed": 3
   },
   "LunarLander-v3/temporl/lam2.5/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "31ca40fb8f63",
    "env_id": "LunarLander-v3",
@@ -1536,8 +1536,8 @@
    "seed": 3
   },
   "LunarLander-v3/lazy/lam1.2/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
@@ -1558,8 +1558,8 @@
    "seed": 3
   },
   "LunarLander-v3/lazy/lam1.6/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
@@ -1569,8 +1569,8 @@
    "seed": 3
   },
   "LunarLander-v3/lazy/lam1.8/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
@@ -1591,8 +1591,8 @@
    "seed": 3
   },
   "LunarLander-v3/lazy/lam2.5/seed3": {
-   "status": "대기",
-   "attempts": 0,
+   "status": "진행중",
+   "attempts": 1,
    "elapsed_sec": 0.0,
    "fingerprint": "789154ed6e13",
    "env_id": "LunarLander-v3",
