@@ -92,6 +92,7 @@ def para(doc, text: str = "", *, align=WD_ALIGN_PARAGRAPH.JUSTIFY, size=BODY_PT,
     p.alignment = align
     pf = p.paragraph_format
     pf.line_spacing = line
+    pf.widow_control = True        # 문단의 첫·마지막 한 줄이 혼자 다른 쪽에 남지 않게
     pf.space_before = Pt(before)
     pf.space_after = Pt(after)
     if first_indent and align == WD_ALIGN_PARAGRAPH.JUSTIFY:
@@ -141,19 +142,57 @@ def add_rich_text(p, text: str, size=BODY_PT, font=BODY_FONT, bold=False):
     return p
 
 
+def keep_with_next(p, on: bool = True):
+    """이 문단을 다음 문단과 붙여 둔다 — 쪽이 넘어가도 둘이 갈라지지 않는다.
+
+    양식 요구: "그림과 표는 본문에서 언급된 쪽에 싣되, 다음 쪽으로 넘어가는 경우에는
+    다음 쪽 맨 처음에 삽입한다." 제목만 앞 쪽에 남고 표가 뒤 쪽으로 넘어가면 이 규칙을 어긴다.
+    """
+    p.paragraph_format.keep_with_next = on
+    return p
+
+
+def no_widow(p):
+    """문단의 첫 줄이나 마지막 줄이 혼자 다른 쪽에 남지 않게 한다."""
+    p.paragraph_format.widow_control = True
+    return p
+
+
+def table_no_split(t, repeat_header: bool = True):
+    """표가 쪽 경계에서 갈라지지 않게 한다.
+
+    · cantSplit  : 한 줄(row)이 두 쪽에 걸쳐 잘리는 것을 막는다
+    · tblHeader  : 표가 여러 쪽에 걸칠 만큼 길면 머리글 줄을 각 쪽에 다시 그린다
+                   (머리글 없이 이어지는 표는 읽을 수 없다)
+    · 마지막 줄을 뺀 모든 줄에 keep_with_next — 짧은 표는 통째로 다음 쪽으로 밀린다
+    """
+    rows = t.rows
+    for i, r in enumerate(rows):
+        trPr = r._tr.get_or_add_trPr()
+        cant = OxmlElement("w:cantSplit")
+        trPr.append(cant)
+        if i == 0 and repeat_header:
+            trPr.append(OxmlElement("w:tblHeader"))
+        if i < len(rows) - 1:
+            for c in r.cells:
+                for par in c.paragraphs:
+                    par.paragraph_format.keep_with_next = True
+    return t
+
+
 def add_chapter_heading(doc, text: str):
-    return para(doc, text, align=WD_ALIGN_PARAGRAPH.LEFT, size=13, font=HEAD_FONT,
-                bold=True, line=1.3, before=16, after=6, first_indent=False)
+    return keep_with_next(para(doc, text, align=WD_ALIGN_PARAGRAPH.LEFT, size=13, font=HEAD_FONT,
+                               bold=True, line=1.3, before=16, after=6, first_indent=False))
 
 
 def add_section_heading(doc, text: str):
-    return para(doc, text, align=WD_ALIGN_PARAGRAPH.LEFT, size=11, font=HEAD_FONT,
-                bold=True, line=1.3, before=10, after=4, first_indent=False)
+    return keep_with_next(para(doc, text, align=WD_ALIGN_PARAGRAPH.LEFT, size=11, font=HEAD_FONT,
+                               bold=True, line=1.3, before=10, after=4, first_indent=False))
 
 
 def add_sub_heading(doc, text: str):
-    return para(doc, text, align=WD_ALIGN_PARAGRAPH.LEFT, size=10, font=HEAD_FONT,
-                bold=True, line=1.3, before=8, after=3, first_indent=False)
+    return keep_with_next(para(doc, text, align=WD_ALIGN_PARAGRAPH.LEFT, size=10, font=HEAD_FONT,
+                               bold=True, line=1.3, before=8, after=3, first_indent=False))
 
 
 def add_bullet(doc, text: str, level: int = 0):
@@ -189,9 +228,11 @@ def add_figure(doc, image_path: Path, ko: str, en: str, note: str = "",
     p.paragraph_format.line_spacing = 1.0
     p.paragraph_format.space_before = Pt(8)
     p.add_run().add_picture(str(image_path), width=Cm(width_cm))
+    keep_with_next(p)                      # 그림과 그 아래 제목이 갈라지지 않게
     cap = para(doc, "", align=WD_ALIGN_PARAGRAPH.CENTER, line=1.15, before=4, after=2,
                first_indent=False)
     set_run_font(cap.add_run(ko), HEAD_FONT, 9.5, bold=True)
+    keep_with_next(cap)
     cap2 = para(doc, "", align=WD_ALIGN_PARAGRAPH.CENTER, line=1.15, before=0, after=4,
                 first_indent=False)
     set_run_font(cap2.add_run(en), HEAD_FONT, 9, italic=True)
@@ -208,9 +249,11 @@ def add_table(doc, header: list[str], rows: list[list[str]], ko: str, en: str,
     cap = para(doc, "", align=WD_ALIGN_PARAGRAPH.CENTER, line=1.15, before=10, after=2,
                first_indent=False)
     set_run_font(cap.add_run(ko), HEAD_FONT, 9.5, bold=True)
+    keep_with_next(cap)                    # 양식: 표 제목은 표 상단 — 갈라지면 안 된다
     cap2 = para(doc, "", align=WD_ALIGN_PARAGRAPH.CENTER, line=1.15, before=0, after=3,
                 first_indent=False)
     set_run_font(cap2.add_run(en), HEAD_FONT, 9, italic=True)
+    keep_with_next(cap2)
 
     t = doc.add_table(rows=1, cols=len(header))
     t.style = "Table Grid"
@@ -238,6 +281,7 @@ def add_table(doc, header: list[str], rows: list[list[str]], ko: str, en: str,
             for i, w in enumerate(widths):
                 if i < len(r.cells):
                     r.cells[i].width = Cm(w)
+    table_no_split(t)
     if note:
         n = para(doc, "", align=WD_ALIGN_PARAGRAPH.LEFT, line=1.15, before=3, after=8,
                  first_indent=False)

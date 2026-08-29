@@ -1,0 +1,13 @@
+
+===== 2026-08-29 12:06:55 시작 =====
+[러너] main_lunarlander | 총 360조건 | 이미 완료 240 | 동시 10개
+  ▶ 시작 LunarLander-v3/dqn/lam1.2/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam1.6/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam1.8/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/dqn/lam2.5/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/temporl/lam1.2/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/temporl/lam1.6/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/temporl/lam1.8/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/temporl/lam2.5/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/lazy/lam1.2/seed0 (시도 1)
+  ▶ 시작 LunarLander-v3/lazy/lam1.6/seed0 (시도 1)

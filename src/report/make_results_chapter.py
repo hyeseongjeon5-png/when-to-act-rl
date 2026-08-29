@@ -82,14 +82,18 @@ def _cols(agg: pd.DataFrame, env_id: str, metric: str = "cost_return") -> list[s
     # 기준선을 얼마나 잘 만들었는지가 결론을 바꾼다는 것이 이 논문의 내용이기 때문이다.
     if ref == "rule_threshold_tuned" and "rule_threshold" in set(agg.agent):
         rules.append("rule_threshold")
-    if "rule_best" in set(agg.agent) and ref in set(agg.agent):
-        a = agg[agg.agent == "rule_best"].set_index("lam")[metric + "_iqm"]
-        b = agg[agg.agent == ref].set_index("lam")[metric + "_iqm"]
-        common = a.index.intersection(b.index)
-        if len(common) and not (a.loc[common] - b.loc[common]).abs().lt(1e-9).all():
-            rules.append("rule_best")
     if "rule_noop" in set(agg.agent):
         rules.append("rule_noop")
+    # 포락선 열은 **이미 실린 규칙들의 최댓값과 다를 때만** 넣는다.
+    # 같다면 독자가 눈으로 계산할 수 있는 값을 한 열 더 싣는 것이고,
+    # 그 한 열 때문에 표가 쪽을 넘어간다 (LunarLander가 그랬다: 8열 · 29cm).
+    if "rule_best" in set(agg.agent) and rules:
+        w = agg.pivot_table(index="lam", columns="agent", values=metric + "_iqm")
+        have = [r for r in rules if r in w.columns]
+        if "rule_best" in w.columns and have:
+            gap = (w["rule_best"] - w[have].max(axis=1)).abs()
+            if gap.max() > 1e-9:
+                rules.append("rule_best")
     return learners + rules
 
 
@@ -254,7 +258,9 @@ def env_section(env_id: str, sec: str, compact: bool = False) -> str:
         parts.append("")
     save = action_saving_fact(agg, env_id)
     if save:
-        parts += ["비용이 오를 때 실제로 행동을 아꼈는지는 행동 횟수로 확인된다: " + save + ".", ""]
+        parts += ["비용이 오를 때 실제로 행동을 아꼈는지는 행동 횟수로 확인된다.", ""]
+        parts += ["- " + b.strip() for b in save.split(";")]
+        parts += [""]
         parts += [] if compact else [
             "<!--TABCAP: " + env_id + "의 에피소드당 행동 횟수 (IQM)"
             " | Actions per episode on " + env_id + " (IQM) -->",
@@ -351,19 +357,42 @@ def causal_section(sec: str) -> str:
         "",
         "<!--TABCAP: 비용을 처음부터 물릴 때와 절반 뒤에 켤 때 (MountainCar-v0, 같은 예산·시드)"
         " | Charging the cost from the start versus switching it on halfway (MountainCar-v0) -->",
-        "| λ | 계열 | 비용 시점 | r′ IQM [95% CI] | 행동 횟수 | 목표 도달률 | 판정 |",
+        "| λ | 계열 | r′ 처음부터 | r′ 절반 뒤 | 행동 (처음→절반뒤) | 도달률 (처음→절반뒤) | 판정 |",
         "|---|---|---|---|---|---|---|",
     ]
+    # 한 조건을 두 줄로 적으면 표가 두 쪽을 넘어간다(19행·46cm). 같은 내용을
+    # **한 줄에 두 조건을 나란히** 두면 9행으로 줄면서 오히려 대조가 잘 보인다.
+    short = {"탐험 실패": "탐험 실패", "무행동이 최적해": "무행동이 최적해",
+             "행동은 늘었으나": "부분 증거", "점수는 높으나": "부분 증거"}
+
+    def code(v: str) -> str:
+        for k, t in short.items():
+            if k in v:
+                return t
+        return "판정 보류"
+
     for r in res:
         lam, ag = format(float(r["lam"]), "g"), name(r["agent"])
-        for key, label in (("from_start", "처음부터"), ("warmup", "절반 뒤")):
-            sc, ac = r[key]["score"], r[key]["actions"]
-            sv = r[key].get("solved")
-            lines.append("| **" + lam + "** | " + ag + " | " + label + " | "
-                         + num(sc["iqm"]) + " [" + num(sc["lo"]) + ", " + num(sc["hi"]) + "] | "
-                         + num(ac["iqm"], 0) + " | "
-                         + (num(sv["iqm"] * 100, 0) + "%" if sv else "—") + " | "
-                         + (r["verdict"] if key == "warmup" else "") + " |")
+        f, w = r["from_start"], r["warmup"]
+
+        def cell(x):
+            sc = x["score"]
+            return num(sc["iqm"]) + " [" + num(sc["lo"]) + ", " + num(sc["hi"]) + "]"
+
+        def pct(x):
+            sv = x.get("solved")
+            return num(sv["iqm"] * 100, 0) + "%" if sv else "—"
+
+        lines.append("| **" + lam + "** | " + ag + " | " + cell(f) + " | " + cell(w) + " | "
+                     + num(f["actions"]["iqm"], 0) + " → " + num(w["actions"]["iqm"], 0) + " | "
+                     + pct(f) + " → " + pct(w) + " | " + code(str(r["verdict"])) + " |")
+    lines += [
+        "",
+        "판정 칸은 줄임말이다. **탐험 실패** = 절반 뒤에 켠 쪽이 도달률이나 점수에서 "
+        "신뢰구간이 겹치지 않게 앞선 경우, **부분 증거** = 한쪽 지표만 앞선 경우, "
+        "**무행동이 최적해** = 양쪽 모두 행동이 멈춘 경우, **판정 보류** = 신뢰구간이 겹친 경우다. "
+        "판정 문구 전체는 `results/aggregate/causal_warmup.json`에 그대로 남아 있다.",
+    ]
     n_expl = sum(1 for r in res if str(r["verdict"]).startswith("탐험 실패"))
     n_opt = sum(1 for r in res if "무행동이 최적해" in str(r["verdict"]))
     n_none = len(res) - n_expl - n_opt

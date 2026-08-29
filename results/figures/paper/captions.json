@@ -20,9 +20,9 @@
  },
  "fig4": {
   "file": "fig4_collapse_MountainCar-v0.png",
-  "ko": "무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
-  "en": "Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
-  "note": "가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축을 썼다(0.001 아래는 선형). 왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이며, 선은 IQM, 띠는 95% 계층 부트스트랩 신뢰구간이다(시드 10개). 검은 점선은 기준 규칙(pump)이다.",
+  "ko": "무행동 붕괴는 두 단계로 일어난다 — 성능이 먼저 무너지고, 행동은 나중에 줄어든다 (MountainCar-v0)",
+  "en": "Collapse to inaction happens in two stages: success rate falls before the action count does (MountainCar-v0)",
+  "note": "가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축을 썼다(0.001 아래는 선형). 왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이며, 선은 IQM, 띠는 95% 계층 부트스트랩 신뢰구간이다(시드 10개). 검은 점선은 기준 규칙(pump)이다. 주황색 띠는 표준 DQN 기준으로 **목표 도달률은 이미 절반 아래로 내려갔으나 행동 횟수는 아직 λ=0의 절반 위에 있는** 구간이다 — 이 구간이 존재한다는 것이 '행동을 아끼다 실패하는 것이 아니라, 행동을 그대로 하면서 실패한다'는 뜻이다.",
   "source": "results/aggregate/MountainCar-v0_iqm.csv"
  }
 }

@@ -32,15 +32,22 @@ h1,h2,h3 { font-family:"맑은 고딕","Malgun Gothic",sans-serif; line-height:1
 h1 { font-size: 13pt; } h2 { font-size: 11pt; } h3 { font-size: 10pt; }
 img { max-width: 100%; display:block; margin: 8pt auto 2pt; }
 table { border-collapse: collapse; width: 100%; margin: 4pt 0 10pt; font-size: 9pt;
-        font-family:"바탕","Batang",serif; table-layout: fixed; }
+        font-family:"바탕","Batang",serif; table-layout: auto; }
 th, td { border: 1px solid #333; padding: 2pt 3pt; line-height: 1.15;
-         word-break: break-word; text-align:center; }
+         overflow-wrap: break-word; text-align:center; }
+td:first-child, th:first-child { white-space: nowrap; }
 th { background:#ededed; font-family:"맑은 고딕","Malgun Gothic",sans-serif; }
 td:first-child { text-align:left; }
 sup { font-size: 7.5pt; }
 .banner { position:sticky; top:0; background:#222; color:#fff; padding:8px 14px;
           font-family:"맑은 고딕",sans-serif; font-size:12px; z-index:9; }
 .overflow-warn { outline: 3px solid #d62728; }
+/* 쪽 경계 — Word의 실제 조판은 아니지만 '그림·표가 페이지를 걸치는가'를 보는 데 쓴다 */
+.pagebreak { position:absolute; left:0; right:0; border-top:2px dashed #c33; z-index:5; }
+.pagebreak span { position:absolute; right:4px; top:2px; font:11px "맑은 고딕",sans-serif;
+                  color:#c33; background:#fff; padding:0 4px; }
+.page { position:relative; }
+.straddle { outline: 3px solid #e08a00; outline-offset: 2px; }
 """
 
 JS = """
@@ -48,6 +55,64 @@ JS = """
 document.querySelectorAll('table').forEach(function (t) {
   if (t.scrollWidth > t.clientWidth + 2) { t.classList.add('overflow-warn'); }
 });
+
+// Word의 조판을 흉내 낸다: 쪽 경계를 걸치는 그림·표는 다음 쪽 맨 처음으로 밀어낸다
+// (.docx에 넣은 cantSplit·keepNext가 Word에서 하는 일이 이것이다).
+// 밀어내도 여전히 걸치는 것 = 한 쪽보다 큰 덩어리 = Word도 못 고치는 진짜 문제.
+(function () {
+  var page = document.querySelector('.page');
+  var CM = 37.7952755906;                 // 1cm = 이만큼의 CSS 픽셀
+  var H = 24.7 * CM;                      // 한 쪽에 들어가는 본문 높이 (29.7 − 2.5×2)
+  var top0 = 2.5 * CM;
+
+  function boundsNow() {
+    var n = Math.ceil((page.scrollHeight - top0) / H), b = [];
+    for (var i = 1; i <= n; i++) b.push(top0 + i * H);
+    return b;
+  }
+  // 그림은 <p><img></p> + 캡션 2줄, 표는 캡션 2줄 + <table> 이 한 덩어리다.
+  function blockOf(el) {
+    if (el.tagName === 'IMG') {
+      var a = el.closest('p') || el, list = [a];
+      for (var i = 0; i < 2 && a.nextElementSibling; i++) { a = a.nextElementSibling; list.push(a); }
+      return list;
+    }
+    var b = [el], q = el.previousElementSibling;
+    for (var j = 0; j < 2 && q; j++) { b.unshift(q); q = q.previousElementSibling; }
+    return b;
+  }
+  var pushed = 0, stuck = [];
+  document.querySelectorAll('table, img').forEach(function (el) {
+    var blk = blockOf(el);
+    for (var pass = 0; pass < 2; pass++) {
+      var pr = page.getBoundingClientRect();
+      var t = blk[0].getBoundingClientRect().top - pr.top;
+      var bt = blk[blk.length - 1].getBoundingClientRect().bottom - pr.top;
+      var bd = boundsNow(), hit = null;
+      for (var k = 0; k < bd.length; k++) if (t < bd[k] && bt > bd[k]) { hit = bd[k]; break; }
+      if (hit === null) return;
+      if (bt - t > H) {                                   // 한 쪽보다 큰 덩어리 — 밀어내도 소용없다
+        el.classList.add('straddle');
+        stuck.push(el.tagName === 'TABLE'
+          ? '표(' + el.rows.length + '행, ' + Math.round((bt - t) / H * 100) + '%쪽)'
+          : '그림(' + Math.round((bt - t) / H * 100) + '%쪽)');
+        return;
+      }
+      blk[0].style.marginTop = (parseFloat(getComputedStyle(blk[0]).marginTop) + (hit - t) + 2) + 'px';
+      pushed++;
+    }
+  });
+  var nb = boundsNow();
+  nb.forEach(function (y, i) {
+    var d = document.createElement('div');
+    d.className = 'pagebreak'; d.style.top = y + 'px';
+    d.innerHTML = '<span>— ' + (i + 2) + ' —</span>';
+    page.appendChild(d);
+  });
+  document.querySelector('.banner').innerHTML +=
+    ' · 총 ' + (nb.length + 1) + '쪽 · 다음 쪽으로 밀린 그림·표 ' + pushed + '개'
+    + ' · 밀어도 안 되는 것 ' + stuck.length + '개' + (stuck.length ? ' (주황): ' + stuck.join(', ') : '');
+})();
 """
 
 

@@ -71,7 +71,7 @@ def fig1_method() -> Path:
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
 
     # ── 왼쪽: 비용 래퍼가 끼어드는 자리 ──────────────────────────────
-    ax.text(0.005, 0.965, "(가) 행동 비용 래퍼 — 환경과 학습기 사이에 한 겹",
+    ax.text(0.005, 0.965, "① 행동 비용 래퍼 — 환경과 학습기 사이에 한 겹",
             fontsize=10.5, fontweight="bold", va="top")
     _box(ax, 0.005, 0.62, 0.125, 0.16, "학습기\n(정책)", "#eef4fb", "#1f77b4", 9.5, "bold")
     _box(ax, 0.205, 0.60, 0.185, 0.20,
@@ -99,7 +99,7 @@ def fig1_method() -> Path:
             ha="center", va="center", fontsize=8.2, color="#777777", style="italic")
 
     # ── 오른쪽: 비교 4계열 ──────────────────────────────────────────
-    ax.text(0.665, 0.965, "(나) 같은 λ·같은 예산으로 겨루는 네 계열",
+    ax.text(0.665, 0.965, "② 같은 λ·같은 예산으로 겨루는 네 계열",
             fontsize=10.5, fontweight="bold", va="top")
     series = [
         ("(가) 표준 DQN", "매 스텝 행동을 하나 고른다", "#eef4fb", "#1f77b4"),
@@ -115,7 +115,7 @@ def fig1_method() -> Path:
         y -= 0.152
 
     # ── 아래: 실험 절차 ────────────────────────────────────────────
-    ax.text(0.005, 0.335, "(다) 절차 — λ를 키워 가며 같은 자로 재고, 교차점을 λ*로 읽는다",
+    ax.text(0.005, 0.335, "③ 절차 — λ를 키워 가며 같은 자로 재고, 교차점을 λ*로 읽는다",
             fontsize=10.5, fontweight="bold", va="top")
     steps = [
         "λ 격자\n0 → 큰 값",
@@ -180,9 +180,11 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
         ax.plot(g.lam, g.cost_return_iqm, "-o", ms=4.2, lw=2.0, color=COLOR[a],
                 label=LABEL[a], zorder=4)
         ax.fill_between(g.lam, g.cost_return_ci_lo, g.cost_return_ci_hi,
-                        color=COLOR[a], alpha=0.16, lw=0, zorder=2)
-    for name, style in ((ref, dict(ls="--", lw=2.0, color="#111111")),
-                        ("rule_best", dict(ls="-.", lw=1.6, color="#7b3fb5")),
+                        color=COLOR[a], alpha=0.11, lw=0.7, ec=COLOR[a], zorder=2)
+    # 포락선을 두껍고 옅게 **먼저** 깐다. 기준 규칙과 겹치는 구간에서는 검은 점선 둘레로
+    # 보라 테가 비쳐 "이 구간은 기준 규칙이 곧 최강 규칙"이라는 사실이 눈에 보인다.
+    for name, style in (("rule_best", dict(ls="-", lw=5.0, color="#b98fe0", alpha=0.55)),
+                        (ref, dict(ls="--", lw=2.0, color="#111111")),
                         ("rule_noop", dict(ls=":", lw=1.4, color="#888888"))):
         if name not in set(agg.agent):
             continue
@@ -200,19 +202,35 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
             v = r.get("lam_star_pt")
             if v is not None:                      # 0.0도 뜻이 있다 — 거짓값으로 버리면 안 된다
                 stars[r["learner"]] = float(v)
-    y0, y1 = ax.get_ylim()
     zero_at = [LABEL[a] for a, v in stars.items() if v == 0.0 and a in learners]
+    xt = ax.get_xaxis_transform()          # x는 데이터 좌표, y는 축 비율
+    have = [v for a, v in stars.items() if a in learners]
+
+    # 이 그림의 주인공은 λ*다. 모든 계열이 규칙에 지는 구간을 회색으로 깔아
+    # "여기서부터는 학습을 쓸 이유가 없다"를 선이 아니라 면적으로 보여 준다.
+    # 단, λ*가 전부 0이면 이 음영이 그림 전체를 덮어 아무것도 구분해 주지 못한다.
+    # 그때는 칠하지 않는다 — 아래 빨간 상자가 같은 말을 더 분명히 한다.
+    if have and len(have) == len(learners) and max(have) > float(agg.lam.min()):
+        xr = ax.get_xlim()
+        ax.axvspan(max(have), xr[1], color="#9e9e9e", alpha=0.15, lw=0, zorder=0)
+        ax.set_xlim(*xr)
+        ax.annotate("← 학습이 이기는 구간   |   모든 계열이 규칙에 지는 구간 →",
+                    xy=(max(have), 0.012), xycoords=ax.get_xaxis_transform(),
+                    ha="center", va="bottom", fontsize=7.4, color="#5f5f5f")
+
     for a, lam in sorted(stars.items(), key=lambda kv: kv[1]):
         if a not in learners or lam == 0.0:
             continue
-        ax.axvline(lam, color=COLOR[a], ls="-.", lw=1.0, alpha=0.55, zorder=1)
-        ax.annotate(f"λ*={lam:g} {SHORT[a]}", xy=(lam, y0 + 0.12 * (y1 - y0)),
-                    xytext=(4, 0), textcoords="offset points", rotation=90,
-                    fontsize=7.6, color=COLOR[a], fontweight="bold", va="bottom")
+        ax.axvline(lam, color=COLOR[a], ls="-.", lw=1.2, alpha=0.7, zorder=1)
+        # 가로로, 그림 맨 위에 — 세로 라벨은 데이터 위를 가로질러 읽기 어려웠다
+        ax.annotate(f"λ*={lam:g}" + chr(10) + SHORT[a], xy=(lam, 1.005), xycoords=xt,
+                    ha="center", va="bottom", fontsize=7.4, color=COLOR[a],
+                    fontweight="bold", linespacing=1.1)
     if zero_at:
-        ax.annotate("λ*=0 (비용이 없어도 규칙을 못 이김): " + ", ".join(zero_at),
-                    xy=(0.02, 0.03), xycoords="axes fraction", fontsize=7.6,
-                    color="#b3261e", fontweight="bold")
+        ax.annotate("λ*=0 — 비용이 없어도 규칙을 못 이김: " + ", ".join(zero_at),
+                    xy=(0.02, 0.035), xycoords="axes fraction", fontsize=7.8,
+                    color="#b3261e", fontweight="bold",
+                    bbox=dict(fc="white", ec="#b3261e", lw=0.8, alpha=0.9, pad=2.5))
 
     n_seeds = int(agg.n_seeds.max())
     if symlog:
@@ -220,15 +238,22 @@ def lambda_map(env_id: str, tag: str, symlog: bool = False) -> Path | None:
         # 0 근처를 넓혀 보는 대칭 로그 축을 쓴다 (λ=0도 그대로 표시된다).
         ax.set_xscale("symlog", linthresh=0.001)
         ax.xaxis.set_major_formatter(PLAIN)   # 수식 글꼴 눈금($10^{-3}$) 대신 평범한 숫자로
-        ax.set_xlabel("행동 1번의 비용  λ   (0 부근을 넓혀 그린 축)", fontsize=10)
+        # 대칭 로그 축은 0을 가운데 두므로 왼쪽 절반이 **음수 λ**가 된다. 비용에 음수는 없다.
+        # 그대로 두면 그림 너비의 40%가 빈 채로 낭비되고 데이터가 오른쪽에 몰려 보인다.
+        ax.set_xlim(left=-0.00018)
+        ax.set_xticks([t for t in ax.get_xticks() if t >= 0])
+        ax.set_xlabel("행동 1번의 비용  λ   (0 부근을 넓혀 그린 축 · 음수 구간 없음)", fontsize=10)
     else:
         ax.set_xlabel("행동 1번의 비용  λ   (오른쪽일수록 행동이 비싸다)", fontsize=10)
     ax.set_ylabel("비용 반영 총보상 r′  (높을수록 좋다)", fontsize=10)
     ax.grid(alpha=0.25)
-    ax.legend(fontsize=8, loc="best", framealpha=0.92)
+    # 범례를 그림 안에 두면 자리를 어디로 잡아도 선을 가린다. 특히 논문의 비교 기준인
+    # 규칙 선을 가리는 것이 가장 나쁘다. 축 아래로 빼면 가리는 것이 없다.
+    ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.155),
+              ncol=3, frameon=False, handlelength=2.4, columnspacing=1.6)
     ax.tick_params(labelsize=9)
-    ax.text(0.99, 0.02, f"시드 {n_seeds}개 · IQM · 95% 계층 부트스트랩 CI",
-            transform=ax.transAxes, ha="right", va="bottom", fontsize=7.6, color="#666666")
+    ax.text(0.99, 0.975, f"시드 {n_seeds}개 · IQM · 95% 계층 부트스트랩 CI",
+            transform=ax.transAxes, ha="right", va="top", fontsize=7.6, color="#666666")
     fig.tight_layout()
     out = OUT / f"{tag}_lambda_map_{env_id}.png"
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
@@ -258,19 +283,50 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
         for a in learners:
             g = agg[agg.agent == a].sort_values("lam")
             ax.plot(g.lam, g[col], "-o", ms=4.0, lw=1.9, color=COLOR[a], label=LABEL[a], zorder=3)
-            ax.fill_between(g.lam, g[lo], g[hi], color=COLOR[a], alpha=0.15, lw=0, zorder=2)
+            ax.fill_between(g.lam, g[lo], g[hi], color=COLOR[a], alpha=0.11, lw=0.7, ec=COLOR[a], zorder=2)
         ref = REF[env_id]
         if ref in set(agg.agent):
             g = agg[agg.agent == ref].sort_values("lam")
             ax.plot(g.lam, g[col], ls="--", lw=1.7, color="#111111", label=LABEL.get(ref, ref), zorder=3)
         ax.set_xscale("symlog", linthresh=0.001)
         ax.xaxis.set_major_formatter(PLAIN)
+        ax.set_xlim(left=-0.00018)          # 음수 λ는 없다 — 왼쪽 절반을 비워 두지 않는다
+        ax.set_xticks([t for t in ax.get_xticks() if t >= 0])
         ax.set_xlabel("행동 1번의 비용  λ  (0 부근을 넓혀 그린 축)", fontsize=9.5)
         ax.set_ylabel(ylab, fontsize=9.5)
         ax.grid(alpha=0.25)
         ax.tick_params(labelsize=8.5)
-    # 두 단계 구조를 눈으로 보이게 한다: '도달률이 절반이 되는 λ'를 **왼쪽 패널에도** 세로선으로
-    # 표시한다. 그 지점에서 행동 횟수는 아직 λ=0과 비슷하다는 것이 이 그림의 요점이다.
+    # 이 그림의 발견은 "성능이 먼저 무너지고, 행동은 나중에 줄어든다"이다.
+    # 그 사실을 독자가 두 패널을 눈으로 오가며 맞춰 보게 두지 않고, **그 구간을 칠해서**
+    # 두 패널 같은 자리에 보여 준다. 기준은 대표 계열(표준 DQN)로 한다.
+    #   구간 시작 = 도달률이 λ=0의 절반 아래로 처음 내려가는 λ
+    #   구간 끝   = 행동 횟수가 λ=0의 절반 아래로 처음 내려가는 λ
+    def _first_below(a: str, col: str, frac: float) -> float | None:
+        g0 = agg[(agg.agent == a) & (agg.lam == 0.0)]
+        g = agg[(agg.agent == a) & (agg.lam > 0)].sort_values("lam")
+        if g0.empty or g.empty:
+            return None
+        hit = g[g[col] < float(g0.iloc[0][col]) * frac]
+        return None if hit.empty else float(hit.iloc[0].lam)
+
+    lead = "dqn" if "dqn" in learners else (learners[0] if learners else None)
+    s_half = _first_below(lead, "solved_iqm", 0.5) if lead else None
+    a_half = _first_below(lead, "n_actions_iqm", 0.5) if lead else None
+    if s_half is not None and a_half is not None and a_half > s_half:
+        for ax in axes:
+            ax.axvspan(s_half, a_half, color="#f0a500", alpha=0.22, lw=0, zorder=0)
+            for x in (s_half, a_half):     # 로그 축에서 이 구간은 매우 좁다 — 경계를 그어 준다
+                ax.axvline(x, color="#f0a500", lw=1.1, alpha=0.85, zorder=1)
+        # 좁은 띠는 칠하기만 해서는 눈에 띄지 않는다. 빈자리에 설명을 두고 화살표로 가리킨다.
+        axes[0].annotate("여기서 성능은 이미 무너졌는데" + chr(10) + "행동 횟수는 아직 λ=0과 비슷하다" + chr(10) + f"(λ {s_half:g} ~ {a_half:g})",
+                         xy=(s_half, 0.42), xycoords=axes[0].get_xaxis_transform(),
+                         xytext=(0.045, 0.30), textcoords="axes fraction",
+                         ha="left", va="center", fontsize=8.0, color="#8a5a00",
+                         fontweight="bold", linespacing=1.35,
+                         bbox=dict(fc="white", ec="#f0a500", lw=1.0, alpha=0.95, pad=3.5),
+                         arrowprops=dict(arrowstyle="->", color="#c98600", lw=1.4,
+                                         connectionstyle="arc3,rad=-0.18"))
+
     for a in learners:
         g0 = agg[(agg.agent == a) & (agg.lam == 0.0)]
         g = agg[(agg.agent == a) & (agg.lam > 0)].sort_values("lam")
@@ -282,7 +338,7 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
         lam_h = float(half.iloc[0].lam)
         for ax in axes:
             ax.axvline(lam_h, color=COLOR[a], ls=":", lw=1.1, alpha=0.55, zorder=1)
-    axes[0].annotate("점선 = 목표 도달률이 절반이 되는 λ" + chr(10) + "(그 지점에서 행동 횟수는 아직 높다)",
+    axes[0].annotate("세로 점선 = 계열별로 목표 도달률이 절반이 되는 λ",
                      xy=(0.02, 0.06), xycoords="axes fraction", fontsize=7.4, color="#555555",
                      va="bottom")
     axes[0].legend(fontsize=7.8, loc="best", framealpha=0.92)
@@ -293,12 +349,16 @@ def collapse_figure(env_id: str = "MountainCar-v0") -> Path | None:
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
     CAPTIONS["fig4"] = {
         "file": out.name,
-        "ko": "무행동 붕괴 — 비용이 조금만 붙어도 행동을 멈춘다 (MountainCar-v0)",
-        "en": "Collapse to inaction: action count and success rate versus action cost λ on MountainCar-v0",
+        "ko": "무행동 붕괴는 두 단계로 일어난다 — 성능이 먼저 무너지고, 행동은 나중에 줄어든다 (MountainCar-v0)",
+        "en": ("Collapse to inaction happens in two stages: success rate falls before the action "
+               "count does (MountainCar-v0)"),
         "note": ("가로축은 λ=0 부근을 넓혀 보기 위해 대칭 로그 축을 썼다(0.001 아래는 선형). "
                  "왼쪽은 에피소드당 행동 횟수, 오른쪽은 목표 도달률이며, "
                  f"선은 IQM, 띠는 95% 계층 부트스트랩 신뢰구간이다(시드 {n_seeds}개). "
-                 "검은 점선은 기준 규칙(pump)이다."),
+                 "검은 점선은 기준 규칙(pump)이다. 주황색 띠는 표준 DQN 기준으로 "
+                 "**목표 도달률은 이미 절반 아래로 내려갔으나 행동 횟수는 아직 λ=0의 절반 위에 있는** "
+                 "구간이다 — 이 구간이 존재한다는 것이 '행동을 아끼다 실패하는 것이 아니라, "
+                 "행동을 그대로 하면서 실패한다'는 뜻이다."),
         "source": f"results/aggregate/{env_id}_iqm.csv",
     }
     print(f"  저장: {out.relative_to(ROOT)}")
