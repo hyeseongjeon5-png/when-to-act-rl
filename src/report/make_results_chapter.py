@@ -706,7 +706,7 @@ def baseline_audit_section() -> str:
                     + num(r["현재"]["eval_iqm"]) + " | " + num(r["튜닝셋 최고"]["eval_iqm"]) + " | "
                     + num(r["차이"]) + " | " + r["판정"] + " |")
     return "\n".join([
-        "## 7. 기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가",
+        "## {감사번호}. 기준선 감사 — 비교 상대인 규칙을 성의 있게 만들었는가",
         "",
         "\"학습이 단순 규칙을 이긴다\"는 주장은 그 규칙을 얼마나 잘 만들었는지에 달려 있다. "
         "환경마다 기준 규칙의 계수를 격자로 훑어 더 나은 것이 있는지 확인했다. "
@@ -731,7 +731,7 @@ def baseline_audit_section() -> str:
     ])
 
 
-FAIRNESS_TMPL = """## 6. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
+FAIRNESS_TMPL = """## {공정성번호}. 공정성 점검 — 비용이 없을 때 학습은 규칙 수준에 닿는가
 
 MountainCar에서 λ*가 0으로 나왔다는 것은 "비용이 없어도 학습이 규칙에 진다"는 뜻이다.
 그렇다면 이 결과는 비용에 대한 발견이 아니라 학습이 덜 됐다는 신호일 수 있다.
@@ -768,9 +768,6 @@ def main() -> None:
     for e in envs[:2]:
         k += 1
         parts.append(env_section(e, "4." + str(k), a.compact))
-    for e in envs[2:]:
-        k += 1
-        parts.append(env_section(e, "4." + str(k), a.compact))
 
     # 5절: 두 환경이 갈린 원인을 파고든다
     parts.append("## 5. 무엇이 두 환경을 갈랐나")
@@ -791,6 +788,22 @@ def main() -> None:
     if ts:
         j += 1
         parts.append(ts)
+
+    # 6절: 세 번째 환경으로 확인한다.
+    # 여기 두는 이유는 두 가지다 —
+    #   (1) 내용: MinAtar는 두 환경 사이에 놓이도록 고른 환경이라, 앞의 설명을 확인하는 자리다
+    #   (2) 배치: 4절에 두면 그 λ 지도가 그림 4가 되어 '그림 4 = 무행동 붕괴' 지시가 깨진다
+    third = [env_section(e, "6", a.compact) for e in envs[2:]]
+    third = [t for t in third if t]
+    if third:
+        parts.append("## 6. 세 번째 환경으로 확인한다")
+        parts.append("")
+        parts.append("앞의 두 환경은 보상 조밀도의 양 끝이었다. MinAtar/Freeway는 그 사이에 놓이도록 "
+                     "고른 환경이다(Ⅲ장 2절의 조밀도 측정). 여기서 λ\*가 두 환경 사이에 오면 "
+                     "'조밀도가 λ\*를 가른다'는 설명이 한 번 더 확인되고, 그렇지 않으면 그 설명이 "
+                     "너무 단순하다는 뜻이 된다. **어느 쪽이든 그대로 적는다.**")
+        parts.append("")
+        parts += [t.replace("### 6 ", "### 6.1 ") for t in third]
     body = "\n".join(x for x in parts if x)
     src = ("\n<!-- 출처: results/aggregate/" + "{" + ",".join(envs) + "}_iqm.csv, "
            "*_lambda_star.json. 조건별 원본은 results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv. "
@@ -798,8 +811,13 @@ def main() -> None:
     out = Path(a.out) if a.out else OUT
     out.parent.mkdir(parents=True, exist_ok=True)
     head = HEADER_TMPL.replace("<!--LEAD:tab1-->", lam_star_lead())
-    out.write_text(head + "\n" + body + "\n" + FAIRNESS_TMPL
-                   + "\n" + baseline_audit_section() + src, encoding="utf-8")
+    # 세 번째 환경 절이 없으면(실험이 아직 안 끝났으면) 뒤 절 번호가 하나씩 당겨져야 한다.
+    # 그러지 않으면 '5절 다음이 7절'이 되어 목차에 구멍이 생긴다.
+    has_third = any("## 6. 세 번째 환경" in x for x in parts)
+    n_fair = 7 if has_third else 6
+    fair = FAIRNESS_TMPL.replace("{공정성번호}", str(n_fair))
+    audit = baseline_audit_section().replace("{감사번호}", str(n_fair + 1))
+    out.write_text(head + chr(10) + body + chr(10) + fair + chr(10) + audit + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
 
 
