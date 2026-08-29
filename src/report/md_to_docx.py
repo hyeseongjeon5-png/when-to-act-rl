@@ -110,7 +110,13 @@ def resolve_refs(md: str, numbers: dict) -> str:
     def tab(m):
         return _one("표", m)
 
-    return TABREF_MARK.sub(tab, FIGREF_MARK.sub(fig, md))
+    out = TABREF_MARK.sub(tab, FIGREF_MARK.sub(fig, md))
+    # 형식이 틀린 참조 마커는 아래 COMMENT 규칙에 걸려 **조용히 지워진다.**
+    # 사라진 자리는 "보면() 답이 갈린다"처럼 괄호만 남아 눈에 잘 안 띈다. 그래서 알린다.
+    for bad in re.finditer(r"<!--\s*(FIGREF|TABREF):[^>]*-->", out):
+        print("  [경고] 알아보지 못한 참조 마커: " + bad.group(0)
+              + "  → <!--FIGREF:태그--> 또는 <!--FIGREF:태그|조사--> 형식이어야 한다")
+    return out
 
 
 def _captions() -> dict:
