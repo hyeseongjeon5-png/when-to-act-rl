@@ -59,8 +59,11 @@ REFERENCES = [
     'Information Processing Systems (NeurIPS), Vol.34, pp.29304-29320, 2021.',
 ]
 
-FIG_WIDTH = {"fig1": 16.0, "fig2": 14.0, "fig3": 14.0, "fig4": 16.0, "fig5": 14.0,
-             "fig6": 14.0}
+# 본문 폭은 16cm(A4 21 − 여백 2.5×2)다. 그림을 그보다 좁게 넣으면 그림 안의 글자도
+# 같은 비율로 작아진다 — 14cm면 범례가 6pt가 되어 본문 10pt보다 작아진다.
+# 논문의 핵심 근거인 λ 지도가 가장 읽기 어려워서는 안 되므로 전부 본문 폭에 맞춘다.
+FIG_WIDTH = {"fig1": 16.0, "fig2": 16.0, "fig3": 16.0, "fig4": 16.0, "fig5": 16.0,
+             "fig6": 16.0}
 
 
 def _read(path: str) -> str | None:

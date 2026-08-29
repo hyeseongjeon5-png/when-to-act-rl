@@ -292,6 +292,52 @@ def check_ordinal_order() -> None:
         print(f"        └ 나온 줄: {[ln for _, ln in seen]}")
 
 
+def check_caption_position() -> None:
+    """양식: **그림 제목은 그림 하단, 표 제목은 표 상단.** 조립된 .docx에서 직접 확인한다.
+
+    지금은 코드가 그렇게 만들도록 짜여 있지만, 코드가 그렇다는 것과 결과물이 그렇다는 것은
+    다르다. 만들어진 파일을 열어 순서를 본다.
+    """
+    print(chr(10) + "그림 제목은 아래, 표 제목은 위에 있는가 (.docx 확인)")
+    docx = ROOT / "졸업논문_초안v1.docx"
+    if not docx.exists():
+        print("  [건너뜀] .docx가 없다 — 먼저 make_thesis_docx를 돌릴 것")
+        return
+    try:
+        from docx import Document
+        from docx.oxml.ns import qn
+    except Exception as e:
+        print(f"  [확인 못 함] python-docx를 못 불러왔다: {e}")
+        return
+    doc = Document(str(docx))
+    body = doc.element.body
+    # 본문 순서대로 (종류, 내용) 목록을 만든다. 표는 하나의 항목으로 센다.
+    seq = []
+    for child in body.iterchildren():
+        if child.tag == qn("w:p"):
+            txt = "".join(n.text or "" for n in child.iter(qn("w:t"))).strip()
+            kind = "그림파일" if child.find(".//" + qn("a:blip")) is not None else "글"
+            seq.append((kind, txt))
+        elif child.tag == qn("w:tbl"):
+            seq.append(("표", ""))
+    bad = 0
+    for i, (kind, txt) in enumerate(seq):
+        if kind == "그림파일":
+            near = [t for k, t in seq[i + 1:i + 4] if k == "글" and t]
+            if not any(re.match(r"그림 \d+\.", t) for t in near):
+                print(f"  [고칠 것] {i}번째 그림 아래에 '그림 n.' 제목이 없다 (뒤에 온 글: {near[:2]})")
+                bad += 1
+        elif kind == "표":
+            near = [t for k, t in seq[max(0, i - 3):i] if k == "글" and t]
+            if not any(re.match(r"표 \d+\.", t) for t in near):
+                print(f"  [고칠 것] {i}번째 표 위에 '표 n.' 제목이 없다 (앞에 온 글: {near[-2:]})")
+                bad += 1
+    n_fig = sum(1 for k, _ in seq if k == "그림파일")
+    n_tab = sum(1 for k, _ in seq if k == "표")
+    if not bad:
+        print(f"  [맞음] 그림 {n_fig}개는 제목이 아래, 표 {n_tab}개는 제목이 위에 있다")
+
+
 def main() -> None:
     print("=" * 78)
     print("원고 일관성 점검 — 사람이 판단할 목록 (자동 수정하지 않는다)")
@@ -328,6 +374,7 @@ def main() -> None:
     except Exception as e:
         print(f"  [확인 못 함] {e}")
     check_ordinal_order()
+    check_caption_position()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)

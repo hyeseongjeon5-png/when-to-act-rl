@@ -6,58 +6,70 @@
       "env_id": "MountainCar-v0",
       "rule": "pump 규칙",
       "per_step": {
-        "raw_return_iqm": -119.8,
-        "charged_mean": 119.21,
-        "steps_mean": 119.21,
+        "raw_return_iqm": -119.33833333333332,
+        "charged_mean": 119.33,
+        "steps_mean": 119.33,
+        "n_seeds": 10,
+        "n_episodes_per_seed": 100,
         "noop_raw_return_iqm": -200.0,
-        "lam_cross": 0.6727623521516651
+        "lam_cross": 0.6759546356043465
       },
       "per_switch": {
-        "raw_return_iqm": -119.8,
+        "raw_return_iqm": -119.33833333333332,
         "charged_mean": 3.0,
-        "steps_mean": 119.21,
+        "steps_mean": 119.33,
+        "n_seeds": 10,
+        "n_episodes_per_seed": 100,
         "noop_raw_return_iqm": -200.0,
-        "lam_cross": 26.733333333333334
+        "lam_cross": 26.887222222222224
       },
-      "lam_cross_ratio": 39.736666666666665
+      "lam_cross_ratio": 39.776666666666664
     },
     {
       "env_id": "LunarLander-v3",
       "rule": "임계값 규칙",
       "per_step": {
-        "raw_return_iqm": 38.283954362074816,
-        "charged_mean": 123.7,
-        "steps_mean": 193.89,
-        "noop_raw_return_iqm": -136.31986606681264,
-        "lam_cross": 1.4115102702416122
+        "raw_return_iqm": 35.79395934101099,
+        "charged_mean": 121.527,
+        "steps_mean": 192.46,
+        "n_seeds": 10,
+        "n_episodes_per_seed": 100,
+        "noop_raw_return_iqm": -131.29494775506987,
+        "lam_cross": 1.3749118063975976
       },
       "per_switch": {
-        "raw_return_iqm": 38.283954362074816,
-        "charged_mean": 128.23,
-        "steps_mean": 193.89,
-        "noop_raw_return_iqm": -136.31986606681264,
-        "lam_cross": 1.3616456400911445
+        "raw_return_iqm": 35.79395934101099,
+        "charged_mean": 127.452,
+        "steps_mean": 192.46,
+        "n_seeds": 10,
+        "n_episodes_per_seed": 100,
+        "noop_raw_return_iqm": -131.29494775506987,
+        "lam_cross": 1.3109947831032926
       },
-      "lam_cross_ratio": 0.9646728534664276
+      "lam_cross_ratio": 0.9535119103662556
     },
     {
       "env_id": "MinAtar/Freeway-v1",
       "rule": "신중 규칙",
       "per_step": {
-        "raw_return_iqm": 18.5,
-        "charged_mean": 299.0,
+        "raw_return_iqm": 17.111666666666665,
+        "charged_mean": 299.10900000000004,
         "steps_mean": 1000.0,
+        "n_seeds": 10,
+        "n_episodes_per_seed": 100,
         "noop_raw_return_iqm": 0.0,
-        "lam_cross": 0.061872909698996656
+        "lam_cross": 0.05720879902198417
       },
       "per_switch": {
-        "raw_return_iqm": 18.5,
-        "charged_mean": 591.72,
+        "raw_return_iqm": 17.111666666666665,
+        "charged_mean": 591.911,
         "steps_mean": 1000.0,
+        "n_seeds": 10,
+        "n_episodes_per_seed": 100,
         "noop_raw_return_iqm": 0.0,
-        "lam_cross": 0.03126478739944568
+        "lam_cross": 0.02890918848723316
       },
-      "lam_cross_ratio": 0.5053065639153653
+      "lam_cross_ratio": 0.5053276590568515
     }
   ]
 }
