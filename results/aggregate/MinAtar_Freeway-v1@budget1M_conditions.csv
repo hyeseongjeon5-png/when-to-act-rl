@@ -1,4 +1,14 @@
 ﻿env_id,gym_env_id,agent,lam,seed,fingerprint,cost_return,raw_return,n_actions,solved,steps,n_eval_episodes,elapsed_sec,total_steps,source_csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,dqn,0.0,0,e6d989b0b54b,9.377777777777778,9.377777777777778,968.5111111111111,0.0,1000.0,45,9487.1,1000000,results/raw/MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed0_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,dqn,0.0,1,e6d989b0b54b,8.377777777777778,8.377777777777778,851.1111111111111,0.0,1000.0,45,9069.3,1000000,results/raw/MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed1_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,dqn,0.0,2,e6d989b0b54b,5.844444444444444,5.844444444444444,657.9111111111112,0.0,1000.0,45,9483.5,1000000,results/raw/MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed2_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,dqn,0.0,3,e6d989b0b54b,9.133333333333333,9.133333333333333,906.9111111111112,0.0,1000.0,45,8934.5,1000000,results/raw/MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed3_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,dqn,0.0,4,e6d989b0b54b,8.844444444444445,8.844444444444445,952.2666666666667,0.0,1000.0,45,8691.8,1000000,results/raw/MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed4_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,lazy,0.0,0,ceef27762263,13.8,13.8,598.2888888888889,0.0,1000.0,45,9291.9,1000000,results/raw/MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed0_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,lazy,0.0,1,ceef27762263,12.466666666666667,12.466666666666667,364.8222222222222,0.0,1000.0,45,9202.2,1000000,results/raw/MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed1_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,lazy,0.0,2,ceef27762263,13.6,13.6,545.1555555555556,0.0,1000.0,45,9109.8,1000000,results/raw/MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed2_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,lazy,0.0,3,ceef27762263,15.28888888888889,15.28888888888889,417.31111111111113,0.0,1000.0,45,8569.7,1000000,results/raw/MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed3_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,lazy,0.0,4,ceef27762263,14.377777777777778,14.377777777777778,616.9111111111112,0.0,1000.0,45,8692.1,1000000,results/raw/MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed4_final.csv
 MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,0,규칙(지문없음),16.56,16.56,299.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed0_final.csv
 MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,1,규칙(지문없음),16.88,16.88,299.17,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed1_final.csv
 MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,2,규칙(지문없음),15.54,15.54,299.08,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed2_final.csv
@@ -9,3 +19,8 @@ MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,1,규칙(지문없�
 MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,2,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.001,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed2_final.csv
 MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,3,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed3_final.csv
 MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,4,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed4_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,temporl,0.0,0,c90ac4038414,6.533333333333333,6.533333333333333,958.9333333333333,0.0,1000.0,45,17948.0,1000000,results/raw/MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed0_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,temporl,0.0,1,c90ac4038414,8.466666666666667,8.466666666666667,803.6666666666666,0.0,1000.0,45,17904.4,1000000,results/raw/MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed1_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,temporl,0.0,2,c90ac4038414,10.2,10.2,951.1111111111111,0.0,1000.0,45,18107.6,1000000,results/raw/MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed2_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,temporl,0.0,3,c90ac4038414,9.555555555555555,9.555555555555555,982.9111111111112,0.0,1000.0,45,15639.0,1000000,results/raw/MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed3_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,temporl,0.0,4,c90ac4038414,7.133333333333334,7.133333333333334,617.0222222222222,0.0,1000.0,45,15593.1,1000000,results/raw/MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed4_final.csv

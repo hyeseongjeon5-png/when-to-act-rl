@@ -1,7 +1,159 @@
 {
   "env_id": "MinAtar_Freeway-v1@budget1M",
   "rule": "rule_cautious",
-  "results": [],
+  "results": [
+    {
+      "learner": "dqn",
+      "rule": "rule_cautious",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 5,
+          "learner_iqm": 8.785185185185185,
+          "rule_iqm": 16.843333333333334,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/1 λ",
+      "min_seeds": 5,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "lazy",
+      "rule": "rule_cautious",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 5,
+          "learner_iqm": 13.925925925925926,
+          "rule_iqm": 16.843333333333334,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/1 λ",
+      "min_seeds": 5,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "temporl",
+      "rule": "rule_cautious",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 5,
+          "learner_iqm": 8.385185185185186,
+          "rule_iqm": 16.843333333333334,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/1 λ",
+      "min_seeds": 5,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)"
+    }
+  ],
   "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
-  "results_vs_best_rule": []
+  "results_vs_best_rule": [
+    {
+      "learner": "dqn",
+      "rule": "rule_best",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 5,
+          "learner_iqm": 8.785185185185185,
+          "rule_iqm": 16.843333333333334,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/1 λ",
+      "min_seeds": 5,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "lazy",
+      "rule": "rule_best",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 5,
+          "learner_iqm": 13.925925925925926,
+          "rule_iqm": 16.843333333333334,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/1 λ",
+      "min_seeds": 5,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)"
+    },
+    {
+      "learner": "temporl",
+      "rule": "rule_best",
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 0.0,
+      "lams_in_grid": [
+        0.0
+      ],
+      "lams_compared": [
+        0.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 5,
+          "learner_iqm": 8.385185185185186,
+          "rule_iqm": 16.843333333333334,
+          "wins_ci": false,
+          "wins_pt": false
+        }
+      ],
+      "coverage": "1/1 λ",
+      "min_seeds": 5,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)"
+    }
+  ]
 }

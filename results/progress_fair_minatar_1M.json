@@ -4,34 +4,23 @@
  "pid": 7244,
  "workers": 10,
  "started_at": 1788077892.2414713,
- "updated_at": 1788078462.8865411,
- "wall_elapsed_sec": 570.6,
+ "updated_at": 1788102734.460163,
+ "wall_elapsed_sec": 24842.2,
  "total": 15,
- "done": 0,
- "running": 10,
+ "done": 15,
+ "running": 0,
  "failed": 0,
  "skipped": 0,
- "pending": 5,
- "avg_sec_per_cond": 0.0,
+ "pending": 0,
+ "avg_sec_per_cond": 11714.9,
  "eta_sec": null,
  "eta_text": "측정 중",
- "running_now": [
-  "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed0",
-  "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed0",
-  "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed0",
-  "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed1",
-  "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed1",
-  "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed1",
-  "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed2",
-  "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed2",
-  "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed2",
-  "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed3"
- ],
+ "running_now": [],
  "conditions": {
   "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed0": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 9487.1,
    "fingerprint": "e6d989b0b54b",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -40,9 +29,9 @@
    "seed": 0
   },
   "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed0": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 17948.0,
    "fingerprint": "c90ac4038414",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -51,9 +40,9 @@
    "seed": 0
   },
   "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed0": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 9291.9,
    "fingerprint": "ceef27762263",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -62,9 +51,9 @@
    "seed": 0
   },
   "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed1": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 9069.3,
    "fingerprint": "e6d989b0b54b",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -73,9 +62,9 @@
    "seed": 1
   },
   "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed1": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 17904.4,
    "fingerprint": "c90ac4038414",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -84,9 +73,9 @@
    "seed": 1
   },
   "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed1": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 9202.2,
    "fingerprint": "ceef27762263",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -95,9 +84,9 @@
    "seed": 1
   },
   "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 9483.5,
    "fingerprint": "e6d989b0b54b",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -106,9 +95,9 @@
    "seed": 2
   },
   "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 18107.6,
    "fingerprint": "c90ac4038414",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -117,9 +106,9 @@
    "seed": 2
   },
   "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed2": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 9109.8,
    "fingerprint": "ceef27762263",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -128,9 +117,9 @@
    "seed": 2
   },
   "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed3": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 8934.5,
    "fingerprint": "e6d989b0b54b",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -139,9 +128,9 @@
    "seed": 3
   },
   "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed3": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 15639.0,
    "fingerprint": "c90ac4038414",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -150,9 +139,9 @@
    "seed": 3
   },
   "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed3": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 8569.7,
    "fingerprint": "ceef27762263",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -161,9 +150,9 @@
    "seed": 3
   },
   "MinAtar_Freeway-v1@budget1M/dqn/lam0.0/seed4": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 8691.8,
    "fingerprint": "e6d989b0b54b",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -172,9 +161,9 @@
    "seed": 4
   },
   "MinAtar_Freeway-v1@budget1M/temporl/lam0.0/seed4": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 15593.1,
    "fingerprint": "c90ac4038414",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -183,9 +172,9 @@
    "seed": 4
   },
   "MinAtar_Freeway-v1@budget1M/lazy/lam0.0/seed4": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 8692.1,
    "fingerprint": "ceef27762263",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1@budget1M",
@@ -193,5 +182,7 @@
    "lam": 0.0,
    "seed": 4
   }
- }
+ },
+ "finished": true,
+ "finished_at": 1788102734.460163
 }

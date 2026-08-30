@@ -1,0 +1,4 @@
+
+===== 2026-08-31 00:12:16 experiments/configs/collapse_budget_mc.yaml =====
+[규칙 rule_noop           ] 굴린 시드 10개 3.3초 · 환산 50건 0.17초 · λ 5개
+[규칙 rule_pump           ] 굴린 시드 10개 2.2초 · 환산 50건 0.28초 · λ 5개

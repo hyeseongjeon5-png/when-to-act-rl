@@ -417,7 +417,7 @@ def budget_effect() -> str:
     """
     PAIRS = [("LunarLander-v3", "LunarLander-v3@budget1M", "20만", "100만", "5배"),
              ("MinAtar_Freeway-v1", "MinAtar_Freeway-v1@budget1M", "30만", "100만", "3.3배")]
-    out = []
+    out, reach, widened = [], [], ""
     for base, big, s_lo, s_hi, mult in PAIRS:
         fb, fg = AGG / (base + "_iqm.csv"), AGG / (big + "_iqm.csv")
         if not (fb.exists() and fg.exists()):
@@ -442,21 +442,49 @@ def budget_effect() -> str:
                 + " 스텝) " + ("**세 계열 모두 점수가 떨어졌다**" if worse == len(bits)
                               else f"{worse}개 계열의 점수가 떨어졌다") + ": " + " · ".join(bits) + ".")
         out.append(head)
+        # 예산을 늘린 뒤에도 규칙에 못 닿았는지, 구간이 얼마나 벌어졌는지 모아 둔다
+        ref = REF_RULE.get(base)
+        rr = A[(A.agent == ref) & (A.lam == 0.0)] if ref else None
+        if rr is not None and not rr.empty:
+            rv = float(rr.iloc[0].raw_return_iqm)
+            best = max((float(B[(B.agent == g) & (B.lam == 0.0)].iloc[0].raw_return_iqm)
+                        for g in ("dqn", "temporl", "lazy")
+                        if not B[(B.agent == g) & (B.lam == 0.0)].empty), default=None)
+            if best is not None:
+                pct = best / rv * 100
+                env_ko = base.split("@")[0]
+                if pct >= 100:
+                    reach.append(f"**{env_ko}**에서는 예산을 늘려도 규칙을 더 크게 이기지 못했다"
+                                 f"(가장 나은 계열이 규칙의 {pct:.0f}% — 본실험보다 줄었다)")
+                else:
+                    reach.append(f"**{env_ko}**에서는 예산을 늘려도 규칙에 닿지 못했다"
+                                 f"(가장 나은 계열이 규칙의 {pct:.0f}%)")
+        if base.startswith("LunarLander"):
+            ws = []
+            for g in ("dqn", "temporl", "lazy"):
+                x = A[(A.agent == g) & (A.lam == 0.0)]
+                y = B[(B.agent == g) & (B.lam == 0.0)]
+                if not x.empty and not y.empty:
+                    x, y = x.iloc[0], y.iloc[0]
+                    ws.append((float(y.raw_return_ci_hi) - float(y.raw_return_ci_lo))
+                              / max(1e-9, float(x.raw_return_ci_hi) - float(x.raw_return_ci_lo)))
+            if ws:
+                widened = f"{min(ws):.1f}~{max(ws):.1f}배로 벌어졌다"
     if not out:
         return ""
+    reach_note = (". ".join(reach) + ".") if reach else ""
+    tail = [reach_note + " **본실험에서 보고한 λ\*는 예산이 모자라 낮게 나온 값이 아니다.**", ""]
+    if widened:
+        tail += ["LunarLander에서는 점수가 떨어졌을 뿐 아니라 **신뢰구간 폭이 " + widened + "** — "
+                 "오래 학습시킬수록 시드마다 결과가 크게 갈린다는 뜻이다. 이 연구는 조기 종료를 "
+                 "쓰지 않고 정해진 예산을 끝까지 소진하므로, 학습이 한 번 무너지면 회복하지 못한 채 "
+                 "끝난다.", ""]
+    tail += ["다만 이것은 이 설정에서의 관찰이다. 조기 종료나 학습률 감소를 쓰면 달라질 수 있고, "
+             "그 확인은 이 연구의 범위 밖이다.", ""]
     return chr(10).join([
         "",
         "**예산을 늘리면 나아지리라는 기대는 빗나갔다.**", "",
-    ] + [b + chr(10) for b in out] + [
-        "구간 폭이 함께 커진 것이 중요하다. 오래 학습시킬수록 시드마다 결과가 크게 갈린다는 뜻이다. "
-        "이 연구는 조기 종료를 쓰지 않고 정해진 예산을 끝까지 소진하므로, 학습이 한 번 무너지면 "
-        "회복하지 못한 채 끝난다. **따라서 본실험에서 보고한 λ\*는 예산이 모자라 낮게 나온 값이 "
-        "아니다 — 예산을 늘리면 오히려 나빠졌다.**",
-        "",
-        "다만 이것은 이 설정에서의 관찰이다. 조기 종료나 학습률 감소를 쓰면 달라질 수 있고, "
-        "그 확인은 이 연구의 범위 밖이다.",
-        "",
-    ])
+    ] + [b + chr(10) for b in out] + tail)
 
 
 def axis_verdict() -> str:

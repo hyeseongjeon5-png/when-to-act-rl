@@ -1,0 +1,16 @@
+
+===== MinAtar_Freeway-v1@budget1M =====
+        agent      lam  n_seeds  cost_return_iqm  cost_return_ci_lo  cost_return_ci_hi  n_actions_iqm  solved_iqm
+          dqn     0.00        5             8.79               6.69               9.30         903.43        0.00
+         lazy     0.00        5            13.93              12.84              14.99         520.25        0.00
+    rule_best     0.00        5            16.84              15.88              17.47         299.08        0.00
+rule_cautious     0.00        5            16.84              15.88              17.47         299.08        0.00
+    rule_noop     0.00        5             0.00               0.00               0.00           0.00        0.00
+      temporl     0.00        5             8.39               6.73               9.99         904.57        0.00
+  λ* [dqn vs rule_cautious] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [lazy vs rule_cautious] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_cautious] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [dqn vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [lazy vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  λ* [temporl vs rule_best] CI기준 0.0 / 점추정기준 0.0 — λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 5개뿐 — 시드 10개 기준 결론이 아님)
+  저장: results/aggregate/MinAtar_Freeway-v1@budget1M_iqm.csv, MinAtar_Freeway-v1@budget1M_lambda_star.json
