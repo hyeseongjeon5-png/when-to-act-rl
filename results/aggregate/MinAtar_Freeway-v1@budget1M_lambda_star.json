@@ -1,0 +1,7 @@
+{
+  "env_id": "MinAtar_Freeway-v1@budget1M",
+  "rule": "rule_cautious",
+  "results": [],
+  "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
+  "results_vs_best_rule": []
+}

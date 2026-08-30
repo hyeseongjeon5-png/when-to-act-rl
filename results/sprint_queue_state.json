@@ -9,14 +9,16 @@
   "5_LL정밀_학습",
   "4_MinAtar_규칙",
   "4_MinAtar_학습",
-  "1C_공정성확장_LL_규칙"
+  "1C_공정성확장_LL_규칙",
+  "1C_공정성확장_LL",
+  "1C_공정성확장_MinAtar_규칙"
  ],
  "current": {
-  "label": "1C_공정성확장_LL",
+  "label": "1C_공정성확장_MinAtar",
   "kind": "train",
-  "spec": "experiments/configs/fair_ll_1M.yaml:10",
-  "started_at": 1788060168.8821304,
-  "started_text": "2026-08-30 12:22:48"
+  "spec": "experiments/configs/fair_minatar_1M.yaml:10",
+  "started_at": 1788077887.7146337,
+  "started_text": "2026-08-30 17:18:07"
  },
  "history": [
   {
@@ -78,8 +80,20 @@
    "hours": 0.01,
    "exit": 0,
    "finished_text": "2026-08-30 12:22:48"
+  },
+  {
+   "label": "1C_공정성확장_LL",
+   "hours": 4.91,
+   "exit": 0,
+   "finished_text": "2026-08-30 17:17:17"
+  },
+  {
+   "label": "1C_공정성확장_MinAtar_규칙",
+   "hours": 0.01,
+   "exit": 0,
+   "finished_text": "2026-08-30 17:18:07"
   }
  ],
- "updated_at": 1788060168.8821304,
- "updated_text": "2026-08-30 12:22:48"
+ "updated_at": 1788077887.7146337,
+ "updated_text": "2026-08-30 17:18:07"
 }

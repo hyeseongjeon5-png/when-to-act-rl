@@ -408,6 +408,57 @@ def cost_share(agg) -> str:
     return f"에피소드에서 물게 되는 비용 총액이 그 크기의 {rng}(1% 미만)만 되어도"
 
 
+def budget_effect() -> str:
+    """예산을 늘렸을 때 λ=0 성능이 어떻게 변했는지 환경별로 계산해 문장으로 만든다.
+
+    2026-08-30: LunarLander에서 예산을 5배로 늘리자 **성능이 오히려 떨어지고
+    불확실성이 커졌다.** 기대와 반대인 결과이며, 이 저장소의 규칙은 그런 결과도
+    그대로 적는 것이다. 숫자는 전부 집계 파일에서 읽는다.
+    """
+    PAIRS = [("LunarLander-v3", "LunarLander-v3@budget1M", "20만", "100만", "5배"),
+             ("MinAtar_Freeway-v1", "MinAtar_Freeway-v1@budget1M", "30만", "100만", "3.3배")]
+    out = []
+    for base, big, s_lo, s_hi, mult in PAIRS:
+        fb, fg = AGG / (base + "_iqm.csv"), AGG / (big + "_iqm.csv")
+        if not (fb.exists() and fg.exists()):
+            continue
+        A, B = pd.read_csv(fb), pd.read_csv(fg)
+        bits, worse = [], 0
+        for ag in ("dqn", "temporl", "lazy"):
+            x = A[(A.agent == ag) & (A.lam == 0.0)]
+            y = B[(B.agent == ag) & (B.lam == 0.0)]
+            if x.empty or y.empty:
+                continue
+            x, y = x.iloc[0], y.iloc[0]
+            d = float(y.raw_return_iqm) - float(x.raw_return_iqm)
+            wb = float(x.raw_return_ci_hi) - float(x.raw_return_ci_lo)
+            wg = float(y.raw_return_ci_hi) - float(y.raw_return_ci_lo)
+            worse += d < 0
+            bits.append(f"{name(ag)} {num(x.raw_return_iqm, 0)}→{num(y.raw_return_iqm, 0)}"
+                        f"(구간 폭 {wb:.0f}→{wg:.0f})")
+        if not bits:
+            continue
+        head = ("**" + base + "**에서 예산을 " + mult + "로 늘리자(" + s_lo + " → " + s_hi
+                + " 스텝) " + ("**세 계열 모두 점수가 떨어졌다**" if worse == len(bits)
+                              else f"{worse}개 계열의 점수가 떨어졌다") + ": " + " · ".join(bits) + ".")
+        out.append(head)
+    if not out:
+        return ""
+    return chr(10).join([
+        "",
+        "**예산을 늘리면 나아지리라는 기대는 빗나갔다.**", "",
+    ] + [b + chr(10) for b in out] + [
+        "구간 폭이 함께 커진 것이 중요하다. 오래 학습시킬수록 시드마다 결과가 크게 갈린다는 뜻이다. "
+        "이 연구는 조기 종료를 쓰지 않고 정해진 예산을 끝까지 소진하므로, 학습이 한 번 무너지면 "
+        "회복하지 못한 채 끝난다. **따라서 본실험에서 보고한 λ\*는 예산이 모자라 낮게 나온 값이 "
+        "아니다 — 예산을 늘리면 오히려 나빠졌다.**",
+        "",
+        "다만 이것은 이 설정에서의 관찰이다. 조기 종료나 학습률 감소를 쓰면 달라질 수 있고, "
+        "그 확인은 이 연구의 범위 밖이다.",
+        "",
+    ])
+
+
 def axis_verdict() -> str:
     """세 번째 환경의 λ*가 '규칙 품질'과 '보상 조밀도' 중 어느 축을 따라갔는지 판정한다.
 
@@ -885,7 +936,7 @@ def main() -> None:
     # 그러지 않으면 '5절 다음이 7절'이 되어 목차에 구멍이 생긴다.
     has_third = any("## 6. 세 번째 환경" in x for x in parts)
     n_fair = 7 if has_third else 6
-    fair = FAIRNESS_TMPL.replace("{공정성번호}", str(n_fair))
+    fair = FAIRNESS_TMPL.replace("{공정성번호}", str(n_fair)) + budget_effect()
     audit = baseline_audit_section().replace("{감사번호}", str(n_fair + 1))
     out.write_text(head + chr(10) + body + chr(10) + fair + chr(10) + audit + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))

@@ -4,21 +4,18 @@
  "pid": 6236,
  "workers": 10,
  "started_at": 1788060172.7486103,
- "updated_at": 1788075540.9399369,
- "wall_elapsed_sec": 15368.2,
+ "updated_at": 1788077835.7531981,
+ "wall_elapsed_sec": 17663.0,
  "total": 30,
- "done": 28,
- "running": 2,
+ "done": 30,
+ "running": 0,
  "failed": 0,
  "skipped": 0,
  "pending": 0,
- "avg_sec_per_cond": 4675.1,
- "eta_sec": 935.0,
- "eta_text": "약 0.3시간 남음",
- "running_now": [
-  "LunarLander-v3@budget1M/temporl/lam0.0/seed8",
-  "LunarLander-v3@budget1M/temporl/lam0.0/seed9"
- ],
+ "avg_sec_per_cond": 4821.4,
+ "eta_sec": null,
+ "eta_text": "측정 중",
+ "running_now": [],
  "conditions": {
   "LunarLander-v3@budget1M/dqn/lam0.0/seed0": {
    "status": "완료",
@@ -296,9 +293,9 @@
    "seed": 8
   },
   "LunarLander-v3@budget1M/temporl/lam0.0/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 6928.1,
    "fingerprint": "dfde8f3507a4",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3@budget1M",
@@ -329,9 +326,9 @@
    "seed": 9
   },
   "LunarLander-v3@budget1M/temporl/lam0.0/seed9": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 6810.6,
    "fingerprint": "dfde8f3507a4",
    "env_id": "LunarLander-v3",
    "room": "LunarLander-v3@budget1M",
@@ -350,5 +347,7 @@
    "lam": 0.0,
    "seed": 9
   }
- }
+ },
+ "finished": true,
+ "finished_at": 1788077835.7531981
 }

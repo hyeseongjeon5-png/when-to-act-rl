@@ -6,7 +6,7 @@
       "learner": "dqn",
       "rule": "rule_threshold_tuned",
       "lam_star_ci": 0.0,
-      "lam_star_pt": null,
+      "lam_star_pt": 0.0,
       "lams_in_grid": [
         0.0
       ],
@@ -16,16 +16,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 169.4391600263373,
+          "n_seeds": 10,
+          "learner_iqm": 147.98131121880783,
           "rule_iqm": 162.275249950774,
           "wins_ci": false,
-          "wins_pt": true
+          "wins_pt": false
         }
       ],
       "coverage": "1/1 λ",
-      "min_seeds": 8,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     },
     {
       "learner": "lazy",
@@ -41,16 +41,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 166.7275232373229,
+          "n_seeds": 10,
+          "learner_iqm": 168.74233455032683,
           "rule_iqm": 162.275249950774,
           "wins_ci": false,
           "wins_pt": true
         }
       ],
       "coverage": "1/1 λ",
-      "min_seeds": 8,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
     },
     {
       "learner": "temporl",
@@ -66,16 +66,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 6,
-          "learner_iqm": -33.398896226552246,
+          "n_seeds": 10,
+          "learner_iqm": 4.374858307675207,
           "rule_iqm": 162.275249950774,
           "wins_ci": false,
           "wins_pt": false
         }
       ],
       "coverage": "1/1 λ",
-      "min_seeds": 6,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 6개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     }
   ],
   "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
@@ -84,7 +84,7 @@
       "learner": "dqn",
       "rule": "rule_best",
       "lam_star_ci": 0.0,
-      "lam_star_pt": null,
+      "lam_star_pt": 0.0,
       "lams_in_grid": [
         0.0
       ],
@@ -94,16 +94,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 169.4391600263373,
+          "n_seeds": 10,
+          "learner_iqm": 147.98131121880783,
           "rule_iqm": 162.275249950774,
           "wins_ci": false,
-          "wins_pt": true
+          "wins_pt": false
         }
       ],
       "coverage": "1/1 λ",
-      "min_seeds": 8,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     },
     {
       "learner": "lazy",
@@ -119,16 +119,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 166.7275232373229,
+          "n_seeds": 10,
+          "learner_iqm": 168.74233455032683,
           "rule_iqm": 162.275249950774,
           "wins_ci": false,
           "wins_pt": true
         }
       ],
       "coverage": "1/1 λ",
-      "min_seeds": 8,
-      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "실험한 λ 전 구간에서 규칙을 이김 — λ*는 격자 최대값보다 큼"
     },
     {
       "learner": "temporl",
@@ -144,16 +144,16 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 6,
-          "learner_iqm": -33.398896226552246,
+          "n_seeds": 10,
+          "learner_iqm": 4.374858307675207,
           "rule_iqm": 162.275249950774,
           "wins_ci": false,
           "wins_pt": false
         }
       ],
       "coverage": "1/1 λ",
-      "min_seeds": 6,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 6개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     }
   ]
 }

@@ -1,0 +1,11 @@
+﻿env_id,gym_env_id,agent,lam,seed,fingerprint,cost_return,raw_return,n_actions,solved,steps,n_eval_episodes,elapsed_sec,total_steps,source_csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,0,규칙(지문없음),16.56,16.56,299.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed0_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,1,규칙(지문없음),16.88,16.88,299.17,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed1_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,2,규칙(지문없음),15.54,15.54,299.08,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed2_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,3,규칙(지문없음),17.09,17.09,298.87,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed3_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_cautious,0.0,4,규칙(지문없음),17.66,17.66,299.41,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_cautious/lam0.0/seed4_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,0,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed0_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,1,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed1_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,2,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.001,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed2_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,3,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed3_final.csv
+MinAtar_Freeway-v1@budget1M,MinAtar/Freeway-v1,rule_noop,0.0,4,규칙(지문없음),0.0,0.0,0.0,0.0,1000.0,100,0.0,0,results/raw/MinAtar_Freeway-v1@budget1M/rule_noop/lam0.0/seed4_final.csv
