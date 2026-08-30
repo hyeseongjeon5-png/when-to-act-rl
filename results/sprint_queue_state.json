@@ -7,14 +7,16 @@
   "3_인과_학습",
   "5_LL정밀_규칙",
   "5_LL정밀_학습",
-  "4_MinAtar_규칙"
+  "4_MinAtar_규칙",
+  "4_MinAtar_학습",
+  "1C_공정성확장_LL_규칙"
  ],
  "current": {
-  "label": "4_MinAtar_학습",
+  "label": "1C_공정성확장_LL",
   "kind": "train",
-  "spec": "experiments/configs/main_minatar_freeway.yaml:10",
-  "started_at": 1787985597.1058633,
-  "started_text": "2026-08-29 15:39:57"
+  "spec": "experiments/configs/fair_ll_1M.yaml:10",
+  "started_at": 1788060168.8821304,
+  "started_text": "2026-08-30 12:22:48"
  },
  "history": [
   {
@@ -64,8 +66,20 @@
    "hours": 0.0,
    "exit": 0,
    "finished_text": "2026-08-29 15:39:57"
+  },
+  {
+   "label": "4_MinAtar_학습",
+   "hours": 20.7,
+   "exit": 0,
+   "finished_text": "2026-08-30 12:22:05"
+  },
+  {
+   "label": "1C_공정성확장_LL_규칙",
+   "hours": 0.01,
+   "exit": 0,
+   "finished_text": "2026-08-30 12:22:48"
   }
  ],
- "updated_at": 1787985597.1058633,
- "updated_text": "2026-08-29 15:39:57"
+ "updated_at": 1788060168.8821304,
+ "updated_text": "2026-08-30 12:22:48"
 }

@@ -4,29 +4,18 @@
  "pid": 19260,
  "workers": 10,
  "started_at": 1787985601.0696201,
- "updated_at": 1788048575.532036,
- "wall_elapsed_sec": 62974.5,
+ "updated_at": 1788060123.236879,
+ "wall_elapsed_sec": 74522.2,
  "total": 180,
- "done": 150,
- "running": 10,
+ "done": 180,
+ "running": 0,
  "failed": 0,
  "skipped": 0,
- "pending": 20,
- "avg_sec_per_cond": 4006.6,
- "eta_sec": 12019.7,
- "eta_text": "약 3.3시간 남음",
- "running_now": [
-  "MinAtar_Freeway-v1/temporl/lam0.0/seed8",
-  "MinAtar_Freeway-v1/temporl/lam0.005/seed8",
-  "MinAtar_Freeway-v1/temporl/lam0.01/seed8",
-  "MinAtar_Freeway-v1/temporl/lam0.02/seed8",
-  "MinAtar_Freeway-v1/temporl/lam0.04/seed8",
-  "MinAtar_Freeway-v1/temporl/lam0.06/seed8",
-  "MinAtar_Freeway-v1/lazy/lam0.0/seed8",
-  "MinAtar_Freeway-v1/lazy/lam0.005/seed8",
-  "MinAtar_Freeway-v1/lazy/lam0.01/seed8",
-  "MinAtar_Freeway-v1/lazy/lam0.02/seed8"
- ],
+ "pending": 0,
+ "avg_sec_per_cond": 4053.3,
+ "eta_sec": null,
+ "eta_text": "측정 중",
+ "running_now": [],
  "conditions": {
   "MinAtar_Freeway-v1/dqn/lam0.0/seed0": {
    "status": "완료",
@@ -1679,9 +1668,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/temporl/lam0.0/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 5615.1,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1690,9 +1679,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/temporl/lam0.005/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 7078.0,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1701,9 +1690,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/temporl/lam0.01/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 7083.7,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1712,9 +1701,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/temporl/lam0.02/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 7062.0,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1723,9 +1712,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/temporl/lam0.04/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 7042.7,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1734,9 +1723,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/temporl/lam0.06/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 6924.5,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1745,9 +1734,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/lazy/lam0.0/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 2497.9,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1756,9 +1745,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/lazy/lam0.005/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 2420.3,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1767,9 +1756,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/lazy/lam0.01/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 2411.7,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1778,9 +1767,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/lazy/lam0.02/seed8": {
-   "status": "진행중",
+   "status": "완료",
    "attempts": 1,
-   "elapsed_sec": 0.0,
+   "elapsed_sec": 3177.2,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1789,9 +1778,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/lazy/lam0.04/seed8": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2630.9,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1800,9 +1789,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/lazy/lam0.06/seed8": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2792.3,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1811,9 +1800,9 @@
    "seed": 8
   },
   "MinAtar_Freeway-v1/dqn/lam0.0/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2549.6,
    "fingerprint": "98ebed2de231",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1822,9 +1811,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/dqn/lam0.005/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 3070.4,
    "fingerprint": "98ebed2de231",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1833,9 +1822,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/dqn/lam0.01/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 3005.5,
    "fingerprint": "98ebed2de231",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1844,9 +1833,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/dqn/lam0.02/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 3069.1,
    "fingerprint": "98ebed2de231",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1855,9 +1844,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/dqn/lam0.04/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 3100.4,
    "fingerprint": "98ebed2de231",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1866,9 +1855,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/dqn/lam0.06/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 3079.1,
    "fingerprint": "98ebed2de231",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1877,9 +1866,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/temporl/lam0.0/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 5738.4,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1888,9 +1877,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/temporl/lam0.005/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 6839.4,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1899,9 +1888,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/temporl/lam0.01/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 6821.7,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1910,9 +1899,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/temporl/lam0.02/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 6787.7,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1921,9 +1910,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/temporl/lam0.04/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 6763.5,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1932,9 +1921,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/temporl/lam0.06/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 6483.1,
    "fingerprint": "34d7a776195d",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1943,9 +1932,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/lazy/lam0.0/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2475.2,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1954,9 +1943,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/lazy/lam0.005/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2582.1,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1965,9 +1954,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/lazy/lam0.01/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2462.3,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1976,9 +1965,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/lazy/lam0.02/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2481.9,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1987,9 +1976,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/lazy/lam0.04/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2308.6,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -1998,9 +1987,9 @@
    "seed": 9
   },
   "MinAtar_Freeway-v1/lazy/lam0.06/seed9": {
-   "status": "대기",
-   "attempts": 0,
-   "elapsed_sec": 0.0,
+   "status": "완료",
+   "attempts": 1,
+   "elapsed_sec": 2255.4,
    "fingerprint": "71bd1602e34f",
    "env_id": "MinAtar/Freeway-v1",
    "room": "MinAtar_Freeway-v1",
@@ -2008,5 +1997,7 @@
    "lam": 0.06,
    "seed": 9
   }
- }
+ },
+ "finished": true,
+ "finished_at": 1788060123.236879
 }

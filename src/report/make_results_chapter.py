@@ -408,6 +408,69 @@ def cost_share(agg) -> str:
     return f"에피소드에서 물게 되는 비용 총액이 그 크기의 {rng}(1% 미만)만 되어도"
 
 
+def axis_verdict() -> str:
+    """세 번째 환경의 λ*가 '규칙 품질'과 '보상 조밀도' 중 어느 축을 따라갔는지 판정한다.
+
+    이 절을 둔 이유가 그 판정이다. 두 축이 갈리는 환경을 하나 넣어 두었으니,
+    결과가 어느 쪽이든 그대로 적는다. 숫자는 전부 집계 파일에서 읽는다.
+    """
+    dens_p = AGG / "reward_density.json"
+    if not dens_p.exists():
+        return ""
+    try:
+        dens = {r["env_id"]: r for r in
+                json.loads(dens_p.read_text(encoding="utf-8"))["results"]}
+    except Exception:
+        return ""
+
+    def star(env):
+        f = AGG / (env + "_lambda_star.json")
+        if not f.exists():
+            return None
+        d = json.loads(f.read_text(encoding="utf-8"))
+        out = {}
+        for r in d.get("results_vs_best_rule", []):
+            out[r["learner"]] = r.get("lam_star_pt")
+        return out or None
+
+    mc, ll, ma = star("MountainCar-v0"), star("LunarLander-v3"), star("MinAtar_Freeway-v1")
+    if not (mc and ll and ma):
+        return ""
+    dk = {"MountainCar-v0": "MountainCar-v0", "LunarLander-v3": "LunarLander-v3",
+          "MinAtar_Freeway-v1": "MinAtar/Freeway-v1"}
+    rate = {e: dens[dk[e]]["informative_step_rate"] * 100 for e in dk if dk[e] in dens}
+    if len(rate) < 3:
+        return ""
+
+    all_zero = all(v == 0.0 for v in ma.values() if v is not None)
+    ll_pos = any((v or 0) > 0 for v in ll.values())
+    lines = ["", "**이 절을 둔 이유는 두 축을 가르기 위해서였다. 답은 이렇다.**", ""]
+    if all_zero and ll_pos:
+        lines.append(
+            "MinAtar에서 λ\*는 세 계열 모두 **0**이다 — 두 환경 사이가 아니라 "
+            "MountainCar와 **같은 값**이다. 이 환경은 규칙 품질 축에서 가운데였으므로, "
+            "λ\*가 규칙 품질을 따라간다면 사이 값이 나왔어야 한다. 그러지 않았다.")
+        lines.append("")
+        lines.append(
+            "대신 λ\*는 **보상 조밀도**를 따라간다. 신호가 있는 스텝의 비율은 "
+            + f"MountainCar {rate['MountainCar-v0']:.1f}% · MinAtar {rate['MinAtar_Freeway-v1']:.1f}% · "
+            + f"LunarLander {rate['LunarLander-v3']:.1f}% 로(Ⅲ장 2절), "
+            "MinAtar는 이 축에서 가운데가 아니라 MountainCar 쪽 끝에 있다. "
+            "**λ\*도 그 자리를 따라갔다.**")
+        lines.append("")
+        lines.append(
+            "즉 **'좋은 규칙이 이미 있으면 학습이 불리하다'가 아니라 "
+            "'보상이 상태를 구분해 주지 못하면 학습이 불리하다'**가 이 연구가 관찰한 것이다. "
+            "다만 환경이 셋뿐이므로 이것은 세 점이 한 방향을 가리킨다는 뜻이지 "
+            "상관을 보인 것은 아니다.")
+    else:
+        lines.append(
+            "MinAtar의 λ\*는 " + ", ".join(f"{name(k)} {v!r}" for k, v in ma.items())
+            + " 다. 앞의 두 환경과 견주어 이 값이 무엇을 뜻하는지는 위 표와 그림에서 읽는다.")
+    lines.append("")
+    return chr(10).join(lines)
+
+
 def tradeoff_section(sec: str) -> str:
     """행동-성능 상충 절. 문장 안 숫자는 전부 집계에서 계산한다."""
     envs = [e for e in ("MountainCar-v0", "LunarLander-v3") if (AGG / (e + "_iqm.csv")).exists()]
@@ -810,6 +873,7 @@ def main() -> None:
                      "0에 가까운 값이 나와야 한다. **어느 쪽이든 그대로 적는다.**")
         parts.append("")
         parts += [t.replace("### 6 ", "### 6.1 ") for t in third]
+        parts.append(axis_verdict())
     body = "\n".join(x for x in parts if x)
     src = ("\n<!-- 출처: results/aggregate/" + "{" + ",".join(envs) + "}_iqm.csv, "
            "*_lambda_star.json. 조건별 원본은 results/raw/{환경}/{계열}/lam{λ}/seed{n}_final.csv. "

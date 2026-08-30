@@ -8,6 +8,7 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.0,5,98ebed2de231,7.888888888888889,7
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.0,6,98ebed2de231,6.688888888888889,6.688888888888889,834.1777777777778,0.0,1000.0,45,2542.0,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.0/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.0,7,98ebed2de231,8.511111111111111,8.511111111111111,911.8666666666667,0.0,1000.0,45,2501.0,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.0/seed7_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.0,8,98ebed2de231,9.244444444444444,9.244444444444444,891.5555555555555,0.0,1000.0,45,2546.0,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.0/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.0,9,98ebed2de231,7.688888888888889,7.688888888888889,717.3777777777777,0.0,1000.0,45,2549.6,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.0/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,0,98ebed2de231,2.8807777777778054,7.5777777777777775,939.4,0.0,1000.0,45,2789.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,1,98ebed2de231,1.7836666666667014,4.644444444444445,572.1555555555556,0.0,1000.0,45,2593.1,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,2,98ebed2de231,4.699111111111149,8.533333333333333,766.8444444444444,0.0,1000.0,45,2866.5,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed2_final.csv
@@ -17,6 +18,7 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,5,98ebed2de231,2.513777777777803
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,6,98ebed2de231,1.7333333333333445,5.066666666666666,666.6666666666666,0.0,1000.0,45,3066.2,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,7,98ebed2de231,2.983444444444452,6.555555555555555,714.4222222222222,0.0,1000.0,45,2557.1,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed7_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,8,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3000.0,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.005,9,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3070.4,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.005/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,0,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3298.2,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,1,98ebed2de231,0.9997777777778013,4.8,380.02222222222224,0.0,1000.0,45,2605.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,2,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3160.6,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed2_final.csv
@@ -26,6 +28,7 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,5,98ebed2de231,-1.761111111111081
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,6,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3131.1,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,7,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3088.9,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed7_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,8,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3033.2,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.01,9,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3005.5,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.01/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,0,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3313.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,1,98ebed2de231,-0.6573333333333331,0.6,62.86666666666667,0.0,1000.0,45,3016.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,2,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3207.6,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed2_final.csv
@@ -34,6 +37,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,4,98ebed2de231,-0.004888888888888
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,5,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,2749.4,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,6,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3129.1,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,7,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3160.8,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,8,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3161.9,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.02,9,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3069.1,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.02/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,0,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3330.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,1,98ebed2de231,-0.12533333333333344,0.08888888888888889,5.355555555555555,0.0,1000.0,45,3089.8,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,2,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3230.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed2_final.csv
@@ -42,6 +47,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,4,98ebed2de231,-0.039111111111111
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,5,98ebed2de231,-0.04266666666666669,0.022222222222222223,1.6222222222222222,0.0,1000.0,45,3049.9,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,6,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3135.0,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,7,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3173.9,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,8,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3148.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.04,9,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3100.4,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.04/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,0,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3295.6,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,1,98ebed2de231,-0.013333333333333332,0.0,0.2222222222222222,0.0,1000.0,45,3171.8,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,2,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3267.9,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed2_final.csv
@@ -50,6 +57,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,4,98ebed2de231,0.0,0.0,0.0,0.0,10
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,5,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3094.3,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,6,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3107.0,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,7,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3175.9,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,8,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3166.5,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,dqn,0.06,9,98ebed2de231,0.0,0.0,0.0,0.0,1000.0,45,3079.1,300000,results/raw/MinAtar_Freeway-v1/dqn/lam0.06/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,0,71bd1602e34f,14.533333333333333,14.533333333333333,402.4222222222222,0.0,1000.0,45,2594.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,1,71bd1602e34f,12.777777777777779,12.777777777777779,403.4222222222222,0.0,1000.0,45,2666.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,2,71bd1602e34f,11.777777777777779,11.777777777777779,513.5111111111111,0.0,1000.0,45,2490.2,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed2_final.csv
@@ -58,6 +67,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,4,71bd1602e34f,14.822222222222223
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,5,71bd1602e34f,15.977777777777778,15.977777777777778,487.1777777777778,0.0,1000.0,45,2535.2,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,6,71bd1602e34f,14.933333333333334,14.933333333333334,517.5333333333333,0.0,1000.0,45,2513.2,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,7,71bd1602e34f,12.555555555555555,12.555555555555555,609.0888888888888,0.0,1000.0,45,2517.8,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,8,71bd1602e34f,11.155555555555555,11.155555555555555,487.6222222222222,0.0,1000.0,45,2497.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.0,9,71bd1602e34f,9.466666666666667,9.466666666666667,255.0,0.0,1000.0,45,2475.2,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.0/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,0,71bd1602e34f,12.266888888888795,14.6,466.6222222222222,0.0,1000.0,45,2584.4,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,1,71bd1602e34f,12.853111111111053,14.555555555555555,340.4888888888889,0.0,1000.0,45,2651.4,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,2,71bd1602e34f,12.051777777777732,13.8,349.64444444444445,0.0,1000.0,45,2493.6,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed2_final.csv
@@ -66,6 +77,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,4,71bd1602e34f,11.8774444444443
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,5,71bd1602e34f,15.406999999999906,17.511111111111113,420.8222222222222,0.0,1000.0,45,2834.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,6,71bd1602e34f,14.358222222222164,16.244444444444444,377.24444444444447,0.0,1000.0,45,2427.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,7,71bd1602e34f,15.340555555555486,17.044444444444444,340.77777777777777,0.0,1000.0,45,2399.6,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,8,71bd1602e34f,10.386222222222173,12.333333333333334,389.4222222222222,0.0,1000.0,45,2420.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.005,9,71bd1602e34f,11.852666666666622,13.666666666666666,362.8,0.0,1000.0,45,2582.1,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.005/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,0,71bd1602e34f,11.917333333333366,15.266666666666667,334.93333333333334,0.0,1000.0,45,2573.1,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,1,71bd1602e34f,9.765777777777803,12.422222222222222,265.64444444444445,0.0,1000.0,45,2571.4,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,2,71bd1602e34f,9.830444444444497,13.266666666666667,343.6222222222222,0.0,1000.0,45,2504.4,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed2_final.csv
@@ -74,6 +87,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,4,71bd1602e34f,12.52600000000004
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,5,71bd1602e34f,12.995111111111159,16.6,360.4888888888889,0.0,1000.0,45,2594.1,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,6,71bd1602e34f,8.422888888888938,11.977777777777778,355.4888888888889,0.0,1000.0,45,2502.7,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,7,71bd1602e34f,12.423555555555605,15.777777777777779,335.4222222222222,0.0,1000.0,45,2479.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,8,71bd1602e34f,9.915777777777848,14.444444444444445,452.8666666666667,0.0,1000.0,45,2411.7,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.01,9,71bd1602e34f,10.236666666666718,13.822222222222223,358.55555555555554,0.0,1000.0,45,2462.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.01/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,0,71bd1602e34f,10.077777777777847,16.22222222222222,307.22222222222223,0.0,1000.0,45,2490.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,1,71bd1602e34f,7.148444444444494,12.6,272.5777777777778,0.0,1000.0,45,2602.4,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,2,71bd1602e34f,7.462222222222286,13.8,316.8888888888889,0.0,1000.0,45,2451.7,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed2_final.csv
@@ -82,6 +97,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,4,71bd1602e34f,6.258666666666708
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,5,71bd1602e34f,10.776000000000074,17.133333333333333,317.8666666666667,0.0,1000.0,45,2630.7,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,6,71bd1602e34f,10.551555555555623,16.066666666666666,275.75555555555553,0.0,1000.0,45,2729.6,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,7,71bd1602e34f,7.716888888888952,15.244444444444444,376.3777777777778,0.0,1000.0,45,2525.8,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,8,71bd1602e34f,13.217333333333416,19.2,299.1333333333333,0.0,1000.0,45,3177.2,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.02,9,71bd1602e34f,7.608444444444509,14.177777777777777,328.46666666666664,0.0,1000.0,45,2481.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.02/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,0,71bd1602e34f,3.0044444444444443,13.933333333333334,273.22222222222223,0.0,1000.0,45,2568.5,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,1,71bd1602e34f,0.7146666666666703,8.511111111111111,194.9111111111111,0.0,1000.0,45,2671.1,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,2,71bd1602e34f,1.9955555555555498,12.688888888888888,267.3333333333333,0.0,1000.0,45,2511.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed2_final.csv
@@ -90,6 +107,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,4,71bd1602e34f,-0.34488888888889
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,5,71bd1602e34f,2.607999999999996,12.022222222222222,235.35555555555555,0.0,1000.0,45,2522.1,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,6,71bd1602e34f,1.666666666666667,12.955555555555556,282.22222222222223,0.0,1000.0,45,2369.0,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,7,71bd1602e34f,1.6506666666666698,4.2,63.733333333333334,0.0,1000.0,45,2784.0,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,8,71bd1602e34f,2.5991111111111285,16.31111111111111,342.8,0.0,1000.0,45,2630.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.04,9,71bd1602e34f,2.776000000000001,13.733333333333333,273.93333333333334,0.0,1000.0,45,2308.6,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.04/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,0,71bd1602e34f,-0.2364444444444453,3.3555555555555556,59.86666666666667,0.0,1000.0,45,2554.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,1,71bd1602e34f,0.14044444444444323,2.8444444444444446,45.06666666666667,0.0,1000.0,45,2864.9,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,2,71bd1602e34f,0.18799999999999853,3.6,56.86666666666667,0.0,1000.0,45,2548.6,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed2_final.csv
@@ -98,6 +117,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,4,71bd1602e34f,-0.97244444444444
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,5,71bd1602e34f,-0.05022222222222224,0.044444444444444446,1.5777777777777777,0.0,1000.0,45,2673.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,6,71bd1602e34f,-0.9888888888888913,7.377777777777778,139.44444444444446,0.0,1000.0,45,2505.8,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,7,71bd1602e34f,-1.2751111111111146,8.88888888888889,169.4,0.0,1000.0,45,2717.0,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,8,71bd1602e34f,-0.1640000000000019,5.4,92.73333333333333,0.0,1000.0,45,2792.3,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,lazy,0.06,9,71bd1602e34f,-2.9271111111111154,8.088888888888889,183.6,0.0,1000.0,45,2255.4,300000,results/raw/MinAtar_Freeway-v1/lazy/lam0.06/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,rule_cautious,0.0,0,규칙(지문없음),16.64,16.64,298.24,0.0,1000.0,50,0.0,0,results/raw/MinAtar_Freeway-v1/rule_cautious/lam0.0/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,rule_cautious,0.0,1,규칙(지문없음),16.52,16.52,297.96,0.0,1000.0,50,0.0,0,results/raw/MinAtar_Freeway-v1/rule_cautious/lam0.0/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,rule_cautious,0.0,2,규칙(지문없음),15.34,15.34,299.1,0.0,1000.0,50,0.0,0,results/raw/MinAtar_Freeway-v1/rule_cautious/lam0.0/seed2_final.csv
@@ -466,6 +487,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.0,4,34d7a776195d,9.5111111111111
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.0,5,34d7a776195d,12.422222222222222,12.422222222222222,961.8666666666667,0.0,1000.0,45,6001.0,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.0/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.0,6,34d7a776195d,5.133333333333334,5.133333333333334,819.1111111111111,0.0,1000.0,45,5688.6,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.0/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.0,7,34d7a776195d,8.688888888888888,8.688888888888888,966.2666666666667,0.0,1000.0,45,5715.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.0/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.0,8,34d7a776195d,9.511111111111111,9.511111111111111,933.7555555555556,0.0,1000.0,45,5615.1,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.0/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.0,9,34d7a776195d,6.444444444444445,6.444444444444445,672.0888888888888,0.0,1000.0,45,5738.4,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.0/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,0,34d7a776195d,2.3045555555555923,6.2,779.0888888888888,0.0,1000.0,45,6071.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,1,34d7a776195d,4.38177777777782,8.71111111111111,865.8666666666667,0.0,1000.0,45,6274.8,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,2,34d7a776195d,4.2171111111111275,7.688888888888889,694.3555555555556,0.0,1000.0,45,5895.6,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed2_final.csv
@@ -474,6 +497,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,4,34d7a776195d,1.84844444444
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,5,34d7a776195d,4.656555555555557,8.022222222222222,673.1333333333333,0.0,1000.0,45,5947.9,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,6,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7115.5,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,7,34d7a776195d,4.933333333333332,9.933333333333334,1000.0,0.0,1000.0,45,7127.1,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,8,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7078.0,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.005,9,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6839.4,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.005/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,0,34d7a776195d,-1.0586666666666056,7.955555555555556,901.4222222222222,0.0,1000.0,45,5969.8,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,1,34d7a776195d,-0.6288888888888517,4.6,522.8888888888889,0.0,1000.0,45,6290.3,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,2,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7156.4,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed2_final.csv
@@ -482,6 +507,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,4,34d7a776195d,0.660444444444
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,5,34d7a776195d,0.20933333333336543,5.5777777777777775,536.8444444444444,0.0,1000.0,45,6063.8,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,6,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7134.3,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,7,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7021.1,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,8,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7083.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.01,9,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6821.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.01/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,0,34d7a776195d,-0.5959999999999992,0.15555555555555556,37.577777777777776,0.0,1000.0,45,6751.0,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,1,34d7a776195d,-0.1626666666666668,0.1111111111111111,13.688888888888888,0.0,1000.0,45,6504.9,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,2,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7325.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed2_final.csv
@@ -490,6 +517,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,4,34d7a776195d,-0.23022222222
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,5,34d7a776195d,-0.020444444444444446,0.0,1.0222222222222221,0.0,1000.0,45,6624.1,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,6,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7189.8,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,7,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6995.4,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,8,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7062.0,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.02,9,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6787.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.02/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,0,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6753.3,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,1,34d7a776195d,-0.4702222222222227,0.15555555555555556,15.644444444444444,0.0,1000.0,45,7319.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,2,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7151.4,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed2_final.csv
@@ -498,6 +527,8 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,4,34d7a776195d,-0.00355555555
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,5,34d7a776195d,-0.08888888888888893,0.022222222222222223,2.7777777777777777,0.0,1000.0,45,6891.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,6,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7051.3,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,7,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7073.5,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,8,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7042.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.04,9,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6763.5,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.04/seed9_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,0,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6899.3,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed0_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,1,34d7a776195d,-0.04933333333333335,0.0,0.8222222222222222,0.0,1000.0,45,7333.3,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed1_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,2,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7046.4,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed2_final.csv
@@ -506,3 +537,5 @@ MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,4,34d7a776195d,0.0,0.0,0.0,0.
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,5,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7051.5,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed5_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,6,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6947.0,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed6_final.csv
 MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,7,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,7023.7,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed7_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,8,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6924.5,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed8_final.csv
+MinAtar_Freeway-v1,MinAtar/Freeway-v1,temporl,0.06,9,34d7a776195d,0.0,0.0,0.0,0.0,1000.0,45,6483.1,300000,results/raw/MinAtar_Freeway-v1/temporl/lam0.06/seed9_final.csv

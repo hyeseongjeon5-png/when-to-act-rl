@@ -26,23 +26,23 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 9,
-          "learner_iqm": 7.026666666666666,
+          "n_seeds": 10,
+          "learner_iqm": 7.137037037037039,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 9,
-          "learner_iqm": 2.499600000000023,
+          "n_seeds": 10,
+          "learner_iqm": 2.37188888888891,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 9,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
@@ -50,7 +50,7 @@
         },
         {
           "lam": 0.02,
-          "n_seeds": 8,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
@@ -58,15 +58,15 @@
         },
         {
           "lam": 0.04,
-          "n_seeds": 8,
-          "learner_iqm": -0.00977777777777778,
+          "n_seeds": 10,
+          "learner_iqm": -0.00651851851851852,
           "rule_iqm": 4.984133333333333,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.06,
-          "n_seeds": 8,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": -0.9921333333333329,
           "wins_ci": true,
@@ -74,8 +74,8 @@
         }
       ],
       "coverage": "6/6 λ",
-      "min_seeds": 8,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     },
     {
       "learner": "lazy",
@@ -101,56 +101,56 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 14.266666666666666,
+          "n_seeds": 10,
+          "learner_iqm": 13.566666666666668,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 8,
-          "learner_iqm": 12.882499999999936,
+          "n_seeds": 10,
+          "learner_iqm": 12.543351851851789,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 8,
-          "learner_iqm": 10.98427777777782,
+          "n_seeds": 10,
+          "learner_iqm": 10.681592592592638,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.02,
-          "n_seeds": 8,
-          "learner_iqm": 8.101333333333395,
+          "n_seeds": 10,
+          "learner_iqm": 8.42755555555562,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.04,
-          "n_seeds": 8,
-          "learner_iqm": 1.9802222222222206,
+          "n_seeds": 10,
+          "learner_iqm": 2.216000000000002,
           "rule_iqm": 4.984133333333333,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.06,
-          "n_seeds": 8,
-          "learner_iqm": -0.5018888888888905,
+          "n_seeds": 10,
+          "learner_iqm": -0.5267407407407426,
           "rule_iqm": -0.9921333333333329,
           "wins_ci": false,
           "wins_pt": true
         }
       ],
       "coverage": "6/6 λ",
-      "min_seeds": 8,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     },
     {
       "learner": "temporl",
@@ -176,47 +176,47 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 8.772222222222222,
+          "n_seeds": 10,
+          "learner_iqm": 8.774074074074074,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 8,
-          "learner_iqm": 3.1879722222222524,
+          "n_seeds": 10,
+          "learner_iqm": 2.125314814814835,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 8,
-          "learner_iqm": 0.04538888888889699,
+          "n_seeds": 10,
+          "learner_iqm": 0.030259259259264662,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.02,
-          "n_seeds": 8,
-          "learner_iqm": -0.045777777777777806,
+          "n_seeds": 10,
+          "learner_iqm": -0.03051851851851854,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.04,
-          "n_seeds": 8,
-          "learner_iqm": -0.0008888888888888889,
+          "n_seeds": 10,
+          "learner_iqm": -0.0005925925925925926,
           "rule_iqm": 4.984133333333333,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.06,
-          "n_seeds": 8,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": -0.9921333333333329,
           "wins_ci": true,
@@ -224,8 +224,8 @@
         }
       ],
       "coverage": "6/6 λ",
-      "min_seeds": 8,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     }
   ],
   "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
@@ -254,23 +254,23 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 9,
-          "learner_iqm": 7.026666666666666,
+          "n_seeds": 10,
+          "learner_iqm": 7.137037037037039,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 9,
-          "learner_iqm": 2.499600000000023,
+          "n_seeds": 10,
+          "learner_iqm": 2.37188888888891,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 9,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
@@ -278,7 +278,7 @@
         },
         {
           "lam": 0.02,
-          "n_seeds": 8,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
@@ -286,15 +286,15 @@
         },
         {
           "lam": 0.04,
-          "n_seeds": 8,
-          "learner_iqm": -0.00977777777777778,
+          "n_seeds": 10,
+          "learner_iqm": -0.00651851851851852,
           "rule_iqm": 6.568933333333333,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.06,
-          "n_seeds": 8,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": 2.475066666666667,
           "wins_ci": false,
@@ -302,8 +302,8 @@
         }
       ],
       "coverage": "6/6 λ",
-      "min_seeds": 8,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     },
     {
       "learner": "lazy",
@@ -329,56 +329,56 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 14.266666666666666,
+          "n_seeds": 10,
+          "learner_iqm": 13.566666666666668,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 8,
-          "learner_iqm": 12.882499999999936,
+          "n_seeds": 10,
+          "learner_iqm": 12.543351851851789,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 8,
-          "learner_iqm": 10.98427777777782,
+          "n_seeds": 10,
+          "learner_iqm": 10.681592592592638,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.02,
-          "n_seeds": 8,
-          "learner_iqm": 8.101333333333395,
+          "n_seeds": 10,
+          "learner_iqm": 8.42755555555562,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.04,
-          "n_seeds": 8,
-          "learner_iqm": 1.9802222222222206,
+          "n_seeds": 10,
+          "learner_iqm": 2.216000000000002,
           "rule_iqm": 6.568933333333333,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.06,
-          "n_seeds": 8,
-          "learner_iqm": -0.5018888888888905,
+          "n_seeds": 10,
+          "learner_iqm": -0.5267407407407426,
           "rule_iqm": 2.475066666666667,
           "wins_ci": false,
           "wins_pt": false
         }
       ],
       "coverage": "6/6 λ",
-      "min_seeds": 8,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     },
     {
       "learner": "temporl",
@@ -404,47 +404,47 @@
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 8,
-          "learner_iqm": 8.772222222222222,
+          "n_seeds": 10,
+          "learner_iqm": 8.774074074074074,
           "rule_iqm": 16.936666666666664,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.005,
-          "n_seeds": 8,
-          "learner_iqm": 3.1879722222222524,
+          "n_seeds": 10,
+          "learner_iqm": 2.125314814814835,
           "rule_iqm": 15.4426,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.01,
-          "n_seeds": 8,
-          "learner_iqm": 0.04538888888889699,
+          "n_seeds": 10,
+          "learner_iqm": 0.030259259259264662,
           "rule_iqm": 13.948533333333335,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.02,
-          "n_seeds": 8,
-          "learner_iqm": -0.045777777777777806,
+          "n_seeds": 10,
+          "learner_iqm": -0.03051851851851854,
           "rule_iqm": 10.960400000000002,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.04,
-          "n_seeds": 8,
-          "learner_iqm": -0.0008888888888888889,
+          "n_seeds": 10,
+          "learner_iqm": -0.0005925925925925926,
           "rule_iqm": 6.568933333333333,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 0.06,
-          "n_seeds": 8,
+          "n_seeds": 10,
           "learner_iqm": 0.0,
           "rule_iqm": 2.475066666666667,
           "wins_ci": false,
@@ -452,8 +452,8 @@
         }
       ],
       "coverage": "6/6 λ",
-      "min_seeds": 8,
-      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함 (주의: 시드 8개뿐 — 시드 10개 기준 결론이 아님)"
+      "min_seeds": 10,
+      "note": "λ=0에서도 규칙을 못 이김 — 비용 때문이 아니라 학습 자체가 규칙보다 약함"
     }
   ]
 }
