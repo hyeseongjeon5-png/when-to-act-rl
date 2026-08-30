@@ -711,6 +711,10 @@ def collapse_budget_note() -> str:
         out.append("예산을 3.3배로 줘도 " + str(gained) + "/" + str(len(shared))
                    + "개 지점에서만 올랐다.")
     out.append("")
+    out.append("(뒤의 공정성 점검 절도 예산을 다루지만 묻는 것이 다르다. 여기서는 "
+               "**붕괴 문턱이 예산에 따라 밀리는가**를, 그쪽에서는 **비용이 없는 λ=0에서 "
+               "학습이 규칙 수준에 닿는가**를 묻는다.)")
+    out.append("")
     out.append("<!-- 출처: results/aggregate/MountainCar-v0@budget1M_epsconst_iqm.csv -->")
     out.append("")
     return chr(10).join(out)

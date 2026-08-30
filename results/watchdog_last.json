@@ -1,6 +1,6 @@
 {
- "time": "2026-08-31 05:02:45",
- "ts": 1788120165.103659,
+ "time": "2026-08-31 06:02:58",
+ "ts": 1788123778.78001,
  "runs": [
   {
    "run": "causal_warmup_mc",
@@ -10,23 +10,23 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2456.3,
+   "stale_min": 2516.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 90
   },
   {
    "run": "collapse_budget_mc",
-   "done": 45,
+   "done": 50,
    "total": 50,
-   "running": 5,
+   "running": 0,
    "skipped": 0,
-   "pid_alive": true,
-   "finished": false,
-   "stale_min": 0.0,
+   "pid_alive": false,
+   "finished": true,
+   "stale_min": 49.4,
    "advanced_since_last": true,
-   "eta_text": "약 0.5시간 남음",
-   "prev_done": 35
+   "eta_text": "측정 중",
+   "prev_done": 45
   },
   {
    "run": "fair_ll_1M",
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 705.5,
+   "stale_min": 765.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 30
@@ -49,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 290.5,
+   "stale_min": 350.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 15
@@ -62,7 +62,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 3011.7,
+   "stale_min": 3071.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -75,7 +75,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 3010.6,
+   "stale_min": 3070.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -88,7 +88,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2961.1,
+   "stale_min": 3021.4,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -101,7 +101,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2243.0,
+   "stale_min": 2303.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 360
@@ -114,7 +114,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 1000.7,
+   "stale_min": 1060.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 180
@@ -127,29 +127,42 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2673.8,
+   "stale_min": 2734.0,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
+  },
+  {
+   "run": "switch_cost_mc",
+   "done": 14,
+   "total": 180,
+   "running": 10,
+   "skipped": 0,
+   "pid_alive": true,
+   "finished": false,
+   "stale_min": 0.3,
+   "advanced_since_last": null,
+   "eta_text": "약 6.6시간 남음",
+   "prev_done": null
   }
  ],
  "issues": [],
  "level": "정상",
  "queue": {
-  "current": "6_붕괴문턱_예산의존",
-  "done": 14,
-  "pending": 5,
-  "next": "6_붕괴문턱_예산의존",
+  "current": "7_전환비용_학습",
+  "done": 16,
+  "pending": 3,
+  "next": "7_전환비용_학습",
   "alive": null,
   "pid": null,
-  "stale_min": 290.3
+  "stale_min": 49.0
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 15,
-  "fresh": 5,
+  "scanned": 29,
+  "fresh": 18,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -159,8 +172,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 74
+  "n_expected_floor": 20
  },
  "disk_free_gb": 328.8,
- "done_conditions_total": 3511
+ "done_conditions_total": 3770
 }

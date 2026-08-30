@@ -1,0 +1,13 @@
+
+===== 2026-08-31 05:14:00 시작 =====
+[러너] switch_cost_mc | 총 180조건 | 이미 완료 0 | 동시 10개
+  ▶ 시작 MountainCar-v0@switch/dqn/lam0.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/dqn/lam2.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/dqn/lam5.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/dqn/lam10.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/dqn/lam18.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/dqn/lam26.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/temporl/lam0.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/temporl/lam2.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/temporl/lam5.0/seed0 (시도 1)
+  ▶ 시작 MountainCar-v0@switch/temporl/lam10.0/seed0 (시도 1)
