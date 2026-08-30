@@ -13,14 +13,16 @@
   "1C_공정성확장_LL",
   "1C_공정성확장_MinAtar_규칙",
   "1C_공정성확장_MinAtar",
-  "6_붕괴문턱_예산의존_규칙"
+  "6_붕괴문턱_예산의존_규칙",
+  "6_붕괴문턱_예산의존",
+  "7_전환비용_규칙"
  ],
  "current": {
-  "label": "6_붕괴문턱_예산의존",
+  "label": "7_전환비용_학습",
   "kind": "train",
-  "spec": "experiments/configs/collapse_budget_mc.yaml:10",
-  "started_at": 1788102750.092282,
-  "started_text": "2026-08-31 00:12:30"
+  "spec": "experiments/configs/switch_cost_mc.yaml:10",
+  "started_at": 1788120840.7886617,
+  "started_text": "2026-08-31 05:14:00"
  },
  "history": [
   {
@@ -106,8 +108,20 @@
    "hours": 0.0,
    "exit": 0,
    "finished_text": "2026-08-31 00:12:30"
+  },
+  {
+   "label": "6_붕괴문턱_예산의존",
+   "hours": 5.02,
+   "exit": 0,
+   "finished_text": "2026-08-31 05:13:37"
+  },
+  {
+   "label": "7_전환비용_규칙",
+   "hours": 0.01,
+   "exit": 0,
+   "finished_text": "2026-08-31 05:14:00"
   }
  ],
- "updated_at": 1788102750.092282,
- "updated_text": "2026-08-31 00:12:30"
+ "updated_at": 1788120840.7886617,
+ "updated_text": "2026-08-31 05:14:00"
 }

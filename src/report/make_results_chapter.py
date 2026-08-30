@@ -664,12 +664,56 @@ def collapse_section(sec: str) -> str:
         "−200에서 −120 사이인데, " + cost_share(agg) + " 학습은 목표에 닿기를 포기한다. "
         "**행동 1번의 값이 아니라, 한 에피소드에 물게 되는 비용 총액이 그만큼이라는 뜻이다.**",
         "",
+        collapse_budget_note(),
         "그런데 '성능이 먼저 무너진다'는 사실 자체는 원인을 말해 주지 않는다. 두 가지가 가능하다. "
         "**(가)** 비용이 붙은 세상에서는 그 정도가 실제로 최선이거나, "
         "**(나)** 비용 때문에 학습 과정이 망가져 있을 법한 정책을 못 찾았거나. "
         "다음 절의 대조 실험이 이 둘을 가른다.",
         "",
     ])
+
+
+def collapse_budget_note() -> str:
+    """붕괴 문턱이 예산에 따라 달라지는지 — 공통 λ에서만 비교한다.
+
+    두 판의 λ 격자가 다르므로(본실험에는 0.0075가 있고 100만 판에는 없다)
+    '문턱이 몇으로 옮겼다'는 말은 할 수 없다. **양쪽에 다 있는 λ에서만** 견준다.
+    """
+    fb, fg = AGG / "MountainCar-v0_iqm.csv", AGG / "MountainCar-v0@budget1M_epsconst_iqm.csv"
+    if not (fb.exists() and fg.exists()):
+        return ""
+    A, B = pd.read_csv(fb), pd.read_csv(fg)
+    A, B = A[A.agent == "dqn"], B[B.agent == "dqn"]
+    shared = sorted(set(A.lam) & set(B.lam))
+    if len(shared) < 3:
+        return ""
+    bits, gained = [], 0
+    for l in shared:
+        x = float(A[A.lam == l].iloc[0].solved_iqm) * 100
+        y = float(B[B.lam == l].iloc[0].solved_iqm) * 100
+        gained += y > x
+        bits.append(f"λ={l:g} {x:.0f}%→{y:.0f}%")
+    zero_both = [l for l in shared
+                 if float(A[A.lam == l].iloc[0].solved_iqm) == 0
+                 and float(B[B.lam == l].iloc[0].solved_iqm) == 0]
+    out = ["", "**이 문턱이 예산 때문에 생긴 것은 아니다.** 같은 환경·같은 계열(표준 DQN)을 "
+           "예산 3.3배(30만 → 100만 스텝)로 다시 돌려 목표 도달률을 견주었다. "
+           "두 판의 λ 격자가 달라 '문턱이 어디로 옮겼다'고는 말할 수 없으므로, "
+           "**양쪽에 다 있는 λ에서만** 비교한다.", ""]
+    out.append("- " + " · ".join(bits))
+    out.append("")
+    if zero_both:
+        out.append("예산을 3.3배로 줘도 " + str(gained) + "/" + str(len(shared))
+                   + "개 지점에서 몇 %p 오르는 데 그쳤고, λ=" + format(max(zero_both), "g")
+                   + "에서는 **양쪽 모두 도달률 0%** 다. "
+                   "**붕괴는 예산을 늘려 없앨 수 있는 것이 아니다.**")
+    else:
+        out.append("예산을 3.3배로 줘도 " + str(gained) + "/" + str(len(shared))
+                   + "개 지점에서만 올랐다.")
+    out.append("")
+    out.append("<!-- 출처: results/aggregate/MountainCar-v0@budget1M_epsconst_iqm.csv -->")
+    out.append("")
+    return chr(10).join(out)
 
 
 def causal_section(sec: str) -> str:

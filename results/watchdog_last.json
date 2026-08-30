@@ -1,6 +1,6 @@
 {
- "time": "2026-08-31 02:02:27",
- "ts": 1788109347.9337578,
+ "time": "2026-08-31 05:02:45",
+ "ts": 1788120165.103659,
  "runs": [
   {
    "run": "causal_warmup_mc",
@@ -10,23 +10,23 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2276.0,
+   "stale_min": 2456.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 90
   },
   {
    "run": "collapse_budget_mc",
-   "done": 15,
+   "done": 45,
    "total": 50,
-   "running": 10,
+   "running": 5,
    "skipped": 0,
    "pid_alive": true,
    "finished": false,
-   "stale_min": 0.3,
+   "stale_min": 0.0,
    "advanced_since_last": true,
-   "eta_text": "약 3.5시간 남음",
-   "prev_done": 5
+   "eta_text": "약 0.5시간 남음",
+   "prev_done": 35
   },
   {
    "run": "fair_ll_1M",
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 525.2,
+   "stale_min": 705.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 30
@@ -49,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 110.2,
+   "stale_min": 290.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 15
@@ -62,7 +62,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2831.4,
+   "stale_min": 3011.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -75,7 +75,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2830.4,
+   "stale_min": 3010.6,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -88,7 +88,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2780.9,
+   "stale_min": 2961.1,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -101,7 +101,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2062.7,
+   "stale_min": 2243.0,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 360
@@ -114,7 +114,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 820.4,
+   "stale_min": 1000.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 180
@@ -127,7 +127,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2493.5,
+   "stale_min": 2673.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -142,14 +142,14 @@
   "next": "6_붕괴문턱_예산의존",
   "alive": null,
   "pid": null,
-  "stale_min": 110.0
+  "stale_min": 290.3
  },
  "processes": {
   "queue": 1
  },
  "logs": {
-  "scanned": 20,
-  "fresh": 10,
+  "scanned": 15,
+  "fresh": 5,
   "fresh_minutes": 20,
   "traceback_logs": [],
   "nan_logs": []
@@ -159,8 +159,8 @@
   "nan_results": [],
   "floor_conditions": [],
   "n_floor": 0,
-  "n_expected_floor": 67
+  "n_expected_floor": 74
  },
- "disk_free_gb": 328.9,
- "done_conditions_total": 3481
+ "disk_free_gb": 328.8,
+ "done_conditions_total": 3511
 }
