@@ -546,3 +546,4 @@ agent      lam  n_seeds  cost_return_iqm  cost_return_ci_lo  cost_return_ci_hi  
   저장: results\figures\MountainCar-v0@warmup50_action_map.png
   저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
 보고서 저장: results\reports\2026-08-31_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
