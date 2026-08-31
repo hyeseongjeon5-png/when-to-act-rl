@@ -27,3 +27,50 @@
 [2026-08-29 15:39:57] === 작업 완료: 4_MinAtar_규칙 | 0.00시간 | 종료코드 0 ===
 [2026-08-29 15:39:57] === 작업 시작: 4_MinAtar_학습 (train) ===
 [2026-08-29 15:39:57]   ▶ experiments/configs/main_minatar_freeway.yaml (워커 10)
+[2026-08-30 12:22:05] === 작업 완료: 4_MinAtar_학습 | 20.70시간 | 종료코드 0 ===
+[2026-08-30 12:22:05] === 작업 시작: 1C_공정성확장_LL_규칙 (rules) ===
+[2026-08-30 12:22:05]   ▶ 고정 규칙 experiments/configs/fair_ll_1M.yaml
+[2026-08-30 12:22:48] === 작업 완료: 1C_공정성확장_LL_규칙 | 0.01시간 | 종료코드 0 ===
+[2026-08-30 12:22:48] === 작업 시작: 1C_공정성확장_LL (train) ===
+[2026-08-30 12:22:48]   ▶ experiments/configs/fair_ll_1M.yaml (워커 10)
+[2026-08-30 17:17:17] === 작업 완료: 1C_공정성확장_LL | 4.91시간 | 종료코드 0 ===
+[2026-08-30 17:17:17] === 작업 시작: 1C_공정성확장_MinAtar_규칙 (rules) ===
+[2026-08-30 17:17:17]   ▶ 고정 규칙 experiments/configs/fair_minatar_1M.yaml
+[2026-08-30 17:18:07] === 작업 완료: 1C_공정성확장_MinAtar_규칙 | 0.01시간 | 종료코드 0 ===
+[2026-08-30 17:18:07] === 작업 시작: 1C_공정성확장_MinAtar (train) ===
+[2026-08-30 17:18:07]   ▶ experiments/configs/fair_minatar_1M.yaml (워커 10)
+[2026-08-31 00:12:16] === 작업 완료: 1C_공정성확장_MinAtar | 6.90시간 | 종료코드 0 ===
+[2026-08-31 00:12:16] === 작업 시작: 6_붕괴문턱_예산의존_규칙 (rules) ===
+[2026-08-31 00:12:16]   ▶ 고정 규칙 experiments/configs/collapse_budget_mc.yaml
+[2026-08-31 00:12:30] === 작업 완료: 6_붕괴문턱_예산의존_규칙 | 0.00시간 | 종료코드 0 ===
+[2026-08-31 00:12:30] === 작업 시작: 6_붕괴문턱_예산의존 (train) ===
+[2026-08-31 00:12:30]   ▶ experiments/configs/collapse_budget_mc.yaml (워커 10)
+[2026-08-31 05:13:37] === 작업 완료: 6_붕괴문턱_예산의존 | 5.02시간 | 종료코드 0 ===
+[2026-08-31 05:13:37] === 작업 시작: 7_전환비용_규칙 (rules) ===
+[2026-08-31 05:13:37]   ▶ 고정 규칙 experiments/configs/switch_cost_mc.yaml
+[2026-08-31 05:14:00] === 작업 완료: 7_전환비용_규칙 | 0.01시간 | 종료코드 0 ===
+[2026-08-31 05:14:00] === 작업 시작: 7_전환비용_학습 (train) ===
+[2026-08-31 05:14:00]   ▶ experiments/configs/switch_cost_mc.yaml (워커 10)
+[2026-08-31 12:37:05] === 작업 완료: 7_전환비용_학습 | 7.38시간 | 종료코드 0 ===
+[2026-08-31 12:37:05] === 작업 시작: 8_Lazy기본정책_규칙 (rules) ===
+[2026-08-31 12:37:05]   ▶ 고정 규칙 experiments/configs/lazy_tuned_base_ll.yaml
+[2026-08-31 12:38:08] === 작업 완료: 8_Lazy기본정책_규칙 | 0.02시간 | 종료코드 0 ===
+[2026-08-31 12:38:08] === 작업 시작: 8_Lazy기본정책_학습 (train) ===
+[2026-08-31 12:38:08]   ▶ experiments/configs/lazy_tuned_base_ll.yaml (워커 10)
+[2026-08-31 15:18:21] === 작업 완료: 8_Lazy기본정책_학습 | 2.67시간 | 종료코드 0 ===
+[2026-08-31 15:18:21] 대기열 비어 있음 — 새 줄이 추가되길 기다린다 (sprint_queue.tsv)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\sprint_queue.py", line 137, in <module>
+    for cfg, item, done, skipped, left in todo:
+^^
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\sprint_queue.py", line 116, in main
+    return 0
+        ^^^^^
+  File "C:\Users\전혜성\Desktop\AI-Team\13_졸업과제\src\train\sprint_queue.py", line 67, in save_state
+    st["updated_at"] = time.time()
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\전혜성\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1188, in replace
+    os.replace(self, target)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\전혜성\\Desktop\\AI-Team\\13_졸업과제\\results\\sprint_queue_state.tmp' -> 'C:\\Users\\전혜성\\Desktop\\AI-Team\\13_졸업과제\\results\\sprint_queue_state.json'
