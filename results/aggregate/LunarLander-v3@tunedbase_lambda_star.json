@@ -5,8 +5,8 @@
     {
       "learner": "lazy",
       "rule": "rule_threshold_tuned",
-      "lam_star_ci": 0.1,
-      "lam_star_pt": 0.1,
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 1.0,
       "lams_in_grid": [
         0.0,
         0.1,
@@ -31,92 +31,110 @@
         1.37,
         1.6,
         1.8,
-        2.0
+        2.0,
+        2.5,
+        3.0
       ],
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 190.88224676367335,
+          "n_seeds": 10,
+          "learner_iqm": 194.63176910653615,
           "rule_iqm": 162.275249950774,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 0.1,
-          "n_seeds": 1,
-          "learner_iqm": 89.13148375739237,
+          "n_seeds": 10,
+          "learner_iqm": 203.7912456149761,
           "rule_iqm": 146.10391661744063,
-          "wins_ci": false,
-          "wins_pt": false
+          "wins_ci": true,
+          "wins_pt": true
         },
         {
           "lam": 0.3,
-          "n_seeds": 1,
-          "learner_iqm": 185.82619451929392,
+          "n_seeds": 10,
+          "learner_iqm": 149.46572022445596,
           "rule_iqm": 113.76124995077397,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 0.6,
-          "n_seeds": 1,
-          "learner_iqm": 146.47612501316556,
+          "n_seeds": 10,
+          "learner_iqm": 103.97795938817679,
           "rule_iqm": 65.00584678874165,
-          "wins_ci": true,
-          "wins_pt": true
-        },
-        {
-          "lam": 1.0,
-          "n_seeds": 1,
-          "learner_iqm": 0.1827649716450681,
-          "rule_iqm": -0.5701254152012409,
           "wins_ci": false,
           "wins_pt": true
         },
         {
+          "lam": 1.0,
+          "n_seeds": 10,
+          "learner_iqm": -6.786597983342137,
+          "rule_iqm": -0.5701254152012409,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
           "lam": 1.2,
-          "n_seeds": 1,
-          "learner_iqm": 23.4215546726213,
+          "n_seeds": 10,
+          "learner_iqm": -8.027815942975044,
           "rule_iqm": -33.345792081867906,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.37,
-          "n_seeds": 1,
-          "learner_iqm": 0.545094031707284,
+          "n_seeds": 10,
+          "learner_iqm": -50.169376023544885,
           "rule_iqm": -61.20510874853458,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.6,
-          "n_seeds": 1,
-          "learner_iqm": -280.18539338149253,
+          "n_seeds": 10,
+          "learner_iqm": -124.2591347259201,
           "rule_iqm": -98.81368475528585,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 1.8,
-          "n_seeds": 1,
-          "learner_iqm": -100.19725902086402,
+          "n_seeds": 10,
+          "learner_iqm": -116.65458041760252,
           "rule_iqm": -131.24468475528587,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 2.0,
-          "n_seeds": 1,
-          "learner_iqm": -108.12949978204703,
+          "n_seeds": 10,
+          "learner_iqm": -134.48723457001137,
           "rule_iqm": -163.67568475528583,
+          "wins_ci": false,
+          "wins_pt": true
+        },
+        {
+          "lam": 2.5,
+          "n_seeds": 10,
+          "learner_iqm": -167.25972500262574,
+          "rule_iqm": -244.75318475528582,
+          "wins_ci": false,
+          "wins_pt": true
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 10,
+          "learner_iqm": -184.06679467365663,
+          "rule_iqm": -326.008745377268,
           "wins_ci": true,
           "wins_pt": true
         }
       ],
-      "coverage": "10/12 λ",
-      "min_seeds": 1,
+      "coverage": "12/12 λ",
+      "min_seeds": 10,
       "note": "격자 안에서 교차 지점 발견"
     }
   ],
@@ -125,8 +143,8 @@
     {
       "learner": "lazy",
       "rule": "rule_best",
-      "lam_star_ci": 0.1,
-      "lam_star_pt": 0.1,
+      "lam_star_ci": 0.0,
+      "lam_star_pt": 1.0,
       "lams_in_grid": [
         0.0,
         0.1,
@@ -151,92 +169,110 @@
         1.37,
         1.6,
         1.8,
-        2.0
+        2.0,
+        2.5,
+        3.0
       ],
       "rows": [
         {
           "lam": 0.0,
-          "n_seeds": 1,
-          "learner_iqm": 190.88224676367335,
+          "n_seeds": 10,
+          "learner_iqm": 194.63176910653615,
           "rule_iqm": 162.275249950774,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 0.1,
-          "n_seeds": 1,
-          "learner_iqm": 89.13148375739237,
+          "n_seeds": 10,
+          "learner_iqm": 203.7912456149761,
           "rule_iqm": 146.10391661744063,
-          "wins_ci": false,
-          "wins_pt": false
+          "wins_ci": true,
+          "wins_pt": true
         },
         {
           "lam": 0.3,
-          "n_seeds": 1,
-          "learner_iqm": 185.82619451929392,
+          "n_seeds": 10,
+          "learner_iqm": 149.46572022445596,
           "rule_iqm": 113.76124995077397,
           "wins_ci": true,
           "wins_pt": true
         },
         {
           "lam": 0.6,
-          "n_seeds": 1,
-          "learner_iqm": 146.47612501316556,
+          "n_seeds": 10,
+          "learner_iqm": 103.97795938817679,
           "rule_iqm": 65.00584678874165,
-          "wins_ci": true,
-          "wins_pt": true
-        },
-        {
-          "lam": 1.0,
-          "n_seeds": 1,
-          "learner_iqm": 0.1827649716450681,
-          "rule_iqm": -0.5701254152012409,
           "wins_ci": false,
           "wins_pt": true
         },
         {
+          "lam": 1.0,
+          "n_seeds": 10,
+          "learner_iqm": -6.786597983342137,
+          "rule_iqm": -0.5701254152012409,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
           "lam": 1.2,
-          "n_seeds": 1,
-          "learner_iqm": 23.4215546726213,
+          "n_seeds": 10,
+          "learner_iqm": -8.027815942975044,
           "rule_iqm": -33.345792081867906,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.37,
-          "n_seeds": 1,
-          "learner_iqm": 0.545094031707284,
+          "n_seeds": 10,
+          "learner_iqm": -50.169376023544885,
           "rule_iqm": -61.20510874853458,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 1.6,
-          "n_seeds": 1,
-          "learner_iqm": -280.18539338149253,
+          "n_seeds": 10,
+          "learner_iqm": -124.2591347259201,
           "rule_iqm": -98.81368475528585,
           "wins_ci": false,
           "wins_pt": false
         },
         {
           "lam": 1.8,
-          "n_seeds": 1,
-          "learner_iqm": -100.19725902086402,
+          "n_seeds": 10,
+          "learner_iqm": -116.65458041760252,
           "rule_iqm": -131.24468475528587,
-          "wins_ci": true,
+          "wins_ci": false,
           "wins_pt": true
         },
         {
           "lam": 2.0,
-          "n_seeds": 1,
-          "learner_iqm": -108.12949978204703,
+          "n_seeds": 10,
+          "learner_iqm": -134.48723457001137,
           "rule_iqm": -131.29494775506987,
-          "wins_ci": true,
-          "wins_pt": true
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 2.5,
+          "n_seeds": 10,
+          "learner_iqm": -167.25972500262574,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 3.0,
+          "n_seeds": 10,
+          "learner_iqm": -184.06679467365663,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": false,
+          "wins_pt": false
         }
       ],
-      "coverage": "10/12 λ",
-      "min_seeds": 1,
+      "coverage": "12/12 λ",
+      "min_seeds": 10,
       "note": "격자 안에서 교차 지점 발견"
     }
   ]

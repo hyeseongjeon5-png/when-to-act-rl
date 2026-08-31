@@ -17,15 +17,10 @@
   "6_붕괴문턱_예산의존",
   "7_전환비용_규칙",
   "7_전환비용_학습",
-  "8_Lazy기본정책_규칙"
+  "8_Lazy기본정책_규칙",
+  "8_Lazy기본정책_학습"
  ],
- "current": {
-  "label": "8_Lazy기본정책_학습",
-  "kind": "train",
-  "spec": "experiments/configs/lazy_tuned_base_ll.yaml:10",
-  "started_at": 1788147488.1920238,
-  "started_text": "2026-08-31 12:38:08"
- },
+ "current": null,
  "history": [
   {
    "label": "1_공정성파일럿",
@@ -134,8 +129,14 @@
    "hours": 0.02,
    "exit": 0,
    "finished_text": "2026-08-31 12:38:08"
+  },
+  {
+   "label": "8_Lazy기본정책_학습",
+   "hours": 2.67,
+   "exit": 0,
+   "finished_text": "2026-08-31 15:18:21"
   }
  ],
- "updated_at": 1788147488.1920238,
- "updated_text": "2026-08-31 12:38:08"
+ "updated_at": 1788157941.661254,
+ "updated_text": "2026-08-31 15:32:21"
 }

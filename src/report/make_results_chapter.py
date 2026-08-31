@@ -878,6 +878,74 @@ HEADER_TMPL = """# Ⅳ. Experimental Results
 MountainCar에서 무엇이 무너지는지를 먼저 보면, LunarLander가 왜 다른지가 대비로 드러난다.
 """
 
+def lazy_base_section() -> str:
+    """Lazy-MDP에 더 좋은 기본 정책을 주면 좋아지는가 — 기대와 반대로 나온 결과.
+
+    Ⅴ장에 "Lazy 성적은 약한 기본 정책 위에서 난 것이라 하한이다"라고 적어 두었었다.
+    그 말이 맞는지 확인하려고 기본 정책을 계수를 다시 고른 규칙으로 바꿔 다시 돌렸다.
+    """
+    fa, fb = AGG / "LunarLander-v3_iqm.csv", AGG / "LunarLander-v3@tunedbase_iqm.csv"
+    sa, sb = (AGG / "LunarLander-v3_lambda_star.json",
+              AGG / "LunarLander-v3@tunedbase_lambda_star.json")
+    if not all(f.exists() for f in (fa, fb, sa, sb)):
+        return ""
+    A, B = pd.read_csv(fa), pd.read_csv(fb)
+
+    def star(f):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for r in d.get("results_vs_best_rule", []):
+            if r["learner"] == "lazy":
+                return r.get("lam_star_ci"), r.get("lam_star_pt")
+        return None, None
+
+    ci_a, pt_a = star(sa)
+    ci_b, pt_b = star(sb)
+    za = A[(A.agent == "lazy") & (A.lam == 0.0)]
+    zb = B[(B.agent == "lazy") & (B.lam == 0.0)]
+    if za.empty or zb.empty:
+        return ""
+    za, zb = za.iloc[0], zb.iloc[0]
+    g = lambda v: "격자 밖" if v is None else format(float(v), "g")
+    return chr(10).join([
+        "",
+        "### 기본 정책을 잘 만들면 Lazy-MDP도 좋아지는가",
+        "",
+        "Lazy-MDP는 **기본 정책에 맡기기**라는 선택지를 하나 더 갖는다. 그렇다면 그 기본 정책을 "
+        "잘 만들수록 Lazy도 좋아져야 할 것 같다. 실제로 이 연구는 한동안 "
+        "\"Lazy 성적은 약한 규칙 위에서 난 것이라 하한이다\"라고 적어 두었다. "
+        "확인하려고 기본 정책만 계수를 다시 고른 규칙으로 바꿔 같은 조건에서 다시 돌렸다"
+        "(λ 12개 × 시드 10개).",
+        "",
+        "**기대는 빗나갔다.**",
+        "",
+        "<!--TABCAP: Lazy-MDP의 기본 정책을 바꿨을 때 (LunarLander-v3, 시드 10개) "
+        "| Changing the base policy of Lazy-MDP (LunarLander-v3, 10 seeds) -->",
+        "| 기본 정책 | λ=0 점수 r′ [95% CI] | λ=0 행동 횟수 | λ\*_CI | λ\*_점추정 |",
+        "|---|---|---:|---:|---:|",
+        "| 처음 규칙 (약함) | " + num(za.cost_return_iqm) + " [" + num(za.cost_return_ci_lo, 0)
+        + ", " + num(za.cost_return_ci_hi, 0) + "] | " + num(za.n_actions_iqm, 0) + " | "
+        + g(ci_a) + " | " + g(pt_a) + " |",
+        "| 다시 고른 규칙 (강함) | " + num(zb.cost_return_iqm) + " [" + num(zb.cost_return_ci_lo, 0)
+        + ", " + num(zb.cost_return_ci_hi, 0) + "] | " + num(zb.n_actions_iqm, 0) + " | "
+        + g(ci_b) + " | " + g(pt_b) + " |",
+        "",
+        "좋은 기본 정책을 주자 **행동은 " + num(za.n_actions_iqm - zb.n_actions_iqm, 0)
+        + "회 줄었지만 점수는 오르지 않았고**, 통계적 우위가 사라지는 지점(λ\*_CI)은 오히려 "
+        "앞당겨졌다. 신뢰구간이 대부분의 λ에서 겹치므로 **어느 쪽이 낫다고 말하지는 않는다.** "
+        "확실한 것은 **'하한'이라는 기대가 확인되지 않았다**는 것이다.",
+        "",
+        "한 가지 해석이 가능하다. 기본 정책이 강하면 위임이 매력적이어서 에이전트의 행동이 "
+        "규칙 쪽으로 수렴하고, 그러면 **규칙을 크게 넘어설 여지도 함께 사라진다.** "
+        "반대로 기본 정책이 약하면 위임할 이유가 없어 직접 행동하는 법을 배워야 하고, "
+        "그렇게 배운 정책이 다시 고른 규칙보다 나았을 수 있다. "
+        "**다만 이것은 관측에 대한 해석이지 확인한 것이 아니다** — 어느 상태에서 위임했는지를 "
+        "보아야 말할 수 있고, 그것은 이 연구에서 하지 않았다(Ⅴ장 다음 연구).",
+        "",
+        "<!-- 출처: results/aggregate/LunarLander-v3@tunedbase_iqm.csv (120조건) -->",
+        "",
+    ])
+
+
 def switch_cost_section(sec: str) -> str:
     """비용 부과 방식을 바꾸면 답이 달라지는가 — 학습 계열까지 재어 본 절.
 
@@ -1094,7 +1162,7 @@ def main() -> None:
     has_third = any("## 6. 세 번째 환경" in x for x in parts)
     n_fair = 7 if has_third else 6
     fair = FAIRNESS_TMPL.replace("{공정성번호}", str(n_fair)) + budget_effect()
-    audit = baseline_audit_section().replace("{감사번호}", str(n_fair + 1))
+    audit = baseline_audit_section().replace("{감사번호}", str(n_fair + 1)) + lazy_base_section()
     audit += chr(10) + switch_cost_section(str(n_fair + 2))
     out.write_text(head + chr(10) + body + chr(10) + fair + chr(10) + audit + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
