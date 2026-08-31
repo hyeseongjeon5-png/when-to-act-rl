@@ -1,0 +1,243 @@
+{
+  "env_id": "LunarLander-v3@tunedbase",
+  "rule": "rule_threshold_tuned",
+  "results": [
+    {
+      "learner": "lazy",
+      "rule": "rule_threshold_tuned",
+      "lam_star_ci": 0.1,
+      "lam_star_pt": 0.1,
+      "lams_in_grid": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.2,
+        1.37,
+        1.6,
+        1.8,
+        2.0,
+        2.5,
+        3.0
+      ],
+      "lams_compared": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.2,
+        1.37,
+        1.6,
+        1.8,
+        2.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 1,
+          "learner_iqm": 190.88224676367335,
+          "rule_iqm": 162.275249950774,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 0.1,
+          "n_seeds": 1,
+          "learner_iqm": 89.13148375739237,
+          "rule_iqm": 146.10391661744063,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.3,
+          "n_seeds": 1,
+          "learner_iqm": 185.82619451929392,
+          "rule_iqm": 113.76124995077397,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 0.6,
+          "n_seeds": 1,
+          "learner_iqm": 146.47612501316556,
+          "rule_iqm": 65.00584678874165,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.0,
+          "n_seeds": 1,
+          "learner_iqm": 0.1827649716450681,
+          "rule_iqm": -0.5701254152012409,
+          "wins_ci": false,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.2,
+          "n_seeds": 1,
+          "learner_iqm": 23.4215546726213,
+          "rule_iqm": -33.345792081867906,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.37,
+          "n_seeds": 1,
+          "learner_iqm": 0.545094031707284,
+          "rule_iqm": -61.20510874853458,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.6,
+          "n_seeds": 1,
+          "learner_iqm": -280.18539338149253,
+          "rule_iqm": -98.81368475528585,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 1.8,
+          "n_seeds": 1,
+          "learner_iqm": -100.19725902086402,
+          "rule_iqm": -131.24468475528587,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 1,
+          "learner_iqm": -108.12949978204703,
+          "rule_iqm": -163.67568475528583,
+          "wins_ci": true,
+          "wins_pt": true
+        }
+      ],
+      "coverage": "10/12 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견"
+    }
+  ],
+  "rule_best_note": "rule_best = λ마다 가장 센 고정 규칙을 고른 포락선 (보조 비교)",
+  "results_vs_best_rule": [
+    {
+      "learner": "lazy",
+      "rule": "rule_best",
+      "lam_star_ci": 0.1,
+      "lam_star_pt": 0.1,
+      "lams_in_grid": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.2,
+        1.37,
+        1.6,
+        1.8,
+        2.0,
+        2.5,
+        3.0
+      ],
+      "lams_compared": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        1.0,
+        1.2,
+        1.37,
+        1.6,
+        1.8,
+        2.0
+      ],
+      "rows": [
+        {
+          "lam": 0.0,
+          "n_seeds": 1,
+          "learner_iqm": 190.88224676367335,
+          "rule_iqm": 162.275249950774,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 0.1,
+          "n_seeds": 1,
+          "learner_iqm": 89.13148375739237,
+          "rule_iqm": 146.10391661744063,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 0.3,
+          "n_seeds": 1,
+          "learner_iqm": 185.82619451929392,
+          "rule_iqm": 113.76124995077397,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 0.6,
+          "n_seeds": 1,
+          "learner_iqm": 146.47612501316556,
+          "rule_iqm": 65.00584678874165,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.0,
+          "n_seeds": 1,
+          "learner_iqm": 0.1827649716450681,
+          "rule_iqm": -0.5701254152012409,
+          "wins_ci": false,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.2,
+          "n_seeds": 1,
+          "learner_iqm": 23.4215546726213,
+          "rule_iqm": -33.345792081867906,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.37,
+          "n_seeds": 1,
+          "learner_iqm": 0.545094031707284,
+          "rule_iqm": -61.20510874853458,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 1.6,
+          "n_seeds": 1,
+          "learner_iqm": -280.18539338149253,
+          "rule_iqm": -98.81368475528585,
+          "wins_ci": false,
+          "wins_pt": false
+        },
+        {
+          "lam": 1.8,
+          "n_seeds": 1,
+          "learner_iqm": -100.19725902086402,
+          "rule_iqm": -131.24468475528587,
+          "wins_ci": true,
+          "wins_pt": true
+        },
+        {
+          "lam": 2.0,
+          "n_seeds": 1,
+          "learner_iqm": -108.12949978204703,
+          "rule_iqm": -131.29494775506987,
+          "wins_ci": true,
+          "wins_pt": true
+        }
+      ],
+      "coverage": "10/12 λ",
+      "min_seeds": 1,
+      "note": "격자 안에서 교차 지점 발견"
+    }
+  ]
+}
