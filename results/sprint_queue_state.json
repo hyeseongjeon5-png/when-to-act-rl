@@ -15,14 +15,16 @@
   "1C_공정성확장_MinAtar",
   "6_붕괴문턱_예산의존_규칙",
   "6_붕괴문턱_예산의존",
-  "7_전환비용_규칙"
+  "7_전환비용_규칙",
+  "7_전환비용_학습",
+  "8_Lazy기본정책_규칙"
  ],
  "current": {
-  "label": "7_전환비용_학습",
+  "label": "8_Lazy기본정책_학습",
   "kind": "train",
-  "spec": "experiments/configs/switch_cost_mc.yaml:10",
-  "started_at": 1788120840.7886617,
-  "started_text": "2026-08-31 05:14:00"
+  "spec": "experiments/configs/lazy_tuned_base_ll.yaml:10",
+  "started_at": 1788147488.1920238,
+  "started_text": "2026-08-31 12:38:08"
  },
  "history": [
   {
@@ -120,8 +122,20 @@
    "hours": 0.01,
    "exit": 0,
    "finished_text": "2026-08-31 05:14:00"
+  },
+  {
+   "label": "7_전환비용_학습",
+   "hours": 7.38,
+   "exit": 0,
+   "finished_text": "2026-08-31 12:37:05"
+  },
+  {
+   "label": "8_Lazy기본정책_규칙",
+   "hours": 0.02,
+   "exit": 0,
+   "finished_text": "2026-08-31 12:38:08"
   }
  ],
- "updated_at": 1788120840.7886617,
- "updated_text": "2026-08-31 05:14:00"
+ "updated_at": 1788147488.1920238,
+ "updated_text": "2026-08-31 12:38:08"
 }

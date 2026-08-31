@@ -1,0 +1,9 @@
+
+===== 2026-08-31 12:37:05 experiments/configs/lazy_tuned_base_ll.yaml =====
+[규칙 rule_noop           ] 굴린 시드 10개 4.6초 · 환산 120건 0.40초 · λ 12개
+[규칙 rule_periodic_k1    ] 굴린 시드 10개 4.3초 · 환산 120건 0.41초 · λ 12개
+[규칙 rule_periodic_k2    ] 굴린 시드 10개 4.2초 · 환산 120건 0.43초 · λ 12개
+[규칙 rule_periodic_k4    ] 굴린 시드 10개 4.3초 · 환산 120건 0.45초 · λ 12개
+[규칙 rule_periodic_k8    ] 굴린 시드 10개 4.3초 · 환산 120건 0.56초 · λ 12개
+[규칙 rule_threshold      ] 굴린 시드 10개 12.7초 · 환산 120건 0.55초 · λ 12개
+[규칙 rule_threshold_tuned] 굴린 시드 10개 18.6초 · 환산 120건 0.48초 · λ 12개

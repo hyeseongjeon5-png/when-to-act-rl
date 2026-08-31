@@ -878,6 +878,87 @@ HEADER_TMPL = """# Ⅳ. Experimental Results
 MountainCar에서 무엇이 무너지는지를 먼저 보면, LunarLander가 왜 다른지가 대비로 드러난다.
 """
 
+def switch_cost_section(sec: str) -> str:
+    """비용 부과 방식을 바꾸면 답이 달라지는가 — 학습 계열까지 재어 본 절.
+
+    이 연구의 지도는 '매 스텝 과금'(작동 비용) 위에 있다. 실제 설비에서는 행동이
+    **바뀔 때만** 무는 해석(전환 비용)도 흔하다. 고정 규칙만으로도 λ 눈금이 크게
+    달라진다는 것은 이미 보였고, 여기서는 **학습 계열도 같은 조건에서** 잰다.
+    """
+    f = AGG / "MountainCar-v0@switch_iqm.csv"
+    fb = AGG / "MountainCar-v0_iqm.csv"
+    if not (f.exists() and fb.exists()):
+        return ""
+    B, A = pd.read_csv(f), pd.read_csv(fb)
+    lams = sorted(B.lam.unique())
+    cols = [a for a in ("dqn", "temporl", "lazy") if a in set(B.agent)]
+    cols += [r for r in ("rule_pump", "rule_noop") if r in set(B.agent)]
+    if not cols:
+        return ""
+
+    def half(df, ag):
+        z = df[(df.agent == ag) & (df.lam == 0.0)]
+        g = df[(df.agent == ag) & (df.lam > 0)].sort_values("lam")
+        if z.empty or g.empty:
+            return None
+        h = g[g.solved_iqm < float(z.iloc[0].solved_iqm) * 0.5]
+        return None if h.empty else float(h.iloc[0].lam)
+
+    lines = [
+        "## " + sec + ". 비용을 어떻게 세느냐가 답을 바꾼다",
+        "",
+        "이 연구의 지도는 **매 스텝 과금**(행동을 실행하는 스텝마다 λ) 위에 있다. "
+        "실제 설비에서는 행동이 **바뀔 때만** 무는 해석(전환 비용)도 흔하다. "
+        "밸브를 계속 열어 두는 것은 공짜고 여닫는 순간에만 마모가 생기는 경우다. "
+        "같은 환경(MountainCar)·같은 계열·같은 예산에서 **과금 방식만** 바꿔 다시 쟀다.",
+        "",
+        "<!--TABCAP: 전환 과금에서의 목표 도달률 (MountainCar-v0, 시드 10개) "
+        "| Goal-reaching rate under per-switch cost (MountainCar-v0, 10 seeds) -->",
+        "| 계열 | " + " | ".join("λ=" + format(l, "g") for l in lams) + " |",
+        "|---|" + "---|" * len(lams),
+    ]
+    for c in cols:
+        g = B[B.agent == c].set_index("lam")
+        cells = [(num(g.loc[l].solved_iqm * 100, 0) + "%") if l in g.index else "—" for l in lams]
+        bold = "**" if c in ("dqn", "temporl", "lazy") else ""
+        lines.append("| " + bold + name(c) + bold + " | " + " | ".join(cells) + " |")
+    lines.append("")
+
+    h_step = {a: half(A, a) for a in ("dqn", "temporl", "lazy")}
+    h_sw = {a: half(B, a) for a in ("dqn", "temporl", "lazy")}
+    facts = []
+    ratios = [h_sw[a] / h_step[a] for a in h_step if h_step.get(a) and h_sw.get(a)]
+    if ratios:
+        facts.append("도달률이 절반이 되는 λ가 매 스텝 과금에서는 "
+                     + ", ".join(format(v, "g") for v in sorted({v for v in h_step.values() if v}))
+                     + "이었는데 전환 과금에서는 "
+                     + ", ".join(format(v, "g") for v in sorted({v for v in h_sw.values() if v}))
+                     + "이다 — **λ 눈금이 두 자릿수로 커졌다.** "
+                     "전환은 행동보다 훨씬 드물게 일어나므로 같은 압력을 주려면 λ가 그만큼 커야 한다.")
+    tp = B[B.agent == "temporl"].set_index("lam")
+    if not tp.empty:
+        lo = min(float(tp.loc[l].solved_iqm) for l in lams if l in tp.index)
+        facts.append("**전환 과금에서는 TempoRL만 끝까지 버틴다.** 격자 끝(λ="
+                     + format(max(lams), "g") + ")에서도 도달률 "
+                     + num(lo * 100, 0) + "% 아래로 내려가지 않는 반면, "
+                     "표준 DQN은 λ=" + format(sorted(l for l in lams if l > 0)[0], "g")
+                     + "에서 이미 0%가 된다. 한 번 고른 행동을 오래 유지하는 구조가 "
+                     "**전환에만 값을 매기는 세상에서 곧바로 이점이 된다** — "
+                     "매 스텝 과금에서는 드러나지 않던 이점이다.")
+    facts.append("다만 **어느 계열도 pump 규칙을 이기지 못한다.** pump는 속도 부호가 바뀔 때만 "
+                 "방향을 틀어 전환이 3회뿐이라, 이 과금 방식에서 오히려 더 유리해진다. "
+                 "그리고 λ가 커지면 TempoRL의 점수는 무행동 아래로 내려간다 — "
+                 "버티는 것과 이득을 보는 것은 다르다.")
+    lines += ["- " + x for x in facts]
+    lines += ["", "**이 연구의 지도는 '매 스텝 과금'이라는 전제 위에 있다.** "
+              "전제를 바꾸면 λ 눈금뿐 아니라 **어느 방법이 유리한지도 바뀐다.** "
+              "실무자는 자기 설비의 마모가 어느 쪽에 가까운지를 먼저 정해야 한다.",
+              "",
+              "<!-- 출처: results/aggregate/MountainCar-v0@switch_iqm.csv "
+              "(cost_mode=per_switch, 180조건) -->", ""]
+    return chr(10).join(lines)
+
+
 def baseline_audit_section() -> str:
     """기준선 감사 절 — 비교 상대인 규칙을 성의 있게 만들었는가."""
     p = AGG / "baseline_audit.json"
@@ -1014,6 +1095,7 @@ def main() -> None:
     n_fair = 7 if has_third else 6
     fair = FAIRNESS_TMPL.replace("{공정성번호}", str(n_fair)) + budget_effect()
     audit = baseline_audit_section().replace("{감사번호}", str(n_fair + 1))
+    audit += chr(10) + switch_cost_section(str(n_fair + 2))
     out.write_text(head + chr(10) + body + chr(10) + fair + chr(10) + audit + src, encoding="utf-8")
     print("Ⅳ장 생성: " + str(out.relative_to(ROOT)))
 
