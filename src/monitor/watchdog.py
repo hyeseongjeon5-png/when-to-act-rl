@@ -7,7 +7,7 @@
   ④ 디스크 여유가 있고 결과 파일이 정상적으로 쌓이는가
   ⑤ 학습 곡선이 비정상인가 (보상 바닥 고정, 행동 횟수 0 고정 등)
   ⑥ 작업 대기열이 살아 있는가 (러너가 끝났는데 다음이 안 뜨면 12코어가 조용히 논다)
-  ⑦ 같은 것이 여러 벌 돌고 있지 않은가 (감시 장치가 잘못 판단해 중복 실행하는 사고를 잡는다)
+  ⑦ 같은 것이 여러 벌 돌고 있지 않은가 (되살리는 장치가 잘못 판단해 중복 실행하는 것을 잡는다)
 
 결과는 results/watchdog.log에 한 줄, 자세한 내용은 results/watchdog_last.json에 남긴다.
 종료 코드: 0 정상 / 1 경고 / 2 이상(사람 또는 에이전트 개입 필요)
@@ -48,7 +48,7 @@ def process_roots(pattern: str) -> list[int]:
     왜 뿌리만 세나: .venv/Scripts/python.exe 는 실제 인터프리터를 자식으로 띄우므로
     논리적으로 하나인 프로세스가 목록에 둘로 보인다. 부모가 같은 목록 안에 있으면 자식이다.
 
-    Git Bash에는 wmic도 ps aux도 없다 — PowerShell을 쓴다 (2026-08-29 사고에서 배운 것).
+    Git Bash에는 wmic도 ps aux도 없다 — PowerShell을 쓴다.
     """
     ps = ("Get-CimInstance Win32_Process -Filter \"name='python.exe'\" | "
           "Where-Object { $_.CommandLine -like '*" + pattern + "*' } | "
@@ -202,7 +202,7 @@ def main() -> int:
 
     # ---- ⑥ 작업 대기열 점검 ----
     # 러너 하나가 끝나고 다음이 안 떠도 progress.json은 '종료됨'이라 조용하다.
-    # 그러면 12코어가 아무 경고 없이 논다 — 85시간 스프린트에서는 이게 가장 비싼 사고다.
+    # 그러면 12코어가 아무 경고 없이 논다 — 장시간 무인 실행에서는 이것이 가장 비싼 낭비다.
     qs = RESULTS / "sprint_queue_state.json"
     if qs.exists():
         try:
@@ -244,8 +244,8 @@ def main() -> int:
             report["issues"].append(f"⑥ 대기열 상태 파일 읽기 실패: {e}")
 
     # ---- ⑦ 중복 실행 점검 ----
-    # 2026-08-29 사고: 감시자가 잘못 판단해 대기열을 5분마다 새로 띄웠고 같은 실험이 세 벌 돌았다.
-    # '죽었는가'만 보고 '너무 많은가'를 안 보면 이런 사고를 놓친다.
+    # 되살리는 장치가 잘못 판단하면 같은 실험이 여러 벌 돌 수 있다.
+    # '죽었는가'만 보고 '너무 많은가'를 안 보면 그것을 놓친다.
     q_roots = process_roots("sprint_queue")
     report["processes"] = {"queue": len(q_roots)}
     if len(q_roots) > 1:

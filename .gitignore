@@ -45,3 +45,9 @@ results/reports/_docx_smoke.docx
 .playwright-mcp/
 thesis_*.png
 results/queue_supervisor.lock
+
+# 작업 과정 기록 (로컬 보관 — 공개 저장소에는 두지 않는다)
+논문초안v2_수정이력.md
+docs/05_다음-세션-인수인계.md
+docs/06_자체심사.md
+docs/사고기록.md

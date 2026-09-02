@@ -132,7 +132,7 @@ def main() -> None:
         if extra:
             payload.update(extra)
         # 진행 상황 기록이 실패해도 실험은 계속 간다.
-        # (윈도우에서는 감시·상태 확인이 이 파일을 읽는 순간 교체가 거부된다 — 2026-08-29 사고)
+        # (윈도우에서는 감시·상태 확인이 이 파일을 읽는 순간 교체가 거부된다)
         if not write_text_atomic(prog_path, json.dumps(payload, ensure_ascii=False, indent=1)):
             print("  [경고] 진행 상황 파일을 갱신하지 못했다 (다음 갱신 때 다시 쓴다)", flush=True)
 
