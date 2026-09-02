@@ -89,7 +89,7 @@ def numbering_rules() -> list[str]:
     조용히 밀린다.** 실제로 Ⅲ장에 표를 넣었더니 '표 1 = 임계 비용 λ*'가 표 2로 밀렸다.
     사람 눈에는 잘 안 띄는 종류의 어긋남이라 기계가 본다.
     """
-    docx = ROOT / "졸업논문_초안v1.docx"
+    docx = ROOT / "졸업논문_초안v3.docx"
     if not docx.exists():
         return ["  [건너뜀] .docx가 아직 없다"]
     try:
@@ -303,7 +303,7 @@ def check_caption_position() -> None:
     다르다. 만들어진 파일을 열어 순서를 본다.
     """
     print(chr(10) + "그림 제목은 아래, 표 제목은 위에 있는가 (.docx 확인)")
-    docx = ROOT / "졸업논문_초안v1.docx"
+    docx = ROOT / "졸업논문_초안v3.docx"
     if not docx.exists():
         print("  [건너뜀] .docx가 없다 — 먼저 make_thesis_docx를 돌릴 것")
         return
@@ -393,7 +393,7 @@ def check_list_continuation() -> None:
     한 문단이 되어 있으면 쪼개진 것이다. 어림짐작이 아니라 원본과 결과를 직접 맞춘다.
     """
     print(chr(10) + "목록 항목이 쪼개지지 않았는가 (원본과 .docx 대조)")
-    docx = ROOT / "졸업논문_초안v1.docx"
+    docx = ROOT / "졸업논문_초안v3.docx"
     if not docx.exists():
         print("  [건너뜀] .docx가 없다")
         return
@@ -474,6 +474,60 @@ def check_duplicate_sentences() -> None:
         print("  [맞음] 사람이 쓴 장에 그대로 반복된 문장이 없다")
 
 
+def check_docx_openable() -> None:
+    """워드가 이 파일을 열 수 있는 모양인가 — 규격상 반드시 지켜야 하는 것만 본다.
+
+    왜 만들었나: 2026-09-02에 v2가 한워드에서 열리지 않았다. 원인은 본문 맨 끝의
+    구역 설정 <w:sectPr> **뒤에** 수식 문단 3개가 붙은 것이었다. 규격상 sectPr은
+    본문의 마지막 요소여야 한다. python-docx로는 읽히고 압축도 멀쩡해서
+    기존 검사 어디에도 걸리지 않았다 — '읽힌다'와 '워드가 연다'는 다르다.
+    """
+    print(chr(10) + "워드가 열 수 있는 모양인가 (.docx 구조)")
+    docx = ROOT / "졸업논문_초안v3.docx"
+    if not docx.exists():
+        print("  [건너뜀] .docx가 없다 — 먼저 make_thesis_docx를 돌릴 것")
+        return
+    import zipfile
+    from xml.etree import ElementTree as ET
+    W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+    bad = []
+    z = zipfile.ZipFile(docx)
+    for n in z.namelist():
+        if n.endswith((".xml", ".rels")):
+            try:
+                ET.fromstring(z.read(n))
+            except Exception as e:
+                bad.append(n + ": " + str(e)[:60])
+    if bad:
+        print("  [문제] XML이 깨진 부분이 있다: " + " / ".join(bad))
+    else:
+        print(f"  [맞음] 문서 안 XML {sum(1 for n in z.namelist() if n.endswith(('.xml', '.rels')))}개가 모두 정상")
+
+    body = ET.fromstring(z.read("word/document.xml")).find(W + "body")
+    kids = list(body)
+    idx = [i for i, k in enumerate(kids) if k.tag == W + "sectPr"]
+    if not idx:
+        print("  [문제] 본문에 구역 설정(sectPr)이 없다")
+    elif idx[-1] != len(kids) - 1:
+        after = len(kids) - 1 - idx[-1]
+        print(f"  [문제] 구역 설정(sectPr) 뒤에 요소 {after}개가 붙어 있다 "
+              "— 워드가 파일 열기를 거부한다. sectPr은 본문의 마지막이어야 한다")
+    else:
+        print(f"  [맞음] 구역 설정이 본문의 마지막이다 (본문 요소 {len(kids)}개)")
+
+    # 각주를 쓰면 세 짝(구분선·이어짐선·본문 각주)이 다 있어야 한다
+    doc_txt = z.read("word/document.xml").decode("utf-8")
+    n_ref = doc_txt.count("footnoteReference")
+    if n_ref:
+        if "word/footnotes.xml" not in z.namelist():
+            print("  [문제] 본문이 각주를 가리키는데 footnotes.xml이 없다")
+        else:
+            fx = z.read("word/footnotes.xml").decode("utf-8")
+            ok = "separator" in fx and "continuationSeparator" in fx
+            print(f"  [{'맞음' if ok else '문제'}] 각주 {n_ref}개 · 구분선/이어짐선 "
+                  + ("갖춤" if ok else "없음 — 워드가 복구를 요구할 수 있다"))
+
+
 def check_docx_package() -> None:
     """조립된 .docx 안에 그림이 실제로 들어갔는지 패키지 수준에서 본다.
 
@@ -482,7 +536,7 @@ def check_docx_package() -> None:
     그 파일이 실제로 패키지 안에 있는지.
     """
     print(chr(10) + "제출물(.docx) 안에 그림이 온전히 들어갔는가")
-    docx = ROOT / "졸업논문_초안v1.docx"
+    docx = ROOT / "졸업논문_초안v3.docx"
     if not docx.exists():
         print("  [건너뜀] .docx가 없다")
         return
@@ -561,6 +615,7 @@ def main() -> None:
         print(f"  [확인 못 함] {e}")
     check_duplicate_sentences()
     check_docx_package()
+    check_docx_openable()
     print(f"\n절 참조가 맞는가")
     for line in section_refs():
         print(line)
