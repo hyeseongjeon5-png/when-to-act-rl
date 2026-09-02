@@ -33,6 +33,11 @@ results/archive_pilotA/logs/
 results/archive_pilotA/checkpoints/
 
 # 논문 조립 결과물 (마크다운이 원본, docx는 재생성 가능)
+# → 최종본 졸업논문_초안v3.docx 만 커밋한다. 이전 판·백업·점검용은 제외.
+졸업논문_초안v1.docx
+졸업논문_초안v1_backup.docx
+졸업논문_초안v2.docx
+results/reports/_omml_점검.docx
 # → 최종본은 커밋한다. 중간 산출물만 제외.
 results/reports/_docx_smoke.docx
 

@@ -178,16 +178,28 @@ def star_facts(env_id: str) -> list[str]:
     agg_p = AGG / (env_id + "_iqm.csv")
     agg = pd.read_csv(agg_p) if agg_p.exists() else pd.DataFrame()
     out = []
+    zero_groups: dict[tuple[str, str], list[str]] = {}
     for s in st.get("results", []):
-        lname = eun(s["learner"])
         if s.get("lam_star_pt") == 0.0:
             how = _tie_or_loss(agg, s["learner"], ref) if not agg.empty else "이기지 못했다"
             tail = ("어느 쪽이든 '비용 때문에 졌다'고 말할 수 없다 — 비용이 0인 조건이다."
                     if how.startswith("비겼다")
                     else "비용 때문이 아니라 학습된 정책 자체가 규칙보다 약하다는 뜻이다.")
-            out.append(lname + " 비용이 아예 없는 λ=0에서 " + RULE_LABEL.get(ref, ref)
-                       + "에 " + how + ". " + tail)
-        elif s.get("lam_star_pt") is not None:
+            zero_groups.setdefault((how, tail), []).append(name(s["learner"]))
+    for (how, tail), names in zero_groups.items():
+        if len(names) == len(st.get("results", [])) and len(names) > 1:
+            subj = "세 계열 모두"
+        elif len(names) > 1:
+            subj = "·".join(names) + EUN.get(names[-1], "은")
+        else:
+            subj = eun(names[0])
+        out.append(subj + " 비용이 아예 없는 λ=0에서 " + RULE_LABEL.get(ref, ref)
+                   + "에 " + how + ". " + tail)
+    for s in st.get("results", []):
+        lname = eun(s["learner"])
+        if s.get("lam_star_pt") == 0.0:
+            continue
+        if s.get("lam_star_pt") is not None:
             extra = ("" if s.get("lam_star_ci") is None
                      else " 통계적으로 확실한 우위는 λ=" + format(float(s["lam_star_ci"]), "g")
                           + "에서 이미 사라졌다.")
@@ -438,9 +450,14 @@ def budget_effect() -> str:
                         f"(구간 폭 {wb:.0f}→{wg:.0f})")
         if not bits:
             continue
+        if worse == len(bits):
+            verdict = "**세 계열 모두 점수가 떨어졌다**"
+        elif worse == 0:
+            verdict = "어느 계열도 뚜렷이 나아지지 않았다"
+        else:
+            verdict = "계열마다 방향이 달랐다"
         head = ("**" + base + "**에서 예산을 " + mult + "로 늘리자(" + s_lo + " → " + s_hi
-                + " 스텝) " + ("**세 계열 모두 점수가 떨어졌다**" if worse == len(bits)
-                              else f"{worse}개 계열의 점수가 떨어졌다") + ": " + " · ".join(bits) + ".")
+                + " 스텝) " + verdict + ": " + " · ".join(bits) + ".")
         out.append(head)
         # 예산을 늘린 뒤에도 규칙에 못 닿았는지, 구간이 얼마나 벌어졌는지 모아 둔다
         ref = REF_RULE.get(base)
@@ -785,7 +802,7 @@ def causal_section(sec: str) -> str:
         "판정 칸은 줄임말이다. **탐험 실패** = 절반 뒤에 켠 쪽이 도달률이나 점수에서 "
         "신뢰구간이 겹치지 않게 앞선 경우, **부분 증거** = 한쪽 지표만 앞선 경우, "
         "**무행동이 최적해** = 양쪽 모두 행동이 멈춘 경우, **판정 보류** = 신뢰구간이 겹친 경우다. "
-        "판정 문구 전체는 `results/aggregate/causal_warmup.json`에 그대로 남아 있다.",
+        "판정 문구 전체는 공개 저장소(각주 1)의 집계 결과에 그대로 남아 있다.",
     ]
     n_expl = sum(1 for r in res if str(r["verdict"]).startswith("탐험 실패"))
     n_opt = sum(1 for r in res if "무행동이 최적해" in str(r["verdict"]))
@@ -823,7 +840,7 @@ def lam_star_lead() -> str:
 
     zero_envs = [e for e, by in rows if all(v == 0.0 for v in by.values() if v is not None)]
     win_envs = [e for e, by in rows if any((v or 0) > 0 for v in by.values())]
-    out = ["**결론부터 적는다. 임계 비용 λ\*는 하나의 숫자로 정해지지 않는다 — 환경에 따라 갈린다.**", ""]
+    out = ["**임계 비용 λ\*의 결과를 먼저 제시한다. λ\*는 하나의 숫자로 정해지지 않으며, 환경에 따라 갈린다.**", ""]
     if zero_envs:
         out.append("")
         out.append("**" + ", ".join(zero_envs) + "**에서는 세 학습 계열 모두 λ\*가 0이다. "
@@ -1024,7 +1041,55 @@ def switch_cost_section(sec: str) -> str:
               "",
               "<!-- 출처: results/aggregate/MountainCar-v0@switch_iqm.csv "
               "(cost_mode=per_switch, 180조건) -->", ""]
+    lines += switch_cost_rules_block()
     return chr(10).join(lines)
+
+
+def switch_cost_rules_block() -> list[str]:
+    """세 환경의 고정 규칙에서 과금 방식이 λ 눈금을 얼마나 옮기는가 (표 15).
+
+    학습 계열은 MountainCar에서만 다시 쟀지만, **규칙만이라면 세 환경 모두** 잴 수 있다.
+    규칙은 결정적이라 과금 횟수가 정확히 세어지고, 무행동이 규칙을 이기기 시작하는 λ는
+    나눗셈 한 번으로 나온다. 그래서 이 표는 눈금 변화가 MountainCar만의 일이 아님을 보인다.
+    """
+    p = AGG / "switch_cost_rules.json"
+    if not p.exists():
+        return []
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    rows = d.get("results", [])
+    if not rows:
+        return []
+    short = {"MountainCar-v0": "MountainCar", "LunarLander-v3": "LunarLander",
+             "MinAtar/Freeway-v1": "MinAtar Freeway", "MinAtar_Freeway-v1": "MinAtar Freeway"}
+    out = ["학습 계열을 다시 재는 것은 MountainCar에서만 했지만, **고정 규칙만이라면 세 환경 모두** "
+           "잴 수 있다. 규칙은 결정적이라 과금 횟수가 정확히 세어지기 때문이다. "
+           "무행동이 그 환경의 규칙을 이기기 시작하는 λ는 다음 한 줄로 정해지고, "
+           "**분모가 과금 방식에 따라 달라진다.**", "", "<!--EQ:lambda_cross-->", "",
+           "<!--TABCAP: 비용 부과 방식을 바꾸면 λ 눈금이 얼마나 달라지는가 "
+           "(고정 규칙, 시드 10개 × 100 에피소드) | How the λ scale shifts when the cost model "
+           "changes (fixed rules, 10 seeds x 100 episodes) -->",
+           "| 환경 / 규칙 | 매 스텝 과금 | 전환 과금 | λ_교차 (매 스텝) | λ_교차 (전환) | 배율 |",
+           "|---|---|---|---|---|---|"]
+    for r in rows:
+        st, sw = r["per_step"], r["per_switch"]
+        ratio = float(r["lam_cross_ratio"])
+        out.append("| " + short.get(r["env_id"], r["env_id"]) + " / " + r["rule"].replace(" 규칙", "")
+                   + " | " + num(st["charged_mean"], 1) + " | "
+                   + ("**" + num(sw["charged_mean"], 1) + "**" if ratio > 2 else num(sw["charged_mean"], 1))
+                   + " | " + num(st["lam_cross"], 3) + " | "
+                   + ("**" + num(sw["lam_cross"], 3) + "**" if ratio > 2 else num(sw["lam_cross"], 3))
+                   + " | " + ("**" if ratio > 2 else "") + num(ratio, 1) + "배"
+                   + ("**" if ratio > 2 else "") + " |")
+    out += ["", "방향이 환경마다 다르다는 점이 중요하다. pump 규칙은 속도 부호가 바뀔 때만 방향을 틀어 "
+            "119회 중 전환이 3회뿐이라 전환 과금에서 거의 공짜가 된다. 반대로 Freeway의 신중 규칙은 "
+            "'기다렸다 올라가기'를 반복해 전환이 행동보다 많아 오히려 손해를 본다. "
+            "**같은 환경, 같은 규칙이라도 비용을 어떻게 세느냐가 답을 바꾼다.**", "",
+            "<!-- 출처: results/aggregate/switch_cost_rules.json "
+            "(src/analysis/switch_cost_rules.py) -->", ""]
+    return out
 
 
 def baseline_audit_section() -> str:
@@ -1053,9 +1118,8 @@ def baseline_audit_section() -> str:
         "튜닝은 평가에 쓰지 않는 에피소드에서 하고, 거기서 고른 하나만 평가용 에피소드로 다시 쟀다(Ⅲ장 6.2절). "
         "재는 잣대는 본실험과 같다 — 시드마다 점수를 내고 그 시드 점수들의 IQM을 쓴다.",
         "",
-        "<!--TABCAP: 기준 규칙의 계수를 다시 골랐을 때 (시드 10개 × 100 에피소드, 본실험과 같은 잣대)"
-        " | Re-selecting the coefficients of each baseline rule "
-        "(10 seeds x 100 episodes, the same estimator as the main experiment) -->",
+        "<!--TABCAP: 기준 규칙의 계수를 다시 골랐을 때 (시드 10개 × 100 에피소드)"
+        " | Re-selecting the coefficients of each baseline rule (10 seeds x 100 episodes) -->",
         "| 환경 | 규칙 | 현재 계수 r IQM | 다시 고른 계수 r IQM | 차이 | 판정 |",
         "|---|---|---|---|---|---|",
     ] + rows + [
@@ -1064,6 +1128,11 @@ def baseline_audit_section() -> str:
         "**LunarLander의 임계값 규칙만 계수를 다시 고르는 것으로 " + num(worst_gap, 0) + "점이 올랐다**"
         "(같은 형태의 규칙, 계수만 다름). 그 결과 그 환경의 임계 비용 λ*가 바뀌었다 — "
         "<!--TABREF:tab1|의--> 값은 다시 고른 규칙을 포함한 것이다.",
+        "",
+        "이 표의 평가는 규칙마다 시드 10개 × 100 에피소드다. 본실험의 규칙 평가는 환경에 따라 "
+        "에피소드 수가 다르고(MinAtar/Freeway는 50), 그래서 같은 규칙이라도 값이 조금 다르게 "
+        "나온다 — 신중 규칙이 본실험 표에서는 16.9, 이 표에서는 17.1인 것이 그 때문이다. "
+        "**우열 판정은 이 표 안에서만 하고, 다른 표와 직접 견주지 않는다.**",
         "",
         "이 비대칭이 중요하다. MountainCar에서 '학습이 규칙에 진다'는 결론은 기준선이 이미 최선이었으므로 "
         "더 단단해졌고, LunarLander에서 '학습이 이긴다'는 결론만 약한 기준선의 덕을 보고 있었다.",

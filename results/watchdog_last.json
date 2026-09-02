@@ -1,6 +1,6 @@
 {
- "time": "2026-09-02 12:07:44",
- "ts": 1788318464.2373607,
+ "time": "2026-09-02 20:08:15",
+ "ts": 1788347295.301141,
  "runs": [
   {
    "run": "causal_warmup_mc",
@@ -10,7 +10,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5761.3,
+   "stale_min": 6241.8,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 90
@@ -23,7 +23,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 3294.1,
+   "stale_min": 3774.6,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 50
@@ -36,7 +36,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 4010.5,
+   "stale_min": 4491.0,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 30
@@ -49,7 +49,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 3595.5,
+   "stale_min": 4076.0,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 15
@@ -62,7 +62,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 6316.7,
+   "stale_min": 6797.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -75,7 +75,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 6315.6,
+   "stale_min": 6796.1,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -88,7 +88,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 6266.1,
+   "stale_min": 6746.7,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 5
@@ -101,7 +101,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2689.4,
+   "stale_min": 3169.9,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 120
@@ -114,7 +114,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5548.0,
+   "stale_min": 6028.5,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 360
@@ -127,7 +127,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 4305.7,
+   "stale_min": 4786.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 180
@@ -140,7 +140,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 5978.8,
+   "stale_min": 6459.3,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 420
@@ -153,7 +153,7 @@
    "skipped": 0,
    "pid_alive": false,
    "finished": true,
-   "stale_min": 2850.7,
+   "stale_min": 3331.2,
    "advanced_since_last": false,
    "eta_text": "측정 중",
    "prev_done": 180
@@ -168,7 +168,7 @@
   "next": null,
   "alive": null,
   "pid": null,
-  "stale_min": 2433.4
+  "stale_min": 2913.9
  },
  "processes": {
   "queue": 0
@@ -187,6 +187,6 @@
   "n_floor": 0,
   "n_expected_floor": 0
  },
- "disk_free_gb": 329.8,
+ "disk_free_gb": 329.5,
  "done_conditions_total": 4896
 }

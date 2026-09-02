@@ -66,7 +66,7 @@ def table1_lambda_star(envs=("MountainCar-v0", "LunarLander-v3", "MinAtar_Freewa
         "note": ("λ*_CI는 학습의 95% 신뢰구간 하한이 규칙의 상한 아래로 처음 내려간 λ(엄격), "
                  "λ*_점추정은 두 IQM 곡선이 처음 교차한 λ(느슨)이다. λ*=0은 비용이 없어도 "
                  "규칙을 이기지 못했다는 뜻이며, '격자 밖'은 실험한 최대 λ까지 계속 이겼다는 뜻이다. "
-                 "출처: results/aggregate/*_lambda_star.json"),
+                 "출처: 공개 저장소(각주 1)"),
         "widths": [3.2, 2.6, 2.0, 2.2, 2.0, 2.2, 1.3],
     }
 
@@ -112,7 +112,11 @@ def table2_setup(cfg_names=("main_mountaincar", "main_lunarlander", "main_minata
         "ko": "실험 설정 요약",
         "en": "Summary of the experimental setup",
         "note": ("하이퍼파라미터는 세 학습 계열이 완전히 동일하며 TempoRL 공개 구현의 기본값을 그대로 썼다. "
-                 "출처: experiments/configs/main_*.yaml"),
+                 "MinAtar Freeway만 최종 평가 에피소드 수가 적은 것(스냅샷 3장 × 15)은 이 환경의 "
+                 "한 에피소드가 1,000스텝으로 고정되어 있어 45 에피소드만으로도 45,000 환경 스텝이 되기 "
+                 "때문이다. 다른 두 환경은 에피소드가 짧아 같은 비용으로 더 많이 굴릴 수 있다. "
+                 "학습이 없어 굴리는 값이 싼 고정 규칙에는 세 환경 모두 더 많은 에피소드를 주었다. "
+                 "출처: 공개 저장소(각주 1)"),
         "widths": [4.2, 5.6, 5.6],
     }
 
@@ -121,7 +125,7 @@ def table3_fairness(variants: dict[str, str] | None = None) -> dict | None:
     """공정성 점검 — 비용이 없는 λ=0에서 학습이 그 환경의 최고 규칙 수준에 닿는가.
 
     세 환경을 한 표에 모은다. 환경마다 '예산을 늘리면 달라지는가'를 물었기 때문이다.
-    표준 DQN 기준이며, 비교 상대는 그 환경의 기준 규칙이다.
+    세 학습 계열을 모두 싣고, 비교 상대는 그 환경의 기준 규칙이다.
     """
     ENVS = [
         ("MountainCar-v0", "rule_pump", [
@@ -152,23 +156,30 @@ def table3_fairness(variants: dict[str, str] | None = None) -> dict | None:
             if not p2.exists():
                 continue
             df = pd.read_csv(p2)
-            g = df[(df.agent == "dqn") & (df.lam == 0.0)]
-            if g.empty:
-                continue
-            r = g.iloc[0]
-            env_rows.append([env if not env_rows else "", label,
-                             f"{int(r.total_steps):,}", str(int(r.n_seeds)),
-                             f"{r.raw_return_iqm:.1f}",
-                             f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
-                             f"{r.solved_iqm * 100:.0f}%"])
+            first_of_setting = True
+            for ag in ("dqn", "temporl", "lazy"):
+                g = df[(df.agent == ag) & (df.lam == 0.0)]
+                if g.empty:
+                    continue
+                r = g.iloc[0]
+                solved = "—" if env.startswith("MinAtar") else f"{r.solved_iqm * 100:.0f}%"
+                env_rows.append([env if not env_rows else "",
+                                 (label + " — " if first_of_setting else "") + AGENT_KO[ag]
+                                 if not first_of_setting else label + " — " + AGENT_KO[ag],
+                                 f"{int(r.total_steps):,}", str(int(r.n_seeds)),
+                                 f"{r.raw_return_iqm:.1f}",
+                                 f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
+                                 solved])
+                first_of_setting = False
         if not env_rows:
             continue
         if not gr.empty:
             r = gr.iloc[0]
+            solved = "—" if env.startswith("MinAtar") else f"**{r.solved_iqm * 100:.0f}%**"
             env_rows.append(["", f"**기준: {RULE_KO.get(rule, rule)} (학습 없음)**", "—",
                              str(int(r.n_seeds)), f"**{r.raw_return_iqm:.1f}**",
                              f"[{r.raw_return_ci_lo:.1f}, {r.raw_return_ci_hi:.1f}]",
-                             f"**{r.solved_iqm * 100:.0f}%**"])
+                             solved])
         rows += env_rows
     if len(rows) < 2:
         return None
@@ -178,10 +189,10 @@ def table3_fairness(variants: dict[str, str] | None = None) -> dict | None:
         "ko": "공정성 점검 — 비용이 없을 때(λ=0) 학습은 그 환경의 규칙 수준에 닿는가",
         "en": "Fairness check: does learning reach rule-level performance at zero cost (λ=0)",
         "note": ("비용이 없는 조건에서도 학습이 규칙에 지면 '비용 때문에 졌다'고 말할 수 없다. "
-                 "그래서 환경마다 학습 예산을 늘려 λ=0 성능을 다시 쟀다. 표준 DQN 기준이며, "
+                 "그래서 환경마다 학습 예산을 늘려 λ=0 성능을 다시 쟀다. "
                  "평가는 본실험과 같다(스냅샷 3장 × 최종 에피소드). 시드 수가 10개보다 적은 줄은 "
                  "결정을 위한 파일럿이며 그 자체로 결론이 아니다. "
-                 "출처: results/aggregate/*_iqm.csv"),
+                 "출처: 공개 저장소(각주 1)"),
         "widths": [2.6, 4.4, 1.9, 1.1, 1.6, 2.4, 1.4],
     }
 
