@@ -620,8 +620,9 @@ def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
         ax.tick_params(labelsize=8.5 * fs)
         ax.legend(fontsize=7.4 * fs, loc="upper center", bbox_to_anchor=(0.5, -0.17),
                   ncol=2, frameon=False, columnspacing=1.2, handletextpad=0.4)
-        ax.annotate("← 좋아지는 방향 (적게 움직이고 많이 받는다)", xy=(0.03, 0.965),
-                    xycoords="axes fraction", fontsize=7.6 * fs, color="#2e7d32", fontweight="bold")
+        if ax is axes[0]:
+            ax.annotate("← 좋아지는 방향", xy=(0.03, 0.965), xycoords="axes fraction",
+                        fontsize=7.6 * fs, color="#2e7d32", fontweight="bold")
     fig.tight_layout()
     out = OUT / (tag + "_actions_vs_return.png")
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
@@ -629,7 +630,8 @@ def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
         "file": out.name,
         "ko": "행동을 아낀 만큼 무엇을 얻었는가 — 행동 횟수와 원보상의 상충",
         "en": "What the saved actions buy: episode actions versus raw return (before cost)",
-        "note": ("세로축은 **비용을 빼기 전** 원보상이라 '행동을 줄여서 이긴 것'과 "
+        "note": ("**왼쪽 위로 갈수록 좋다 — 적게 움직이고 많이 받는 쪽이다.** "
+                 "세로축은 **비용을 빼기 전** 원보상이라 '행동을 줄여서 이긴 것'과 "
                  "'그냥 잘해서 이긴 것'이 구분된다. 선은 λ를 0부터 키우며 이은 것이고 "
                  "양 끝에 λ를 적었다. 왼쪽 위로 갈수록 좋다. 옅은 붉은 영역은 "
                  "**기준 규칙보다 행동은 더 쓰고 보상은 더 적은** 자리다 — 그 안에 있으면 "

@@ -28,7 +28,7 @@ OUT = ROOT / "졸업논문_초안v1.docx"
 
 TITLE_KO = "행동에 비용이 붙을 때 학습은 언제 규칙을 이기는가: 행동 비용 λ에 따른 성능 지도와 임계 비용"
 TITLE_EN = "When does learning beat a fixed rule under action cost? A performance map over the action cost λ"
-AUTHOR_LINE = "○○학과 20○○○○○○ 전혜성   [본인 확인 필요 — 학과·학번을 채울 것]"
+AUTHOR_LINE = "기계공학과 2125256 전혜성"
 
 CHAPTERS = [
     ("paper/01_서론.md", {}),
@@ -81,7 +81,7 @@ def title_block(doc) -> None:
     p = B.para(doc, "", align=WD_ALIGN_PARAGRAPH.CENTER, line=1.25, after=8, first_indent=False)
     B.set_run_font(p.add_run(TITLE_EN), B.HEAD_FONT, 11.5, italic=True)
     p = B.para(doc, "", align=WD_ALIGN_PARAGRAPH.CENTER, line=1.2, after=12, first_indent=False)
-    B.set_run_font(p.add_run(AUTHOR_LINE), B.HEAD_FONT, 10, color="B3261E")
+    B.set_run_font(p.add_run(AUTHOR_LINE), B.HEAD_FONT, 10.5)
 
 
 def abstract_block(doc) -> None:
