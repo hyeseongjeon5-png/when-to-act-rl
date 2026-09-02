@@ -547,3 +547,344 @@ agent      lam  n_seeds  cost_return_iqm  cost_return_ci_lo  cost_return_ci_hi  
   저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
 보고서 저장: results\reports\2026-08-31_본실험보고서.html
 Ⅳ장 생성: paper\04_결과.md
+===== 2026-08-31 20:46:31 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-08-31_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-08-31 21:51:02 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-08-31_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-08-31 22:55:20 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-08-31_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-08-31 23:59:54 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 01:07:31 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 02:12:05 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 03:16:34 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 04:23:51 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 05:28:54 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 06:33:29 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 07:38:16 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 08:42:34 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 09:46:47 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 10:51:47 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 11:56:34 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 13:01:04 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 14:06:06 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 15:13:00 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 16:18:00 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 17:23:03 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 18:25:49 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 19:28:32 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 20:31:19 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 21:34:01 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 22:36:41 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-01 23:39:25 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-01_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 00:44:17 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 01:47:01 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 02:49:43 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 03:52:26 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 04:55:07 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 06:00:06 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 07:02:46 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 08:05:26 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 09:08:09 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 10:10:48 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 11:13:29 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
+Ⅳ장 생성: paper\04_결과.md
+===== 2026-09-02 12:16:10 중간 집계 =====
+  λ* [lazy vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  λ* [temporl vs rule_best] CI기준 0.01 / 점추정기준 0.01 — 격자 안에서 교차 지점 발견
+  저장: results/aggregate/MountainCar-v0@warmup50_iqm.csv, MountainCar-v0@warmup50_lambda_star.json
+  저장: results\figures\MountainCar-v0@warmup50_lambda_map_raw_return.png
+  저장: results\figures\MountainCar-v0@warmup50_action_map.png
+  저장: results\figures\MountainCar-v0@warmup50_learning_curves.png
+보고서 저장: results\reports\2026-09-02_본실험보고서.html
