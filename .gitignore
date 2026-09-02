@@ -51,3 +51,14 @@ results/queue_supervisor.lock
 docs/05_다음-세션-인수인계.md
 docs/06_자체심사.md
 docs/사고기록.md
+
+# AI 작업 지시문 (로컬 전용)
+CLAUDE.md
+
+# 실행 찌꺼기 — 결과는 results/aggregate 와 results/figures 에 있다
+results/logs/
+*.tmp
+
+# HTML 보고서는 최신 한 장만 저장소에 둔다 (집계·그림에서 언제든 다시 만든다)
+results/reports/*.html
+!results/reports/2026-09-02_본실험보고서.html

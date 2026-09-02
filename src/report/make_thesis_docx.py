@@ -28,7 +28,8 @@ OUT = ROOT / "졸업논문_초안v3.docx"
 
 TITLE_KO = "행동에 비용이 붙을 때 학습은 언제 규칙을 이기는가: 행동 비용 λ에 따른 성능 지도와 임계 비용"
 TITLE_EN = "When does learning beat a fixed rule under action cost? A performance map over the action cost λ"
-AUTHOR_LINE = "기계공학과 2125256 전혜성"
+# 학번은 넣지 않는다 — 공개 저장소에 올라가는 파일이다. 제출본에는 학교 양식에 맞춰 본인이 채운다.
+AUTHOR_LINE = "기계공학과 전혜성"
 
 CHAPTERS = [
     ("paper/01_서론.md", {}),

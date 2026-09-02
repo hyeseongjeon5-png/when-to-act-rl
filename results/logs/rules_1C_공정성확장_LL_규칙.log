@@ -1,5 +1,0 @@
-
-===== 2026-08-30 12:22:05 experiments/configs/fair_ll_1M.yaml =====
-[규칙 rule_noop           ] 굴린 시드 10개 3.7초 · 환산 10건 0.04초 · λ 1개
-[규칙 rule_threshold      ] 굴린 시드 10개 12.3초 · 환산 10건 0.04초 · λ 1개
-[규칙 rule_threshold_tuned] 굴린 시드 10개 18.1초 · 환산 10건 0.07초 · λ 1개

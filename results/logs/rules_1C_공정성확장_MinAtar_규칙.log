@@ -1,4 +1,0 @@
-
-===== 2026-08-30 17:17:17 experiments/configs/fair_minatar_1M.yaml =====
-[규칙 rule_noop           ] 굴린 시드 5개 12.0초 · 환산 5건 0.06초 · λ 1개
-[규칙 rule_cautious       ] 굴린 시드 5개 27.5초 · 환산 5건 0.05초 · λ 1개
