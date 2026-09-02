@@ -28,26 +28,38 @@
 ```
 ├─ src/
 │  ├─ envs/          # 행동 비용 래퍼 (cost_wrapper.py)
-│  ├─ agents/        # DQN, TempoRL, Lazy-MDP (구현 예정)
-│  └─ baselines/     # 고정 규칙 기준선 (fixed_rules.py)
-├─ experiments/      # 실험 config (yaml)
-├─ results/          # 실험 로그·그림·보고서 (대용량 raw는 git 제외)
+│  ├─ agents/        # 표준 DQN · TempoRL 방식 · Lazy-MDP 방식
+│  ├─ baselines/     # 고정 규칙 기준선 (무행동 · k스텝 주기 · 임계값)
+│  ├─ train/         # 본실험 러너 (이어하기 · 체크포인트 · 진행 기록)
+│  ├─ eval/          # 평가 (탐험 끈 상태로 스냅샷 여러 장)
+│  ├─ analysis/      # 집계 — IQM · 계층 부트스트랩 CI · λ* 계산
+│  └─ report/        # 그림 · 표 · 논문 조립 · 원고 점검
+├─ experiments/      # 실험 config (yaml) — λ 격자·시드·예산이 전부 여기 있다
+├─ results/          # 집계·그림·보고서 (대용량 raw와 체크포인트는 git 제외)
 ├─ docs/             # 실험 설계 · 로드맵 · 실험일지
-└─ paper/            # 논문 원고
+└─ paper/            # 논문 원고 (마크다운이 원본, .docx는 조립 결과물)
 ```
 
 ## 재현 방법
 
 ```bash
-pip install swig                 # Windows에서 box2d(LunarLander) 빌드에 먼저 필요
+pip install swig                 # 윈도우에서 box2d(LunarLander) 빌드에 먼저 필요
 pip install -r requirements.txt
+python tests/run_all.py          # 자동 테스트 (비용 래퍼·규칙·집계)
 
-# 고정 규칙 기준선 평가 (동작함)
-python -m src.eval.run_fixed_rules --config experiments/configs/smoke_fixed_rules_mountaincar.yaml
-python -m src.report.make_report --session results/session_2026-08-24.json
+# 1) 본실험 — config 하나가 한 환경의 λ 격자 × 시드 × 계열 전체다
+#    이미 끝난 조건은 건너뛰므로 중간에 멈춰도 그냥 다시 실행하면 이어진다
+python -m src.train.runner --config experiments/configs/main_mountaincar.yaml
+python -m src.train.runner --config experiments/configs/main_lunarlander.yaml
+python -m src.train.runner --config experiments/configs/main_minatar_freeway.yaml
 
-# 학습 에이전트 파일럿 (예정): python -m src.run --config experiments/configs/pilot_mountaincar.yaml
+# 2) 집계부터 논문·보고서까지 한 번에 다시 만들기
+python -m src.report.finalize --reps 10000
 ```
+
+실험을 돌리지 않고 **결과만 보려면** `results/aggregate/`의 집계 CSV와 `results/figures/`의 그림을 바로 열면 된다. 해석은 `paper/04_결과.md`에 있다.
+
+설정을 바꾸면 **설정 지문**이 달라져 예전 체크포인트를 자동으로 버린다 — 조건이 섞이지 않는다. 다른 조건을 재려면 `experiments/configs/`의 yaml을 복사해 고치면 된다(λ 격자 · 시드 · 예산 · 계열 · 규칙이 모두 그 안에 있다).
 
 > **환경 버전 메모** — `LunarLander-v2`는 gymnasium 1.3.0에서 폐기되어 **v3**를 사용한다.
 > torch는 CPU 빌드로 설치되었다(CUDA 없음). 자세한 세팅 기록은 `docs/실험일지.md`.
