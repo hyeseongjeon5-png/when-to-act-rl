@@ -1,4 +1,4 @@
-"""졸업논문 .docx 조립 — paper/*.md + 그림 + 자동 생성 표 → 졸업논문_초안v1.docx
+"""졸업논문 .docx 조립 — paper/*.md + 그림 + 자동 생성 표 → 졸업논문_초안v3.docx
 
 학교 양식(붙임1_졸업논문양식.pdf)의 순서를 그대로 따른다:
   제목(국문·영문) → Abstract(국문요약 500자 이내) → Keyword(5개 이하)
@@ -24,7 +24,7 @@ from src.report.paper_tables import all_tables
 
 ROOT = Path(__file__).resolve().parents[2]
 PAPER = ROOT / "paper"
-OUT = ROOT / "졸업논문_초안v1.docx"
+OUT = ROOT / "졸업논문_초안v3.docx"
 
 TITLE_KO = "행동에 비용이 붙을 때 학습은 언제 규칙을 이기는가: 행동 비용 λ에 따른 성능 지도와 임계 비용"
 TITLE_EN = "When does learning beat a fixed rule under action cost? A performance map over the action cost λ"
@@ -148,6 +148,9 @@ def build() -> Path:
     n_img = len(doc.inline_shapes)
     print(f"  저장: {OUT.name} | 문단 {n_par} · 표 {n_tab}(번호 {counter['tab']}) · "
           f"그림 {n_img}(번호 {counter['fig']})")
+    from src.report.footnote import add as _add_footnote
+    _add_footnote(OUT, "전체 코드·설정·실험일지·집계 결과는 "
+                       "github.com/hyeseongjeon5-png/when-to-act-rl 에 공개되어 있다.")
     return OUT
 
 

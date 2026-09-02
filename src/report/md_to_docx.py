@@ -31,6 +31,8 @@ TAB_MARK = re.compile(r"<!--\s*TABLE:([A-Za-z0-9_]+)\s*-->")
 TABCAP_MARK = re.compile(r"<!--\s*TABCAP:\s*(.+?)\s*\|\s*(.+?)\s*-->")
 # 원고 안에서 만들어지는 표(TABCAP)에 이름표를 달아 본문이 가리킬 수 있게 한다.
 TABTAG_MARK = re.compile(r"<!--\s*TABTAG:([A-Za-z0-9_]+)\s*-->")
+# 워드 수식 객체(OMML) 자리. 글자로 쓰면 수식이 아니라 문자열이 된다.
+EQ_MARK = re.compile(r"<!--\s*EQ:([A-Za-z0-9_]+)\s*-->")
 COMMENT = re.compile(r"<!--.*?-->", re.S)
 
 
@@ -151,6 +153,9 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
     """마크다운 한 장을 doc에 이어 붙인다. numbers를 주면 FIGREF/TABREF를 번호로 바꾼다."""
     if numbers:
         md_text = resolve_refs(md_text, numbers)
+    # 각주 자리 표시를 '살아남는 글자'로 바꾼다. <!--FN1--> 그대로 두면 주석 제거에 지워져
+    # 조립이 끝난 .docx에서 자리를 찾을 수 없다 (2026-09-02에 실제로 그랬다).
+    md_text = md_text.replace("<!--FN1-->", "")
     caps = _captions()
     auto_tables = auto_tables or {}
     fig_width = fig_width or {}
@@ -202,6 +207,16 @@ def render(doc, md_text: str, auto_tables: dict | None = None,
                             note=t.get("note", ""), widths=t.get("widths"))
             else:
                 print(f"  [경고] 표 {key}를 찾지 못해 건너뜀")
+            i += 1
+            continue
+
+        # ---- 수식 (워드 수식 객체) ----
+        # 반드시 '주석 건너뛰기'보다 앞에 와야 한다. <!--EQ:...--> 도 주석 모양이라
+        # 뒤에 두면 그냥 건너뛰어져 수식이 통째로 사라진다 (2026-09-02에 실제로 그랬다).
+        m = EQ_MARK.search(stripped)
+        if m:
+            from src.report import omml
+            omml.insert(doc, m.group(1))
             i += 1
             continue
 

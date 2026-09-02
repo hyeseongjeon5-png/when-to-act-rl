@@ -2,7 +2,7 @@
 
 사용자가 "상태 확인"이라고 할 때 이 하나만 돌리면 된다.
 숫자는 전부 실제 파일에서 읽는다 (progress_*.json, watchdog.log, sprint_queue_state.json,
-results/raw/, paper/*.md, 졸업논문_초안v1.docx).
+results/raw/, paper/*.md, 졸업논문_초안v3.docx).
 
 실행: python -m src.monitor.sprint_status
 """
@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "results"
 PAPER = ROOT / "paper"
-DOCX = ROOT / "졸업논문_초안v1.docx"
+DOCX = ROOT / "졸업논문_초안v3.docx"
 
 SPRINT_START = None  # results/sprint_start.txt 가 있으면 거기서 읽는다
 

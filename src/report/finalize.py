@@ -8,7 +8,7 @@
   3. 작업용 그림  results/figures/*.png
   4. 논문용 그림  results/figures/paper/*.png  (300dpi, 캡션 국문·영문)
   5. Ⅳ장 원고    paper/04_결과.md              (숫자는 집계 파일에서만)
-  6. 논문 조립    졸업논문_초안v1.docx
+  6. 논문 조립    졸업논문_초안v3.docx
   7. 미리보기     results/reports/논문_미리보기.html
   8. 원고 점검    낡은 표현·남은 [본인 확인 필요] 표시 목록
   9. README 갱신  README.md의 '결과' 절 (표시 구간 안쪽만)

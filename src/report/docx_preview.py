@@ -16,7 +16,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DOCX = ROOT / "졸업논문_초안v1.docx"
+DOCX = ROOT / "졸업논문_초안v3.docx"
 OUT = ROOT / "results" / "reports" / "논문_미리보기.html"
 
 CSS = """
