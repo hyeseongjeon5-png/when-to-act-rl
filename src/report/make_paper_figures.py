@@ -50,11 +50,11 @@ PLAIN = FuncFormatter(lambda v, _pos: format(v, "g"))
 CAPTIONS: dict[str, dict] = {}
 
 
-def _box(ax, x, y, w, h, text, fc, ec, fs=9, weight="normal"):
+def _box(ax, x, y, w, h, text, fc, ec, fs=9, weight="normal", lw=1.6, tc="#000000"):
     ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.006,rounding_size=0.018",
-                                fc=fc, ec=ec, lw=1.3, zorder=2, clip_on=False))
-    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs,
-            zorder=3, linespacing=1.5, fontweight=weight, clip_on=False)
+                                fc=fc, ec=ec, lw=lw, zorder=2, clip_on=False))
+    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs, color=tc,
+            zorder=3, linespacing=1.45, fontweight=weight, clip_on=False)
 
 
 def _arrow(ax, p0, p1, text=None, color="#333333", fs=7.6, rad=0.0, dy=0.016):
@@ -67,81 +67,82 @@ def _arrow(ax, p0, p1, text=None, color="#333333", fs=7.6, rad=0.0, dy=0.016):
 
 
 def fig1_method() -> Path:
-    """그림 1 — 비용 래퍼 한 겹과 비교 4계열의 구조."""
-    fig, ax = plt.subplots(figsize=(9.2, 5.0), dpi=DPI)
-    ax.set_xlim(-0.015, 1.015); ax.set_ylim(-0.02, 1.02); ax.axis("off")
+    """그림 1 — 비용 래퍼 한 겹과 비교 4계열의 구조.
 
-    # ── 왼쪽: 비용 래퍼가 끼어드는 자리 ──────────────────────────────
-    ax.text(0.005, 0.965, "① 행동 비용 래퍼 — 환경과 학습기 사이에 한 겹",
-            fontsize=10.5, fontweight="bold", va="top")
-    _box(ax, 0.005, 0.62, 0.125, 0.16, "학습기\n(정책)", "#eef4fb", "#1f77b4", 9.5, "bold")
-    _box(ax, 0.205, 0.60, 0.185, 0.20,
-         "행동 비용 래퍼\nActionCostWrapper", "#fff6e5", "#e08a00", 9.5, "bold")
-    _box(ax, 0.465, 0.62, 0.125, 0.16, "환경\n(Gymnasium)", "#eef7ee", "#2ca02c", 9.5, "bold")
+    판형에 맞춰 그린다: .docx가 이 그림을 폭 16cm로 넣으므로, 도화지를 6.3인치(=16cm)로 잡으면
+    **여기서 지정한 pt가 인쇄된 pt 그대로**가 된다. 예전에는 9.2인치로 그려 16cm로 줄였고,
+    그래서 7.8pt로 적은 글자가 종이에서는 5.3pt로 찍혔다. 좌우로 나누던 배치를 위아래로 쌓아
+    같은 폭에 더 큰 글자를 넣는다. 색은 전부 검정 계열(#000/#222)로, 테두리는 진한 색으로 한다.
+    """
+    fig, ax = plt.subplots(figsize=(6.3, 5.3), dpi=DPI)
+    fig.subplots_adjust(left=0.005, right=0.995, top=0.995, bottom=0.005)
+    ax.set_xlim(-0.012, 1.012); ax.set_ylim(-0.015, 1.015); ax.axis("off")
+    HEAD, BODY, DIM = "#000000", "#111111", "#222222"
+    # 테두리는 상자 채움색보다 두 단계 진하게 — 흑백 인쇄에서도 경계가 남는다
+    E_BLUE, E_ORANGE, E_GREEN, E_RED, E_GRAY = "#0f4c81", "#8a5200", "#1a6b1a", "#8f1d1e", "#3d3d3d"
 
-    _arrow(ax, (0.130, 0.750), (0.205, 0.750), None)
-    _arrow(ax, (0.390, 0.750), (0.465, 0.750), None)
-    _arrow(ax, (0.465, 0.650), (0.390, 0.650), None)
-    _arrow(ax, (0.205, 0.650), (0.130, 0.650), None)
-    ax.text(0.1675, 0.762, "행동 a", ha="center", fontsize=7.8, color="#333333")
-    ax.text(0.4275, 0.762, "행동 a 그대로", ha="center", fontsize=7.8, color="#333333")
-    ax.text(0.1675, 0.618, "보상 r\u2032", ha="center", fontsize=7.8, color="#333333")
-    ax.text(0.4275, 0.618, "보상 r", ha="center", fontsize=7.8, color="#333333")
+    # ── ① 비용 래퍼가 끼어드는 자리 ─────────────────────────────────
+    ax.text(0.0, 1.005, "① 행동 비용 래퍼 — 환경과 학습기 사이에 한 겹",
+            fontsize=11.5, fontweight="bold", va="top", color=HEAD)
+    _box(ax, 0.015, 0.845, 0.225, 0.088, "학습기\n(정책)", "#eef4fb", E_BLUE, 10, "bold")
+    _box(ax, 0.3875, 0.845, 0.225, 0.088, "행동 비용 래퍼\nActionCostWrapper", "#fff6e5", E_ORANGE, 10, "bold")
+    _box(ax, 0.760, 0.845, 0.225, 0.088, "환경\n(Gymnasium)", "#eef7ee", E_GREEN, 10, "bold")
 
-    ax.text(0.2975, 0.545,
-            "r′ = r - λ · 1[a ≠ a_noop]",
-            ha="center", va="center", fontsize=12, fontweight="bold", color="#b35c00",
-            bbox=dict(boxstyle="round,pad=0.35", fc="#fffaf0", ec="#e08a00", lw=1.1))
-    ax.text(0.2975, 0.475,
-            "no-op(아무것도 안 함)은 공짜, 그 밖의 행동은 1회당 λ",
-            ha="center", va="center", fontsize=8.6, color="#555555")
-    ax.text(0.2975, 0.425,
-            "학습·평가 코드는 비용이 붙은 줄 모른다 → 네 계열에 같은 규칙이 적용된다",
-            ha="center", va="center", fontsize=8.2, color="#777777", style="italic")
+    _arrow(ax, (0.240, 0.915), (0.3875, 0.915), None, color=DIM)
+    _arrow(ax, (0.6125, 0.915), (0.760, 0.915), None, color=DIM)
+    _arrow(ax, (0.760, 0.865), (0.6125, 0.865), None, color=DIM)
+    _arrow(ax, (0.3875, 0.865), (0.240, 0.865), None, color=DIM)
+    for x, y, t, va in ((0.3138, 0.922, "행동 a", "bottom"), (0.6862, 0.922, "a 그대로", "bottom"),
+                        (0.3138, 0.856, "보상 r′", "top"), (0.6862, 0.856, "보상 r", "top")):
+        ax.text(x, y, t, ha="center", va=va, fontsize=10, color=BODY)
 
-    # ── 오른쪽: 비교 4계열 ──────────────────────────────────────────
-    ax.text(0.665, 0.965, "② 같은 λ·같은 예산으로 겨루는 네 계열",
-            fontsize=10.5, fontweight="bold", va="top")
+    ax.text(0.5, 0.775, "r′ = r - λ · 1[a ≠ a_noop]", ha="center", va="center",
+            fontsize=13, fontweight="bold", color="#7a3f00",
+            bbox=dict(boxstyle="round,pad=0.35", fc="#fffaf0", ec=E_ORANGE, lw=1.4))
+    ax.text(0.5, 0.715, "no-op(아무것도 안 함)은 공짜, 그 밖의 행동은 1회당 λ",
+            ha="center", va="center", fontsize=10, color=BODY)
+    ax.text(0.5, 0.672, "학습·평가 코드는 비용이 붙은 줄 모른다 → 네 계열에 같은 규칙이 적용된다",
+            ha="center", va="center", fontsize=10, color=DIM, style="italic")
+
+    # ── ② 비교 4계열 (위아래로 쌓아 한 줄씩 폭을 다 쓴다) ──────────────
+    ax.text(0.0, 0.628, "② 같은 λ·같은 예산으로 겨루는 네 계열",
+            fontsize=11.5, fontweight="bold", va="top", color=HEAD)
     series = [
-        ("(가) 표준 DQN", "매 스텝 행동을 하나 고른다", "#eef4fb", "#1f77b4"),
-        ("(나) TempoRL 방식", "행동 + 유지 길이 j를 함께 배운다", "#fdeeee", "#d62728"),
-        ("(다) Lazy-MDP 방식", "직접 할지 / 기본 규칙에 맡길지 고른다", "#eef7ee", "#2ca02c"),
-        ("(라) 고정 규칙", "학습 없음 — 무행동 · k스텝 주기 · 임계값", "#f2f2f2", "#777777"),
+        ("(가) 표준 DQN", "매 스텝 행동을 하나 고른다", "#eef4fb", E_BLUE),
+        ("(나) TempoRL 방식", "행동 + 유지 길이 j를 함께 배운다", "#fdeeee", E_RED),
+        ("(다) Lazy-MDP 방식", "직접 할지 / 기본 규칙에 맡길지 고른다", "#eef7ee", E_GREEN),
+        ("(라) 고정 규칙", "학습 없음 — 무행동 · k스텝 주기 · 임계값", "#f2f2f2", E_GRAY),
     ]
-    y = 0.745
-    for name, desc, fc, ec in series:
-        _box(ax, 0.655, y, 0.335, 0.108, "", fc, ec)
-        ax.text(0.672, y + 0.070, name, fontsize=9.3, fontweight="bold", va="center", ha="left", zorder=3)
-        ax.text(0.672, y + 0.031, desc, fontsize=8.2, color="#444444", va="center", ha="left", zorder=3)
-        y -= 0.152
+    y = 0.510
+    for nm, desc, fc, ec in series:
+        _box(ax, 0.020, y, 0.960, 0.058, "", fc, ec)
+        ax.text(0.040, y + 0.029, nm, fontsize=10.5, fontweight="bold", color=HEAD,
+                va="center", ha="left", zorder=3)
+        ax.text(0.360, y + 0.029, desc, fontsize=10, color=BODY, va="center", ha="left", zorder=3)
+        y -= 0.073
 
-    # ── 아래: 실험 절차 ────────────────────────────────────────────
-    ax.text(0.005, 0.335, "③ 절차 — λ를 키워 가며 같은 자로 재고, 교차점을 λ*로 읽는다",
-            fontsize=10.5, fontweight="bold", va="top")
-    steps = [
-        "λ 격자\n0 → 큰 값",
-        "계열 4종\n× 시드 10개",
-        "같은 환경 스텝 예산\n탐험 끈 평가",
-        "IQM + 95%\n계층 부트스트랩 CI",
-        "λ-성능 지도\n임계 비용 λ*",
-    ]
-    w, gap = 0.168, 0.038
-    x = 0.012
+    # ── ③ 절차 ────────────────────────────────────────────────────
+    ax.text(0.0, 0.268, "③ 절차 — λ를 키워 가며 같은 자로 재고, 교차점을 λ*로 읽는다",
+            fontsize=11.5, fontweight="bold", va="top", color=HEAD)
+    steps = ["λ 격자\n0 → 큰 값", "계열 4종\n× 시드 10개", "같은 예산\n탐험 끈 평가",
+             "IQM + 95% CI\n부트스트랩", "λ-성능 지도\nλ* 읽기"]
+    w, gap = 0.178, 0.027
+    x = 0.001
     for i, st in enumerate(steps):
         fc = "#eaf0f8" if i < 4 else "#fff2f2"
-        ec = "#4a7ebb" if i < 4 else "#d62728"
-        _box(ax, x, 0.10, w, 0.165, st, fc, ec, 8.8, "bold" if i == 4 else "normal")
+        ec = "#2f5f96" if i < 4 else E_RED
+        _box(ax, x, 0.080, w, 0.110, st, fc, ec, 10, "bold" if i == 4 else "normal")
         if i < len(steps) - 1:
-            _arrow(ax, (x + w, 0.1825), (x + w + gap, 0.1825))
+            _arrow(ax, (x + w, 0.135), (x + w + gap, 0.135), color=DIM)
         x += w + gap
 
-    ax.text(0.5, 0.035,
-            "λ* = 학습이 그 λ에서 가장 센 고정 규칙을 더 이상 이기지 못하게 되는 가장 작은 λ",
-            ha="center", fontsize=9, color="#b3261e", fontweight="bold")
+    ax.text(0.5, 0.020,
+            "λ* = 학습이 그 λ에서 가장 센 고정 규칙을 이기지 못하게 되는 가장 작은 λ",
+            ha="center", fontsize=10, color="#8f1d1e", fontweight="bold")
 
-    fig.tight_layout()
     p = OUT / "fig1_method.png"
-    fig.savefig(p, bbox_inches="tight", pad_inches=0.06, facecolor="white"); plt.close(fig)
+    fig.savefig(p, facecolor="white", dpi=DPI)   # tight 크롭 안 함 — 폭 6.3in=16cm 그대로 300dpi
+    plt.close(fig)
     CAPTIONS["fig1"] = {
         "file": p.name,
         "ko": "행동 비용 래퍼와 비교 4계열의 구조",
@@ -621,8 +622,10 @@ def tradeoff_figure(tag: str = "fig_tradeoff") -> Path | None:
         ax.legend(fontsize=7.4 * fs, loc="upper center", bbox_to_anchor=(0.5, -0.17),
                   ncol=2, frameon=False, columnspacing=1.2, handletextpad=0.4)
         if ax is axes[0]:
-            ax.annotate("← 좋아지는 방향", xy=(0.03, 0.965), xycoords="axes fraction",
-                        fontsize=7.6 * fs, color="#2e7d32", fontweight="bold")
+            # 왼쪽 위로 올라오는 시드가 생기면 글씨와 겹친다. 흰 바탕을 깔아 어떤 경우에도 읽히게 한다.
+            ax.annotate("← 좋아지는 방향", xy=(0.035, 0.955), xycoords="axes fraction", va="top",
+                        fontsize=7.6 * fs, color="#2e7d32", fontweight="bold", zorder=6,
+                        bbox=dict(boxstyle="round,pad=0.22", fc="white", ec="#a5d6a7", lw=0.6))
     fig.tight_layout()
     out = OUT / (tag + "_actions_vs_return.png")
     fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
